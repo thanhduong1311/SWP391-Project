@@ -11,7 +11,7 @@ drop table[address]
 drop table[job]
 drop table account
 
-
+--CREATE DATABASE ProjectSWP
 
 create table [service] (
 	id int primary key not null identity,
@@ -137,6 +137,18 @@ create table [address] (
 	commune nvarchar(100),
 	lo nvarchar(100)
 )
+create table [rank](
+id int primary key not null identity,
+[name] varchar(100),
+min_spend decimal(10,2),
+discount decimal(10,2)
+)
+create table [member](
+customer_id int,
+rank_id int,
+uprank_date datetime
+)
+
 
 ALTER TABLE [job]
 ADD FOREIGN KEY (service_id) REFERENCES [service] (id);
@@ -174,6 +186,10 @@ ALTER TABLE major
 ADD FOREIGN KEY (employee_id) REFERENCES employee (employee_id);
 ALTER TABLE major
 ADD FOREIGN KEY (service_id) REFERENCES [service] (id);
+ALTER TABLE [member]
+ADD FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
+ALTER TABLE [member]
+ADD FOREIGN KEY (rank_id) REFERENCES [rank] (id);
 
 insert into [service] (name,img,unitPrice,discount,created_at,update_at) 
 values
@@ -240,6 +256,11 @@ insert into [rating] (job_id,point,rating_description,created_at,update_at)
 values
 (2,5,N'Làm việc rất ok',getdate(), GETDATE())
 
+insert into [notification]
+
+
+
+
 select * from [service]
 select * from account
 select * from employee
@@ -251,7 +272,8 @@ select * from salary_history
 
 
 
-select e.employee_id, c.[user_id], c.full_name, c.username from  
+select e.employee_id, c.[user_id], c.full_name, c.username
+from  
 employee e join account c on e.[user_id] = c.[user_id]
 
 
