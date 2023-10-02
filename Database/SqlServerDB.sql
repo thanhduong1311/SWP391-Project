@@ -10,6 +10,8 @@ drop table major
 drop table[address]
 drop table[job]
 drop table account
+drop table [rank]
+drop table [member]
 
 --CREATE DATABASE ProjectSWP
 
@@ -256,7 +258,6 @@ insert into [rating] (job_id,point,rating_description,created_at,update_at)
 values
 (2,5,N'Làm việc rất ok',getdate(), GETDATE())
 
-insert into [notification]
 
 
 
