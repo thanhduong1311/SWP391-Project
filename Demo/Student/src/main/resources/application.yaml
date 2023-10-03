@@ -1,0 +1,17 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/student_management
+    username: root
+    password: 1234
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        ddl-auto: update
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8090
