@@ -96,8 +96,15 @@
                 <a
                         href="signin.html"
                         class="btn btn-lg btn-dark"
+                        style="display: none;"
                 >Sign In</a
                 >
+
+                <div style="height: 100%; display: flex; justify-content: center;align-items: center;" th:object="${User}">
+                    <img src="" alt="" th:src="*{avatar}"
+                         style="width: 60px;height: 60px; border-radius: 50%; border: 1px solid #000;margin: auto 0;">
+                    <p style="margin: 0 10px; font-weight: 500;" th:text="*{name}"></p>
+                </div>
             </div>
         </div>
     </nav>

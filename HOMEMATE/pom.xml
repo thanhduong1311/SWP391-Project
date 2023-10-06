@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.demo</groupId>
-    <artifactId>Student-managment</artifactId>
+    <artifactId>MaidManagement</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Student</name>
     <description>Student</description>
@@ -91,6 +91,9 @@
             <artifactId>jjwt-api</artifactId>
             <version>0.12.0</version>
         </dependency>
+
+
+
 
 
     </dependencies>
