@@ -7,19 +7,18 @@ import lombok.*;
 
 import java.util.Date;
 
+
 @Entity
-@Table(name = Rank.COLLECTION_NAME)
+@Table(name = Job.COLLECTION_NAME)
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class Job {
 
-    public final static String COLLECTION_NAME = "rank";
+    public final static String COLLECTION_NAME = "job";
 
     @Id
-    @Column(name = "job_id",unique = true,nullable = false)
+    @Column(name = "job_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int jobId;
 
@@ -27,19 +26,38 @@ public class Job {
 
     private String description;
 
-    private int serviceId;
+    @ManyToOne
+    @JoinColumn(name = "service_id")
+    private Service serviceId;
 
-    private Date from;
+    private Date start;
 
-    private Date to;
+    private Date end;
 
-    private int customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customerId;
 
-    private int employeeId;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employeeId;
 
     private PaymentType paymentType;
 
     private Date createAt;
 
     private Date updateAt;
+
+    @OneToOne(mappedBy = "jobId")
+    private Income income;
+
+    @OneToOne(mappedBy = "jobId")
+    private Feedbacks feedback;
+
+    @OneToOne(mappedBy = "jobId")
+    private Report report;
+
+    @OneToOne(mappedBy = "jobId")
+    private EmployeeRequest request;
+
 }

@@ -6,9 +6,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = Customer.COLLECTION_NAME)
+@Table(name = Service.COLLECTION_NAME)
 @Getter
 @Setter
 @ToString
@@ -32,6 +33,10 @@ public class Service{
 
     private Date updateAt;
 
+    @OneToMany(mappedBy = "jobId")
+    private List<Job> jobs;
 
+    @ManyToMany(mappedBy = "services")
+    private List<Employee> employees;
 
 }

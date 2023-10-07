@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = Rank.COLLECTION_NAME)
+@Table(name = EmployeeRequest.COLLECTION_NAME)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,13 +18,18 @@ public class EmployeeRequest {
     public final static String COLLECTION_NAME = "employeeRequest";
 
     @Id
-    @Column(name = "request_id",unique = true,nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "request_id")
     private int requestId;
 
-    private int jobId;
+    @OneToOne
+    @JoinColumn(name = "job_id",referencedColumnName = "job_id")
+    private Job jobId;
 
-    private int employeeId;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employeeId;
 
     private String reason;
 
@@ -32,9 +37,9 @@ public class EmployeeRequest {
 
     private Date decisionAt;
 
-    private Date create_at;
+    private Date createAt;
 
-    private Date update_at;
+    private Date updateAt;
 
 
 }

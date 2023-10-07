@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = Customer.COLLECTION_NAME)
@@ -56,6 +57,16 @@ public class Customer{
 
     private Date updateAt;
 
+    @OneToMany(mappedBy = "jobId")
+    private List<Job> jobs;
 
+    @OneToMany(mappedBy = "feedbackId")
+    private List<Feedbacks> feedbacks;
+
+    @OneToMany(mappedBy = "reportId")
+    private List<Report> reports;
+
+    @OneToMany(mappedBy = "customer")
+    List<Member> members;
 
 }

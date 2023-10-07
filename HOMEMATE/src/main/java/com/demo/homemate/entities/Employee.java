@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.coyote.Request;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = Employee.COLLECTION_NAME)
@@ -20,7 +22,7 @@ public class Employee{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employee_id")
+    @JoinColumn(name = "employee_id")
     private int employeeId;
 
     private Role role;
@@ -56,6 +58,24 @@ public class Employee{
     private Date createAt;
 
     private Date updateAt;
+
+    @OneToMany(mappedBy = "incomeId")
+    private List<Income> imcomes;
+
+    @OneToMany(mappedBy = "requestId")
+    private List<EmployeeRequest> requests;
+
+    @OneToMany(mappedBy = "jobId")
+    private List<Job> jobs;
+
+    @ManyToMany
+    @JoinTable(
+            name = "major",
+            joinColumns = @JoinColumn(
+                    name = "employeeId"),
+            inverseJoinColumns = @JoinColumn(name = "serviceId")
+    )
+    private List<Service> services;
 
 
 }

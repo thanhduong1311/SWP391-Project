@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = Rank.COLLECTION_NAME)
+@Table(name = Report.COLLECTION_NAME)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,17 +17,21 @@ public class Report {
     public final static String COLLECTION_NAME = "report";
 
     @Id
-    @Column(name = "report_id",unique = true,nullable = false)
+    @Column(name = "reportId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reportId;
 
-    private int customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customerId;
 
-    private int jobId;
+    @OneToOne
+    @JoinColumn(name = "job_id", referencedColumnName ="job_id" )
+    private Job jobId;
 
     private String reason;
 
-    private Date create_at;
+    private Date createAt;
 
-    private Date update_at;
+    private Date updateAt;
 }
