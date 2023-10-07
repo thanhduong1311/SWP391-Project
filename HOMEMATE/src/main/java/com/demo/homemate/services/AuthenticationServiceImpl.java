@@ -1,23 +1,24 @@
 package com.demo.homemate.services;
 
-import com.demo.homemate.configurations.JwtServiceTest;
+import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
-import com.demo.homemate.entities.Employee;
+import com.demo.homemate.entities.Admin;
 import com.demo.homemate.mappings.Implement.AccountMapper;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import enums.Role;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private  UserService userService;
 
-    private final JwtServiceTest jwtService;
-    private  AuthenticationManager authenticationManager;
-
-
-
+    private AuthenticationManager authenticationManager;
 
 //    private final String STUDENT_DOMAIN = "fpt.edu.vn";
 
@@ -54,14 +51,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     public AuthenticationResponse authentication(AuthenticationRequest request) {
 
+
            int check =  userService.checkLogin(request);
 
 
            if(check ==1 ) {
                var user = employeeRepository.findByUsername(request.getUsername());
-//               var jwtToken = jwtService.generateToken(user);
-
-               var jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc3N1ZXIiOiJJc3N1ZXIiLCJJc3N1ZWQgQXQiOiIyMDIzLTEwLTA2VDEwOjI5OjM3LjE4M1oiLCJFeHBpcmF0aW9uIjoiMjAyMy0xMC0wNlQxMDoyOTozNy4xODNaIiwiVXNlcm5hbWUiOiJBZG1pbiIsIlJvbGUiOiJBZG1pbiJ9.LB6BdxFnzzYSHzxIEkoWbgvcCe6MZ-06p2RGc8pNAeo";
+               String jwtToken = JWTService.generateJwtEmployeeToken(user);
                return new AuthenticationResponse()
                        .setToken(jwtToken)
                        .setPageReturn("home")
@@ -69,9 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                        .setStateCode(1);
            } else if (check == 2){
                var user = customerRepository.findByUsername(request.getUsername());
-
-               var jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc3N1ZXIiOiJJc3N1ZXIiLCJJc3N1ZWQgQXQiOiIyMDIzLTEwLTA2VDEwOjI5OjM3LjE4M1oiLCJFeHBpcmF0aW9uIjoiMjAyMy0xMC0wNlQxMDoyOTozNy4xODNaIiwiVXNlcm5hbWUiOiJBZG1pbiIsIlJvbGUiOiJBZG1pbiJ9.LB6BdxFnzzYSHzxIEkoWbgvcCe6MZ-06p2RGc8pNAeo";
-//               var jwtToken = jwtService.generateToken(user);
+               String jwtToken = JWTService.generateJwtCustomerToken(user);
                return new AuthenticationResponse()
                        .setToken(jwtToken)
                        .setPageReturn("home")
@@ -79,8 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                        .setStateCode(1);
            } else if (check == 3) {
                var user = adminRepository.findByUsername(request.getUsername());
-               var jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc3N1ZXIiOiJJc3N1ZXIiLCJJc3N1ZWQgQXQiOiIyMDIzLTEwLTA2VDEwOjI5OjM3LjE4M1oiLCJFeHBpcmF0aW9uIjoiMjAyMy0xMC0wNlQxMDoyOTozNy4xODNaIiwiVXNlcm5hbWUiOiJBZG1pbiIsIlJvbGUiOiJBZG1pbiJ9.LB6BdxFnzzYSHzxIEkoWbgvcCe6MZ-06p2RGc8pNAeo";
-//               var jwtToken = jwtService.generateToken(user);
+               String jwtToken = JWTService.generateJwtAdminToken(user);
                return new AuthenticationResponse()
                        .setToken(jwtToken)
                        .setPageReturn("home")
@@ -94,12 +87,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public Optional<Employee> getCurrentAuthenticatedAccount() {
+    public Optional<Admin> getCurrentAuthenticatedAccount() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
-            return Optional.ofNullable(employeeRepository.findByUsername(((UserDetails) principal).getUsername()));
+            return Optional.ofNullable(adminRepository.findByUsername(((UserDetails) principal).getUsername()));
         }
-        return Optional.ofNullable(employeeRepository.findByUsername(principal.toString()));
+        return Optional.ofNullable(adminRepository.findByUsername(principal.toString()));
     }
 
 

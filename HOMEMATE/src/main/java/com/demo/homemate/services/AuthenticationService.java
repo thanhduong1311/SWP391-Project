@@ -2,7 +2,7 @@ package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
-import com.demo.homemate.entities.Employee;
+import com.demo.homemate.entities.Admin;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +18,9 @@ public interface AuthenticationService {
 
 //    AuthenticationResponse refreshToken(String token, HttpServletRequest request);
 
-    Optional<Employee> getCurrentAuthenticatedAccount();
+//    Optional<Employee> getCurrentAuthenticatedAccount();
 //    Optional<Customer> getCurrentAuthenticatedAccount();
-//    Optional<Admin> getCurrentAuthenticatedAccount();
+    Optional<Admin> getCurrentAuthenticatedAccount();
 
     Optional<String> getCurrentAuthentication();
 

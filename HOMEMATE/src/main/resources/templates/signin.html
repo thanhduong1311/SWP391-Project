@@ -81,6 +81,8 @@
           >
         </div>
 
+        <p class="message alert-danger" th:text="${LoginError.getMessage()}"></p>
+
         <div class="checkbox mb-3">
           <label>
             <input
@@ -106,7 +108,7 @@
           <a href="signup.html">Register</a
           >.</small
         >
-        <p class="mt-5 mb-3 text-muted" th:text="${ErrorPass.getUsername()} ">
+        <p class="mt-5 mb-3 text-muted" >
 
         </p>
       </form>

@@ -1,9 +1,11 @@
 package com.demo.homemate.controllers;
 
 
+import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.AccountResponse;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
+import com.demo.homemate.dtos.error.MessageOject;
 import com.demo.homemate.services.AuthenticationService;
 import com.demo.homemate.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,16 +35,15 @@ public class UserController {
     public String login(AuthenticationRequest account, Model model) {
         AuthenticationResponse auth = authenticationService.authentication(account);
         System.out.println("TOKEN: " +  auth.getToken());
-
         if(auth.getStateCode() == 1) {
             AccountResponse accountResponse = auth.getAccountResponse();
             // set data cho đối tượng được đăng nhập ,cái JWT nhét   đây nè mà chưa làm được
             model.addAttribute("User",accountResponse);
             return viewHomePage(model);
         } else {
-            return auth.getPageReturn();
+           model.addAttribute("LoginError", new MessageOject("Fail","Username or password is incorrect!"));
+           return loginView(model);
         }
-
 
     }
 
@@ -54,10 +55,8 @@ public class UserController {
     @GetMapping("")
     public String loginView(Model model) {
         model.addAttribute("account", new AuthenticationRequest());
-
-        if (model.getAttribute("ErrorPass") == null) {
-            model.addAttribute("ErrorPass", new AuthenticationRequest());
-
+        if (model.getAttribute("LoginError") == null) {
+            model.addAttribute("LoginError", new MessageOject("",""));
         }
         return "signin";
     }
