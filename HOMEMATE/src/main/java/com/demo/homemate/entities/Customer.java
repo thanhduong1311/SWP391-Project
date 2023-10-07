@@ -1,7 +1,7 @@
 package com.demo.homemate.entities;
 
 import com.demo.homemate.enums.Role;
-import com.demo.homemate.enums.Status;
+import com.demo.homemate.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class Customer{
 
     private Role role;
 
-    private Status status;
+    private AccountStatus accountStatus;
 
     @Column(unique = true)
     private String username;
@@ -37,6 +37,7 @@ public class Customer{
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String phone;
 
     private String gender;

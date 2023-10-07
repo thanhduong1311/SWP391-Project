@@ -1,6 +1,6 @@
 package com.demo.homemate.enums;
 
-public enum Status {
+public enum AccountStatus {
     ACTIVE,
 
     BAN,
