@@ -97,11 +97,11 @@ public class UserController {
                     }
                     case "CUSTOMER" -> {
 
-                        return "customer-home";
+                        return "redirect:/admin";
                     }
                     case "EMPLOYEE" -> {
 
-                        return "employee-home";
+                        return "redirect:/admin";
                     }
                     default -> {
 
@@ -113,6 +113,14 @@ public class UserController {
     @GetMapping(value = "admin")
     public String viewAdminPage(){
         return "home";
+    }
+    @GetMapping(value = "customer")
+    public String viewCustomerPage(){
+        return "customer";
+    }
+    @GetMapping(value = "employee")
+    public String viewEmployeePage(){
+        return "employee";
     }
 
 
