@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/SWP391Hommate
     username: root
-    password: 1234
+    password: 12345
   jpa:
     properties:
       hibernate:

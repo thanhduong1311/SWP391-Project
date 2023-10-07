@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+
 @Service
 public class UserService implements IUserService, UserDetailsService {
 
@@ -66,32 +68,43 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public int checkLogin(AuthenticationRequest request) {
+
         int var = checkUsername(request.getUsername());
 
         if (var == 0) {
             return 0;
-        } else if (var == 1) {
-            Employee e = employeeRepository.findByUsername(request.getUsername());
-            if (e.getUsername().equals(request.getUsername()) &&
-                    e.getPassword().equals(request.getPassword())
-            ) {
-                return 1;
-            } else return 0;
-
-        } else if (var == 2) {
-            Customer c = customerRepository.findByUsername(request.getUsername());
-            if (c.getUsername().equals(request.getUsername()) &&
-                    c.getPassword().equals(request.getPassword())
-            ) {
-                return 2;
-            } else return 0;
         } else {
-            Admin a = adminRepository.findByUsername(request.getUsername());
-            if (a.getUsername().equals(request.getUsername()) &&
-                    a.getPassword().equals(request.getPassword())
-            ) {
-                return 3;
-            } else return 0;
+            PasswordMD5 p5 = new PasswordMD5();
+            String password = "";
+            try {
+                password =p5.encode(request.getPassword());
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (var == 1) {
+                Employee e = employeeRepository.findByUsername(request.getUsername());
+                if (e.getUsername().equals(request.getUsername()) &&
+                        e.getPassword().equals(password)
+                ) {
+                    return 1;
+                } else return 0;
+
+            } else if (var == 2) {
+                Customer c = customerRepository.findByUsername(request.getUsername());
+                if (c.getUsername().equals(request.getUsername()) &&
+                        c.getPassword().equals(password)
+                ) {
+                    return 2;
+                } else return 0;
+            } else {
+                Admin a = adminRepository.findByUsername(request.getUsername());
+                if (a.getUsername().equals(request.getUsername()) &&
+                        a.getPassword().equals(password)
+                ) {
+                    return 3;
+                } else return 0;
+            }
         }
     }
 

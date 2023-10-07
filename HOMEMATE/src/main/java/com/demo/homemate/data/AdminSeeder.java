@@ -24,7 +24,7 @@ public class AdminSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(adminRepository.count() == 0) {
+        if(adminRepository.count() ==0 ) {
             Admin admin = new Admin();
             admin.setUsername("Admin");
             admin.setPassword("123");

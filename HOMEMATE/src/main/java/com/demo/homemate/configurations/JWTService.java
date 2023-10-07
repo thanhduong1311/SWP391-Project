@@ -40,7 +40,7 @@ public class JWTService {
         long  expiration = System.currentTimeMillis() + 3600000 * 6; // 1 hour
         return Jwts
                 .builder()
-                .setSubject(account.getUsername())
+                .setSubject(String.valueOf(account.getRole()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -51,7 +51,7 @@ public class JWTService {
         long  expiration = System.currentTimeMillis() + 3600000 * 6; // 1 hour
         return Jwts
                 .builder()
-                .setSubject(account.getUsername())
+                .setSubject(String.valueOf(account.getRole()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -62,7 +62,7 @@ public class JWTService {
         long  expiration = System.currentTimeMillis() + 3600000 * 6; // 1 hour
         return Jwts
                 .builder()
-                .setSubject(account.getUsername())
+                .setSubject(String.valueOf(account.getRole()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
