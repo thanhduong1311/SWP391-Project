@@ -1,7 +1,7 @@
 package com.demo.homemate.entities;
 
-import enums.Role;
-import enums.Status;
+import com.demo.homemate.enums.Role;
+import com.demo.homemate.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,15 +41,20 @@ public class Customer{
 
     private String gender;
 
-    private String address;
+    private String city;
 
     private double balance;
+
+    private String district;
+
+    private String address_detail;
+
+    private double totalSpend;
 
     private Date createAt;
 
     private Date updateAt;
 
-    private double totalSpend;
 
 
 }

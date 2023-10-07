@@ -24,7 +24,6 @@ public class AccountMapper implements IAccountMapper {
                 .setEmail(employee.getEmail())
                 .setPhone(employee.getPhone())
                 .setUsername(employee.getUsername());
-
     }
 
     @Override

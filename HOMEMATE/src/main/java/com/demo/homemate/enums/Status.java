@@ -1,4 +1,4 @@
-package enums;
+package com.demo.homemate.enums;
 
 public enum Status {
     ACTIVE,

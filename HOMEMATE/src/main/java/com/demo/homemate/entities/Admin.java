@@ -1,7 +1,7 @@
 package com.demo.homemate.entities;
 
 
-import enums.Role;
+import com.demo.homemate.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,7 +1,7 @@
 package com.demo.homemate.entities;
 
-import enums.Role;
-import enums.Status;
+import com.demo.homemate.enums.Role;
+import com.demo.homemate.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,15 +43,19 @@ public class Employee{
 
     private String gender;
 
-    private String address;
-
     private double balance;
+
+    private String idCardNumber;
+
+    private String city;
+
+    private String district;
+
+    private String address_detail;
 
     private Date createAt;
 
     private Date updateAt;
 
-
-    private String idCardNumber;
 
 }

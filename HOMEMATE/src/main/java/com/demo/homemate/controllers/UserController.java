@@ -8,6 +8,8 @@ import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.error.MessageOject;
 import com.demo.homemate.services.AuthenticationService;
 import com.demo.homemate.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,10 @@ public class UserController {
         System.out.println("TOKEN: " +  auth.getToken());
         if(auth.getStateCode() == 1) {
             AccountResponse accountResponse = auth.getAccountResponse();
-            // set data cho đối tượng được đăng nhập ,cái JWT nhét   đây nè mà chưa làm được
+            // set data cho đối tượng được đăng nhập ,cái JWT nhét   đây nè mà chưa làm đượcz
+
+            Cookie cookie = new Cookie("Token",auth.getToken());
+
             model.addAttribute("User",accountResponse);
             return viewHomePage(model);
         } else {
