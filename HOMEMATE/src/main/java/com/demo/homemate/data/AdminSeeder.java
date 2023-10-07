@@ -30,16 +30,7 @@ public class AdminSeeder implements CommandLineRunner {
             admin.setPassword("123");
             admin.setRole(Role.ADMIN);
 
-            Admin admin1 = new Admin();
-            admin.setUsername("Admin1");
-            admin.setPassword("1234");
-            admin.setRole(Role.ADMIN);
-
-            List<Admin> ls = new ArrayList<>();
-            ls.add(admin);
-            ls.add(admin1);
-
-            adminRepository.saveAll(ls);
+            adminRepository.save(admin);
 
         }
     }
