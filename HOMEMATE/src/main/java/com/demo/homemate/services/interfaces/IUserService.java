@@ -1,4 +1,4 @@
-package com.demo.homemate.services;
+package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
@@ -75,8 +75,20 @@ public interface IUserService {
      * @return 1 if valid
      * @return 0 if not valid
      */
+
+    /**
+     * Check phone number is right format or not
+     * @param phone
+     * @return 1 if true
+     */
     public int checkPhone(String phone);
 
+    /**
+     * compare new password and confirm password
+     * @param password
+     * @param confirmPassword
+     * @return 1 if true
+     */
     public int checkNewPassword(String password, String confirmPassword);
 
 

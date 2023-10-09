@@ -33,8 +33,6 @@ public class Income {
 
     private String note;
 
-    private Double discount;
-
     private Date createAt;
 
     private Date updateAt;

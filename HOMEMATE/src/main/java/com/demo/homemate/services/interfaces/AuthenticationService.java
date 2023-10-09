@@ -1,4 +1,4 @@
-package com.demo.homemate.services;
+package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;

@@ -8,7 +8,7 @@ import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.error.MessageOject;
-import com.demo.homemate.services.AuthenticationService;
+import com.demo.homemate.services.interfaces.AuthenticationService;
 import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.UserService;
 import io.jsonwebtoken.Claims;
@@ -94,7 +94,7 @@ public class UserController {
                 Claims claim = jwt.parseJwt(token);
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
-                        return "redirect:/user/admin";
+                        return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
                         return "redirect:/user/customer";
@@ -108,10 +108,7 @@ public class UserController {
                 }
             }
     }
-    @GetMapping(value = "/admin")
-    public String viewAdminPage(Model model){
-        return "home";
-    }
+
     @GetMapping(value = "/customer")
     public String viewCustomerPage(){
         return "customer-home";

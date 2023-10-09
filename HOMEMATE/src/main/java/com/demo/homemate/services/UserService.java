@@ -5,10 +5,12 @@ import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
+import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
+import com.demo.homemate.services.interfaces.IUserService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Service
 public class UserService implements IUserService, UserDetailsService {
@@ -135,6 +140,11 @@ public class UserService implements IUserService, UserDetailsService {
         int checkNewPass = checkNewPassword(request.getPassword(), request.getConfirmPassword());
         int checkUsername = checkUsername(request.getUsername());
 
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDatetime = dateTimeFormatter.format(now);
+        Date createAt = new Date(formattedDatetime);
+
         if(checkPhone != 0 && checkEmail ==0 && checkNewPass !=0 && checkUsername ==0) {
             Customer customer = new Customer();
             customer.setUsername(request.getUsername());
@@ -144,6 +154,9 @@ public class UserService implements IUserService, UserDetailsService {
             customer.setEmail(request.getEmail());
             customer.setDob(request.getDob());
             customer.setRole(Role.CUSTOMER);
+            customer.setAccountStatus(AccountStatus.ACTIVE);
+            customer.setCreateAt(createAt);
+            customer.setUpdateAt(createAt);
 
             customerRepository.save(customer);
 
