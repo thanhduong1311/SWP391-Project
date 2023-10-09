@@ -1,6 +1,8 @@
 package com.demo.homemate.controllers;
 
 
+import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.services.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,12 @@ public class AdminController {
 
     @GetMapping(value = "/account-management")
     public String viewAccountManagement(Model model){
+        List<Customer> customerList = adminService.getAllCustomer();
+        List<Employee> employeeList = adminService.getAllEmployee();
+        List<Employee> partnerList = adminService.getAllPartner();
+        model.addAttribute("EmployeeList",employeeList);
+        model.addAttribute("CustomerList",customerList);
+        model.addAttribute("PartnerList",partnerList);
         return "admin-account-management";
     }
 
