@@ -41,6 +41,8 @@ public class Employee{
     @Column(unique = true)
     private String email;
 
+    private String dob;
+
     private String phone;
 
     private String gender;

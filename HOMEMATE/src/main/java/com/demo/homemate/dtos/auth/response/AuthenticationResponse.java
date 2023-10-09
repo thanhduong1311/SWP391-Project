@@ -1,6 +1,6 @@
 package com.demo.homemate.dtos.auth.response;
 
-import com.demo.homemate.dtos.account.AccountResponse;
+import com.demo.homemate.dtos.account.response.AccountResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

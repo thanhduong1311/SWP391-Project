@@ -1,20 +1,17 @@
-package com.demo.homemate.dtos.account;
+package com.demo.homemate.dtos.customer.response;
 
+
+import com.demo.homemate.dtos.error.MessageOject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors(chain = true)
-public class AccountResponse {
-
-    private String avatar;
-
+public class CustomerResponse {
     private String username;
 
     private String phone;
@@ -22,6 +19,10 @@ public class AccountResponse {
     private String name;
 
     private String email;
+
+    private int stateCode;
+
+    private MessageOject messageOject;
 
 
 }

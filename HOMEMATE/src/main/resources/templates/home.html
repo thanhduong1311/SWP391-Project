@@ -94,17 +94,17 @@
                     </li>
                 </ul>
                 <a
-                        href="signin.html"
+                        th:href="@{/signin}"
                         class="btn btn-lg btn-dark"
-                        style="display: none;"
+                        style=""
                 >Sign In</a
                 >
 
-                <div style="height: 100%; display: flex; justify-content: center;align-items: center;" th:object="${User}">
-                    <img src="" alt=""
-                         style="width: 60px;height: 60px; border-radius: 50%; border: 1px solid #000;margin: auto 0;">
-                    <p style="margin: 0 10px; font-weight: 500;" ></p>
-                </div>
+<!--                <div style="height: 100%; display: flex; justify-content: center;align-items: center;" >-->
+<!--                    <img th:src="*{Userinfor.getAvatar()}"  th:alt="*{Userinfor.getUsername()}"-->
+<!--                         style="width: 60px;height: 60px; border-radius: 50%; border: 1px solid #000;margin: auto 0;">-->
+<!--                    <p style="margin: 0 10px; font-weight: 500;"  th:value="${Userinfor.getUsername()}"></p>-->
+<!--                </div>-->
             </div>
         </div>
     </nav>

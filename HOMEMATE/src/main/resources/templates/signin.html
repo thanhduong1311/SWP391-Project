@@ -59,7 +59,7 @@
   <body
     class="text-center animate__animated animate__fadeIn">
     <main class="form-signin">
-      <form th:action="@{/login}" th:object="${account}" method="post">
+      <form th:action="@{/user/login}" th:object="${account}" method="post">
         <img
           class="mb-4"
           src="../assets/images/Homemate-logo-black.png"
@@ -105,7 +105,7 @@
         <br />
         <small class="mt-1"
           >If you do not have an account, please
-          <a href="signup.html">Register</a
+          <a th:href="@{/user/signup}">Register</a
           >.</small
         >
         <p class="mt-5 mb-3 text-muted" >

@@ -1,12 +1,15 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
+import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
+import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -63,7 +66,7 @@ public class UserService implements IUserService, UserDetailsService {
                 return 2;
             }
         }
-        return 0;
+        return -1;
     }
 
     @Override
@@ -121,6 +124,47 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public int getRole(Admin admin) {
         return admin.getRole().ordinal();
+    }
+
+    @SneakyThrows
+    @Override
+    public int createCustomer(RegisterRequest request) {
+
+        int checkPhone = checkPhone(request.getPhone());
+        int checkEmail = checkEmail(request.getEmail());
+        int checkNewPass = checkNewPassword(request.getPassword(), request.getConfirmPassword());
+        int checkUsername = checkUsername(request.getUsername());
+
+        if(checkPhone != 0 && checkEmail ==0 && checkNewPass !=0 && checkUsername ==0) {
+            Customer customer = new Customer();
+            customer.setUsername(request.getUsername());
+            customer.setPassword(PasswordMD5.encode(request.getPassword()));
+            customer.setFullName(request.getLastName() + " " +request.getFirstName());
+            customer.setPhone(request.getPhone());
+            customer.setEmail(request.getEmail());
+            customer.setDob(request.getDob());
+            customer.setRole(Role.CUSTOMER);
+
+            customerRepository.save(customer);
+
+         return  customerRepository.findByUsername(request.getUsername()) != null ? 1:0;
+        } else {
+            if (checkUsername != 0) return 2;
+            if (checkNewPass ==0 ) return 3;
+            if  (checkPhone == 0) return 4;
+            if (checkEmail != 0) return 5;
+        }
+            return 0;
+    }
+
+    @Override
+    public int checkPhone(String phone) {
+        return PhoneValidator.isValid(phone) == true ? 1:0;
+    }
+
+    @Override
+    public int checkNewPassword(String password, String confirmPassword) {
+        return password.equals(confirmPassword) ? 1:0;
     }
 
     @Override

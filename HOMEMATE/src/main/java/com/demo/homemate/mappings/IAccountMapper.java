@@ -1,6 +1,6 @@
 package com.demo.homemate.mappings;
 
-import com.demo.homemate.dtos.account.AccountResponse;
+import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;

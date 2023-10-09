@@ -1,6 +1,5 @@
-package com.demo.homemate.dtos.auth.request;
+package com.demo.homemate.dtos.account.response;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,15 +11,17 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class RegisterRequest {
+public class AccountResponse {
 
-    private String firstName;
+    private String avatar;
 
-    private String lastName;
+    private String username;
 
-    @NotBlank
+    private String phone;
+
+    private String name;
+
     private String email;
 
-    @NotBlank
-    private String password;
+
 }

@@ -41,6 +41,8 @@ public class Customer{
     @Column(unique = true)
     private String phone;
 
+    private String dob;
+
     private String gender;
 
     private String city;

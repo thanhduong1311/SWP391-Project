@@ -7,10 +7,10 @@
       content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="assets/css/bootstrap.min.css" />
+      href="../assets/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
-      href="assets/css/sign.css" />
+      href="../assets/css/sign.css" />
     <link
       rel="apple-touch-icon"
       href="/docs/5.0/assets/img/favicons/apple-touch-icon.png"
@@ -57,22 +57,25 @@
     </style>
   </head>
   <body
-    class="text-center animate__animated animate__fadeIn">
+    class="text-center animate__animated animate__fadeIn" style="padding: 0">
     <main class="form-signin">
-      <form th:action="@{/customerRegiter}" th:object="" method="post">
+      <form th:action="@{/user/signup}"  th:object="${RequestRegister}"  method="post">
         <img
           class="mb-4"
           src="../assets/images/Homemate-logo-black.png"
           alt=""
           width="300px"
-          height="180px" />
-        <h1 class="h3 mb-3 fw-normal">
+          height="180px"
+        style="height: 40px; width: auto;margin: 0 0 5px 0"/>
+        <h1 class="h3 mb-3 fw-normal" style="margin: 0 0 5px 0">
           Register
         </h1>
+        <p class="message color-danger" style="color: red" th:text="${UserRegiter.getMessage()}"></p>
 
         <div class="form-input">
           <div class="form-floating">
             <input
+                    th:field="*{username}"
               type="text"
               class="form-control"
               id="floatingUsername"
@@ -83,6 +86,7 @@
           </div>
           <div class="form-floating">
             <input
+                    th:field="*{password}"
               type="password"
               class="form-control"
               id="floatingPassword"
@@ -93,7 +97,8 @@
           </div>
           <div class="form-floating">
             <input
-              type="text"
+                    th:field="*{confirmPassword}"
+              type="password"
               class="form-control"
               id="floatingConfirmPassword"
               placeholder="ConfirmPassword" />
@@ -103,6 +108,7 @@
           </div>
           <div class="form-floating">
             <input
+                    th:field="*{lastName}"
               type="text"
               class="form-control"
               id="floatingLastName"
@@ -113,6 +119,7 @@
           </div>
           <div class="form-floating">
             <input
+                    th:field="*{firstName}"
               type="text"
               class="form-control"
               id="floatingName"
@@ -123,6 +130,7 @@
           </div>
           <div class="form-floating">
             <input
+                    th:field="*{phone}"
               type="text"
               class="form-control"
               id="floatingPhone"
@@ -133,6 +141,7 @@
           </div>
           <div class="form-floating">
             <input
+                    th:field="*{email}"
               type="email"
               class="form-control"
               id="floatingEmail"
@@ -143,6 +152,7 @@
           </div>
           <div class="form-floating">
             <input
+                    th:field="*{dob}"
               type="date"
               class="form-control"
               id="floatingBirthday"
@@ -171,7 +181,7 @@
         </button>
         <small class="mt-1"
           >If you have an account,
-          <a href="signin">Log in</a>.</small
+          <a th:href="@{/user}">Log in</a>.</small
         >
         <p class="mt-5 mb-3 text-muted">
           &copy; Homemate 2023
