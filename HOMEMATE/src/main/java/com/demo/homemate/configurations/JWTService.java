@@ -5,22 +5,13 @@ package com.demo.homemate.configurations;/*
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
-import com.demo.homemate.mappings.Implement.AccountMapper;
-import com.demo.homemate.repositories.AdminRepository;
+import com.demo.homemate.mappings.AccountMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.security.Key;
-import java.sql.SQLOutput;
 import java.util.Date;
-import java.util.Map;
 
 public class JWTService {
 

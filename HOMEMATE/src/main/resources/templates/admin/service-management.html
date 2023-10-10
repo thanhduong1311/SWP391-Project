@@ -7,13 +7,16 @@
       content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="assets/css/bootstrap.min.css" />
+      href="../assets/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <style>
       .disabled-link {
         pointer-events: none;
+      }
+      .td-btn {
+        text-align: right;
       }
     </style>
     <title>Document</title>
@@ -42,25 +45,25 @@
             class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a th:href="@{/admin/account-management}"  style="font-weight: 500; color:#000" class="nav-link"
+                <a th:href="@{/admin/accounts}" style="font-weight: 500; color:#000" class="nav-link"
                 >Account Manager</a
                 >
               </li>
               <li class="nav-item" >
-                <a th:href="@{/admin/service-management}" class="nav-link"
+                <a th:href="@{/admin/services}" class="nav-link"
                 >Service Manager</a
                 >
               </li>
               <li class="nav-item">
-                <a th:href="@{/admin/task-management}" class="nav-link"
+                <a th:href="@{/admin/tasks}" class="nav-link"
                 >Task Manager</a
                 >
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link"
-                  >Setting</a
+                >Setting</a
                 >
               </li>
             </ul>
@@ -87,51 +90,55 @@
                     <a
                       href=""
                       class="btn btn-dark"
-                      >Applies List</a
+                      >Add Service</a
                     >
                   </h3>
                   <h3 class="mb-0 col-10">
                     <a
                       href=""
                       class="btn btn-dark"
-                      >Account List</a
+                      >Update Service</a
                     >
                   </h3>
                 </div>
               </div>
               <div
-                class="card-body h-100 row align-items-center"
+                class="card-body h-100"
                 data-mdb-perfect-scrollbar="true"
                 style="
                   position: relative;
                   height: 400px;
                 ">
-                <div class="col-10">
-                  <div>
-                    Full Name: Nguyen Van A
-                  </div>
-                  <div>CCCD: 091234556789</div>
-                  <div>Brith Day: 10/09/2001</div>
-                  <div>
-                    Address: 195 đường 30/4 Ninh
-                    Kiều, Cần Thơ
-                  </div>
-                  <div>Phone 0999.111.773</div>
-                  <div>Workplace: Cần Thơ</div>
-                </div>
-                <div class="col-2">
-                  <a
-                    href=""
-                    class="btn btn-danger"
-                    >Block</a
-                  >
-                  <a
-                    href=""
-                    class="btn btn-danger"
-                    >Remove</a
-                  >
-                </div>
               </div>
+              <table class="table" >
+                <thead class="thead-dark">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Service Name</th>
+                  <th scope="col">Service Image</th>
+                  <th scope="col">Service Price</th>
+                  <th scope="col">Service Discount</th>
+                  <th scope="col">Service Description</th>
+                  <th scope="col">Create At</th>
+                  <th scope="col">Update At</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="service : ${ServiceList}">
+
+                  <td th:text="${service.getServiceId()}"></td>
+                  <td th:text="${service.getName()}"></td>
+                  <td >
+                    <img th:src="${service.getImage()}" style="width: 80px; height: 80px" alt="service img">
+                  </td>
+                  <td th:text="${service.getPrice()}"></td>
+                  <td th:text="${service.getDiscount()}"></td>
+                  <td th:text="${service.getDescription()}"></td>
+                  <td th:text="${service.getCreateAt()}"></td>
+                  <td th:text="${service.getUpdateAt()}"></td>
+                </tr>
+                </tbody>
+              </table>
               <div class="card-footer p-3"></div>
             </div>
           </div>
@@ -139,6 +146,8 @@
       </div>
     </section>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

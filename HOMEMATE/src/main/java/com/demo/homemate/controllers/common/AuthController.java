@@ -1,18 +1,17 @@
-package com.demo.homemate.controllers;
+package com.demo.homemate.controllers.common;
 
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
-import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
+import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.error.MessageOject;
-import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.enums.Role;
-import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.UserService;
+import com.demo.homemate.services.interfaces.IAuthenticationService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,16 +26,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.WebUtils;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("")
 @RequiredArgsConstructor
-public class UserController {
-
+public class AuthController {
 
     private final IAuthenticationService IAuthenticationService;
 
     private final CreateAccountService createAccountService;
 
     private final UserService userService ;
+
 
     /**
      * xử lí login
@@ -61,7 +60,7 @@ public class UserController {
             model.addAttribute("LoginError", new MessageOject("Fail","Username or password is incorrect!"));
             return loginView(model);
         }
-        return "redirect:/user/home";
+        return "redirect:/customer/home";
     }
 
 
@@ -71,7 +70,7 @@ public class UserController {
      * @param model
      * @return
      */
-    @GetMapping("")
+    @GetMapping("login")
     public String loginView(Model model) {
         model.addAttribute("account", new AuthenticationRequest());
         if (model.getAttribute("LoginError") == null) {
@@ -106,59 +105,16 @@ public class UserController {
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
-                        return "redirect:/user/customer";
+                        return "redirect:/customer";
                     }
                     case "EMPLOYEE" -> {
-                        return "redirect:/user/employee";
+                        return "redirect:/employee";
                     }
                     default -> {
                         return "signin";
                     }
                 }
             }
-    }
-
-    @GetMapping(value = "/customer")
-    public String viewCustomerPage(HttpServletRequest request){
-        Cookie cookie = WebUtils.getCookie(request, "Token");
-        String token=String.valueOf(cookie.getValue());
-        JWTService jwt = new JWTService();
-
-        if (token!=null){
-            try {
-                Claims claim = jwt.parseJwt(token);
-                System.out.println(claim.getSubject());
-                if(claim.getSubject().equals(Role.CUSTOMER.toString())){
-                    return "employee-home";
-                }
-                else return "redirect:/user/home";
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-        else return "redirect:/user/home";
-    }
-    @GetMapping(value = "/employee")
-    public String viewEmployeePage(HttpServletRequest request){
-        Cookie cookie = WebUtils.getCookie(request, "Token");
-        String token=String.valueOf(cookie.getValue());
-        JWTService jwt = new JWTService();
-
-        if (token!=null){
-            try {
-                Claims claim = jwt.parseJwt(token);
-                System.out.println(claim.getSubject());
-                if(claim.getSubject().equals(Role.EMPLOYEE.toString())){
-                    return "employee-home";
-                }
-                else return "redirect:/user/home";
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-        else return "redirect:/user/home";
     }
 
 
@@ -180,7 +136,7 @@ public class UserController {
             model.addAttribute("UserRegiter", response.getMessageOject());
             System.out.println("OK");
             System.out.println(response.getMessageOject().getMessage());
-            return "redirect:/user";
+            return "redirect:/customer";
         }else {
             model.addAttribute("UserRegiter", response.getMessageOject());
             System.out.println("Okn't");

@@ -4,7 +4,7 @@ import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.entities.Admin;
-import com.demo.homemate.mappings.Implement.AccountMapper;
+import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
@@ -30,15 +30,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
 
-    @Autowired
-    private  CustomerRepository customerRepository;
-    @Autowired
-    private  EmployeeRepository employeeRepository;
-    @Autowired
-    private  AdminRepository adminRepository;
 
-    @Autowired
-    private  UserService userService;
+    private final CustomerRepository customerRepository;
+
+    private final EmployeeRepository employeeRepository;
+
+    private final AdminRepository adminRepository;
+
+    private final UserService userService;
 
     private AuthenticationManager authenticationManager;
 

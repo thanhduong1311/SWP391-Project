@@ -1,4 +1,4 @@
-package com.demo.homemate.services;
+package com.demo.homemate.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -1,99 +1,79 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.email.EmailDetails;
-import com.demo.homemate.services.interfaces.IEmailService;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import javax.mail.Authenticator;
+import java.util.Date;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-import java.io.File;
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
-public class EmailService implements IEmailService {
+public class EmailService {
 
-    @Autowired
-    private  JavaMailSender javaMailSender;
-
-    @Value("${spring.mail.username}") private String sender;
-
-    @Override
-    public String sendSimpleMail(EmailDetails details) {
-        try {
-
-            // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
-
-            // Setting up necessary details
-            mailMessage.setFrom("yojihangroup@gmail.com");
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
-
-            // Sending the mail
-            javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
-        }
-
-        // Catch block to handle the exceptions
-        catch (Exception e) {
-            return "Error while Sending Mail";
-        }
-    }
-
-    @Override
-    public  String sendMailWithAttachment(EmailDetails details) {
-        MimeMessage mimeMessage
-                = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper;
-
-        try {
-
-            // Setting multipart as true for attachments to
-            // be send
-            mimeMessageHelper
-                    = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setFrom(sender);
-            mimeMessageHelper.setTo(details.getRecipient());
-            mimeMessageHelper.setText(details.getMsgBody());
-            mimeMessageHelper.setSubject(
-                    details.getSubject());
-
-            // Adding the attachment
-            FileSystemResource file
-                    = new FileSystemResource(
-                    new File(details.getAttachment()));
-
-            mimeMessageHelper.addAttachment(
-                    file.getFilename(), file);
-
-            // Sending the mail
-            javaMailSender.send(mimeMessage);
-            return "Mail sent Successfully";
-        }
-
-        // Catch block to handle MessagingException
-        catch (MessagingException e) {
-
-            // Display message when exception occurred
-            return "Error while sending mail!!!";
-        }
-    }
+    static final String from = "homematesuportteam@gmail.com";
+    static final String password = "wasilomwbwhienvd";
 
     public static void main(String[] args) {
-        EmailService emailService = new EmailService();
+    EmailService e = new EmailService();
+        e.sendEmail(new EmailDetails("thanhduongjnguyen@gmail.com","Thank you for using our service","HomeMate Say Hello to You",""));
+        e.sendEmail(new EmailDetails("tuanla267@gmail.com","Thank you for using our service","HomeMate Say Hello to You",""));
+        e.sendEmail(new EmailDetails("tuanlace170040@fpt.edu.vn","Thank you for using our service","HomeMate Say Hello to You",""));
+    }
 
-        // Call the sendSimpleMail() method on the instance
-        emailService.sendSimpleMail(new EmailDetails("thanhduongjnguyen@gmail.com","abc","aaa","../assets/images/Homemate-logo-black.png"));}
+    @SneakyThrows
+    public void sendEmail(EmailDetails emailDetails) {
 
+
+        // Create authenticator
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(from, password);
+            }
+        };
+        // Create session
+        Session session = Session.getInstance(createProperties(), auth);
+
+        // Create message
+        MimeMessage msg = createMessage(session, emailDetails.getRecipient(), emailDetails.getSubject(),emailDetails.getMsgBody());
+
+        // Send message
+        Transport.send(msg);
+    }
+
+    private static Properties createProperties() {
+        Properties props = new Properties();
+
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        return props;
+    }
+
+    @SneakyThrows
+    private static MimeMessage createMessage(Session session, String to, String subject, String mailContent) {
+        MimeMessage msg = new MimeMessage(session);
+
+        msg.addHeader("Content-type", "text;charset=UTF-8");
+        msg.setFrom(from);
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parseHeader(to, false));
+        msg.setSubject(subject);
+        msg.setSentDate(new Date());
+
+        msg.setText(mailContent);
+
+        return msg;
+    }
 }

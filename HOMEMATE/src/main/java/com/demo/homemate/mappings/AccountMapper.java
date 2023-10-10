@@ -1,10 +1,10 @@
-package com.demo.homemate.mappings.Implement;
+package com.demo.homemate.mappings;
 
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
-import com.demo.homemate.mappings.IAccountMapper;
+import com.demo.homemate.mappings.interfaces.IAccountMapper;
 
 /**
  * coi ghi chú ở bản thiết ke

@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateAccountService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
     public CustomerResponse createAccount(RegisterRequest request) {
         CustomerResponse response = new CustomerResponse();
         int check = 0; check= userService.createCustomer(request);

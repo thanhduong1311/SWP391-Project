@@ -59,7 +59,7 @@
   <body
     class="text-center animate__animated animate__fadeIn" style="padding: 0">
     <main class="form-signin">
-      <form th:action="@{/user/signup}"  th:object="${RequestRegister}"  method="post">
+      <form th:action="@{/signup}"  th:object="${RequestRegister}"  method="post">
         <img
           class="mb-4"
           src="../assets/images/Homemate-logo-black.png"
@@ -181,7 +181,7 @@
         </button>
         <small class="mt-1"
           >If you have an account,
-          <a th:href="@{/user}">Log in</a>.</small
+          <a th:href="@{/login}">Log in</a>.</small
         >
         <p class="mt-5 mb-3 text-muted">
           &copy; Homemate 2023

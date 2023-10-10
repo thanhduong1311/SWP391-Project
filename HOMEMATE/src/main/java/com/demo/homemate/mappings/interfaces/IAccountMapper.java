@@ -1,4 +1,4 @@
-package com.demo.homemate.mappings;
+package com.demo.homemate.mappings.interfaces;
 
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.entities.Admin;

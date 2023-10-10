@@ -7,6 +7,7 @@ import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IAdminService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
@@ -19,14 +20,14 @@ import java.util.Optional;
 
 
 @org.springframework.stereotype.Service
+@RequiredArgsConstructor
 public class AdminService implements IAdminService  {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private ServiceRepository serviceRepository;
+    private final EmployeeRepository employeeRepository;
+
+    private final CustomerRepository customerRepository;
+
+    private final ServiceRepository serviceRepository;
 
 
     @Override

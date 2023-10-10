@@ -2,9 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       href="../assets/css/bootstrap.min.css" />
@@ -15,10 +12,10 @@
       .disabled-link {
         pointer-events: none;
       }
-      .td-btn {
-        text-align: right;
-      }
     </style>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
   <body>
@@ -45,25 +42,25 @@
             class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a th:href="@{/admin/account-management}" class="nav-link"
+                <a th:href="@{/admin/accounts}" style="font-weight: 500; color:#000" class="nav-link"
                 >Account Manager</a
                 >
               </li>
-              <li class="nav-item" style="font-weight: 500; color:#000">
-                <a th:href="@{/admin/service-management}" class="nav-link"
+              <li class="nav-item" >
+                <a th:href="@{/admin/services}" class="nav-link"
                 >Service Manager</a
                 >
               </li>
               <li class="nav-item">
-                <a th:href="@{/admin/task-management}" class="nav-link"
+                <a th:href="@{/admin/tasks}" class="nav-link"
                 >Task Manager</a
                 >
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link"
-                  >Setting</a
+                >Setting</a
                 >
               </li>
             </ul>
@@ -90,64 +87,50 @@
                     <a
                       href=""
                       class="btn btn-dark"
-                      >Add Service</a
+                      >Applies List</a
                     >
                   </h3>
                   <h3 class="mb-0 col-10">
                     <a
                       href=""
                       class="btn btn-dark"
-                      >Update Service</a
+                      >Account List</a
                     >
                   </h3>
                 </div>
               </div>
-              <div
-                class="card-body h-100"
-                data-mdb-perfect-scrollbar="true"
-                style="
-                  position: relative;
-                  height: 400px;
-                ">
-              </div>
-              <table class="table" >
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Service Name</th>
-                  <th scope="col">Service Image</th>
-                  <th scope="col">Service Price</th>
-                  <th scope="col">Service Discount</th>
-                  <th scope="col">Service Description</th>
-                  <th scope="col">Create At</th>
-                  <th scope="col">Update At</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="service : ${ServiceList}">
-
-                  <td th:text="${service.getServiceId()}"></td>
-                  <td th:text="${service.getName()}"></td>
-                  <td >
-                    <img th:src="${service.getImage()}" style="width: 80px; height: 80px" alt="service img">
-                  </td>
-                  <td th:text="${service.getPrice()}"></td>
-                  <td th:text="${service.getDiscount()}"></td>
-                  <td th:text="${service.getDescription()}"></td>
-                  <td th:text="${service.getCreateAt()}"></td>
-                  <td th:text="${service.getUpdateAt()}"></td>
-                </tr>
-                </tbody>
-              </table>
-              <div class="card-footer p-3"></div>
             </div>
           </div>
+          <table class="table" >
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Account Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer : ${CustomerList}">
+              <td th:text="${customer.getFullName()}"></td>
+              <td th:text="${customer.getRole().toString()}"></td>
+              <td th:text="${customer.getAccountStatus().toString()}"></td>
+            </tr>
+
+            <tr th:each="employee : ${EmployeeList}">
+              <td th:text="${employee.getFullName()}"></td>
+              <td th:text="${employee.getRole().toString()}"></td>
+              <td th:text="${employee.getAccountStatus().toString()}"></td>
+            </tr>
+
+            <tr th:each="partner : ${PartnerList}">
+              <td th:text="${partner.getFullName()}"></td>
+              <td th:text="${partner.getRole().toString()}"></td>
+              <td th:text="${partner.getAccountStatus().toString()}"></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
-
-
-
-    <script src="../assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

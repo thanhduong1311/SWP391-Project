@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Service{
+public class Service {
     public static final String COLLECTION_NAME = "service";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

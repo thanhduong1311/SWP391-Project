@@ -11,6 +11,9 @@ import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.interfaces.IUserService;
+import com.demo.homemate.utils.PasswordMD5;
+import com.demo.homemate.utils.PhoneValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,19 +22,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService, UserDetailsService {
 
-    @Autowired
-    private  EmployeeRepository employeeRepository;
-    @Autowired
-    private  CustomerRepository customerRepository;
-    @Autowired
-    private  AdminRepository adminRepository;
+
+    private final EmployeeRepository employeeRepository;
+
+    private final CustomerRepository customerRepository;
+
+    private final AdminRepository adminRepository;
 
 
     @Override

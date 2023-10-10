@@ -59,7 +59,7 @@
   <body
     class="text-center animate__animated animate__fadeIn">
     <main class="form-signin">
-      <form th:action="@{/user/login}" th:object="${account}" method="post">
+      <form th:action="@{/login}" th:object="${account}" method="post">
         <img
           class="mb-4"
           src="../assets/images/Homemate-logo-black.png"
@@ -68,7 +68,7 @@
           height="180px" />
         <h1 class="h3 mb-3 fw-normal">Log in</h1>
 
-        <div class="form-floating">
+        <div class="form-floating mb-3" >
           <input  th:field="*{username}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
           <label for="floatingInput"
             >Username</label
@@ -105,7 +105,7 @@
         <br />
         <small class="mt-1"
           >If you do not have an account, please
-          <a th:href="@{/user/signup}">Register</a
+          <a th:href="@{/signup}">Register</a
           >.</small
         >
         <p class="mt-5 mb-3 text-muted" >
