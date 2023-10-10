@@ -5,6 +5,7 @@ package com.demo.homemate.configurations;/*
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
+import com.demo.homemate.mappings.Implement.AccountMapper;
 import com.demo.homemate.repositories.AdminRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -52,6 +53,7 @@ public class JWTService {
         return Jwts
                 .builder()
                 .setSubject(String.valueOf(account.getRole()))
+                .claim("User",new AccountMapper().toCustomerResponse(account))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)

@@ -140,10 +140,6 @@ public class UserService implements IUserService, UserDetailsService {
         int checkNewPass = checkNewPassword(request.getPassword(), request.getConfirmPassword());
         int checkUsername = checkUsername(request.getUsername());
 
-//        LocalDateTime now = LocalDateTime.now();
-//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        String formattedDatetime = dateTimeFormatter.format(now);
-//        Date createAt = new Date(formattedDatetime);
 
         if(checkPhone != 0 && checkEmail ==0 && checkNewPass !=0 && checkUsername ==0) {
             Customer customer = new Customer();
@@ -155,8 +151,7 @@ public class UserService implements IUserService, UserDetailsService {
             customer.setDob(request.getDob());
             customer.setRole(Role.CUSTOMER);
             customer.setAccountStatus(AccountStatus.ACTIVE);
-//            customer.setCreateAt(createAt);
-//            customer.setUpdateAt(createAt);
+
 
             customerRepository.save(customer);
 

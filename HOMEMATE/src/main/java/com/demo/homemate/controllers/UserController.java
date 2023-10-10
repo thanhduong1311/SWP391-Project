@@ -9,10 +9,13 @@ import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.error.MessageOject;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
+import com.demo.homemate.enums.Role;
+import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping("/user")
@@ -51,6 +55,7 @@ public class UserController {
             model.addAttribute("name",accountResponse.getName());
             Cookie cookie = new Cookie("Token", auth.getToken());
             cookie.setMaxAge(60 * 60);
+            cookie.setPath("/");
             response.addCookie(cookie);
         }else {
             model.addAttribute("LoginError", new MessageOject("Fail","Username or password is incorrect!"));
@@ -89,12 +94,13 @@ public class UserController {
         System.out.println("=====================================" + jwt);
 
             model.getAttribute("User");
-        System.out.println(token);
             if (token == null) {
                 // The user is not logged in
                 return "signup";
             }else {
                 Claims claim = jwt.parseJwt(token);
+                System.out.println(claim);
+                System.out.println((AccountResponse) claim.get("User"));
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         return "redirect:/admin";
@@ -106,19 +112,53 @@ public class UserController {
                         return "redirect:/user/employee";
                     }
                     default -> {
-                        return "/user/login";
+                        return "signin";
                     }
                 }
             }
     }
 
     @GetMapping(value = "/customer")
-    public String viewCustomerPage(){
-        return "customer-home";
+    public String viewCustomerPage(HttpServletRequest request){
+        Cookie cookie = WebUtils.getCookie(request, "Token");
+        String token=String.valueOf(cookie.getValue());
+        JWTService jwt = new JWTService();
+
+        if (token!=null){
+            try {
+                Claims claim = jwt.parseJwt(token);
+                System.out.println(claim.getSubject());
+                if(claim.getSubject().equals(Role.CUSTOMER.toString())){
+                    return "employee-home";
+                }
+                else return "redirect:/user/home";
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        else return "redirect:/user/home";
     }
     @GetMapping(value = "/employee")
-    public String viewEmployeePage(){
-        return "employee-home";
+    public String viewEmployeePage(HttpServletRequest request){
+        Cookie cookie = WebUtils.getCookie(request, "Token");
+        String token=String.valueOf(cookie.getValue());
+        JWTService jwt = new JWTService();
+
+        if (token!=null){
+            try {
+                Claims claim = jwt.parseJwt(token);
+                System.out.println(claim.getSubject());
+                if(claim.getSubject().equals(Role.EMPLOYEE.toString())){
+                    return "employee-home";
+                }
+                else return "redirect:/user/home";
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        else return "redirect:/user/home";
     }
 
 
@@ -141,9 +181,7 @@ public class UserController {
             System.out.println("OK");
             System.out.println(response.getMessageOject().getMessage());
             return "redirect:/user";
-
         }else {
-
             model.addAttribute("UserRegiter", response.getMessageOject());
             System.out.println("Okn't");
             System.out.println(response.getMessageOject().getMessage());
