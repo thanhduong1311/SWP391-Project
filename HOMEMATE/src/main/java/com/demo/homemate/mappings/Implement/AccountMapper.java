@@ -18,6 +18,8 @@ public class AccountMapper implements IAccountMapper {
         }
 
         return new AccountResponse()
+                .setId(employee.getEmployeeId())
+                .setRole(employee.getRole())
                 .setName(employee.getFullName())
                 .setAvatar(employee.getAvatar())
                 .setEmail(employee.getEmail())
@@ -32,6 +34,8 @@ public class AccountMapper implements IAccountMapper {
         }
 
         return new AccountResponse()
+                .setId(customer.getCustomerId())
+                .setRole(customer.getRole())
                 .setName(customer.getFullName())
                 .setAvatar(customer.getAvatar())
                 .setEmail(customer.getEmail())
@@ -41,14 +45,15 @@ public class AccountMapper implements IAccountMapper {
     }
 
     @Override
-    public AccountResponse toAdminResponse(Admin employee) {
-        if (employee == null) {
+    public AccountResponse toAdminResponse(Admin admin) {
+        if (admin == null) {
             return null;
         }
 
         return new AccountResponse()
+                .setRole(admin.getRole())
                 .setName("Admin")
-                .setUsername(employee.getUsername());
+                .setUsername(admin.getUsername());
 
     }
 }

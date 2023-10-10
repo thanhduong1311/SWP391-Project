@@ -1,5 +1,6 @@
 package com.demo.homemate.dtos.account.response;
 
+import com.demo.homemate.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,10 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class AccountResponse {
+
+    private int id;
+
+    private Role role;
 
     private String avatar;
 
