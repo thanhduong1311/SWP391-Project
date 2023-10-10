@@ -7,7 +7,7 @@ import com.demo.homemate.entities.Admin;
 import java.util.List;
 import java.util.Optional;
 
-public interface AuthenticationService {
+public interface IAuthenticationService {
 
     /**
      * xác thực người dùng và trả về các thông tin của AuthenticationResponse

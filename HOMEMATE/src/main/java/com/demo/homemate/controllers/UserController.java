@@ -8,7 +8,7 @@ import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.error.MessageOject;
-import com.demo.homemate.services.interfaces.AuthenticationService;
+import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.UserService;
 import io.jsonwebtoken.Claims;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 
-    private final AuthenticationService authenticationService;
+    private final IAuthenticationService IAuthenticationService;
 
     private final CreateAccountService createAccountService;
 
@@ -44,7 +44,7 @@ public class UserController {
     public String login(AuthenticationRequest account,
                         Model model,
                         HttpServletResponse response) {
-        AuthenticationResponse auth = authenticationService.authentication(account);
+        AuthenticationResponse auth = IAuthenticationService.authentication(account);
         if(auth.getStateCode() == 1) {
             AccountResponse accountResponse = auth.getAccountResponse();
             model.addAttribute("User",accountResponse);
@@ -85,6 +85,9 @@ public class UserController {
         public String viewHomePage(Model model,
                 @CookieValue(name = "Token") String token) {
             JWTService jwt = new JWTService();
+
+        System.out.println("=====================================" + jwt);
+
             model.getAttribute("User");
         System.out.println(token);
             if (token == null) {
