@@ -7,23 +7,22 @@ import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
-import com.demo.homemate.dtos.error.MessageOject;
-import com.demo.homemate.enums.Role;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.services.CreateAccountService;
+import com.demo.homemate.services.EmailService;
 import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping("")
@@ -36,6 +35,8 @@ public class AuthController {
 
     private final UserService userService ;
 
+    @Autowired
+    private final EmailService emailService;
 
     /**
      * xử lí login
@@ -51,16 +52,16 @@ public class AuthController {
         if(auth.getStateCode() == 1) {
             AccountResponse accountResponse = auth.getAccountResponse();
             model.addAttribute("User",accountResponse);
-            model.addAttribute("name",accountResponse.getName());
+//            model.addAttribute("name",accountResponse.getName());
             Cookie cookie = new Cookie("Token", auth.getToken());
             cookie.setMaxAge(60 * 60);
             cookie.setPath("/");
             response.addCookie(cookie);
         }else {
-            model.addAttribute("LoginError", new MessageOject("Fail","Username or password is incorrect!"));
+            model.addAttribute("LoginError", new MessageOject("Fail","Username or password is incorrect!", null));
             return loginView(model);
         }
-        return "redirect:/customer/home";
+        return "redirect:/home";
     }
 
 
@@ -74,7 +75,7 @@ public class AuthController {
     public String loginView(Model model) {
         model.addAttribute("account", new AuthenticationRequest());
         if (model.getAttribute("LoginError") == null) {
-            model.addAttribute("LoginError", new MessageOject("",""));
+            model.addAttribute("LoginError", new MessageOject());
         }
         return "signin";
     }
@@ -95,10 +96,9 @@ public class AuthController {
             model.getAttribute("User");
             if (token == null) {
                 // The user is not logged in
-                return "signup";
+                return "/customer/home";
             }else {
                 Claims claim = jwt.parseJwt(token);
-                System.out.println(claim);
                 System.out.println((AccountResponse) claim.get("User"));
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
@@ -122,7 +122,7 @@ public class AuthController {
     public String viewSignPage(Model model) {
         model.addAttribute("RequestRegister", new RegisterRequest());
         if (model.getAttribute("UserRegiter") == null) {
-            model.addAttribute("UserRegiter", new MessageOject("",""));
+            model.addAttribute("UserRegiter", new MessageOject());
         }
         return "signup";
     }
@@ -134,16 +134,23 @@ public class AuthController {
         if(response.getStateCode() == 1) {
 
             model.addAttribute("UserRegiter", response.getMessageOject());
-            System.out.println("OK");
+
+            emailService.sendEmail(response.getMessageOject().getEmailMessage());
+
             System.out.println(response.getMessageOject().getMessage());
-            return "redirect:/customer";
+
+
+            return "redirect:/login";
         }else {
             model.addAttribute("UserRegiter", response.getMessageOject());
-            System.out.println("Okn't");
+
             System.out.println(response.getMessageOject().getMessage());
+
             return viewSignPage(model);
 
         }
     }
+
+
 
 }

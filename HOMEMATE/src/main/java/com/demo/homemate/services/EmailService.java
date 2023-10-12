@@ -55,7 +55,7 @@ public class EmailService {
 
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
-        
+
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
@@ -72,7 +72,7 @@ public class EmailService {
         msg.setSubject(subject);
         msg.setSentDate(new Date());
 
-        msg.setText(mailContent);
+        msg.setText(mailContent,"UTF-8","html");
 
         return msg;
     }

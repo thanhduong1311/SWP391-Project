@@ -40,7 +40,7 @@ public class EmployeeHomeController {
             }
 
         }
-        else return "redirect:/customer/home";
+        else return "redirect:/employee/home";
     }
 
 

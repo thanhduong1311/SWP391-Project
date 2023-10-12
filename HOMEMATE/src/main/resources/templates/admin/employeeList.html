@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="../assets/css/bootstrap.min.css" />
+      href="/assets/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -12,11 +15,11 @@
       .disabled-link {
         pointer-events: none;
       }
+      .td-btn {
+        text-align: right;
+      }
     </style>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <title>Account Management</title>
+    <title>Employee List</title>
   </head>
   <body>
     <header>
@@ -94,57 +97,84 @@
                   <h3 class="mb-0 col-2">
                     <a
                             th:href="@{/admin/userManagement/employees}"
-                            class="btn btn-dark"
+                            class="btn btn-dark  disabled-link"
                     >Employee List</a
                     >
                   </h3>
                   <h3 class="mb-0 col-2">
                     <a
                             th:href="@{/admin/userManagement/applies}"
-                            class="btn btn-dark"
+                            class="btn btn-dark "
                     >Apply List</a
                     >
                   </h3>
                 </div>
               </div>
+              <div
+                class="card-body h-100"
+                data-mdb-perfect-scrollbar="true"
+                style="
+                  position: relative;
+                  height: 400px;
+                ">
+                <h3>Employee List</h3>
+                <table class="table mb-0">
+                  <thead>
+                  <tr>
+                    <th class="h4" scope="col">
+                      Username
+                    </th>
+                    <th class="h4" scope="col">
+                      Customer Name
+                    </th>
+                    <th class="h4 text-center" scope="col">
+                      Account Status
+                    </th>
+                    <th
+                            class="h4 text-center"
+                            scope="col"> Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="fw-normal" th:each="employee : *{EmployeeList}">
+                    <td class="align-middle">
+                        <span class="ms-2"
+                              th:text="*{employee.getUsername()}"
+                        ></span
+                        >
+                    </td>
+                    <td class="align-middle">
+                        <span class="ms-2"
+                              th:text="*{employee.getFullName()}"
+                        ></span
+                        >
+                    </td>
+                    <td class="align-middle text-center account-status"
+                        th:text="*{employee.getAccountStatus().toString()}"
+                    >
+                      <span></span>
+                    </td>
+                    <td
+                            class="align-middle td-btn text-center">
+                      <a
+                              href=""
+                              class="btn btn-primary"
+                      >Detail</a
+                      >
+                      
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer p-3"></div>
             </div>
           </div>
-          <h3>Account List</h3>
-          <table class="table" >
-            <thead class="thead-dark">
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Name</th>
-              <th class="text-center" scope="col">Role</th>
-              <th class="text-center" scope="col">Account Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="customer : ${CustomerList}">
-              <td></td>
-              <td th:text="${customer.getFullName()}"></td>
-              <td class="text-center" th:text="${customer.getRole().toString()}"></td>
-              <td class="text-center account-status" th:text="${customer.getAccountStatus().toString()}"></td>
-            </tr>
-
-            <tr th:each="employee : ${EmployeeList}">
-              <td></td>
-              <td th:text="${employee.getFullName()}"></td>
-              <td class="text-center" th:text="${employee.getRole().toString()}"></td>
-              <td class="text-center account-status" th:text="${employee.getAccountStatus().toString()}"></td>
-            </tr>
-
-            <tr th:each="partner : ${PartnerList}">
-              <td></td>
-              <td th:text="${partner.getFullName()}"></td>
-              <td class="text-center" th:text="${partner.getRole().toString()}"></td>
-              <td class="text-center account-status" th:text="${partner.getAccountStatus().toString()}"></td>
-            </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </section>
+
     <script>
       var account = document.querySelectorAll(".account-status");
       account.forEach((account)=> {
@@ -162,5 +192,7 @@
 
       })
     </script>
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

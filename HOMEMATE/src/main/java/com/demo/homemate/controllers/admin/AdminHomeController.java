@@ -34,17 +34,16 @@ public class AdminHomeController {
         if (token!=null){
             try {
                 Claims claim = jwt.parseJwt(token);
-                System.out.println(claim.getSubject());
                 if(claim.getSubject().equals(Role.ADMIN.toString())){
                     return "admin/dashboard";
                 }
-                else return "redirect:/customer/home";
+                else return "redirect:/admin";
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
         }
-        else return "redirect:/customer/home";
+        else return "redirect:/admin/home";
     }
 
 }

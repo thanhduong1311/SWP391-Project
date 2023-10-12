@@ -1,7 +1,7 @@
 package com.demo.homemate.dtos.customer.response;
 
 
-import com.demo.homemate.dtos.error.MessageOject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
