@@ -15,5 +15,4 @@ public class MessageOject {
     private String name;
     private String message;
     private EmailDetails emailMessage;
-
 }

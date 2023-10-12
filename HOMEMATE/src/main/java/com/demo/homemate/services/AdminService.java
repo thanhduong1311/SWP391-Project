@@ -1,5 +1,8 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
+import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
@@ -8,15 +11,12 @@ import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IAdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @org.springframework.stereotype.Service
@@ -43,23 +43,31 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public int addNewService(Service service) {
+    public int handelAddNewService(ServiceRequest request) {
+        Service service = new Service();
+        service.setName(request.getName());
+        service.setPrice(request.getPrice());
+        service.setImage(request.getImg());
+        service.setDiscount(request.getDiscount());
+        service.setDescription(request.getDescription());
+
         if(serviceRepository.findByName(service.getName().trim()) != null) {
             return 0;
         } else {
-            Service newService = new Service();
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDatetime = dateTimeFormatter.format(now);
-            Date createAt = new Date(formattedDatetime);
+//            LocalDateTime now = LocalDateTime.now();
+//            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            String formattedDatetime = dateTimeFormatter.format(now);
+//            Date createAt = new Date(formattedDatetime);
 
-            newService.setName(service.getName());
-            newService.setImage(service.getImage());
-            newService.setPrice(service.getPrice());
-            newService.setDescription(service.getDescription());
-            newService.setDiscount(service.getDiscount());
-            newService.setCreateAt(createAt);
-            newService.setUpdateAt(createAt);
+            service.setName(request.getName());
+            service.setPrice(request.getPrice());
+            service.setImage(request.getImg());
+            service.setDiscount(request.getDiscount());
+            service.setDescription(request.getDescription());
+//            service.setCreateAt(createAt);
+//            service.setUpdateAt(createAt);
+
+            serviceRepository.save(service);
 
             return serviceRepository.findByName(service.getName().trim()) == null ? 0:1;
 
@@ -67,24 +75,35 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public int updateService(Service service) {
-        if(serviceRepository.findByName(service.getName().trim()) == null) {
+    public int handelUpdateService(ServiceRequest request) {
+
+        Service service = new Service();
+        service.setName(request.getName());
+        service.setPrice(request.getPrice());
+        service.setImage(request.getImg());
+        service.setDiscount(request.getDiscount());
+        service.setDescription(request.getDescription());
+
+        if (serviceRepository.findByName(service.getName().trim()) != null) {
             return 0;
         } else {
-            Service newService = new Service();
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDatetime = dateTimeFormatter.format(now);
-            Date updateAt = new Date(formattedDatetime);
+//            LocalDateTime now = LocalDateTime.now();
+//            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            String formattedDatetime = dateTimeFormatter.format(now);
+//            Date createAt = new Date(formattedDatetime);
 
-            newService.setName(service.getName());
-            newService.setImage(service.getImage());
-            newService.setPrice(service.getPrice());
-            newService.setDescription(service.getDescription());
-            newService.setDiscount(service.getDiscount());
-            newService.setUpdateAt(updateAt);
+            service.setName(request.getName());
+            service.setPrice(request.getPrice());
+            service.setImage(request.getImg());
+            service.setDiscount(request.getDiscount());
+            service.setDescription(request.getDescription());
+//            service.setCreateAt(createAt);
+//            service.setUpdateAt(createAt);
 
-            return 1;
+            serviceRepository.save(service);
+
+            return serviceRepository.findByName(service.getName().trim()) == null ? 0 : 1;
+
         }
     }
 
@@ -148,4 +167,57 @@ public class AdminService implements IAdminService  {
     public int unblockAnUser(int userID) {
         return 0;
     }
+
+    @Override
+    public ServiceResponse addService(ServiceRequest request) {
+        ServiceResponse response = new ServiceResponse();
+        if (handelAddNewService(request) == 1) {
+            response.setName(request.getName());
+            response.setImg(request.getImg());
+            response.setPrice(request.getPrice());
+            response.setDiscount(request.getDiscount());
+            response.setDescription(request.getDescription());
+            response.setMessageOject(new MessageOject("Success", "Add service successfully!",null));
+            return response;
+        }
+        response.setMessageOject(new MessageOject("Failed", "Add service failed!",null));
+        return response;
+    }
+
+    @Override
+    public ServiceResponse updateService(ServiceRequest request) {
+        ServiceResponse response = new ServiceResponse();
+        if (handelAddNewService(request) == 1) {
+            response.setName(request.getName());
+            response.setImg(request.getImg());
+            response.setPrice(request.getPrice());
+            response.setDiscount(request.getDiscount());
+            response.setDescription(request.getDescription());
+            response.setMessageOject(new MessageOject("Success", "Update service successfully!",null));
+            return response;
+
+        }
+        response.setMessageOject(new MessageOject("Failed", "Update service failed!",null));
+        return response;
+    }
+
+    @Override
+    public ServiceResponse detailService(int id) {
+        ServiceResponse response = new ServiceResponse();
+        Service service = serviceRepository.getReferenceById(id);
+
+        if(service == null) {
+            response.setMessageOject(new MessageOject("Failed", "Can not find any service match ID",null));
+        }
+
+        response.setName(service.getName());
+        response.setPrice(service.getPrice());
+        response.setDiscount(service.getDiscount());
+        response.setImg(service.getImage());
+        response.setDescription(service.getDescription());
+        response.setMessageOject(new MessageOject("Success", "Service found",null));
+        return response;
+    }
 }
+
+

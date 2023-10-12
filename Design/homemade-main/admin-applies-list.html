@@ -23,8 +23,7 @@
   </head>
   <body>
     <header>
-      <nav
-        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+      <nav class="navbar bg-body-tertiary fs-4">
         <div class="container">
           <a class="navbar-brand fs-2" href="#">
             <icon class="bi bi-gem"></icon>
@@ -45,20 +44,24 @@
             class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0">
+              class="navbar-nav mx-auto me-0 mb-2 mb-lg-0 text-end pb-3">
               <li class="nav-item">
-                <a href="" class="nav-link"
-                  >Account Manager</a
+                <a
+                  href="admin-account-management.html"
+                  class="nav-link"
+                  >Account</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  href="admin-service-management.html"
+                  class="nav-link"
+                  >Service</a
                 >
               </li>
               <li class="nav-item">
                 <a href="" class="nav-link"
-                  >Service Manager</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link"
-                  >Task Manager</a
+                  >Task</a
                 >
               </li>
               <li class="nav-item">
@@ -66,15 +69,20 @@
                   >Setting</a
                 >
               </li>
+              <li class="nav-item">
+                <a
+                  href="#"
+                  class="btn btn-lg btn-dark"
+                  >Log out</a
+                >
+              </li>
             </ul>
-            <a
-              href="#"
-              class="btn btn-lg btn-dark"
-              >Log out</a
-            >
           </div>
         </div>
       </nav>
+      <div
+        class="border-bottom border-secondary"
+        style="border-style: solid 2px"></div>
     </header>
     <section
       class="vh-100"
@@ -85,21 +93,17 @@
           <div class="col-md-12 col-xl-10">
             <div class="card">
               <div class="card-header p-3">
-                <div class="row">
-                  <h3 class="mb-0 col-2">
-                    <a
-                      href=""
-                      class="btn btn-dark disabled-link"
-                      >Applies List</a
-                    >
-                  </h3>
-                  <h3 class="mb-0 col-10">
-                    <a
-                      href=""
-                      class="btn btn-dark"
-                      >Account List</a
-                    >
-                  </h3>
+                <div class="mb-0 h3">
+                  <a
+                    href="admin-applies-list.html"
+                    class="btn btn-dark"
+                    >Applies List</a
+                  >
+                  <a
+                    href="admin-account-list.html"
+                    class="btn btn-dark"
+                    >Account List</a
+                  >
                 </div>
               </div>
               <div

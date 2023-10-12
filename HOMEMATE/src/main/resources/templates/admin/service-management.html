@@ -88,18 +88,12 @@
                 <div class="row">
                   <h3 class="mb-0 col-2">
                     <a
-                      href=""
+                      th:href="@{/admin/services/add}"
                       class="btn btn-dark"
                       >Add Service</a
                     >
                   </h3>
-                  <h3 class="mb-0 col-10">
-                    <a
-                      href=""
-                      class="btn btn-dark"
-                      >Update Service</a
-                    >
-                  </h3>
+
                 </div>
               </div>
               <div
@@ -115,12 +109,8 @@
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Service Name</th>
-                  <th scope="col">Service Image</th>
-                  <th scope="col">Service Price</th>
-                  <th scope="col">Service Discount</th>
                   <th scope="col">Service Description</th>
-                  <th scope="col">Create At</th>
-                  <th scope="col">Update At</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -128,14 +118,10 @@
 
                   <td th:text="${service.getServiceId()}"></td>
                   <td th:text="${service.getName()}"></td>
-                  <td >
-                    <img th:src="${service.getImage()}" style="width: 80px; height: 80px" alt="service img">
-                  </td>
-                  <td th:text="${service.getPrice()}"></td>
-                  <td th:text="${service.getDiscount()}"></td>
                   <td th:text="${service.getDescription()}"></td>
-                  <td th:text="${service.getCreateAt()}"></td>
-                  <td th:text="${service.getUpdateAt()}"></td>
+                  <td>
+                    <a th:href="@{/admin/services/detail/{id}(id=${service.getServiceId()})}" class="btn btn-primary">Detail</a>
+                  </td>
                 </tr>
                 </tbody>
               </table>

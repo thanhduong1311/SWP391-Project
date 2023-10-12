@@ -1,11 +1,12 @@
 package com.demo.homemate.services.interfaces;
 
+import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
+import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IAdminService {
     /**
@@ -23,18 +24,18 @@ public interface IAdminService {
     public Service getAService(int serviceID);
 
     /**
-     * add new service
-     * @param service
+     *  handel for add new service
+     * @param request
      * @return
      */
-    public int addNewService(Service service);
+    public int handelAddNewService(ServiceRequest request);
 
     /**
-     * update service
-     * @param service
+     * handel for update service
+     * @param request
      * @return
      */
-    public int updateService(Service service);
+    public int handelUpdateService(ServiceRequest request);
 
     /**
      * get all customer
@@ -97,6 +98,26 @@ public interface IAdminService {
      */
     public int unblockAnUser(int userID);
 
+    /**
+     *
+     * @param request
+     * @return
+     */
+    public ServiceResponse addService(ServiceRequest request);
 
+    /**
+     *
+     * @param request
+     * @return
+     */
+    public ServiceResponse updateService(ServiceRequest request);
+
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public ServiceResponse detailService(int id) ;
 
 }

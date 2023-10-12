@@ -43,7 +43,8 @@ public class AdminHomeController {
             }
 
         }
-        else return "redirect:/admin/home";
+        else return "redirect:/customer/home";
     }
+
 
 }
