@@ -86,20 +86,10 @@
             <div class="card">
               <div class="card-header p-3">
                 <div class="row">
-                  <h3 class="mb-0 col-2">
-                    <a
-                      href=""
-                      class="btn btn-dark"
-                      >Add Service</a
-                    >
+                  <h3 class="mb-0">
+                    Service detail
                   </h3>
-                  <h3 class="mb-0 col-10">
-                    <a
-                      href=""
-                      class="btn btn-dark"
-                      >Update Service</a
-                    >
-                  </h3>
+
                 </div>
               </div>
               <div
@@ -110,29 +100,16 @@
                   height: 400px;
                 ">
               </div>
-              <table class="table" >
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Service Name</th>
-                  <th scope="col">Service Image</th>
-                  <th scope="col">Service Price</th>
-                  <th scope="col">Service Discount</th>
-                  <th scope="col">Service Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-
-                  <td th:text="${ServiceDetail.getName()}"></td>
-                  <td >
-                    <img th:src="${ServiceDetail.getImg()}" style="width: 80px; height: 80px" alt="service img">
-                  </td>
-                  <td th:text="${ServiceDetail.getPrice()}"></td>
-                  <td th:text="${ServiceDetail.getDiscount()}"></td>
-                  <td th:text="${ServiceDetail.getDescription()}"></td>
-                </tr>
-                </tbody>
-              </table>
+              <div>
+                <img style="width: 300px; height: auto" th:src="*{ServiceDetail.getImage()}" th:alt="*{ServiceDetail.getImage()}">
+                <span th:text ="*{ServiceDetail.getServiceId()}"></span>
+                <span th:text ="*{ServiceDetail.getName()}"></span>
+                <span th:text ="*{ServiceDetail.getPrice()}"></span>
+                <span th:text ="*{ServiceDetail.getDiscount()}"></span>
+                <span th:text ="*{ServiceDetail.getDescription()}"></span>
+                <a th:href="@{/admin/services/edit/{id}(id=${ServiceDetail.getServiceId()})}" class="btn btn-primary">Edit</a>
+                <a th:href="@{/admin/services/delete/{id}(id=${ServiceDetail.getServiceId()})}" class="btn btn-danger">Delete</a>
+              </div>
               <div class="card-footer p-3"></div>
             </div>
           </div>

@@ -77,14 +77,11 @@ public class AdminService implements IAdminService  {
     @Override
     public int handelUpdateService(ServiceRequest request) {
 
-        Service service = new Service();
-        service.setName(request.getName());
-        service.setPrice(request.getPrice());
-        service.setImage(request.getImg());
-        service.setDiscount(request.getDiscount());
-        service.setDescription(request.getDescription());
+        Service service = serviceRepository.findById(request.getServiceId());
 
-        if (serviceRepository.findByName(service.getName().trim()) != null) {
+
+        if (serviceRepository.findByName(service.getName().trim()) != null ||
+                serviceRepository.findById(request.getServiceId()) == null) {
             return 0;
         } else {
 //            LocalDateTime now = LocalDateTime.now();
@@ -97,12 +94,13 @@ public class AdminService implements IAdminService  {
             service.setImage(request.getImg());
             service.setDiscount(request.getDiscount());
             service.setDescription(request.getDescription());
+
 //            service.setCreateAt(createAt);
 //            service.setUpdateAt(createAt);
 
             serviceRepository.save(service);
 
-            return serviceRepository.findByName(service.getName().trim()) == null ? 0 : 1;
+            return serviceRepository.findByName(service.getName().trim()) == null  ? 0 : 1;
 
         }
     }
@@ -185,39 +183,40 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public ServiceResponse updateService(ServiceRequest request) {
-        ServiceResponse response = new ServiceResponse();
-        if (handelAddNewService(request) == 1) {
-            response.setName(request.getName());
-            response.setImg(request.getImg());
-            response.setPrice(request.getPrice());
-            response.setDiscount(request.getDiscount());
-            response.setDescription(request.getDescription());
-            response.setMessageOject(new MessageOject("Success", "Update service successfully!",null));
-            return response;
-
+    public MessageOject updateService(ServiceRequest request) {
+        Service service = serviceRepository.findById(request.getServiceId());
+        if(service != null) {
+            service.setName(request.getName());
+            service.setImage(request.getImg());
+            service.setPrice(request.getPrice());
+            service.setDiscount(request.getDiscount());
+            service.setDescription(request.getDescription());
+            serviceRepository.save(service);
+            return new MessageOject("Succes","Update service successfully!",null);
         }
-        response.setMessageOject(new MessageOject("Failed", "Update service failed!",null));
-        return response;
+        return new MessageOject("Failed","Update service Failed!",null);
+
     }
 
     @Override
-    public ServiceResponse detailService(int id) {
-        ServiceResponse response = new ServiceResponse();
-        Service service = serviceRepository.getReferenceById(id);
+    public MessageOject deleteService(int id) {
+        ServiceResponse response= new ServiceResponse();
+        Service service = serviceRepository.findById(id);
 
-        if(service == null) {
-            response.setMessageOject(new MessageOject("Failed", "Can not find any service match ID",null));
+        if (service == null) {
+           return new MessageOject("Failed","Can not find service with ID = " + id,null);
+        } else {
+            serviceRepository.delete(service);
+            service = serviceRepository.findById(id);
+            if (service != null) {
+               return  (new MessageOject("Failed","Can not delete service with ID = " + id,null));
+            } else {
+                return (new MessageOject("Success","Service delete successfully!",null));
+            }
         }
-
-        response.setName(service.getName());
-        response.setPrice(service.getPrice());
-        response.setDiscount(service.getDiscount());
-        response.setImg(service.getImage());
-        response.setDescription(service.getDescription());
-        response.setMessageOject(new MessageOject("Success", "Service found",null));
-        return response;
     }
+
+
 }
 
 

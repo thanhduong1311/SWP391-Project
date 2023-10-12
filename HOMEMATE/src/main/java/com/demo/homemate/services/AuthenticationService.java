@@ -58,7 +58,6 @@ public class AuthenticationService implements IAuthenticationService {
                String jwtToken = JWTService.generateJwtEmployeeToken(user);
                return new AuthenticationResponse()
                        .setToken(jwtToken)
-                       .setPageReturn("home")
                        .setAccountResponse( new AccountMapper().toEmployeeResponse(user))
                        .setStateCode(1);
            } else if (check == 2){
@@ -66,7 +65,6 @@ public class AuthenticationService implements IAuthenticationService {
                String jwtToken = JWTService.generateJwtCustomerToken(user);
                return new AuthenticationResponse()
                        .setToken(jwtToken)
-                       .setPageReturn("home")
                        .setAccountResponse(new AccountMapper().toCustomerResponse(user))
                        .setStateCode(1);
            } else if (check == 3) {
@@ -74,11 +72,10 @@ public class AuthenticationService implements IAuthenticationService {
                String jwtToken = JWTService.generateJwtAdminToken(user);
                return new AuthenticationResponse()
                        .setToken(jwtToken)
-                       .setPageReturn("home")
                        .setAccountResponse(new AccountMapper().toAdminResponse(user))
                        .setStateCode(1);
            } else {
-                   return new AuthenticationResponse().setPageReturn("index").setStateCode(0);
+                   return new AuthenticationResponse().setStateCode(0);
            }
     }
 

@@ -2,6 +2,7 @@ package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
@@ -110,7 +111,7 @@ public interface IAdminService {
      * @param request
      * @return
      */
-    public ServiceResponse updateService(ServiceRequest request);
+    public MessageOject updateService(ServiceRequest request);
 
 
     /**
@@ -118,6 +119,5 @@ public interface IAdminService {
      * @param id
      * @return
      */
-    public ServiceResponse detailService(int id) ;
-
+    public MessageOject deleteService(int id);
 }

@@ -86,19 +86,8 @@
             <div class="card">
               <div class="card-header p-3">
                 <div class="row">
-                  <h3 class="mb-0 col-2">
-                    <a
-                      href=""
-                      class="btn btn-dark"
-                      >Add Service</a
-                    >
-                  </h3>
-                  <h3 class="mb-0 col-10">
-                    <a
-                      href=""
-                      class="btn btn-dark"
-                      >Update Service</a
-                    >
+                  <h3 class="mb-0">
+                    Update Service
                   </h3>
                 </div>
               </div>
@@ -110,35 +99,34 @@
                   height: 400px;
                 ">
               </div>
-              <table class="table" >
-                <thead class="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Service Name</th>
-                  <th scope="col">Service Image</th>
-                  <th scope="col">Service Price</th>
-                  <th scope="col">Service Discount</th>
-                  <th scope="col">Service Description</th>
-                  <th scope="col">Create At</th>
-                  <th scope="col">Update At</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="service : ${ServiceList}">
+              <form th:action="@{/admin/services/edit/{id}(id=${ServiceEdit.getServiceId()})}" method="post" th:object="${ServiceEdit}">
 
-                  <td th:text="${service.getServiceId()}"></td>
-                  <td th:text="${service.getName()}"></td>
-                  <td >
-                    <img th:src="${service.getImage()}" style="width: 80px; height: 80px" alt="service img">
-                  </td>
-                  <td th:text="${service.getPrice()}"></td>
-                  <td th:text="${service.getDiscount()}"></td>
-                  <td th:text="${service.getDescription()}"></td>
-                  <td th:text="${service.getCreateAt()}"></td>
-                  <td th:text="${service.getUpdateAt()}"></td>
-                </tr>
-                </tbody>
-              </table>
+                <label>Service ID</label>
+                <input th:field="*{serviceId}" th:value="${ServiceEdit.getServiceId()}" readonly type="text">
+                <br>
+                <label>name</label>
+                <input th:field="*{name}" type="text">
+                <br>
+                <label>price</label>
+                <input th:field="*{price}" type="text">
+                <br>
+
+                <label>discount</label>
+                <input th:field="*{discount}" type="text">
+                <br>
+
+                <label>img</label>
+                <input th:field="*{img}" type="text">
+                <br>
+
+                <label>description</label>
+                <input th:field="*{description}" type="text">
+                <br>
+
+
+                <button type="submit">Update</button>
+
+              </form>
               <div class="card-footer p-3"></div>
             </div>
           </div>

@@ -14,6 +14,7 @@ import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +58,11 @@ public class AuthController {
             cookie.setMaxAge(60 * 60);
             cookie.setPath("/");
             response.addCookie(cookie);
+            return "redirect:/home";
         }else {
-            model.addAttribute("LoginError", new MessageOject("Fail","Username or password is incorrect!", null));
+            model.addAttribute("LoginMessage", new MessageOject("Fail","Username or password is incorrect!", null));
             return loginView(model);
         }
-        return "redirect:/home";
     }
 
 
@@ -74,8 +75,8 @@ public class AuthController {
     @GetMapping("login")
     public String loginView(Model model) {
         model.addAttribute("account", new AuthenticationRequest());
-        if (model.getAttribute("LoginError") == null) {
-            model.addAttribute("LoginError", new MessageOject());
+        if (model.getAttribute("LoginMessage") == null) {
+            model.addAttribute("LoginMessage", new MessageOject());
         }
         return "signin";
     }
@@ -151,6 +152,17 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/guest")
+    public String guestPage(Model model) {
+        return "home";
+    }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response) {
+
+        return "redirect:/login";
+    }
 
 
 }

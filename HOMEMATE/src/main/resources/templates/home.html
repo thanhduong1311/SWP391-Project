@@ -64,12 +64,12 @@
                 <ul
                         class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="#" class="nav-link"
+                        <a th:href="@{/guest}" class="nav-link"
                         >Home</a
                         >
                     </li>
                     <li class="nav-item">
-                        <a href="#about" class="nav-link"
+                        <a th:href="@{/}" class="nav-link"
                         >About</a
                         >
                     </li>
@@ -93,7 +93,7 @@
                     </li>
                 </ul>
                 <a
-                        th:href="@{/signin}"
+                        th:href="@{/login}"
                         class="btn btn-lg btn-dark"
                         style=""
                 >Sign In</a
@@ -530,7 +530,7 @@
             Bạn muốn sử dụng dịch vụ của chúng tôi?
         </h1>
         <a
-                href="signup.html"
+                th:href="@{/signup}"
                 class="btn btn-dark btn-lg mt-5"
         >Đăng ký ngay</a
         >

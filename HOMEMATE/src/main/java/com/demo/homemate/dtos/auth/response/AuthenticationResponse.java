@@ -11,7 +11,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Builder
 public class AuthenticationResponse {
-    private String pageReturn;
     private AccountResponse accountResponse;
     private int stateCode;
     private String token;

@@ -28,7 +28,7 @@ public class CustomerHomeController {
 
 
 
-    @GetMapping(value = {"","home"})
+    @GetMapping(value = {"","/home"})
     public String viewCustomerPage(HttpServletRequest request){
         Cookie cookie = WebUtils.getCookie(request, "Token");
         if (cookie == null) {
@@ -43,7 +43,7 @@ public class CustomerHomeController {
                 Claims claim = jwt.parseJwt(token);
                 System.out.println(claim.getSubject());
                 if(claim.getSubject().equals(Role.CUSTOMER.toString())){
-                    return "customer/home";
+                    return "/customer/home";
                 }
                 else return "redirect:/customer/home";
             } catch (Exception e) {

@@ -81,7 +81,7 @@
           >
         </div>
 
-        <p class="message alert-danger text-danger" th:text="${LoginError.getMessage()}"></p>
+        <p id="message" class="message alert-danger text-danger" th:text="${LoginMessage.getMessage()}"></p>
 
         <div class="checkbox mb-3">
           <label>
@@ -113,5 +113,13 @@
         </p>
       </form>
     </main>
+
+    <script>
+      // Đợi 10 giây trước khi xóa div
+      setTimeout(function () {
+        var messageDiv = document.getElementById('message');
+        messageDiv.parentNode.removeChild(messageDiv);
+      }, 5000);
+    </script>
   </body>
 </html>

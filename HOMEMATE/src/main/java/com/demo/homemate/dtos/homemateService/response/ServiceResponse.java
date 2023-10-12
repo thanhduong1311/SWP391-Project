@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ServiceResponse {
+    private int serviceId;
     private String name;
     private String img;
     private double price;
