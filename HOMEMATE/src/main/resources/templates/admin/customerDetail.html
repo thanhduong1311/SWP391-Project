@@ -91,16 +91,7 @@
             <div class="card">
               <div class="card-header p-3">
                 <div class="mb-0 h3">
-                  <a
-                    href="admin-applies-list.html"
-                    class="btn btn-dark"
-                    >Applies List</a
-                  >
-                  <a
-                    href="admin-account-list.html"
-                    class="btn btn-dark"
-                    >Account List</a
-                  >
+                  Customer detail
                 </div>
               </div>
               <div
@@ -139,13 +130,22 @@
                   </div>
                 </div>
                 <div class="col-3">
-                  <a href="" class="btn btn-primary"
-                  >Edit</a
+                  <a id="blockBtn"  class="btn btn-warning"
+                      th:href="@{/admin/userManagement/customer/block/{id}(id=${customerDeatail.getCustomerId()})}"
+                      th:if="${customerDeatail.getAccountStatus().toString().equals('ACTIVE')}"
+                  >Block</a
+                  >
+
+                  <a id="unBlockBtn"  class="btn btn-success"
+                      th:href="@{/admin/userManagement/customer/unblock/{id}(id=${customerDeatail.getCustomerId()})}"
+                     th:if="${customerDeatail.getAccountStatus().toString().equals('BLOCKED')}"
+
+                  >Unblock</a
                   >
                   <a
-                          href=""
+                          th:href="@{/admin/userManagement/customer/delete/{id}(id=${customerDeatail.getCustomerId()})}"
                           class="btn btn-danger"
-                  >Delet</a
+                  >Delete</a
                   >
                 </div>
               </div>
@@ -155,7 +155,6 @@
         </div>
       </div>
     </section>
-
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -6,6 +6,8 @@ import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
+import com.demo.homemate.enums.AccountStatus;
+import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.repositories.ServiceRepository;
@@ -214,6 +216,134 @@ public class AdminService implements IAdminService  {
                 return (new MessageOject("Success","Service delete successfully!",null));
             }
         }
+    }
+
+    @Override
+    public MessageOject blockCustomer(int id) {
+        Customer customer = customerRepository.findById(id);
+
+        if (customer == null) {
+            return new MessageOject("Failed","Can not block this account!",null );
+        }  else {
+            customer.setAccountStatus(AccountStatus.BLOCKED);
+            customerRepository.save(customer);
+            customer = customerRepository.findById(id);
+            if(customer.getAccountStatus().ordinal() == 1) {
+                return new MessageOject("Success","Account is blocked",null );
+            }
+            return new MessageOject("Failed","Can not block this account!",null );
+        }
+    }
+
+    @Override
+    public MessageOject unBlockCustomer(int id) {
+        Customer customer = customerRepository.findById(id);
+
+        if (customer == null) {
+            return new MessageOject("Failed","Can not unblock this account!",null );
+        }  else {
+            customer.setAccountStatus(AccountStatus.ACTIVE);
+            customerRepository.save(customer);
+            customer = customerRepository.findById(id);
+            if(customer.getAccountStatus().ordinal() == 0) {
+                return new MessageOject("Success","Account is unblocked",null );
+            } else {
+                return new MessageOject("Failed","Can not unblock this account!",null );
+            }
+        }
+    }
+
+    @Override
+    public MessageOject deleteCustomer(int id) {
+        Customer customer = customerRepository.findById(id);
+
+        if (customer == null) {
+            return new MessageOject("Failed","Can not delete this account!",null );
+        }  else {
+            customerRepository.delete(customer);
+            customer = customerRepository.findById(id);
+            if(customer == null) {
+                return new MessageOject("Success","Account is deleted",null );
+            } else {
+                return new MessageOject("Failed","Can not delete this account!",null );
+            }
+        }
+    }
+
+    @Override
+    public MessageOject blockEmployee(int id) {
+        Employee employee = employeeRepository.findById(id);
+
+        if (employee == null) {
+            return new MessageOject("Failed","Can not block this account!",null );
+        }  else {
+            employee.setAccountStatus(AccountStatus.BLOCKED);
+            employeeRepository.save(employee);
+            employee = employeeRepository.findById(id);
+            if(employee.getAccountStatus().ordinal() == 1) {
+                return new MessageOject("Success","Account is blocked",null );
+            }
+            return new MessageOject("Failed","Can not block this account!",null );
+        }
+    }
+
+    @Override
+    public MessageOject unBlockEmployee(int id) {
+        Employee employee = employeeRepository.findById(id);
+
+        if (employee == null) {
+            return new MessageOject("Failed","Can not unblock this account!",null );
+        }  else {
+            employee.setAccountStatus(AccountStatus.ACTIVE);
+            employeeRepository.save(employee);
+            employee= employeeRepository.findById(id);
+            if(employee.getAccountStatus().ordinal() == 0) {
+                return new MessageOject("Success","Account is unblocked",null );
+            } else {
+                return new MessageOject("Failed","Can not unblock this account!",null );
+            }
+        }
+    }
+
+    @Override
+    public MessageOject deleteEmployee(int id) {
+        Employee employee = employeeRepository.findById(id);
+
+        if (employee == null) {
+            return new MessageOject("Failed","Can not delete this account!",null );
+        }  else {
+            employeeRepository.delete(employee);
+            employee = employeeRepository.findById(id);
+            if(employee == null) {
+                return new MessageOject("Success","Account is deleted",null );
+            } else {
+                return new MessageOject("Failed","Can not delete this account!",null );
+            }
+        }
+    }
+
+    @Override
+    public MessageOject approvePartner(int id) {
+        Employee employee = employeeRepository.findById(id);
+
+        if (employee == null) {
+            return new MessageOject("Failed","Can not approve this partner!",null );
+        }  else {
+            employee.setAccountStatus(AccountStatus.ACTIVE);
+            employee.setRole(Role.EMPLOYEE);
+            employeeRepository.save(employee);
+            employee= employeeRepository.findById(id);
+            if(employee.getAccountStatus().ordinal() == 0 && employee.getRole().ordinal() == 2) {
+                return new MessageOject("Success","Partner is approved",null );
+            } else {
+                return new MessageOject("Failed","Can not approve this partner!",null );
+            }
+        }
+    }
+
+    @Override
+    public MessageOject rejectPartner(int id) {
+        return null;
     }
 
 

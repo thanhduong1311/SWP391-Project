@@ -106,7 +106,6 @@
                     Username: <span th:text="*{partnerDeatail.getUsername()}"></span>
                   </div>
 
-               
                   <div>
                     Full Name: <span th:text="*{partnerDeatail.getFullName()}"></span>
                   </div>
@@ -132,11 +131,13 @@
                   </div>
                 </div>
                 <div class="col-3">
-                  <a href="" class="btn btn-success"
-                  >Aprove</a
+                  <a id="unBlockBtn"  class="btn btn-success"
+                     th:href="@{/admin/userManagement/employee/approve/{id}(id=${partnerDeatail.getEmployeeId()})}"
+
+                  >Approved</a
                   >
                   <a
-                          href=""
+                    th:href="@{/admin/userManagement/employee/reject/{id}(id=${partnerDeatail.getEmployeeId()})}"
                           class="btn btn-danger"
                   >Reject</a
                   >

@@ -92,7 +92,7 @@
             <div class="card">
               <div class="card-header p-3">
                 <div class="mb-0 h3">
-                  Emloyee Detail
+                  Employee Detail
                 </div>
               </div>
               <div
@@ -133,11 +133,20 @@
                   </div>
                 </div>
                 <div class="col-3">
-                  <a href="" class="btn btn-primary"
-                  >Edit</a
+                  <a id="blockBtn"  class="btn btn-warning"
+                     th:href="@{/admin/userManagement/employee/block/{id}(id=${employeeDeatail.getEmployeeId()})}"
+                     th:if="${employeeDeatail.getAccountStatus().toString().equals('ACTIVE')}"
+                  >Block</a
+                  >
+
+                  <a id="unBlockBtn"  class="btn btn-success"
+                     th:href="@{/admin/userManagement/employee/unblock/{id}(id=${employeeDeatail.getEmployeeId()})}"
+                     th:if="${employeeDeatail.getAccountStatus().toString().equals('BLOCKED')}"
+
+                  >Unblock</a
                   >
                   <a
-                          href=""
+                          th:href="@{/admin/userManagement/employee/delete/{id}(id=${employeeDeatail.getEmployeeId()})}"
                           class="btn btn-danger"
                   >Delete</a
                   >
