@@ -57,6 +57,8 @@ public class Employee{
 
     private String address_detail;
 
+    private String work_place;
+
     private Date createAt;
 
     private Date updateAt;
@@ -78,6 +80,7 @@ public class Employee{
             inverseJoinColumns = @JoinColumn(name = "serviceId")
     )
     private List<Service> services;
+
 
 
 }

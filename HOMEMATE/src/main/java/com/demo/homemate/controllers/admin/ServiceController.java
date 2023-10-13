@@ -20,6 +20,7 @@ public class ServiceController {
 
     private final AdminService adminService;
 
+    //View service management page;
     @GetMapping(value = "")
     public String viewServiceManagement(Model model){
         List<Service> services = adminService.getAllService();
@@ -27,12 +28,14 @@ public class ServiceController {
         return "admin/service-management";
     }
 
+    // View add service
     @GetMapping("/add")
     public String viewAddService(Model model) {
         model.addAttribute("newService", new ServiceRequest());
         return "admin/addService";
     }
 
+    // Add service handle
     @PostMapping("/add")
     public String addService(Model model, ServiceRequest request) {
         System.out.println(request.toString());
@@ -43,13 +46,14 @@ public class ServiceController {
 
 
 
+    // Delete service handle
     @GetMapping("/delete/{id}")
     public String deleteService(@PathVariable("id") int id) {
        MessageOject messageOject =  adminService.deleteService(id);
-
         return "redirect:/admin/services";
     }
 
+    // Details service view
     @GetMapping("/detail/{id}")
     public String viewDetailService(@PathVariable("id") int id, Model model) {
         Service response = adminService.getAService(id);
@@ -57,6 +61,7 @@ public class ServiceController {
         return "admin/detailService";
     }
 
+    // Edit service View
     @GetMapping("/edit/{id}")
     public String viewEditlService(@PathVariable("id") int id, Model model) {
         Service response = adminService.getAService(id);
@@ -65,16 +70,11 @@ public class ServiceController {
         return "admin/updateService";
     }
 
+    //Edit service handle
     @PostMapping("/edit/{id}")
     public String editlService(@PathVariable("id") int id, Model model,ServiceRequest request) {
         MessageOject messageOject = adminService.updateService(request);
         return "redirect:/admin/services";
     }
-
-
-
-
-
-
 
 }

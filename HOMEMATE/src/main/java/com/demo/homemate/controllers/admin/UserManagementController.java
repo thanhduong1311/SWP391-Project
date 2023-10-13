@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class UserManagementController {
 
     private final AdminService adminService;
 
+
+    // View account management view
     @GetMapping()
     public String viewAccountManagement(Model model){
         List<Customer> customerList = adminService.getAllCustomer();
@@ -29,6 +32,7 @@ public class UserManagementController {
         return "admin/account-management";
     }
 
+    // View applies view
     @GetMapping("applies")
     public String viewAppliesList(Model model) {
         List<Employee> partnerList = adminService.getAllPartner();
@@ -36,6 +40,7 @@ public class UserManagementController {
         return "admin/applyList";
     }
 
+    // View employee list view
     @GetMapping("employees")
     public String viewCustomerList(Model model) {
         List<Employee> employeeList = adminService.getAllEmployee();
@@ -44,11 +49,38 @@ public class UserManagementController {
         return "admin/employeeList";
     }
 
+    // View customer list view
     @GetMapping("customers")
     public String viewEmployeeList(Model model) {
         List<Customer> customerList = adminService.getAllCustomer();
         model.addAttribute("CustomerList",customerList);
         return "admin/customerList";
     }
+
+    //View customer detail
+    @GetMapping("/customer/{id}")
+    public String customerDetail(@PathVariable("id") int id ,Model model) {
+        Customer customer = adminService.getACustomer(id);
+        model.addAttribute("customerDeatail",customer);
+        return "/admin/customerDetail";
+    }
+
+    //View customer detail
+    @GetMapping("/employee/{id}")
+    public String employeeDetail(@PathVariable("id") int id ,Model model) {
+        Employee employee = adminService.getAnEmployee(id);
+        System.out.println(employee);
+        model.addAttribute("employeeDeatail",employee);
+        return "/admin/employeeDetail";
+    }
+
+    //View customer detail
+    @GetMapping("/partner/{id}")
+    public String partnerDetail(@PathVariable("id") int id ,Model model) {
+        Employee partner = adminService.getAnEmployee(id);
+        model.addAttribute("partnerDeatail",partner);
+        return "/admin/partnerDetail";
+    }
+
 
 }
