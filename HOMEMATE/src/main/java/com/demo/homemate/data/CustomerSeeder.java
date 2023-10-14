@@ -4,6 +4,7 @@ import com.demo.homemate.entities.Customer;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.CustomerRepository;
+import com.demo.homemate.utils.PasswordMD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -28,7 +29,7 @@ public class CustomerSeeder implements CommandLineRunner {
             Customer user = new Customer();
             user.setCustomerId(1);
             user.setUsername("thanhduong");
-            user.setPassword("123@");
+            user.setPassword(PasswordMD5.encode("123@"));
             user.setRole(Role.CUSTOMER);
             user.setAccountStatus(AccountStatus.ACTIVE);
             user.setFullName("Nguyen Thanh Duong");

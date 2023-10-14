@@ -14,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Service {
+
     public static final String COLLECTION_NAME = "service";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_id")
