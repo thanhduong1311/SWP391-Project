@@ -3,6 +3,7 @@ package com.demo.homemate.data;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.AdminRepository;
+import com.demo.homemate.utils.PasswordMD5;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class AdminSeeder implements CommandLineRunner {
         if(adminRepository.count() ==0 ) {
             Admin admin = new Admin();
             admin.setUsername("Admin");
-            admin.setPassword("123");
+            admin.setPassword(PasswordMD5.encode("123"));
             admin.setRole(Role.ADMIN);
 
             adminRepository.save(admin);

@@ -100,7 +100,6 @@ public class AuthController {
                 return "/customer/home";
             }else {
                 Claims claim = jwt.parseJwt(token);
-                System.out.println((AccountResponse) claim.get("User"));
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         return "redirect:/admin";
