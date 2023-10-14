@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <title>Update Service</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar bg-body-tertiary fs-4">
+        <div class="container">
+          <a class="navbar-brand fs-2" href="#">
+            <icon class="bi bi-gem"></icon>
+            Homemate
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span
+              class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent">
+            <ul
+              class="navbar-nav mx-auto me-0 mb-2 mb-lg-0 text-end pb-3">
+              <li class="nav-item">
+                <a
+                  href="admin-account-management.html"
+                  class="nav-link"
+                  >Account</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  href="admin-service-management.html"
+                  class="nav-link"
+                  >Service</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link"
+                  >Task</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link"
+                  >Setting</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  href="#"
+                  class="btn btn-lg btn-dark"
+                  >Log out</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div
+        class="border-bottom border-secondary"
+        style="border-style: solid 2px"></div>
+    </header>
+    <section
+      class="vh-100"
+      style="background-color: #eee">
+      <div class="container py-5">
+        <div
+          class="row d-flex justify-content-center align-items-center">
+          <div class="col-md-12 col-xl-10">
+            <div class="card">
+              <div class="card-header p-3">
+                <div class="h2">
+                  Update Service
+                </div>
+              </div>
+              <div
+                class="card-body h-100"
+                data-mdb-perfect-scrollbar="true"
+                style="
+                  position: relative;
+                  height: 400px;
+                ">
+                <form
+                  th:action="@{/admin/services/add}"
+                  method="post">
+                  <div class="form-floating pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingNameService"
+                      placeholder=""
+                      required />
+                    <label
+                      for="floatingNameService"
+                      >Name</label
+                    >
+                  </div>
+                  <div class="form-floating pb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="floatingPriceService"
+                      placeholder=""
+                      required />
+                    <label
+                      for="floatingPriceService"
+                      >Price</label
+                    >
+                  </div>
+                  <div class="form-floating pb-3">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="floatingDiscountService"
+                      placeholder=""
+                      required />
+                    <label
+                      for="floatingDiscountService"
+                      >Discount</label
+                    >
+                  </div>
+                  <div class="form-floating pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingImageService"
+                      placeholder=""
+                      required />
+                    <label
+                      for="floatingImageService"
+                      >Image</label
+                    >
+                  </div>
+                  <div class="form-floating pb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingDescriptionService"
+                      placeholder=""
+                      required />
+                    <label
+                      for="floatingDescriptionService"
+                      >Description</label
+                    >
+                  </div>
+                  <div
+                    class="d-flex justify-content-around">
+                    <button
+                      class="btn btn-lg btn-outline-danger"
+                      type="submit">
+                      Delete
+                    </button>
+                    <button
+                      class="btn btn-lg btn-outline-success"
+                      type="submit">
+                      Update
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
