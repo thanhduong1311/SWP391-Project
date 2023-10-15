@@ -4,8 +4,11 @@ import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.mappings.interfaces.IServiceMapping;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ServiceMapper implements IServiceMapping {
+
     @Override
     public ServiceRequest toServiceRequest(Service service) {
         ServiceRequest request = new ServiceRequest();

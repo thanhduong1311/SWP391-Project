@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+      rel="stylesheet"
+      href="assets/css/home.css" />
+    <title>Partner | Review | Homemate</title>
+    <style>
+      :root {
+        --yellow: #ffbd13;
+        --blue: #4383ff;
+        --blue-d-1: #3278ff;
+        --light: #f5f5f5;
+        --grey: #aaa;
+        --white: #fff;
+        --shadow: 8px 8px 30px rgba(0, 0, 0, 0.05);
+      }
+      body,
+      html {
+        font-family: 'Roboto', sans-serif;
+      }
+      .hover-luaga {
+        transition: all 1s;
+      }
+      .hover-luaga:hover {
+        transform: scale(1.1);
+      }
+      .rating {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-gap: 0.5rem;
+        font-size: 2rem;
+        color: var(--yellow);
+        margin-bottom: 2rem;
+      }
+      .rating .star {
+        cursor: pointer;
+      }
+      .rating .star.active {
+        opacity: 0;
+        animation: animate 0.5s
+          calc(var(--i) * 0.1s) ease-in-out
+          forwards;
+      }
+
+      @keyframes animate {
+        0% {
+          opacity: 0;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .rating .star:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body class="animate__animated animate__fadeIn">
+    <!-- Header -->
+    <header>
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+        <div class="container">
+          <a class="navbar-brand fs-2" href="#">
+            <icon class="bi-gem"></icon>
+            Homemate
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span
+              class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent">
+            <ul
+              class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a href="" class="nav-link"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link"
+                  >Task</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link"
+                  >Review</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link"
+                  >History</a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link"
+                  >Setting</a
+                >
+              </li>
+            </ul>
+            <a
+              href="#"
+              class="btn btn-lg btn-dark"
+              >Log out</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div
+        class="container mt-5 p-5 d-flex align-items-end">
+        <img
+          class="rounded-5 border me-4"
+          src="images/user-example.jpg"
+          style="
+            object-fit: cover;
+            object-position: 25% 25%;
+          "
+          alt="User Image"
+          width="100rem"
+          height="100rem" />
+        <h1>Here we are, Partner</h1>
+      </div>
+
+      <div class="container mb-5">
+        <div class="shadow-lg p-5 rounded-4">
+          <h1>
+            Top review của bạn trong năm nay:
+          </h1>
+          <div
+            class="shadow-5 p-5 rounded-5 border mt-5">
+            <h2>
+              <span
+                >Housecleaning 30m<sup
+                  >2</sup
+                ></span
+              >
+              <span>5.0</span>
+              <span class="text-warning"
+                ><icon
+                  class="bi-star-fill"></icon></span
+              ><br /><span class="h3">Zun: </span>
+            </h2>
+            <p>
+              Lorem ipsum dolor sit amet
+              consectetur adipisicing elit. Velit
+              possimus corporis magnam dolor
+              sequi! Vel, eaque sapiente. Tenetur,
+              obcaecati voluptatibus vel tempora
+              earum at recusandae suscipit officia
+              placeat similique perferendis unde
+              sequi officiis hic animi illum
+              necessitatibus aperiam dicta nihil
+              ipsam quod temporibus. Tempora esse
+              obcaecati, corporis, aspernatur
+              cupiditate possimus quod fuga iure
+              quis animi temporibus exercitationem
+              sapiente eos aliquid suscipit at.
+              Amet fugit ea rem nesciunt. Sunt,
+              dolorum error temporibus suscipit
+              excepturi officia, unde incidunt
+              culpa aut quo porro sit eum quos
+              vero minus cum quae laborum quidem
+              facere, libero consectetur.
+              Voluptates, corporis officia dolore
+              tempora totam, at, dolorum impedit
+              quasi maiores nisi accusantium nulla
+              quam voluptate doloribus magnam
+              cumque eaque quis voluptatum.
+              Impedit quod commodi non et vero!
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-dark">
+      <div class="text-center p-3">
+        © 2023 Homemade
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const allStar = document.querySelectorAll(
+        '.rating .star'
+      );
+      const ratingValue = document.querySelector(
+        '.rating input'
+      );
+
+      allStar.forEach((item, idx) => {
+        item.addEventListener(
+          'click',
+          function () {
+            let click = 0;
+            ratingValue.value = idx + 1;
+
+            allStar.forEach((i) => {
+              i.classList.replace(
+                'bxs-star',
+                'bx-star'
+              );
+              i.classList.remove('active');
+            });
+            for (
+              let i = 0;
+              i < allStar.length;
+              i++
+            ) {
+              if (i <= idx) {
+                allStar[i].classList.replace(
+                  'bx-star',
+                  'bxs-star'
+                );
+                allStar[i].classList.add(
+                  'active'
+                );
+              } else {
+                allStar[i].style.setProperty(
+                  '--i',
+                  click
+                );
+                click++;
+              }
+            }
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

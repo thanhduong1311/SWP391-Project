@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="/assets/css/bootstrap.min.css" />
+      href="assets/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -26,8 +26,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link
       rel="stylesheet"
-      href="/assets/css/home.css" />
-    <title>Zun | Homemate</title>
+      href="assets/css/home.css" />
+    <title>Partner | Homemate</title>
     <style>
       body,
       html {
@@ -82,7 +82,7 @@
         class="container mt-5 p-5 d-flex align-items-end">
         <img
           class="rounded-5 border me-4"
-          src="images/customer-example.jpg"
+          src="images/user-example.jpg"
           style="
             object-fit: cover;
             object-position: 25% 25%;
@@ -90,7 +90,7 @@
           alt="User Image"
           width="100rem"
           height="100rem" />
-        <h1>Welcome back, Zun</h1>
+        <h1>Welcome back, Partner</h1>
       </div>
 
       <div class="bg-secondary p-1 mb-3">
@@ -101,16 +101,16 @@
             <div class="col-lg-3">
               <div class="text-center">
                 <a
-                  th:href="@{/customer/bookings/form}"
+                  href="employee-todo-list.html"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
-                  <p class="h4">Booking</p>
+                  <p class="h4">Task</p>
                 </a>
               </div>
             </div>
             <div class="col-lg-3">
               <div class="text-center">
                 <a
-                  href="customer-review.html"
+                  href="#"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
                   <p class="h4">Review</p>
                 </a>
@@ -119,7 +119,7 @@
             <div class="col-lg-3">
               <div class="text-center">
                 <a
-                  href="customer-booking-history.html"
+                  href="employee-history-income.html"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
                   <p class="h4">History</p>
                 </a>
@@ -128,6 +128,7 @@
             <div class="col-lg-3">
               <div class="text-center">
                 <a
+                  href="employee-setting.html"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
                   <p class="h4">Setting</p>
                 </a>
@@ -146,6 +147,6 @@
       <!-- Copyright -->
     </footer>
     <!-- Footer -->
-    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

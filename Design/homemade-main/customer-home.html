@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="/assets/css/bootstrap.min.css" />
+      href="assets/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -26,7 +26,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link
       rel="stylesheet"
-      href="/assets/css/home.css" />
+      href="assets/css/home.css" />
     <title>Zun | Homemate</title>
     <style>
       body,
@@ -82,7 +82,7 @@
         class="container mt-5 p-5 d-flex align-items-end">
         <img
           class="rounded-5 border me-4"
-          src="images/customer-example.jpg"
+          src="images/user-example.jpg"
           style="
             object-fit: cover;
             object-position: 25% 25%;
@@ -101,7 +101,7 @@
             <div class="col-lg-3">
               <div class="text-center">
                 <a
-                  th:href="@{/customer/bookings/form}"
+                  href="customer-booking.html"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
                   <p class="h4">Booking</p>
                 </a>
@@ -146,6 +146,6 @@
       <!-- Copyright -->
     </footer>
     <!-- Footer -->
-    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

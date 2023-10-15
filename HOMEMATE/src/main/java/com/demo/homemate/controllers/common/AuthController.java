@@ -12,6 +12,7 @@ import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.EmailService;
 import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
+import com.demo.homemate.services.interfaces.IServiceService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,8 +37,10 @@ public class AuthController {
 
     private final UserService userService ;
 
-    @Autowired
     private final EmailService emailService;
+
+    private final IServiceService serviceService;
+
 
     /**
      * xử lí login
@@ -90,7 +93,7 @@ public class AuthController {
     @GetMapping(value = "/home")
         public String viewHomePage(Model model,
                 @CookieValue(name = "Token") String token) {
-            JWTService jwt = new JWTService();
+        JWTService jwt = new JWTService();
 
         System.out.println("=====================================" + jwt);
 
@@ -100,7 +103,6 @@ public class AuthController {
                 return "/customer/home";
             }else {
                 Claims claim = jwt.parseJwt(token);
-                System.out.println((AccountResponse) claim.get("User"));
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         return "redirect:/admin";
@@ -143,6 +145,7 @@ public class AuthController {
 
             return "redirect:/login";
         }else {
+
             model.addAttribute("UserRegiter", response.getMessageOject());
 
             System.out.println(response.getMessageOject().getMessage());
@@ -154,6 +157,7 @@ public class AuthController {
 
     @GetMapping("/guest")
     public String guestPage(Model model) {
+        model.addAttribute("services", serviceService.getAllServices());
         return "home";
     }
 
