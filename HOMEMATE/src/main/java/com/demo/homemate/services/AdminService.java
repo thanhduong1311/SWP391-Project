@@ -125,7 +125,7 @@ public class AdminService implements IAdminService  {
         List<Employee> result = new ArrayList<>();
         for (Employee e: employees
              ) {
-            if(e.getAccountStatus().ordinal() == 0) result.add(e);
+            if(e.getRole().ordinal() == 2 && e.getAccountStatus().ordinal()!=2) result.add(e);
         }
         return result;
     }
@@ -142,7 +142,7 @@ public class AdminService implements IAdminService  {
         List<Employee> result = new ArrayList<>();
         for (Employee e: employees
         ) {
-            if(e.getAccountStatus().ordinal() == 2) result.add(e);
+            if(e.getAccountStatus().ordinal() == 2 && e.getRole().ordinal() == 2) result.add(e);
         }
         return result;
     }

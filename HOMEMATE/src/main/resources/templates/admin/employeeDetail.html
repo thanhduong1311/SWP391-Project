@@ -95,63 +95,75 @@
                   Employee Detail
                 </div>
               </div>
-              <div
-                      class="card-body h-100 row align-items-center"
-                      data-mdb-perfect-scrollbar="true"
-                      style="
+
+              <div class="row">
+                <div class="col-md-4">
+                  <img style="width: 100%" th:src="*{employeeDeatail.getAvatar()}">
+                </div>
+                <div class="col-md-8">
+                  <div
+                          class="card-body h-100 row align-items-center"
+                          data-mdb-perfect-scrollbar="true"
+                          style="
                   position: relative;
                   height: 400px;
                 ">
-                <div class="col-9">
-                  <div>
-                    Username: <span th:text="*{employeeDeatail.getUsername()}"></span>
-                  </div>
+                    <div class="col-9">
+                      <div>
+                        Username: <span th:text="*{employeeDeatail.getUsername()}"></span>
+                      </div>
 
 
-                  <div>
-                    Full Name: <span th:text="*{employeeDeatail.getFullName()}"></span>
-                  </div>
-                  <div>
-                   Gender: <span th:text="*{employeeDeatail.getGender()}"></span>
-                  </div>
-                  <div>Brith Day: <span th:text="*{employeeDeatail.getDob()}"></span>
+                      <div>
+                        Full Name: <span th:text="*{employeeDeatail.getFullName()}"></span>
+                      </div>
+                      <div>
+                        Gender: <span th:text="*{employeeDeatail.getGender()}"></span>
+                      </div>
+                      <div>Brith Day: <span th:text="*{employeeDeatail.getDob()}"></span>
+                      </div>
+                      <div>
+                        Address: <span th:text="*{employeeDeatail.getAddress_detail()}"></span>
+                      </div>
+                      <div>Phone <span th:text="*{employeeDeatail.getPhone()}"></span></div>
+                      <div>
+                        <div>
+                          Email: <span th:text="*{employeeDeatail.getEmail()}"></span>
+                        </div>
+                        ID Card number: <span th:text="*{employeeDeatail.getIdCardNumber()}"></span>
+                      </div>
+                      <div>Workplace: <span th:text="*{employeeDeatail.getWork_place()}"></span>
+                      </div>
+                      <div>
+                        Account status: <span th:text="*{employeeDeatail.getAccountStatus().toString()}"></span>
+                      </div>
                     </div>
-                  <div>
-                    Address: <span th:text="*{employeeDeatail.getAddress_detail()}"></span>
-                  </div>
-                  <div>Phone <span th:text="*{employeeDeatail.getPhone()}"></span></div>
-                  <div>
-                    <div>
-                      Email: <span th:text="*{employeeDeatail.getEmail()}"></span>
+                    <div class="col-3">
+                      <a id="blockBtn"  class="btn btn-warning w-100 mb-1"
+                         th:href="@{/admin/userManagement/employee/block/{id}(id=${employeeDeatail.getEmployeeId()})}"
+                         th:if="${employeeDeatail.getAccountStatus().toString().equals('ACTIVE')}"
+                      >Block</a
+                      >
+
+                      <a id="unBlockBtn"  class="btn btn-success w-100 mb-1"
+                         th:href="@{/admin/userManagement/employee/unblock/{id}(id=${employeeDeatail.getEmployeeId()})}"
+                         th:if="${employeeDeatail.getAccountStatus().toString().equals('BLOCKED')}"
+
+                      >Unblock</a
+                      >
+                      <a
+                              th:href="@{/admin/userManagement/employee/delete/{id}(id=${employeeDeatail.getEmployeeId()})}"
+                              class="btn btn-danger w-100 mb-1"
+                      >Delete</a
+                      >
                     </div>
-                    ID Card number: <span th:text="*{employeeDeatail.getIdCardNumber()}"></span>
                   </div>
-                  <div>Workplace: <span th:text="*{employeeDeatail.getWork_place()}"></span>
-                  </div>
-                  <div>
-                    Account status: <span th:text="*{employeeDeatail.getAccountStatus().toString()}"></span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <a id="blockBtn"  class="btn btn-warning"
-                     th:href="@{/admin/userManagement/employee/block/{id}(id=${employeeDeatail.getEmployeeId()})}"
-                     th:if="${employeeDeatail.getAccountStatus().toString().equals('ACTIVE')}"
-                  >Block</a
-                  >
 
-                  <a id="unBlockBtn"  class="btn btn-success"
-                     th:href="@{/admin/userManagement/employee/unblock/{id}(id=${employeeDeatail.getEmployeeId()})}"
-                     th:if="${employeeDeatail.getAccountStatus().toString().equals('BLOCKED')}"
-
-                  >Unblock</a
-                  >
-                  <a
-                          th:href="@{/admin/userManagement/employee/delete/{id}(id=${employeeDeatail.getEmployeeId()})}"
-                          class="btn btn-danger"
-                  >Delete</a
-                  >
                 </div>
               </div>
+
+
+
               <div class="card-footer p-3"></div>
             </div>
           </div>

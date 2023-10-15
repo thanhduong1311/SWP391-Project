@@ -94,53 +94,60 @@
                   Partner detail
                 </div>
               </div>
-              <div
-                      class="card-body h-100 row align-items-center"
-                      data-mdb-perfect-scrollbar="true"
-                      style="
+              <div class="row">
+                <div class="col-md-3">
+                  <img style="width: 100%;" th:src="${partnerDeatail.getAvatar()}" alt="">
+                </div>
+                <div class="col-md-9">
+                  <div
+                          class="card-body h-100 row align-items-center"
+                          data-mdb-perfect-scrollbar="true"
+                          style="
                   position: relative;
                   height: 400px;
                 ">
-                <div class="col-9">
-                  <div>
-                    Username: <span th:text="*{partnerDeatail.getUsername()}"></span>
-                  </div>
+                    <div class="col-9">
+                      <div>
+                        Username: <span th:text="*{partnerDeatail.getUsername()}"></span>
+                      </div>
 
-                  <div>
-                    Full Name: <span th:text="*{partnerDeatail.getFullName()}"></span>
-                  </div>
-                  <div>
-                    Gender: <span th:text="*{partnerDeatail.getGender()}"></span>
-                  </div>
-                  <div>Brith Day: <span th:text="*{partnerDeatail.getDob()}"></span>
-                  </div>
-                  <div>
-                    Address: <span th:text="*{partnerDeatail.getAddress_detail()}"></span>
-                  </div>
-                  <div>Phone <span th:text="*{partnerDeatail.getPhone()}"></span></div>
-                  <div>
-                    <div>
-                      Email: <span th:text="*{partnerDeatail.getEmail()}"></span>
+                      <div>
+                        Full Name: <span th:text="*{partnerDeatail.getFullName()}"></span>
+                      </div>
+                      <div>
+                        Gender: <span th:text="*{partnerDeatail.getGender()}"></span>
+                      </div>
+                      <div>Brith Day: <span th:text="*{partnerDeatail.getDob()}"></span>
+                      </div>
+                      <div>
+                        Address: <span th:text="*{partnerDeatail.getAddress_detail()}"></span>
+                      </div>
+                      <div>Phone <span th:text="*{partnerDeatail.getPhone()}"></span></div>
+                      <div>
+                        <div>
+                          Email: <span th:text="*{partnerDeatail.getEmail()}"></span>
+                        </div>
+                        ID Card number: <span th:text="*{partnerDeatail.getIdCardNumber()}"></span>
+                      </div>
+                      <div>Workplace: <span th:text="*{partnerDeatail.getWork_place()}"></span>
+                      </div>
+                      <div>
+                        Account status: <span th:text="*{partnerDeatail.getAccountStatus().toString()}"></span>
+                      </div>
                     </div>
-                    ID Card number: <span th:text="*{partnerDeatail.getIdCardNumber()}"></span>
-                  </div>
-                  <div>Workplace: <span th:text="*{partnerDeatail.getWork_place()}"></span>
-                  </div>
-                  <div>
-                    Account status: <span th:text="*{partnerDeatail.getAccountStatus().toString()}"></span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <a id="unBlockBtn"  class="btn btn-success"
-                     th:href="@{/admin/userManagement/employee/approve/{id}(id=${partnerDeatail.getEmployeeId()})}"
+                    <div class="col-3">
+                      <a id="unBlockBtn"  class="btn btn-success w-100 mb-1"
+                         th:href="@{/admin/userManagement/employee/approve/{id}(id=${partnerDeatail.getEmployeeId()})}"
 
-                  >Approved</a
-                  >
-                  <a
-                    th:href="@{/admin/userManagement/employee/reject/{id}(id=${partnerDeatail.getEmployeeId()})}"
-                          class="btn btn-danger"
-                  >Reject</a
-                  >
+                      >Approved</a
+                      >
+                      <a
+                              th:href="@{/admin/userManagement/employee/reject/{id}(id=${partnerDeatail.getEmployeeId()})}"
+                              class="btn btn-danger w-100 mb-1"
+                      >Reject</a
+                      >
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="card-footer p-3"></div>

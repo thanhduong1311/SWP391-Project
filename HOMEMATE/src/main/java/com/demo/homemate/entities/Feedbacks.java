@@ -33,9 +33,6 @@ public class Feedbacks {
     @JoinColumn(name = "job_id",referencedColumnName = "job_id")
     private Job jobId;
 
-    private double minSpend;
-
-    private double discount;
 
     @OneToMany(mappedBy = "jobId")
     private List<Job> jobs;

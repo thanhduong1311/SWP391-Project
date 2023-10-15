@@ -22,7 +22,7 @@
     <header>
       <nav class="navbar bg-body-tertiary fs-4">
         <div class="container">
-          <a class="navbar-brand fs-2" href="#">
+          <a class="navbar-brand fs-2" th:href="@{/admin}">
             <icon class="bi bi-gem"></icon>
             Homemate
           </a>
@@ -44,28 +44,28 @@
               class="navbar-nav mx-auto me-0 mb-2 mb-lg-0 text-end pb-3">
               <li class="nav-item">
                 <a
-                  href="admin-account-management.html"
+                        th:href="@{/admin/userManagement}"
                   class="nav-link"
-                  >Account</a
+                  >Account Management</a
                 >
               </li>
               <li class="nav-item">
                 <a
-                  href="admin-service-management.html"
+                        th:href="@{/admin/services}"
                   class="nav-link"
-                  >Service</a
+                  >Service Management</a
                 >
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link"
-                  >Task</a
+                <a th:href="@{/admin/tasks}"
+                  >Task Management</a
                 >
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link"
-                  >Setting</a
-                >
-              </li>
+<!--              <li class="nav-item">-->
+<!--                <a href="#" class="nav-link disabled-link"-->
+<!--                  >Setting</a-->
+<!--                >-->
+<!--              </li>-->
               <li class="nav-item">
                 <a
                   href="#"
@@ -94,61 +94,77 @@
                   Customer detail
                 </div>
               </div>
-              <div
-                      class="card-body h-100 row align-items-center"
-                      data-mdb-perfect-scrollbar="true"
-                      style="
+              <div class="row">
+                <div class="col-md-4">
+                  <img style="width: 100%" th:src="*{customerDeatail.getAvatar()}">
+
+                </div>
+
+                <div class="col-md-8">
+                  <div
+                          class="card-body h-100 row align-items-center"
+                          data-mdb-perfect-scrollbar="true"
+                          style="
                   position: relative;
                   height: 400px;
                 ">
-                <div class="col-9">
-                  <div>
-                    Username: <span th:text="*{customerDeatail.getUsername()}"></span>
-                  </div>
+                    <div class="col-9">
+
+                      <div class="text-black-50">
+                        Customer ID: <span th:text="*{customerDeatail.getCustomerId()}"></span>
+                      </div>
+                      <div>
+                        Username: <span th:text="*{customerDeatail.getUsername()}"></span>
+                      </div>
 
 
-                  <div>
-                    Full Name: <span th:text="*{customerDeatail.getFullName()}"></span>
-                  </div>
-                  <div>
-                    Gender: <span th:text="*{customerDeatail.getGender()}"></span>
-                  </div>
-                  <div>Brith Day: <span th:text="*{customerDeatail.getDob()}"></span>
-                  </div>
-                  <div>
-                    Address: <span th:text="*{customerDeatail.getAddress_detail()}"></span>
-                  </div>
-                  <div>Phone <span th:text="*{customerDeatail.getPhone()}"></span></div>
-                  <div>
-                    <div>
-                      Email: <span th:text="*{customerDeatail.getEmail()}"></span>
+                      <div>
+                        Full Name: <span th:text="*{customerDeatail.getFullName()}"></span>
+                      </div>
+                      <div>
+                        Gender: <span th:text="*{customerDeatail.getGender()}"></span>
+                      </div>
+                      <div>Brith Day: <span th:text="*{customerDeatail.getDob()}"></span>
+                      </div>
+                      <div>
+                        Address: <span th:text="*{customerDeatail.getAddress_detail()}"></span>
+                      </div>
+                      <div>Phone <span th:text="*{customerDeatail.getPhone()}"></span></div>
+                      <div>
+                        <div>
+                          Email: <span th:text="*{customerDeatail.getEmail()}"></span>
+                        </div>
+                        Total spend: <span th:text="*{customerDeatail.getTotalSpend()}"></span>
+                      </div>
+                      <div>
+                        Account status: <span th:text="*{customerDeatail.getAccountStatus().toString()}"></span>
+                      </div>
                     </div>
-                    Total spend: <span th:text="*{customerDeatail.getTotalSpend()}"></span>
-                  </div>
-                  <div>
-                    Account status: <span th:text="*{customerDeatail.getAccountStatus().toString()}"></span>
+                    <div class="col-3">
+                      <a id="blockBtn"  class="btn btn-warning w-100 mb-1"
+                         th:href="@{/admin/userManagement/customer/block/{id}(id=${customerDeatail.getCustomerId()})}"
+                         th:if="${customerDeatail.getAccountStatus().toString().equals('ACTIVE')}"
+                      >Block</a
+                      >
+
+                      <a id="unBlockBtn"  class="btn btn-success  w-100 mb-1"
+                         th:href="@{/admin/userManagement/customer/unblock/{id}(id=${customerDeatail.getCustomerId()})}"
+                         th:if="${customerDeatail.getAccountStatus().toString().equals('BLOCKED')}"
+
+                      >Unblock</a
+                      >
+                      <a
+                              th:href="@{/admin/userManagement/customer/delete/{id}(id=${customerDeatail.getCustomerId()})}"
+                              class="btn btn-danger  w-100 mb-1"
+                      >Delete</a
+                      >
+                    </div>
                   </div>
                 </div>
-                <div class="col-3">
-                  <a id="blockBtn"  class="btn btn-warning"
-                      th:href="@{/admin/userManagement/customer/block/{id}(id=${customerDeatail.getCustomerId()})}"
-                      th:if="${customerDeatail.getAccountStatus().toString().equals('ACTIVE')}"
-                  >Block</a
-                  >
 
-                  <a id="unBlockBtn"  class="btn btn-success"
-                      th:href="@{/admin/userManagement/customer/unblock/{id}(id=${customerDeatail.getCustomerId()})}"
-                     th:if="${customerDeatail.getAccountStatus().toString().equals('BLOCKED')}"
 
-                  >Unblock</a
-                  >
-                  <a
-                          th:href="@{/admin/userManagement/customer/delete/{id}(id=${customerDeatail.getCustomerId()})}"
-                          class="btn btn-danger"
-                  >Delete</a
-                  >
-                </div>
               </div>
+
               <div class="card-footer p-3"></div>
             </div>
           </div>
