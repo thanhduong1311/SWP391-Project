@@ -1,5 +1,6 @@
 package com.demo.homemate.controllers.admin;
 
+import com.demo.homemate.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class TaskController {
 
+    private final AdminService adminService;
+
     @GetMapping(value = "")
     public String viewTaskManagement(Model model) {
-        return "admin/dashboard";
+        model.addAttribute("requestList", adminService.getRequestList());
+        return "admin/taskManagement";
     }
 
-
+    @GetMapping("/requests")
+    public String viewRequest(Model model) {
+        model.addAttribute("requestList", adminService.getRequestList());
+        return "admin/employeeRequest";
+    }
 }

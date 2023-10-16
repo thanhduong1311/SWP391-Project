@@ -90,11 +90,6 @@ public class JWTService {
 
     public static void main(String[] args) {
 //        String s = generateJwt("abc", "asdf");
-        Admin a = new Admin("Admin123","111",null);
-        String s2 = generateJwtAdminToken(a) ;
-        System.out.println(s2);
-        Claims claim = parseJwt(s2);
-        System.out.println(claim);
-        System.out.println(isJwtExpired(claim));
+
     }
 }

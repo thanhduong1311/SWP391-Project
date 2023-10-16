@@ -1,23 +1,24 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
+import com.demo.homemate.dtos.employeeRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
+import com.demo.homemate.entities.EmployeeRequest;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
+import com.demo.homemate.repositories.EmployeeRequestRepository;
 import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IAdminService;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,6 +31,8 @@ public class AdminService implements IAdminService  {
     private final CustomerRepository customerRepository;
 
     private final ServiceRepository serviceRepository;
+
+    private final EmployeeRequestRepository employeeRequestRepository;
 
 
     @Override
@@ -343,6 +346,33 @@ public class AdminService implements IAdminService  {
 
     @Override
     public MessageOject rejectPartner(int id) {
+        return null;
+    }
+
+    @Override
+    public List<EmployeeCancelJobRequest> getRequestList() {
+        List<EmployeeCancelJobRequest> result = new ArrayList<>();
+
+            try {
+                List<EmployeeRequest> list = employeeRequestRepository.findAll();
+                for (EmployeeRequest er:
+                     list) {
+                    EmployeeCancelJobRequest ecr = new EmployeeCancelJobRequest();
+                    ecr.setAccountName(employeeRepository.findById(er.getEmployeeId().getEmployeeId()).getFullName());
+                    ecr.setAccount(employeeRepository.findById(er.getEmployeeId().getEmployeeId()).getUsername());
+                    ecr.setRole(employeeRepository.findById(er.getEmployeeId().getEmployeeId()).getRole());
+                    ecr.setReason(er.getReason());
+                    ecr.setRequestStatus(er.getStatus());
+                    result.add(ecr);
+                }
+            } catch (Exception e) {
+                throw e;
+            }
+            return result;
+    }
+
+    @Override
+    public List<CustomerReportJob> getReportList() {
         return null;
     }
 

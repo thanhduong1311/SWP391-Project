@@ -25,14 +25,14 @@ public class EmployeeSeeder implements CommandLineRunner {
         if(repository.count() == 0) {
             Employee user = new Employee();
             user.setEmployeeId(1);
-            user.setUsername("minhhien");
-            user.setPassword(PasswordMD5.encode("123@"));
+            user.setUsername("giahuy01");
+            user.setPassword(PasswordMD5.encode("01"));
             user.setRole(Role.EMPLOYEE);
             user.setAccountStatus(AccountStatus.ACTIVE);
-            user.setFullName("Nguyen Minh Hien");
+            user.setFullName("Gia Huy");
             user.setAvatar("/assets/images/defaultUser.png");
-            user.setEmail("minhhien@gmail.com");
-            user.setPhone("0873988349");
+            user.setEmail("giahuy01@gmail.com");
+            user.setPhone("0973988349");
             user.setGender("male");
             user.setCity("Can Tho");
             user.setDistrict("Ninh Kieu");
@@ -48,14 +48,14 @@ public class EmployeeSeeder implements CommandLineRunner {
 
             Employee user2 = new Employee();
             user2.setEmployeeId(2);
-            user2.setUsername("duongthanh1");
-            user2.setPassword(PasswordMD5.encode("1"));
+            user2.setUsername("giahuy02");
+            user2.setPassword(PasswordMD5.encode("02"));
             user2.setRole(Role.EMPLOYEE);
             user2.setAccountStatus(AccountStatus.ACTIVE);
-            user2.setFullName("Thanh Duong");
+            user2.setFullName("Gia Huy");
             user2.setAvatar("/assets/images/defaultUser.png");
             user2.setEmail("thanhduong@gmail.com");
-            user2.setPhone("0813113466");
+            user2.setPhone("0893113466");
             user2.setGender("male");
             user2.setCity("Can Tho");
             user2.setDistrict("Ninh Kieu");
@@ -68,14 +68,14 @@ public class EmployeeSeeder implements CommandLineRunner {
 
             Employee user3 = new Employee();
             user3.setEmployeeId(2);
-            user3.setUsername("duongthanh12");
-            user3.setPassword(PasswordMD5.encode("12"));
+            user3.setUsername("giahuy03");
+            user3.setPassword(PasswordMD5.encode("03"));
             user3.setRole(Role.EMPLOYEE);
             user3.setAccountStatus(AccountStatus.WAIT_FOR_APPROVE);
-            user3.setFullName("Thanh Duong");
+            user3.setFullName("Gia Huy");
             user3.setAvatar("/assets/images/defaultUser.png");
-            user3.setEmail("thanhduong33@gmail.com");
-            user3.setPhone("0813113468");
+            user3.setEmail("GiaHuy03@gmail.com");
+            user3.setPhone("0819113468");
             user3.setGender("male");
             user3.setCity("Can Tho");
             user3.setDistrict("Ninh Kieu");
@@ -88,14 +88,14 @@ public class EmployeeSeeder implements CommandLineRunner {
 
             Employee user4 = new Employee();
             user4.setEmployeeId(2);
-            user4.setUsername("duongthanh123");
-            user4.setPassword(PasswordMD5.encode("123"));
+            user4.setUsername("giahuy04");
+            user4.setPassword(PasswordMD5.encode("04"));
             user4.setRole(Role.EMPLOYEE);
             user4.setAccountStatus(AccountStatus.WAIT_FOR_APPROVE);
             user4.setFullName("Thanh Duong");
             user4.setAvatar("/assets/images/defaultUser.png");
-            user4.setEmail("thanhduong123@gmail.com");
-            user4.setPhone("0813113462");
+            user4.setEmail("giahuy04@gmail.com");
+            user4.setPhone("0813113192");
             user4.setGender("male");
             user4.setCity("Can Tho");
             user4.setDistrict("Ninh Kieu");

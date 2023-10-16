@@ -1,5 +1,7 @@
 package com.demo.homemate.services.interfaces;
 
+import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
+import com.demo.homemate.dtos.employeeRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
@@ -173,4 +175,10 @@ public interface IAdminService {
      * @return
      */
     public MessageOject rejectPartner(int id);
+
+    public List<EmployeeCancelJobRequest> getRequestList() ;
+
+    public List<CustomerReportJob> getReportList() ;
+
+
 }
