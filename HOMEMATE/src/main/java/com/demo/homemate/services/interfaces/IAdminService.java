@@ -176,9 +176,8 @@ public interface IAdminService {
      */
     public MessageOject rejectPartner(int id);
 
-    public List<EmployeeCancelJobRequest> getRequestList() ;
 
-    public List<CustomerReportJob> getReportList() ;
+
 
 
 }

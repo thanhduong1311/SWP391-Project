@@ -70,7 +70,6 @@ public class UserManagementController {
     @GetMapping("/employee/{id}")
     public String employeeDetail(@PathVariable("id") int id ,Model model) {
         Employee employee = adminService.getAnEmployee(id);
-        System.out.println(employee);
         model.addAttribute("employeeDeatail",employee);
         return "/admin/employeeDetail";
     }

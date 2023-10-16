@@ -1,30 +1,32 @@
-package com.demo.homemate.dtos.customerReport.responese;
+package com.demo.homemate.dtos.employeeRequest.Response;
 
-
-import com.demo.homemate.entities.Customer;
 import com.demo.homemate.enums.PaymentType;
 import com.demo.homemate.enums.RequestStatus;
-import com.demo.homemate.enums.Role;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
+
 @Getter
 @Setter
-public class CustomerReportJob {
-    private int reportId;
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class CancelJobDetail {
+    private int requestId;
     private int jobId;
     private int CustomerId;
-    private int employeeID;
-    private String account;
     private String CustomerName;
-    private String employeeName;
+    private String EmployeeName;
     private String reason;
+    private RequestStatus status;
     private String address;
+    private PaymentType paymentType;
     private Date start;
     private Date end;
     private String service;
     private String description;
-    private Role role;
+
+
+
 }

@@ -10,10 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeCancelJobRequest {
+    private int JobId;
+    private int RequestID;
     private int accountId;
     private String account;
     private String accountName;
     private String reason;
     private Role role;
+    private RequestStatus status;
     private RequestStatus requestStatus;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <link
@@ -123,10 +123,11 @@
               <td th:text="${request.getAccount()}"></td>
               <td th:text="${request.getAccountName()}"></td>
               <td th:text="${request.getReason()}"></td>
-              <td class="job-status" th:text="${request.getRequestStatus().toString()}"></td>
+              <td class="job-status" th:text="${request.getRequestStatus()}"></td>
               <td>
-                <span class="btn btn-primary" >Detail</span>
-                <span class="btn btn-danger" >Delete</span>
+                <a class="btn btn-primary"  th:href="@{/admin/tasks/request/{id}(id=${request.getRequestID()})}" >Detail</a>
+                <a
+                        th:href="@{/admin/tasks/delete/{id}(id=${request.getRequestID()})}" class="btn btn-danger mb-1" >Delete</a>
               </td>
             </tr>
 

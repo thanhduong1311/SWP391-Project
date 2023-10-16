@@ -87,14 +87,14 @@
                   <h3 class="mb-0 col-2">
                     <a
                             th:href="@{/admin/tasks/requests}"
-                            class="btn btn-dark"
+                            class="btn btn-dark "
                     >Requests List</a
                     >
                   </h3>
                   <h3 class="mb-0 col-2">
                     <a
                             th:href="@{/admin/tasks/reports}"
-                            class="btn btn-dark"
+                            class="btn btn-dark disabled-link"
                     >Reports List</a
                     >
                   </h3>
@@ -104,36 +104,28 @@
           </div>
           <table class="table" >
             <p> </p>
+            <h3>Customer Report List</h3>
 
             <thead class="thead-dark">
             <tr>
               <th scope="col"></th>
-              <th scope="col">Account</th>
-              <th scope="col">Name</th>
-              <th scope="col">Role</th>
+              <th scope="col">Customer name</th>
+              <th scope="col">Employee name</th>
               <th scope="col">Reason</th>
-              <th scope="col">Status</th>
+              <th scope="col">Options</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr th:each="request : ${requestList}">
-              <td></td>
-              <td th:text="${request.getAccount()}"></td>
-              <td th:text="${request.getAccountName()}"></td>
-              <td th:text="${request.getRole()}"></td>
-              <td th:text="${request.getReason()}"></td>
-              <td class="job-status" th:text="${request.getRequestStatus().toString()}"></td>
-            </tr>
             <tr th:each="report : ${reportList}">
               <td></td>
-              <td th:text="${report.getAccount()}"></td>
               <td th:text="${report.getCustomerName()}"></td>
-              <td th:text="${report.getRole()}"></td>
+              <td th:text="${report.getEmployeeName()}"></td>
               <td th:text="${report.getReason()}"></td>
-              <td class="job-status">REPORTED</td>
+              <td>
+                <a th:href="@{/admin/tasks/report/{id}(id=${report.getReportId()})}"  class="btn btn-primary" >Detail</a>
+              </td>
             </tr>
-
 
 
             </tbody>
@@ -148,7 +140,7 @@
           account.classList.add("text-success")
         }
 
-        if (account.innerText.trim().toUpperCase().includes("REJECTED") || account.innerText.trim().toUpperCase().includes("REPORTED")) {
+        if (account.innerText.trim().toUpperCase().includes("REJECTED")) {
           account.classList.add("text-danger")
         }
 
