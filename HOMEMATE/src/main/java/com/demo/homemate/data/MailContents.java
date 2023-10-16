@@ -48,5 +48,28 @@ public class MailContents {
                 "</body>\n" +
                 "</html>";
     }
+    public String ForgetPassword() {
+        return "<html>\n" +
+                "<head>\n" +
+                "<title>Code for confirm Recover password!</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<p>Hi "+this.subjectName+",</p>\n" +
+                "\n" +
+                "<p>We have received a request to recover password!</p>\n" +
+                "\n" +
+                "<p>If it not you, please don't share this code for anyone</p>\n" +
+                "\n" +
+                "<p>The code: "+this.title+"</p>\n" +
+                "\n" +
+                "<p>If you have any questions or requests, please contact us via hotline <b>0813113149</b> or email <b>homematesuportteam@gmail.com</b> .</p>\n" +
+                "\n" +
+                "<p>Thank you for signing up for Homemate. We wish you a great experience!</p>\n" +
+                "\n" +
+                "<p>Sincerely,</p>\n" +
+                "<p>Homemate</p>\n" +
+                "</body>\n" +
+                "</html>";
+    }
 
 }

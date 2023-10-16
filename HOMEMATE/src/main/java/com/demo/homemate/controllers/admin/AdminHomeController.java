@@ -10,8 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.util.WebUtils;
 
 @Controller
@@ -22,14 +24,17 @@ public class AdminHomeController {
     private final AdminService adminService;
 
     @GetMapping(value = {"", "dashboard"})
-    public String viewDashboard(Model model, HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, "Token");
+    public String viewDashboard(Model model,
+                                HttpServletRequest request,
+                                @CookieValue(name = "Token",required = false) String cookieToken,
+                                @SessionAttribute(value="SessionToken",required = false) String sessionToken
+    ) {
 
-        if (cookie == null) {
+        if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
+        String token=cookieToken!=null?cookieToken:sessionToken;
 
-        String token= String.valueOf(cookie.getValue());
         JWTService jwt = new JWTService();
         if (token!=null){
             try {
@@ -43,7 +48,7 @@ public class AdminHomeController {
             }
 
         }
-        else return "redirect:/customer/home";
+        else return "redirect:/login";
     }
 
 
