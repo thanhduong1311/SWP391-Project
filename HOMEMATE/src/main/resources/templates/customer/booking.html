@@ -82,7 +82,7 @@
         class="container mt-5 p-5 d-flex align-items-end">
         <img
                 class="rounded-5 border me-4"
-                src="images/customer-example.jpg"
+                src="/assets/images/defaultUser.png"
                 style="
             object-fit: cover;
             object-position: 25% 25%;
@@ -94,9 +94,8 @@
     </div>
     <div class="row">
 
-        <form class="col-lg-8 mx-auto">
+        <form class="col-lg-8 mx-auto" >
             <h3 class="mb-5">BOOKING FORM</h3>
-
             <div class="form-group mb-3">
                 <label for="name">Name</label>
                 <input name="name" type="text" class="form-control" id="name" placeholder="Customer name">
@@ -110,37 +109,44 @@
                 <input name="address" type="text" class="form-control" id="address" placeholder="Address">
             </div>
             <div class="form-group mb-3">
-                <label for="title">Job title</label>
-                <input name="title" type="text" class="form-control" id="title" placeholder="Job title">
-            </div>
-            <div class="form-group mb-3">
                 <label for="description">Job description</label>
                 <textarea name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
             </div>
             <div class="row mb-3">
                 <div class="form-group mb-3 col-md-6">
-                    <:label for="date">Date</:label>
+                    <label for="date">Date</label>
                     <input name="date" type="date" class="form-control" id="date" placeholder="Date">
                 </div>
                 <div class="form-group mb-3 col-md-6">
-                    <label for="time">Time</label>
-                    <input name="time" type="time" class="form-control" id="time" placeholder="Time">
+                    <label for="start">Start</label>
+                    <input name="time" type="time" class="form-control" id="start" placeholder="Time Start">
+                </div>
+                <div class="form-group mb-3 col-md-6">
+
+                </div>
+                <div class="form-group mb-3 col-md-6">
+                    <label for="end">End</label>
+                    <input name="time" type="time" class="form-control" id="end" placeholder="Time End">
                 </div>
             </div>
             <div class="form-group mb-3">
-                <label for="exampleFormControlSelect1">Example select</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <label for="exampleFormControlSelect1">Select Service</label>
+                <select class="form-control" id="exampleFormControlSelect1"  >
+                    <div th:each="ser:${service}">
+                        <option th:text="*{ser.getName()}"></option>
+                    </div>
                 </select>
             </div>
             <div class="form-group mb-3">
-                <label for="exampleFormControlTextarea1">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+               <div class="payment-type">
+                   <p>Payment type</p>
+                   <label for="name"></label>
+                   <input name="name"  type="radio" class="" id="banking"> Banking
+                   <label for="name"></label>
+                   <input name="name"  type="radio" class="" id="cash" > Cash
+               </div>
             </div>
+            <button type="submit" class="col-md-12 btn btn-primary" >Booking</button>
         </form>
     </div>
 </main>

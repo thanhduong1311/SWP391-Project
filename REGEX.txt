@@ -1,0 +1,60 @@
+^	This character is used to match an expression to its right at the start of a string.			^a is an expression match to the string which starts with 'a' such as "aab", "a9c", "apr", "aaaaab", etc.
+$	The $sign is used to match an expression to its left at the end of a string.				r$ is an expression match to a string which ends with r such as "aaabr", "ar", "r", "aannn9r", etc.
+.	This character is used to match any single character in a string except the line terminator, i.e. /n.	b.x is an expression that match strings such as "bax", "b9x", "bar".
+|	It is used to match a particular character or a group of characters on either side. 
+	---If the character on the left side is matched, then the right side's character is ignored.		A|b is an expression which gives various strings, but each string contains either a or b.
+\	It is used to escape a special character after this sign in a string.	
+A	It is used to match the character 'A' in the string.	
+	This expression matches those strings in which at least one-time A is present.				 Such strings are "Amcx", "mnAr", "mnopAx4".
+Ab	It is used to match the substring 'ab' in the string.	
+	This expression matches those strings in which 'Ab' is present at least one time. 			Such strings are "Abcx", "mnAb", "mnopAbx4
+	
++	This character specifies an expression to its left for one or more times.				s+ is an expression which gives "s", "ss", "sss", and so on.
+?	This character specifies an expression to its left for 0 (Zero) or 1 (one)times.			aS? is an expression which gives either "a" or "as", but not "ass".
+*	This character specifies an expression to its left for 0 or more times					Br* is an expression which gives "B", "Br", "Brr", "Brrr", and so on…
+{x}	It specifies an expression to its left for only x times.						Mab{5} is an expression which gives the following string which contains 5 b's:"Mabbbbb"
+{x, }	It specifies an expression to its left for x or more times.						Xb{3, } is an expression which gives various strings containing at least 3 b's. Such strings are "Xbbb", "Xbbbb", and so on.
+{x,y}	It specifies an expression to its left, at least x times but less than y times.				Pr{3,6}a is an expression which provides two strings. Both strings are as follows:"Prrrr" and "Prrrrr"
+(  )	It is used to match everything which is in the simple bracket.						A(xy) is an expression which matches with the following string:"Axy"
+{   }	It is used to match a particular number of occurrences defined in the curly bracket for its left string xz{4,6} is an expression which matches with the following string:"xzzzzz"
+[    ]	It is used to match any character from a range of characters defined in the square bracket.		xz[atp]r is an expression which matches with the following strings:"xzar", "xztr", and "xzpr"
+[pqr]		It matches p, q, or r individually.								Following strings are matched with this expression:"p", "q", and "r".
+[pqr][xy]	It matches p, q, or r, followed by either x or y.						Following strings are matched with this expression:"px", "qx", and "rx", "py", "qy", and "ry".
+(?: …)		It is used for matching a non-capturing group.							A(?:nt|pple) is an expression which matches to the following string:"Apple"
+[^…..]		It matches a character which is not defined in the square bracket.				Suppose, Ab[^pqr] is an expression which matches only the following string:"Ab"
+[a-z]		It matches letters of a small case from a to z.							This expression matches the strings such as:"a", "python", "good".
+[A-Z]		It matches letters of an upper case from A to Z.						This expression matches the strings such as:"EXCELLENT", "NATURE".
+^[a-zA-Z]	It is used to match the string, which is either starts with a small case or upper-case letter.	This expression matches the strings such as:"A854xb", "pv4fv", "cdux".
+[0-9]		It matches a digit from 0 to 9.	This expression matches the strings 				such as:"9845", "54455"
+[aeiou]		This square bracket only matches the small case vowels.	-
+[AEIOU]		This square bracket only matches the upper-case vowels.	-
+ab[^4-9]	It matches those digits or characters which are not defined in the square bracket.		This expression matches those strings which do not contain 5, 6, 7, and 8.
+\s		It is used to match a one white space character.
+\S		It is used to match one non-white space character.
+\0		It is used to match a NULL character.
+\a		It is used to match a bell or alarm.
+\d		It is used to match one decimal digit, which means from 0 to 9.
+\D		It is used to match any non-decimal digit.
+\n 		It helps a user to match a new line.
+\w		It is used to match the alphanumeric [0-9a-zA-Z] characters.
+\W		It is used to match one non-word character
+\b		It is used to match a word boundary.
+
+ẼX
+import java.util.regex.*;    
+class reg{    
+public static void main(String args[]){    
+System.out.println(Pattern.matches(".r.", "arp")); // This statement displays Boolean value True because the second character is r in both string and regular exp.     
+System.out.println(Pattern.matches(".bm", "abc")); //This statement displays Boolean value False because the third character is different in both string and regular exp.       
+System.out.println(Pattern.matches("..m", "msm")); //This statement displays Boolean value True because the third character is m in both string and regular exp.       
+System.out.println(Pattern.matches("a..s", "amns")); //This statement displays Boolean value True because the first and last character is same in both string and regular exp.      
+System.out.println(Pattern.matches(".s.", "mas")); //This statement displays Boolean value False because the second character is different in both string and regular exp.       
+}  
+}  
+
+check password 
+Pattern p = Pattern.compile("^.*[A-Z]+.*$") : ít nhất 1 kí tự viết hoa, trc đó hoặc sau nó có thể có nhiêu kí tự cũng đc ( dùng dấu .  để thể hiện trc đó có j đó và và * để chỉ có thể có 0 hoặc nhiều lần) 
+Pattern p = Pattern.compile("^.*[a-z]+.*$") 
+Pattern p = Pattern.compile("^.*[0-9]+.*$") 
+Pattern p = Pattern.compile("^.*[#$%@!%^^&*+_?]+.*$")
+Pattern p = Pattern.compile("^.{8,}$") : ít nhất 8 kí tự   

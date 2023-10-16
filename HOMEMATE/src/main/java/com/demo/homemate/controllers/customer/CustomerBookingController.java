@@ -1,5 +1,6 @@
 package com.demo.homemate.controllers.customer;
 
+import com.demo.homemate.dtos.job.request.JobRequest;
 import com.demo.homemate.services.interfaces.IServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class CustomerBookingController {
 
     @GetMapping("/form")
     public String createBooking(Model model) {
+
+        model.addAttribute("bookingInfor",new JobRequest());
+
         model.addAttribute("service", serviceService.getAllServices());
         return "customer/booking";
     }

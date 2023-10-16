@@ -25,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IUserService, UserDetailsService {
+public class UserService implements IUserService {
 
 
     private final EmployeeRepository employeeRepository;
@@ -176,12 +176,5 @@ public class UserService implements IUserService, UserDetailsService {
         return password.equals(confirmPassword) ? 1:0;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Admin user = adminRepository.findByUsername(username);
-        if (user != null) {
-            return user;
-        }
-        throw new UsernameNotFoundException("User not found");
-    }
+
 }

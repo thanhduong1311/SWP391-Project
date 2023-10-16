@@ -67,7 +67,7 @@ public class ServiceController {
         Service response = adminService.getAService(id);
         ServiceRequest request = new ServiceMapper().toServiceRequest(response);
         model.addAttribute("ServiceEdit", request);
-        return "admin/updateService";
+        return "admin/UpdateService";
     }
 
     //Edit service handle

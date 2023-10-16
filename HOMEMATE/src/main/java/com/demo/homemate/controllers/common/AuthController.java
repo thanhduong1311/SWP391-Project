@@ -195,6 +195,7 @@ public class AuthController {
         return "redirect:/login";
     }
 
+
     @GetMapping("/forgetpassword")
     public String showForgotpassword(){
         return "forget-password";
@@ -217,5 +218,9 @@ public class AuthController {
 
     }
 
+    @GetMapping("/guest/partnerRegister")
+    public  String viewPartnerRegister(Model model) {
+            return "partnerRegister";
+    }
 
 }

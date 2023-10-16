@@ -1,23 +1,18 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
+import com.demo.homemate.dtos.employeeRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Customer;
-import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Service;
+import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
-import com.demo.homemate.repositories.CustomerRepository;
-import com.demo.homemate.repositories.EmployeeRepository;
-import com.demo.homemate.repositories.ServiceRepository;
+import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IAdminService;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -30,6 +25,9 @@ public class AdminService implements IAdminService  {
     private final CustomerRepository customerRepository;
 
     private final ServiceRepository serviceRepository;
+
+
+
 
 
     @Override
@@ -345,6 +343,10 @@ public class AdminService implements IAdminService  {
     public MessageOject rejectPartner(int id) {
         return null;
     }
+
+
+
+
 
 
 }
