@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -86,8 +86,19 @@
             <div class="card">
               <div class="card-header p-3">
                 <div class="row">
-                  <h3 class="mb-0">
-                    Update Service
+                  <h3 class="mb-0 col-2">
+                    <a
+                      href=""
+                      class="btn btn-dark"
+                      >Add Service</a
+                    >
+                  </h3>
+                  <h3 class="mb-0 col-10">
+                    <a
+                      href=""
+                      class="btn btn-dark"
+                      >Update Service</a
+                    >
                   </h3>
                 </div>
               </div>
@@ -99,11 +110,9 @@
                   height: 400px;
                 ">
               </div>
-              <form th:action="@{/admin/services/edit/{id}(id=${ServiceEdit.getServiceId()})}" method="post" th:object="${ServiceEdit}">
+              <h1>Add new service</h1>
+              <form th:action="@{/admin/services/add}" method="post" th:object="${newService}">
 
-                <label>Service ID</label>
-                <input th:field="*{serviceId}" th:value="${ServiceEdit.getServiceId()}" readonly type="text">
-                <br>
                 <label>name</label>
                 <input th:field="*{name}" type="text">
                 <br>
@@ -124,7 +133,7 @@
                 <br>
 
 
-                <button type="submit">Update</button>
+                <button type="submit">add</button>
 
               </form>
               <div class="card-footer p-3"></div>

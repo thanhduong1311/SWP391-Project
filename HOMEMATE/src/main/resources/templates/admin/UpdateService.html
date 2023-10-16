@@ -86,7 +86,7 @@
             <div class="card">
               <div class="card-header p-3">
                 <div class="h2">
-                  Add New Service
+                  Update Service
                 </div>
               </div>
               <div
@@ -99,7 +99,7 @@
                 <form
                   th:action="@{/admin/services/add}"
                   method="post"
-                  th:object="${newService}">
+                  th:object="${ServiceEdit}" >
                   <div class="form-floating pb-3">
                     <input
                       type="text"
@@ -170,7 +170,7 @@
                     <button
                       class="btn btn-lg btn-outline-success"
                       type="submit">
-                      Add
+                      Update
                     </button>
                   </div>
                 </form>

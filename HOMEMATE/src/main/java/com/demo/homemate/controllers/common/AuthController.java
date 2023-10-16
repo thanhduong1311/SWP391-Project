@@ -168,5 +168,9 @@ public class AuthController {
         return "redirect:/login";
     }
 
+    @GetMapping("/guest/partnerRegister")
+    public  String viewPartnerRegister(Model model) {
+            return "partnerRegister";
+    }
 
 }
