@@ -1,14 +1,21 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.configurations.JWTService;
+import com.demo.homemate.data.MailContents;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
+import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
+import com.demo.homemate.dtos.email.EmailDetails;
+import com.demo.homemate.dtos.password.RecoverPassword;
+import com.demo.homemate.dtos.password.tokenEmailConfirm;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
+import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
@@ -29,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -257,5 +265,46 @@ public class UserService implements IUserService {
         return 0;
     }
 
+    /**
+     * @param email
+     */
+    @Override
+    public RecoverPassword createCodeRecover(String email) {
+
+        RecoverPassword recoverPassword = new RecoverPassword();
+        //check email
+        int emailOf = checkEmail(email);
+        String fname = "";
+        if (emailOf==1){
+            fname = customerRepository.findByEmail(email).getFullName();
+        }else
+            fname = employeeRepository.findByEmail(email).getFullName();
+
+        //Generate random code
+        Random rd = new Random();
+        int rand = rd.nextInt(999999-100000+1)+100000;
+
+        //Prepare for mail content
+        MailContents mailContents = new MailContents();
+        mailContents.setSubjectName(fname);
+        mailContents.setTitle("[HOMEMATE] RECOVER PASSWORD MAIL");
+        mailContents.setCodeRecover(String.valueOf(rand));
+
+        //Set email required information
+        EmailDetails emailDetails = new EmailDetails();
+        emailDetails.setRecipient(email);
+        emailDetails.setSubject(mailContents.getTitle());
+        emailDetails.setMsgBody(mailContents.CreateRecoverPassword());
+
+
+        recoverPassword.setEmail(email);
+
+        //Generate token
+        String jwtToken = JWTService.generateJwtRecoverCode(new tokenEmailConfirm().setCode(String.valueOf(rand)).setEmail(email));
+        recoverPassword.setExpiration(20);
+        recoverPassword.setEmailDetails(emailDetails);
+        //add to respone
+        return recoverPassword;
+    }
 
 }

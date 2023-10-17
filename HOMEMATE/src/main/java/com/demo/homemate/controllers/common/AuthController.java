@@ -9,11 +9,15 @@ import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.dtos.employee.response.PartnerResponse;
+import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.password.RecoverPassword;
+import com.demo.homemate.dtos.password.tokenEmailConfirm;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.EmailService;
+import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.interfaces.IServiceService;
 import io.jsonwebtoken.Claims;
@@ -40,9 +44,12 @@ public class AuthController {
     private final EmailService emailService;
 
     private final IServiceService serviceService;
+
     private final EmployeeRepository employeeRepository;
 
     private final CustomerRepository customerRepository;
+
+    private final UserService userService;
 
     /**
      * xử lí login
@@ -195,25 +202,58 @@ public class AuthController {
 
 
     @GetMapping("/forgetpassword")
-    public String showForgotpassword(){
+    public String showForgotpassword(HttpServletRequest request, Model model){
+        Cookie cookie = WebUtils.getCookie(request,"RToken");
+        System.out.println("Co model khong: "+ model.getAttribute("ConfirmedEmail"));
+        if (cookie!=null)
+        model.addAttribute("Confirm","huy@gmail.com");
+        else model.addAttribute("Confirm","");
         return "forget-password";
     }
     @PostMapping("/forgetpassword")
     public String forgetPassword(HttpServletResponse response,
+                                 HttpServletRequest request,
                                  Model model,
-                                 @RequestParam(value="txtEmail") String email)
-    {
+                                 @RequestParam(value="txtEmail") String email,
+                                 @RequestParam(value="txtCode",required = false) String code,
+                                 @CookieValue(name = "RToken",required = false) String rtoken
+                                 ) {
         if (email==null||email.isEmpty()){
             return "redirect:/forgetpassword";
         }
+        //Bam nut Send email hoac Confirm code
+        //Neu co token (nhap code xong bam "Confirm"
+        if (rtoken!=null){
+            Claims claim = JWTService.parseJwt(rtoken);
+            //neu co noi dung token
+            if (claim!=null){
+                tokenEmailConfirm tokenEConfirm = (tokenEmailConfirm)claim.get("Recover");
+                //kiem tra emai vs code co dung vs token khong ( o email dc set ve readonly truoc do de nguoi dung khong thay doi dc
+                if (tokenEConfirm.getEmail().equals(email) && code.trim().equals(tokenEConfirm.getCode())){
+                        //chuuen den trang nhap pass moi
+                }else {
+                    //sai code thi cut
+                    model.addAttribute("WrongCode","Wrong code please try again!");
+                    return "redirect:/forgetpassword";
+                }
+            }
+            
 
+
+        //Neu khong co token thi tao 1 token , giai doan Bam Send email/Resend email de no tao
+            // VE SAU TACH RA LM FUNCTION RIENG, DE THEM TRG HOP HET HAN COOKIE( HOAC TOKEN - CHUA XEM)
+        }else{
         if (customerRepository.findByEmail(email)!=null||employeeRepository.findByEmail(email)!=null)
         {
-            return "home";
-        }else{
-            return "redirect:/forgetpassword";
+            RecoverPassword recover = userService.createCodeRecover(email);
+            model.addAttribute("ConfirmedEmail", email);
+            emailService.sendEmail(recover.getEmailDetails());
+            Cookie cookie = new Cookie("RToken",recover.getToken());
+            cookie.setMaxAge(recover.getExpiration());
+            response.addCookie(cookie);
         }
-
+        }
+        return "redirect:/forgetpassword";
     }
 
     @GetMapping("/partnerRegister")

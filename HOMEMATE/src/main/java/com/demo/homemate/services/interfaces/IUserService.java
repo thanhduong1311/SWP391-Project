@@ -3,6 +3,8 @@ package com.demo.homemate.services.interfaces;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
+import com.demo.homemate.dtos.email.EmailDetails;
+import com.demo.homemate.dtos.password.RecoverPassword;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
@@ -96,5 +98,6 @@ public interface IUserService {
     public int createEmployee(PartnerRegisterRequest request);
 
     public int checkIDCard(String cardId);
+    public RecoverPassword createCodeRecover(String email);
 
 }

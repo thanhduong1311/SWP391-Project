@@ -71,7 +71,6 @@ public class EmailService {
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parseHeader(to, false));
         msg.setSubject(subject);
         msg.setSentDate(new Date());
-
         msg.setText(mailContent,"UTF-8","html");
 
         return msg;
