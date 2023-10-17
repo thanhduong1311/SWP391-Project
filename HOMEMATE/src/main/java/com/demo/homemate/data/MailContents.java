@@ -9,6 +9,7 @@ import lombok.Setter;
 public class MailContents {
     String subjectName;
     String title;
+    String codeRecover;
 //    String createAccountSucess ;
 //    String bookingSuccess;
 //    String employeeRegisterSuccess;
@@ -48,10 +49,10 @@ public class MailContents {
                 "</body>\n" +
                 "</html>";
     }
-    public String ForgetPassword() {
+    public String CreateRecoverPassword() {
         return "<html>\n" +
                 "<head>\n" +
-                "<title>Code for confirm Recover password!</title>\n" +
+                "<title>"+this.title+"</title>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "<p>Hi "+this.subjectName+",</p>\n" +
@@ -60,7 +61,7 @@ public class MailContents {
                 "\n" +
                 "<p>If it not you, please don't share this code for anyone</p>\n" +
                 "\n" +
-                "<p>The code: "+this.title+"</p>\n" +
+                "<p>The code: "+this.codeRecover+"</p>\n" +
                 "\n" +
                 "<p>If you have any questions or requests, please contact us via hotline <b>0813113149</b> or email <b>homematesuportteam@gmail.com</b> .</p>\n" +
                 "\n" +

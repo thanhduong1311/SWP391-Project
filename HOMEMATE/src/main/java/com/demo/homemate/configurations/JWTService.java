@@ -2,6 +2,7 @@ package com.demo.homemate.configurations;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import com.demo.homemate.dtos.password.tokenEmailConfirm;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
@@ -12,6 +13,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
+import java.util.Random;
 
 public class JWTService {
 
@@ -62,6 +64,18 @@ public class JWTService {
                 .compact();
     }
 
+    public static String generateJwtRecoverCode(tokenEmailConfirm recover) {
+        long  expiration = System.currentTimeMillis() + 3600000 * 6; // 1 hour
+        return Jwts
+                .builder()
+                .setSubject(recover.getEmail())
+                .claim("tokenConfirm",recover)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
     public static Claims parseJwt(String jwt) {
         try {
             return Jwts
@@ -89,7 +103,8 @@ public class JWTService {
     }
 
     public static void main(String[] args) {
-//        String s = generateJwt("abc", "asdf");
-
+       Random rd = new Random();
+       int rand = rd.nextInt(999999-100000+1)+100000;
+        System.out.println(rand);
     }
 }
