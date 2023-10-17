@@ -1,9 +1,8 @@
 package com.demo.homemate.services.interfaces;
 
-import com.demo.homemate.dtos.employeeRequest.Response.CancelJobDetail;
-import com.demo.homemate.dtos.employeeRequest.Response.EmployeeCancelJobRequest;
+import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
+import com.demo.homemate.dtos.employeeCancelRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Job;
 
 import java.util.List;
 

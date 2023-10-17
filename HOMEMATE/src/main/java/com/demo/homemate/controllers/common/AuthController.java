@@ -7,22 +7,21 @@ import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
+import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
+import com.demo.homemate.dtos.employee.response.PartnerResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.CreateAccountService;
 import com.demo.homemate.services.EmailService;
-import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.interfaces.IServiceService;
-import com.sun.net.httpserver.HttpContext;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,6 @@ public class AuthController {
 
     private final CreateAccountService createAccountService;
 
-    private final UserService userService ;
 
     private final EmailService emailService;
 
@@ -218,9 +216,29 @@ public class AuthController {
 
     }
 
-    @GetMapping("/guest/partnerRegister")
+    @GetMapping("/partnerRegister")
     public  String viewPartnerRegister(Model model) {
-            return "partnerRegister";
+        model.addAttribute("service", serviceService.getAllServices());
+        model.addAttribute("partnerInfo",new PartnerRegisterRequest());
+        return "partnerRegister";
+    }
+
+    @PostMapping("/partnerRegister")
+    public String partnerRegister(Model model, PartnerRegisterRequest request) {
+        System.out.println(request.toString());
+        PartnerResponse response = createAccountService.createAccount(request);
+        if(response.getStateCode() == 1) {
+            model.addAttribute("PartnerRegiter", response.getMessageOject());
+            emailService.sendEmail(response.getMessageOject().getEmailMessage());
+            System.out.println(response.getMessageOject().getMessage());
+            System.out.println("********************************************************************************** SUCCESS");
+            return "redirect:/guest";
+        }else {
+            model.addAttribute("PartnerRegiter", response.getMessageOject().getMessage());
+            System.out.println(response.getMessageOject());
+            System.out.println("********************************************************************************** FAILED");
+            return viewPartnerRegister(model);
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.demo.homemate.dtos.employeeRequest.Response;
+package com.demo.homemate.dtos.employeeCancelRequest.Response;
 
 import com.demo.homemate.enums.PaymentType;
 import com.demo.homemate.enums.RequestStatus;

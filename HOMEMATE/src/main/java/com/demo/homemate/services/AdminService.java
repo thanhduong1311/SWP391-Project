@@ -1,7 +1,5 @@
 package com.demo.homemate.services;
 
-import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
-import com.demo.homemate.dtos.employeeRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
@@ -13,6 +11,7 @@ import com.demo.homemate.services.interfaces.IAdminService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -44,64 +43,64 @@ public class AdminService implements IAdminService  {
 
     @Override
     public int handelAddNewService(ServiceRequest request) {
-        Service service = new Service();
-        service.setName(request.getName());
-        service.setPrice(request.getPrice());
-        service.setImage(request.getImg());
-        service.setDiscount(request.getDiscount());
-        service.setDescription(request.getDescription());
-
-        if(serviceRepository.findByName(service.getName().trim()) != null) {
-            return 0;
-        } else {
-//            LocalDateTime now = LocalDateTime.now();
-//            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String formattedDatetime = dateTimeFormatter.format(now);
-//            Date createAt = new Date(formattedDatetime);
-
+        try {
+            Service service = new Service();
             service.setName(request.getName());
             service.setPrice(request.getPrice());
             service.setImage(request.getImg());
             service.setDiscount(request.getDiscount());
             service.setDescription(request.getDescription());
-//            service.setCreateAt(createAt);
-//            service.setUpdateAt(createAt);
 
-            serviceRepository.save(service);
 
-            return serviceRepository.findByName(service.getName().trim()) == null ? 0:1;
+            if(serviceRepository.findByName(service.getName().trim()) != null) {
+                return 0;
+            } else {
+                service.setName(request.getName());
+                service.setPrice(request.getPrice());
+                service.setImage(request.getImg());
+                service.setDiscount(request.getDiscount());
+                service.setDescription(request.getDescription());
+                service.setCreateAt(new Date());
+                service.setUpdateAt(new Date());
 
+                serviceRepository.save(service);
+
+                return serviceRepository.findByName(service.getName().trim()) == null ? 0:1;
+            }
+
+        } catch (Exception e) {
+            return 0;
         }
+
+
     }
 
     @Override
     public int handelUpdateService(ServiceRequest request) {
 
-        Service service = serviceRepository.findById(request.getServiceId());
+        try {
+            Service service = serviceRepository.findById(request.getServiceId());
+
+            if (serviceRepository.findByName(service.getName().trim()) != null ||
+                    serviceRepository.findById(request.getServiceId()) == null) {
+                return 0;
+            } else {
+
+                service.setName(request.getName());
+                service.setPrice(request.getPrice());
+                service.setImage(request.getImg());
+                service.setDiscount(request.getDiscount());
+                service.setDescription(request.getDescription());
+
+                service.setUpdateAt(new Date());
 
 
-        if (serviceRepository.findByName(service.getName().trim()) != null ||
-                serviceRepository.findById(request.getServiceId()) == null) {
+                serviceRepository.save(service);
+
+                return serviceRepository.findByName(service.getName().trim()) == null  ? 0 : 1;
+            }
+        } catch (Exception e) {
             return 0;
-        } else {
-//            LocalDateTime now = LocalDateTime.now();
-//            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String formattedDatetime = dateTimeFormatter.format(now);
-//            Date createAt = new Date(formattedDatetime);
-
-            service.setName(request.getName());
-            service.setPrice(request.getPrice());
-            service.setImage(request.getImg());
-            service.setDiscount(request.getDiscount());
-            service.setDescription(request.getDescription());
-
-//            service.setCreateAt(createAt);
-//            service.setUpdateAt(createAt);
-
-            serviceRepository.save(service);
-
-            return serviceRepository.findByName(service.getName().trim()) == null  ? 0 : 1;
-
         }
     }
 
@@ -119,13 +118,18 @@ public class AdminService implements IAdminService  {
 
     @Override
     public List<Employee> getAllEmployee() {
-        List<Employee> employees =  employeeRepository.findAll();
-        List<Employee> result = new ArrayList<>();
-        for (Employee e: employees
-             ) {
-            if(e.getRole().ordinal() == 2 && e.getAccountStatus().ordinal()!=2) result.add(e);
+        try {
+            List<Employee> employees =  employeeRepository.findAll();
+            List<Employee> result = new ArrayList<>();
+            for (Employee e: employees
+            ) {
+                if(e.getRole().ordinal() == 2 && e.getAccountStatus().ordinal()!=2) result.add(e);
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
         }
-        return result;
+
     }
 
     @Override
@@ -136,13 +140,17 @@ public class AdminService implements IAdminService  {
 
     @Override
     public List<Employee> getAllPartner() {
-        List<Employee> employees =  employeeRepository.findAll();
-        List<Employee> result = new ArrayList<>();
-        for (Employee e: employees
-        ) {
-            if(e.getAccountStatus().ordinal() == 2 && e.getRole().ordinal() == 2) result.add(e);
+        try {
+            List<Employee> employees =  employeeRepository.findAll();
+            List<Employee> result = new ArrayList<>();
+            for (Employee e: employees
+            ) {
+                if(e.getAccountStatus().ordinal() == 2 && e.getRole().ordinal() == 2) result.add(e);
+            }
+            return result;
+        } catch (Exception e) {
+            return null;
         }
-        return result;
     }
 
     @Override
@@ -169,72 +177,93 @@ public class AdminService implements IAdminService  {
     @Override
     public ServiceResponse addService(ServiceRequest request) {
         ServiceResponse response = new ServiceResponse();
-        if (handelAddNewService(request) == 1) {
-            response.setName(request.getName());
-            response.setImg(request.getImg());
-            response.setPrice(request.getPrice());
-            response.setDiscount(request.getDiscount());
-            response.setDescription(request.getDescription());
-            response.setMessageOject(new MessageOject("Success", "Add service successfully!",null));
+        try {
+            if (handelAddNewService(request) == 1) {
+                response.setName(request.getName());
+                response.setImg(request.getImg());
+                response.setPrice(request.getPrice());
+                response.setDiscount(request.getDiscount());
+                response.setDescription(request.getDescription());
+
+                response.setMessageOject(new MessageOject("Success", "Add service successfully!",null));
+                return response;
+            }
+            response.setMessageOject(new MessageOject("Failed", "Add service failed!",null));
             return response;
+        } catch (Exception e) {
+            response.setMessageOject(new MessageOject("Failed", e.getMessage(),null));
+            return null;
         }
-        response.setMessageOject(new MessageOject("Failed", "Add service failed!",null));
-        return response;
+
     }
 
     @Override
     public MessageOject updateService(ServiceRequest request) {
-        Service service = serviceRepository.findById(request.getServiceId());
-        if(service != null) {
-            service.setName(request.getName());
-            service.setImage(request.getImg());
-            service.setPrice(request.getPrice());
-            service.setDiscount(request.getDiscount());
-            service.setDescription(request.getDescription());
-            serviceRepository.save(service);
-            return new MessageOject("Succes","Update service successfully!",null);
+        try {
+            Service service = serviceRepository.findById(request.getServiceId());
+            if(service != null) {
+                service.setName(request.getName());
+                service.setImage(request.getImg());
+                service.setPrice(request.getPrice());
+                service.setDiscount(request.getDiscount());
+                service.setDescription(request.getDescription());
+                serviceRepository.save(service);
+                return new MessageOject("Succes","Update service successfully!",null);
+            }
+            return new MessageOject("Failed","Update service Failed!",null);
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null);
         }
-        return new MessageOject("Failed","Update service Failed!",null);
-
     }
 
     @Override
     public MessageOject deleteService(int id) {
-        ServiceResponse response= new ServiceResponse();
-        Service service = serviceRepository.findById(id);
+        try {
+            ServiceResponse response= new ServiceResponse();
+            Service service = serviceRepository.findById(id);
 
-        if (service == null) {
-           return new MessageOject("Failed","Can not find service with ID = " + id,null);
-        } else {
-            serviceRepository.delete(service);
-            service = serviceRepository.findById(id);
-            if (service != null) {
-               return  (new MessageOject("Failed","Can not delete service with ID = " + id,null));
+            if (service == null) {
+                return new MessageOject("Failed","Can not find service with ID = " + id,null);
             } else {
-                return (new MessageOject("Success","Service delete successfully!",null));
+                serviceRepository.delete(service);
+                service = serviceRepository.findById(id);
+                if (service != null) {
+                    return  (new MessageOject("Failed","Can not delete service with ID = " + id,null));
+                } else {
+                    return (new MessageOject("Success","Service delete successfully!",null));
+                }
             }
+        } catch (Exception e) {
+            return (new MessageOject("Success",e.getMessage(),null));
         }
+
     }
 
     @Override
     public MessageOject blockCustomer(int id) {
-        Customer customer = customerRepository.findById(id);
+        try {
+            Customer customer = customerRepository.findById(id);
 
-        if (customer == null) {
-            return new MessageOject("Failed","Can not block this account!",null );
-        }  else {
-            customer.setAccountStatus(AccountStatus.BLOCKED);
-            customerRepository.save(customer);
-            customer = customerRepository.findById(id);
-            if(customer.getAccountStatus().ordinal() == 1) {
-                return new MessageOject("Success","Account is blocked",null );
+            if (customer == null) {
+                return new MessageOject("Failed","Can not block this account!",null );
+            }  else {
+                customer.setAccountStatus(AccountStatus.BLOCKED);
+                customerRepository.save(customer);
+                customer = customerRepository.findById(id);
+                if(customer.getAccountStatus().ordinal() == 1) {
+                    return new MessageOject("Success","Account is blocked",null );
+                }
+                return new MessageOject("Failed","Can not block this account!",null );
             }
-            return new MessageOject("Failed","Can not block this account!",null );
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null );
         }
+
     }
 
     @Override
     public MessageOject unBlockCustomer(int id) {
+        try {
         Customer customer = customerRepository.findById(id);
 
         if (customer == null) {
@@ -249,27 +278,37 @@ public class AdminService implements IAdminService  {
                 return new MessageOject("Failed","Can not unblock this account!",null );
             }
         }
+    } catch (Exception e) {
+        return new MessageOject("Failed",e.getMessage(),null );
+    }
     }
 
     @Override
     public MessageOject deleteCustomer(int id) {
         Customer customer = customerRepository.findById(id);
 
-        if (customer == null) {
-            return new MessageOject("Failed","Can not delete this account!",null );
-        }  else {
-            customerRepository.delete(customer);
-            customer = customerRepository.findById(id);
-            if(customer == null) {
-                return new MessageOject("Success","Account is deleted",null );
-            } else {
+        try {
+            if (customer == null) {
                 return new MessageOject("Failed","Can not delete this account!",null );
+            }  else {
+                customerRepository.delete(customer);
+                customer = customerRepository.findById(id);
+                if(customer == null) {
+                    return new MessageOject("Success","Account is deleted",null );
+                } else {
+                    return new MessageOject("Failed","Can not delete this account!",null );
+                }
             }
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null );
         }
+
+
     }
 
     @Override
     public MessageOject blockEmployee(int id) {
+        try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
@@ -283,10 +322,14 @@ public class AdminService implements IAdminService  {
             }
             return new MessageOject("Failed","Can not block this account!",null );
         }
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null );
+        }
     }
 
     @Override
     public MessageOject unBlockEmployee(int id) {
+        try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
@@ -301,10 +344,14 @@ public class AdminService implements IAdminService  {
                 return new MessageOject("Failed","Can not unblock this account!",null );
             }
         }
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null );
+        }
     }
 
     @Override
     public MessageOject deleteEmployee(int id) {
+        try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
@@ -318,10 +365,14 @@ public class AdminService implements IAdminService  {
                 return new MessageOject("Failed","Can not delete this account!",null );
             }
         }
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null );
+        }
     }
 
     @Override
     public MessageOject approvePartner(int id) {
+        try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
@@ -331,23 +382,23 @@ public class AdminService implements IAdminService  {
             employee.setRole(Role.EMPLOYEE);
             employeeRepository.save(employee);
             employee= employeeRepository.findById(id);
+            employee.setUpdateAt(new Date());
             if(employee.getAccountStatus().ordinal() == 0 && employee.getRole().ordinal() == 2) {
                 return new MessageOject("Success","Partner is approved",null );
             } else {
                 return new MessageOject("Failed","Can not approve this partner!",null );
             }
         }
+        } catch (Exception e) {
+            return new MessageOject("Failed",e.getMessage(),null );
+        }
     }
 
     @Override
     public MessageOject rejectPartner(int id) {
-        return null;
+        deleteEmployee(id);
+        return new MessageOject("Succes","Partner is rejected",null);
     }
-
-
-
-
-
 
 }
 

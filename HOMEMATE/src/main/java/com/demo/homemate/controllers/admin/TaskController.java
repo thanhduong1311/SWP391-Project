@@ -1,7 +1,7 @@
 package com.demo.homemate.controllers.admin;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
-import com.demo.homemate.dtos.employeeRequest.Response.CancelJobDetail;
+import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.services.AdminService;
 import com.demo.homemate.services.CustomerReportService;

@@ -1,7 +1,7 @@
 package com.demo.homemate.services;
 
-import com.demo.homemate.dtos.employeeRequest.Response.CancelJobDetail;
-import com.demo.homemate.dtos.employeeRequest.Response.EmployeeCancelJobRequest;
+import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
+import com.demo.homemate.dtos.employeeCancelRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.RequestStatus;
@@ -10,6 +10,7 @@ import com.demo.homemate.services.interfaces.IEmployeeRequestService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -93,6 +94,7 @@ public class EmployeeRequestService implements IEmployeeRequestService {
            if(er == null) {
                return new MessageOject("Failed", "Can not approve this request",null);
            } else {
+               er.setDecisionAt(new Date());
                er.setStatus(RequestStatus.APPROVED);
                employeeRequestRepository.save(er);
                return new MessageOject("Success", "Request is approved",null);
@@ -109,6 +111,7 @@ public class EmployeeRequestService implements IEmployeeRequestService {
             if(er == null) {
                 return new MessageOject("Failed", "Can not reject this request",null);
             } else {
+                er.setDecisionAt(new Date());
                 er.setStatus(RequestStatus.REJECTED);
                 employeeRequestRepository.save(er);
                 return new MessageOject("Success", "Request is rejected",null);

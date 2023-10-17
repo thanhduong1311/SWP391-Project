@@ -2,14 +2,17 @@ package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
+import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
+import com.demo.homemate.entities.Service;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
+import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IUserService;
 import com.demo.homemate.utils.PasswordMD5;
 import com.demo.homemate.utils.PhoneValidator;
@@ -19,11 +22,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-@Service
+@org.springframework.stereotype.Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
 
@@ -33,6 +40,8 @@ public class UserService implements IUserService {
     private final CustomerRepository customerRepository;
 
     private final AdminRepository adminRepository;
+
+    private final ServiceRepository serviceRepository;
 
 
     @Override
@@ -132,6 +141,26 @@ public class UserService implements IUserService {
         return admin.getRole().ordinal();
     }
 
+    @Override
+    public int checkPhone(String phone) {
+        return PhoneValidator.isValid(phone) == true ? 1:0;
+    }
+
+    @Override
+    public int checkNewPassword(String password, String confirmPassword) {
+        return password.equals(confirmPassword) ? 1:0;
+    }
+
+    @Override
+    public int checkIDCard(String IDcard) {
+        List<Employee> employees = employeeRepository.findAll();
+        for (Employee e :
+             employees) {
+            if(e.getIdCardNumber().equals(IDcard.trim())) return 0;
+        }
+        return 1;
+    }
+
     @SneakyThrows
     @Override
     public int createCustomer(RegisterRequest request) {
@@ -149,10 +178,16 @@ public class UserService implements IUserService {
             customer.setFullName(request.getLastName() + " " +request.getFirstName());
             customer.setPhone(request.getPhone());
             customer.setEmail(request.getEmail());
-            customer.setDob(request.getDob());
             customer.setRole(Role.CUSTOMER);
+            customer.setAvatar("/assets/images/defaultUser.png");
             customer.setAccountStatus(AccountStatus.ACTIVE);
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            customer.setDob(sdf.parse(request.getDob()));
+
+
+            customer.setCreateAt(new Date());
+            customer.setUpdateAt(new Date());
 
             customerRepository.save(customer);
 
@@ -166,14 +201,60 @@ public class UserService implements IUserService {
             return 0;
     }
 
-    @Override
-    public int checkPhone(String phone) {
-        return PhoneValidator.isValid(phone) == true ? 1:0;
-    }
 
+    @SneakyThrows
     @Override
-    public int checkNewPassword(String password, String confirmPassword) {
-        return password.equals(confirmPassword) ? 1:0;
+    public int createEmployee(PartnerRegisterRequest request) {
+
+        int checkPhone = checkPhone(request.getPhone());
+        int checkEmail = checkEmail(request.getEmail());
+        int checkNewPass = checkNewPassword(request.getPassword(), request.getConfirmPassword());
+        int checkUsername = checkUsername(request.getUsername());
+        int checkIDCard = checkIDCard(request.getCardIdNumber());
+
+
+        if(checkPhone != 0 && checkEmail ==0 && checkNewPass !=0 && checkUsername ==0 && checkIDCard!=0) {
+            Employee employee = new Employee();
+            employee.setUsername(request.getUsername());//
+            employee.setPassword(PasswordMD5.encode(request.getPassword()));//
+            employee.setFullName(request.getLastName() + " " +request.getFirstName());//
+            employee.setPhone(request.getPhone());//
+            employee.setEmail(request.getEmail());//
+            employee.setCity(request.getCity());
+            employee.setDistrict(request.getDistrict());
+            employee.setAddress_detail(request.getDetailAddress());
+            employee.setIdCardNumber(request.getCardIdNumber());
+            employee.setWork_place(request.getPlaceOfWork());
+            employee.setGender(request.getGender() == 0 ? "male" : "female");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            employee.setDob(sdf.parse(request.getDob()));
+
+            employee.setRole(Role.EMPLOYEE);
+            employee.setAvatar("/assets/images/defaultUser.png");
+            employee.setAccountStatus(AccountStatus.WAIT_FOR_APPROVE);
+
+
+           employee.setCreateAt(new Date());
+           employee.setUpdateAt(new Date());
+
+            List<Service> s = new ArrayList<>();
+            s.add(serviceRepository.findById(request.getForteService()));
+            employee.setServices(s);
+            employeeRepository.save(employee);
+
+
+
+            return employeeRepository.findByUsername(request.getUsername()) != null ? 1 : 0;
+
+        } else {
+            if (checkUsername != 0) return 2;
+            if (checkNewPass ==0 ) return 3;
+            if  (checkPhone == 0) return 4;
+            if (checkEmail != 0) return 5;
+            if (checkIDCard == 0) return 6;
+        }
+        return 0;
     }
 
 

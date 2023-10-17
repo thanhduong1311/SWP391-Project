@@ -94,58 +94,57 @@
     </div>
     <div class="row">
 
-        <form class="col-lg-8 mx-auto" >
+        <form class="col-lg-8 mx-auto" method="post" th:action="@{/customer/bookings/boooking}">
             <h3 class="mb-5">BOOKING FORM</h3>
             <div class="form-group mb-3">
                 <label for="name">Name</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Customer name">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Customer name" readonly>
             </div>
             <div class="form-group mb-3">
                 <label for="phoneNumber">Phone number</label>
-                <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Phone number">
+                <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Phone number" readonly>
             </div>
             <div class="form-group mb-3">
                 <label for="address">Address</label>
-                <input name="address" type="text" class="form-control" id="address" placeholder="Address">
+                <input name="address" type="text" class="form-control" id="address" placeholder="Address" readonly>
             </div>
             <div class="form-group mb-3">
                 <label for="description">Job description</label>
-                <textarea name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
+                <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
             </div>
             <div class="row mb-3">
-                <div class="form-group mb-3 col-md-6">
-                    <label for="date">Date</label>
-                    <input name="date" type="date" class="form-control" id="date" placeholder="Date">
-                </div>
+
                 <div class="form-group mb-3 col-md-6">
                     <label for="start">Start</label>
-                    <input name="time" type="time" class="form-control" id="start" placeholder="Time Start">
-                </div>
-                <div class="form-group mb-3 col-md-6">
-
+                    <input th:field="*{bookingInfor.timeStart}" name="time" type="datetime-local" class="form-control" id="start" placeholder="Time Start">
                 </div>
                 <div class="form-group mb-3 col-md-6">
                     <label for="end">End</label>
-                    <input name="time" type="time" class="form-control" id="end" placeholder="Time End">
+                    <input  th:field="*{bookingInfor.timeEnd}"  name="time" type="datetime-local" class="form-control" id="end" placeholder="Time End">
                 </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="exampleFormControlSelect1">Select Service</label>
-                <select class="form-control" id="exampleFormControlSelect1"  >
-                    <div th:each="ser:${service}">
-                        <option th:text="*{ser.getName()}"></option>
+            <div class="row">
+                <div class="form-group mb-3 col-md-6">
+                    <label for="exampleFormControlSelect1">Select Service</label>
+                    <select class="form-control" id="exampleFormControlSelect1"  th:field="*{bookingInfor.serviceId}">
+                        <div th:each="ser:${service}">
+                            <option th:value="*{ser.getServiceId()}" th:text="*{ser.getName()}"></option>
+                        </div>
+                    </select>
+                </div>
+                <div class="form-group mb-3 col-md-6">
+                    <div class="payment-type">
+                        <p>Payment type</p>
+                        <input name="name" value="0"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="banking">
+                        <label for="banking">Banking</label>
+
+                        <input name="name" value="1"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="cash" >
+                        <label for="cash">Cash</label>
+
                     </div>
-                </select>
+                </div>
             </div>
-            <div class="form-group mb-3">
-               <div class="payment-type">
-                   <p>Payment type</p>
-                   <label for="name"></label>
-                   <input name="name"  type="radio" class="" id="banking"> Banking
-                   <label for="name"></label>
-                   <input name="name"  type="radio" class="" id="cash" > Cash
-               </div>
-            </div>
+
             <button type="submit" class="col-md-12 btn btn-primary" >Booking</button>
         </form>
     </div>

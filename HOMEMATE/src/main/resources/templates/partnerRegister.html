@@ -13,131 +13,226 @@
       rel="stylesheet"
       href="/assets/css/bootstrap.min.css" />
   </head>
-  <body
-    class="animate__animated animate__fadeInDown">
+  <body>
     <div
-      class="container rounded-5 p-5 bg-light mt-5 shadow-lg"
+      class="container rounded-5 p-5 bg-light mt-5"
       style="max-width: 50rem">
       <h1 class="mb-5">Become Partner</h1>
-      <form >
+      <form th:action="@{/partnerRegister}" method="post">
+
         <div class="row">
           <div class="form-floating mb-3 col-md-6">
             <input
                     type="text"
-                    class="form-control p-1"
-                    name="fullname"
-                    id="floatingInput"
-                    placeholder="Họ và tên"
+                    class="form-control p-2"
+                    id="floatingInput1"
+                    th:field="*{partnerInfo.username}"
                     required />
-            <label for="floatingInput"
+            <label for="floatingInput1"
+            >Username</label
+            >
+          </div>
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="password"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.password}"
+                    id="floatingInput2"
+                    required />
+            <label for="floatingInput2"
+            >Password</label
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="email"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.email}"
+                    id="floatingInput3"
+                    required />
+            <label for="floatingInput3"
+            >Email</label
+            >
+          </div>
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="password"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.confirmPassword}"
+                    id="floatingInput4"
+                    required />
+            <label for="floatingInput4"
+            >Confirm password</label
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="text"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.firstName}"
+                    id="floatingInput5"
+                    required />
+            <label for="floatingInput5"
             >First Name</label
             >
           </div>
           <div class="form-floating mb-3 col-md-6">
             <input
                     type="text"
-                    class="form-control p-1"
-                    name="fullname"
-                    id="floatingInput0"
-                    placeholder="Họ và tên"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.lastName}"
+                    id="floatingInput6"
                     required />
-            <label for="floatingInput"
+            <label for="floatingInput6"
             >Last Name</label
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="text"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.city}"
+                    id="floatingInput7"
+                    required />
+            <label for="floatingInput7"
+            >City</label
+            >
+          </div>
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="text"
+                    class="form-control p-2"
+                    th:field="*{partnerInfo.district}"
+                    id="floatingInput8"
+                    required />
+            <label for="floatingInput8"
+            >District</label
             >
           </div>
         </div>
 
         <div class="form-floating mb-3">
           <input
-            type="email"
-            class="form-control"
-            name="email"
-            id="floatingInput1"
-            placeholder="name@example.com"
-            required />
-          <label for="floatingInput">Email</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
             type="text"
             class="form-control"
-            name="phoneNumber"
-            id="floatingInput2"
-            placeholder="Số điện thoại"
+            th:field="*{partnerInfo.detailAddress}"
+            id="floatingInput10"
             required />
-          <label for="floatingInput"
+          <label for="floatingInput10"
+          >Detail Address</label>
+        </div>
+        <div class="row">
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{partnerInfo.phone}"
+                    id="floatingInput11"
+                    placeholder="Số điện thoại"
+                    required />
+            <label for="floatingInput11"
             >Phone number</label
-          >
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            type="date"
-            class="form-control"
-            name="birthday"
-            id="floatingInput3"
-            placeholder="birthday"
-            required />
-          <label for="floatingInput"
+            >
+          </div>
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="date"
+                    class="form-control"
+                    th:field="*{partnerInfo.dob}"
+                    id="floatingInput12"
+                    placeholder="birthday"
+                    required />
+            <label for="floatingInput12"
             >Birthday</label
-          >
+            >
+          </div>
         </div>
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            name="idNum"
-            id="floatingInput4"
-            placeholder=""
-            required />
-          <label for="floatingInput"
-            >ID number</label
-          >
+
+        <div class="row">
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{partnerInfo.cardIdNumber}"
+                    id="floatingInput13"
+                    placeholder=""
+                    required />
+            <label for="floatingInput13"
+            >ID Card number</label
+            >
+          </div>
+
+          <div class=" mb-3 col-md-6 pt-3">
+            <input
+                    type="radio"
+                    name="gender"
+                    class=""
+                    value="0"
+                    th:field="*{partnerInfo.gender}"
+                    id="floatingInput16"
+                    placeholder=""
+            />
+            <label for="floatingInput16"
+            >Male</label
+            >
+
+            <input
+                    type="radio"
+                    name="gender"
+                    class=""
+                    value="1"
+                    id="floatingInput17"
+                    th:field="*{partnerInfo.gender}"
+            />
+            <label for="floatingInput17"
+            >Female</label
+            >
+
+          </div>
+
         </div>
-        <select
-          class="form-select"
-          name="city"
-          required>
-          <option selected value="">
-            Workplace
-          </option>
-          <option value="Hồ Chí Minh">
-            Hồ Chí Minh
-          </option>
-          <option value="Hà Nội">Hà Nội</option>
-          <option value="Thừa Thiên Huế">
-            Thừa Thiên Huế
-          </option>
-          567
-          <option value="Đà Nẵng">Đà Nẵng</option>
-          <option value="Quảng Nam">
-            Quảng Nam
-          </option>
-          <option value="Lâm Đồng">
-            Lâm Đồng
-          </option>
-          <option value="Nha Trang">
-            Nha Trang
-          </option>
-          <option value="Bình Dương">
-            Bình Dương
-          </option>
-          <option value="Biên Hoà">
-            Biên Hoà
-          </option>
-          <option value="Hải Phòng">
-            Hải Phòng
-          </option>
-          <option value="Cần Thơ">Cần Thơ</option>
-        </select>
+
+
+        <div class="row">
+          <div class="form-floating mb-3 col-md-6">
+            <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{partnerInfo.placeOfWork}"
+                    id="floatingInput15"
+                    placeholder="Số điện thoại"
+                    required />
+            <label for="floatingInput15"
+            >Place of work</label
+            >
+          </div>
+          <div class="form-floating mb-3 col-md-6">
+            <label for="selectService">Forte Service</label>
+             <select class="form-control" id="selectService"  th:field="*{partnerInfo.forteService}">
+               <option value="0"> </option>
+               <div th:each="ser:${service}">
+                 <option th:value="*{ser.getServiceId()}" th:text="*{ser.getName()}"></option>
+               </div>
+             </select>
+          </div>
+        </div>
 
         <button
           type="submit"
           class="btn btn-dark w-100 btn-lg mt-3">
-          Submit
+          Register
         </button>
       </form>
       <div class="text-center mt-3">
-        <a class="link-dark" href="home.html"
+        <a class="link-dark" th:href="@{/guest}"
           ><small>Back to Homepage</small></a
         >
       </div>

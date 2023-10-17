@@ -1,17 +1,13 @@
-package com.demo.homemate.dtos.customer.response;
-
+package com.demo.homemate.dtos.employee.response;
 
 import com.demo.homemate.dtos.notification.MessageOject;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerResponse {
+public class PartnerResponse {
     private String username;
 
     private String phone;

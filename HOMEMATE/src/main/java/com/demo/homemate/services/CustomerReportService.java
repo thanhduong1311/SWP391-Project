@@ -1,7 +1,6 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
-import com.demo.homemate.dtos.employeeRequest.Response.CancelJobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.repositories.*;

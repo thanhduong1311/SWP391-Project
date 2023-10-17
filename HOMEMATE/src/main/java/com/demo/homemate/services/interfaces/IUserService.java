@@ -2,6 +2,7 @@ package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
+import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
@@ -92,6 +93,8 @@ public interface IUserService {
     public int checkNewPassword(String password, String confirmPassword);
 
 
+    public int createEmployee(PartnerRegisterRequest request);
 
+    public int checkIDCard(String cardId);
 
 }

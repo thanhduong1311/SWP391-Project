@@ -41,7 +41,7 @@ public class Employee{
     @Column(unique = true)
     private String email;
 
-    private String dob;
+    private Date dob;
 
     private String phone;
 

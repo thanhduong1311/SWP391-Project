@@ -72,4 +72,25 @@ public class MailContents {
                 "</html>";
     }
 
+    public String  EmployeeRegisterSucess() {
+        return "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "  <title>Homamate Partner Registration Confirmation</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "  <p>Dear " +this.subjectName+",</p>\n" +
+                "  <p>On behalf of Homamate, we would like to express our sincere gratitude for your interest in becoming our strategic partner.</p>\n" +
+                "  <p>We have received your partner registration form and are currently reviewing it. We will be in touch with you as soon as possible with our decision.</p>\n" +
+                "  <p>In the meantime, if you have any questions, please do not hesitate to contact us at:</p>\n" +
+                "  <ul>\n" +
+                "    <li>Email: <b>homematesuportteam@gmail.com</b></li>\n" +
+                "    <li>Hotline: <b>0813113149</b></li>\n" +
+                "  </ul>\n" +
+                "  <p>Thank you for your registration.</p>\n" +
+                "  <p>Sincerely,</p>\n" +
+                "  <p>Homamate</p>\n" +
+                "</body>\n" +
+                "</html>";
+    }
+
 }
