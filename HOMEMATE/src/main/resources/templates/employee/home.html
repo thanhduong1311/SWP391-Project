@@ -83,6 +83,7 @@
         <img
           class="rounded-5 border me-4"
           src="images/customer-example.jpg"
+          th:src="*{AccountInfo.getAvatar()}"
           style="
             object-fit: cover;
             object-position: 25% 25%;
@@ -90,7 +91,8 @@
           alt="User Image"
           width="100rem"
           height="100rem" />
-        <h1>Welcome back, Partner</h1>
+        <h1>Welcome back,</h1>
+        <span class="h1" th:text="*{AccountInfo.getName()}"></span>
       </div>
 
       <div class="bg-secondary p-1 mb-3">

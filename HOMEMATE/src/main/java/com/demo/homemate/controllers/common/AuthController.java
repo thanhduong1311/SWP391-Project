@@ -137,6 +137,7 @@ public class AuthController {
                     claim = JWTService.parseJwt(sessionToken);
                     System.out.println("session"+sessionToken);
                 }
+                System.out.println(claim.getSubject());
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         return "redirect:/admin";

@@ -42,7 +42,7 @@ public class AdminHomeController {
                 if(claim.getSubject().equals(Role.ADMIN.toString())){
                     return "admin/dashboard";
                 }
-                else return "redirect:/admin";
+                else return "redirect:/home";
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -61,12 +61,15 @@ public class UserService implements IUserService {
         if (e == null && a == null && c == null) {
             return 0;
         } else {
+            //Employee
             if (c == null && a == null) {
                 return 1;
             }
+            //Customer
             if (e == null && a == null) {
                 return 2;
             }
+            //Admin
             if (e == null && c == null) {
                 return 3;
             }
