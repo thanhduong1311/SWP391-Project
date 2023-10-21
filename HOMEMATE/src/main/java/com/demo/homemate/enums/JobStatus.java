@@ -8,6 +8,8 @@ public enum JobStatus {
 
     DONE,
 
-    CANCEL
+    CANCEL,
+
+    UN_PAY
 
 }

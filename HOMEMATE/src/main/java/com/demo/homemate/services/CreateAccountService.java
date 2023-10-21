@@ -34,7 +34,6 @@ public class CreateAccountService {
             mailContents.setSubjectName(request.getLastName());
             mailContents.setTitle("[HOMEMATE] REGISTER ACCOUNT SUCCESSFULLY");
 
-            System.out.println(request.getLastName() + "###############################################################");
 
             EmailDetails emailDetails = new EmailDetails();
             emailDetails.setRecipient(request.getEmail());

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+    <link
+            rel="stylesheet"
+            href="/assets/css/bootstrap.min.css" />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com" />
+    <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+            rel="stylesheet"
+            href="/assets/css/home.css" />
+    <title>Zun | Homemate</title>
+    <style>
+        body,
+        html {
+            font-family: 'Roboto', sans-serif;
+        }
+        .hover-luaga {
+            transition: all 1s;
+        }
+        .hover-luaga:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="animate__animated animate__fadeIn">
+<!-- Header -->
+<header>
+    <nav
+            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+        <div class="container">
+            <a class="navbar-brand fs-2" href="#">
+                <icon class="bi-gem"></icon>
+                Homemate
+            </a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+            <span
+                    class="navbar-toggler-icon"></span>
+            </button>
+            <div
+                    class="collapse navbar-collapse"
+                    id="navbarSupportedContent">
+                <ul
+                        class="navbar-nav mx-auto mb-2 mb-lg-0"></ul>
+                <a
+                        href="#"
+                        class="btn btn-lg btn-dark"
+                >Log out</a
+                >
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div
+        class="container mt-5 p-5 d-flex align-items-end">
+        <img
+                class="rounded-5 border me-4"
+                src="/assets/images/defaultUser.png"
+                style="
+            object-fit: cover;
+            object-position: 25% 25%;
+          "
+                alt="User Image"
+                width="100rem"
+                height="100rem" />
+        <h1>Welcome back, Zun</h1>
+    </div>
+    <div class="row">
+<!--        th:action="@{/customer/checoutWithPayment/{price}(price=${PaymentRequest.getPrice()})}"-->
+        <form method="post" th:action="@{/customer/bookings/checkOutWithPayment}">
+            <div class="ticket">
+                <div class="ticket-header">
+                    <div class="paymentInfo">
+                        <h1 class="text-center mb-4">Almost complete</h1>
+                        <h4 class="text-center">Pay for <b th:text="*{JobRequest.getServiceName()}"></b> in <b th:text="*{JobRequest.getTimeService()}"></b> hours </h4>
+                        <h4 class="text-center mb-4">Total payment: <b th:text="*{JobRequest.getAmount()}"></b></h4>
+                        <input type="hidden"  name="amount"  th:field="*{PaymentRequest.amount}"/>
+                        <input type="hidden" name="customerID" th:field="*{PaymentRequest.customerID}">
+                        <h5 class="text-start me-auto">Choose your payment methods</h5>
+                    </div>
+
+                    <div class="paymentMethod">
+                        <div>
+                            <div class="momo-radio"><label class="label" for="momoPay"><img
+                                    src="https://test-payment.momo.vn/v2/gateway/images/logo-momo-3b8deb874c6d3b77f976f35310d8e50a.png"
+                                    alt="captureWallet" class="image">
+                                <div style="overflow:hidden">
+                                    <div class="label-title" style="white-space:nowrap">Ví MoMo</div>
+                                </div>
+                            </label><input id="momoPay" type="radio" th:field="*{PaymentRequest.paymentType}" name="paymentMethod" value="captureWallet" checked></div>
+                        </div>
+                        <div>
+                            <div class="momo-radio "><label class="label" for="atmPay"><img
+                                    src="https://test-payment.momo.vn/v2/gateway/images/credit/atm-a2eaf925d65062641bdef898d3cc0fe8.svg"
+                                    alt="payWithATM" class="image">
+                                <div style="overflow:hidden">
+                                    <div class="label-title" style="white-space:nowrap">Thẻ ATM nội địa</div>
+                                </div>
+                            </label><input id="atmPay" type="radio" name="paymentMethod"  th:field="*{PaymentRequest.paymentType}" value="payWithATM"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-devider">
+                    <div class="ticket-norch"></div>
+                    <div class="ticket-norch ticket-norch-right"></div>
+                </div>
+                <div class="ticket-body">
+                    <div>
+                        <button class="btn-momo active">Pay now</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-dark">
+    <div class="text-center p-3">
+        © 2023 Homemade
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
