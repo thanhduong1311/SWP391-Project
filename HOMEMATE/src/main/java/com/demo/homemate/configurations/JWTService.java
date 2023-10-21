@@ -35,6 +35,7 @@ public class JWTService {
         return Jwts
                 .builder()
                 .setSubject(String.valueOf(account.getRole()))
+                .claim("Username",account.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -46,7 +47,7 @@ public class JWTService {
         return Jwts
                 .builder()
                 .setSubject(String.valueOf(account.getRole()))
-                .claim("User",new AccountMapper().toCustomerResponse(account))
+                .claim("Username",account.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -58,6 +59,7 @@ public class JWTService {
         return Jwts
                 .builder()
                 .setSubject(String.valueOf(account.getRole()))
+                .claim("Username",account.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)

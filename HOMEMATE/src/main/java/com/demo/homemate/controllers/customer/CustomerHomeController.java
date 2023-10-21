@@ -2,7 +2,11 @@ package com.demo.homemate.controllers.customer;
 
 
 import com.demo.homemate.configurations.JWTService;
+import com.demo.homemate.dtos.account.response.AccountResponse;
+import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
+import com.demo.homemate.mappings.AccountMapper;
+import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.services.CreateAccountService;
@@ -14,8 +18,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.util.WebUtils;
 
 import java.util.List;
@@ -32,35 +38,37 @@ public class CustomerHomeController {
     private final UserService userService ;
 
     private final IServiceService serviceService;
-
+    private final CustomerRepository customerRepository;
 
     @GetMapping(value = {"","/home"})
-    public String viewCustomerPage(Model model, HttpServletRequest request){
-        Cookie cookie = WebUtils.getCookie(request, "Token");
-        if (cookie == null) {
+    public String viewCustomerPage(Model model,
+                                   HttpServletRequest request,
+                                   @CookieValue(name = "Token",required = false) String cookieToken,
+                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken
+    ){
+        if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
-
-        String token=String.valueOf(cookie.getValue());
+        String token=cookieToken!=null?cookieToken:sessionToken;
         JWTService jwt = new JWTService();
 
         if (token!=null){
             try {
                 Claims claim = jwt.parseJwt(token);
-                System.out.println(claim.getSubject());
                 if(claim.getSubject().equals(Role.CUSTOMER.toString())){
 
-                    // List all services
-//                    List<ServiceResponse> services = serviceService.getAllServices();
-//                    model.addAttribute("services", services);
-
+                    String username = (String)claim.get("Username");
+                    AccountResponse customer = new AccountMapper().toCustomerResponse(customerRepository.findByUsername(username));
+                   //  List all services
+                   List<ServiceResponse> services = serviceService.getAllServices();
+                   model.addAttribute("services", services);
+                   model.addAttribute("AccountInfo",customer);
                     return "/customer/home";
                 }
-                else return "redirect:/customer/home";
+                else return "redirect:/home";
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         }
         else return "redirect:/customer/home";
     }
