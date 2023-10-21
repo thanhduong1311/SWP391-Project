@@ -8,6 +8,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -39,14 +41,36 @@ public class PaymentService implements IPaymentService {
 
     }
 
+    @SneakyThrows
+    @Override
+    public double getTotalTime(Date from, Date to) {
+
+        try {
+
+            long servicetime = to.getTime() - from.getTime();
+
+            return ((double)servicetime / (1000 * 60 * 60));
+        } catch (Exception e) {
+            throw new RuntimeException("Error");
+        }
+
+    }
+
 
 
 
 
     @Override
     public double getTotalMoney(double hour, int serviceID) {
-            double pirce = serviceRepository.findById(serviceID).getPrice();
-            return hour * pirce;
+        double price = serviceRepository.findById(serviceID).getPrice();
+        double totalMoney = hour * price;
+
+        // Round the total money to 2 decimal places
+        BigDecimal bd = new BigDecimal(totalMoney);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        totalMoney = bd.doubleValue();
+
+        return totalMoney;
     }
 
     @Override
