@@ -71,7 +71,7 @@ public class JWTService {
         return Jwts
                 .builder()
                 .setSubject(recover.getEmail())
-                .claim("tokenConfirm",recover)
+                .claim("tokenConfirm",recover.getCode())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
