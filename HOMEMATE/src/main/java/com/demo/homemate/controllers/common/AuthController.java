@@ -9,11 +9,9 @@ import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.dtos.employee.response.PartnerResponse;
-import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.password.RecoverPassword;
 import com.demo.homemate.dtos.password.newPasswordRequest;
-import com.demo.homemate.dtos.password.tokenEmailConfirm;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.CreateAccountService;
@@ -21,10 +19,8 @@ import com.demo.homemate.services.EmailService;
 import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.interfaces.IServiceService;
-import com.demo.homemate.utils.LoginValidate;
-import com.demo.homemate.utils.PasswordMD5;
+import com.demo.homemate.utils.PasswordValidate;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.security.Password;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import java.security.NoSuchAlgorithmException;
@@ -75,9 +70,9 @@ public class AuthController {
                         @RequestParam(value="remember",required = false,defaultValue = "false") boolean rememberMe)
     {
 
-    LoginValidate loginValidate = new LoginValidate();
-    MessageOject messageOject = loginValidate.validateLogin(account.getUsername(),account.getPassword());
-    if(messageOject.getName() ==  null) {
+    PasswordValidate loginValidate = new PasswordValidate();
+    boolean check = loginValidate.checkPasswordValidate(account.getPassword());
+    if(check == true) {
         AuthenticationResponse auth = IAuthenticationService.authentication(account);
         if(auth.getStateCode() == 1) {
             AccountResponse accountResponse = auth.getAccountResponse();
@@ -324,7 +319,7 @@ return "new-password";
         if (newPass.getNewPassword().equals(newPass.getRenewPassword())){
             String email =(String) session.getAttribute("EmailValue");
             userService.ChangePassword(email, newPass.getRenewPassword());
-
+                return "redirect:/Login";
         }else{
 
             newPass.setMessage("Password not matching");
