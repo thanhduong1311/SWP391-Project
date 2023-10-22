@@ -102,7 +102,7 @@ public interface IUserService {
     public int checkIDCard(String cardId);
     public RecoverPassword createCodeRecover(String email);
 
-    public int checkChangePassword(String username,String oldPasswordm,String newPassword, String confirmPassword);
+    public int checkNewChangePassword(String username,String oldPasswordm,String newPassword, String confirmPassword);
 
     public int checkOldPassword(String username,String password);
 

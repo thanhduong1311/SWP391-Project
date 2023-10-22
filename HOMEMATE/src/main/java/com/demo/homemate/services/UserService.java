@@ -46,52 +46,7 @@ public class UserService implements IUserService {
     private final ServiceRepository serviceRepository;
 
 
-    public boolean checkLogin(String username, String password) {
 
-
-        Customer c = customerRepository.findByUsername(username);
-        Employee e = employeeRepository.findByUsername(username);
-        Admin a = adminRepository.findByUsername(username);
-
-        if (e == null && a == null && c == null) {
-            return false;
-        } else {
-            PasswordMD5 p5 = new PasswordMD5();
-            try {
-                password =p5.encode(password);
-            } catch (NoSuchAlgorithmException ex) {
-                throw new RuntimeException(ex);
-            }
-            //Employee
-            if (c == null && a == null) {
-
-                if (e.getUsername().equals(username) &&
-                        e.getPassword().equals(password)
-                ) {
-                    return true;
-                } else return false;
-            }
-            //Customer
-            if (e == null && a == null) {
-
-                if (c.getUsername().equals(username) &&
-                        c.getPassword().equals(password)
-                ) {
-                    return true;
-                } else return false;
-            }
-            //Admin
-            if (e == null && c == null) {
-
-                if (a.getUsername().equals(username) &&
-                        a.getPassword().equals(password)
-                ) {
-                    return true;
-                } else return false;
-            }
-        }
-        return false;
-    }
     @Override
     public int checkUsername(String username) {
         Employee e = employeeRepository.findByUsername(username);
@@ -356,7 +311,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int checkChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+    public int checkNewChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
         int checkU = checkUsername(username);
 
         if(checkU != 0) {
@@ -485,6 +440,37 @@ public class UserService implements IUserService {
             }
         } else {
             return false;
+        }
+    }
+
+    public boolean checkChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+        int checkU = checkUsername(username);
+
+        if(checkU != 0) {
+            boolean checkNull  = checkNull(oldPassword);
+            if(!checkNull) {
+                int checkO  =  checkOldPassword(username,oldPassword);
+                if (checkO !=0) {
+                    PasswordValidate pv = new PasswordValidate();
+                    boolean checkV =  pv.checkPasswordValidate(newPassword);
+                    if (checkV) {
+                        int checkN = checkNewPassword(newPassword,confirmPassword);
+                        if(checkN != 0) {
+                            return true; // ok
+                        } else {
+                            return false;// confirmPassword is wrong
+                        }
+                    } else {
+                        return false; // new pass is not valid
+                    }
+                } else {
+                    return false; // old pass is false
+                }
+            } else {
+                return  false; // password is null
+            }
+        } else {
+            return false; // username not exist
         }
     }
 }
