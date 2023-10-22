@@ -62,10 +62,10 @@
       <form th:action="@{/login}" th:object="${account}" method="post">
         <img
           class="mb-4"
-          src="../assets/images/Homemate-logo-black.png"
+          src="/assets/images/HomeMate.png"
           alt=""
           width="300px"
-          height="180px" />
+          height="" />
         <h1 class="h3 mb-3 fw-normal">Log in</h1>
 
         <div class="form-floating mb-3" >
@@ -120,6 +120,8 @@
         var messageDiv = document.getElementById('message');
         messageDiv.parentNode.removeChild(messageDiv);
       }, 5000);
+
+
     </script>
   </body>
 </html>

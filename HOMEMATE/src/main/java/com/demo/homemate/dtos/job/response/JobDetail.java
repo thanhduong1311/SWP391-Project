@@ -32,4 +32,7 @@ public class JobDetail {
 
     private double price;
 
+    private String customerAvt;
+    private String employeeAvt;
+
 }

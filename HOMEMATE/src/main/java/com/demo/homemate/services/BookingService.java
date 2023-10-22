@@ -197,6 +197,7 @@ public class BookingService implements IJobService {
             if(employee != null ) {
                 jobDetail.setEmployeeID(employee.getEmployeeId());
                 jobDetail.setEmployeeName(employee.getFullName());
+                jobDetail.setEmployeeAvt(employee.getAvatar());
             }
 
             jobDetail.setCustomerID(customer.getCustomerId());

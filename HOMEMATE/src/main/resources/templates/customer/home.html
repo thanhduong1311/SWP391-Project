@@ -80,6 +80,11 @@
     <main>
       <div
         class="container mt-5 p-5 d-flex align-items-end">
+        <a
+                th:href="@{/customer/{username}(username=${AccountInfo.getUsername()})}"
+        >
+
+
         <img
           class="rounded-5 border me-4"
           src=""
@@ -91,16 +96,18 @@
           alt="User Image"
           width="100rem"
           height="100rem" />
-        <h1>Welcome back,</h1>
+        </a>
+
+        <h1>Welcome back, </h1>
         <span class="h1" th:text="*{AccountInfo.getName()}"></span>
       </div>
 
       <div class="bg-secondary p-1 mb-3">
         <div
           class="container m-5 mx-auto bg-light p-4 rounded-5 animate__animated animate__fadeInUp">
-          <h1>Vui lòng chọn mục:</h1>
+          <h1>Make your choice:</h1>
           <div class="row mt-5">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="text-center">
                 <a
                   th:href="@{/customer/bookings/form}"
@@ -109,7 +116,7 @@
                 </a>
               </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="text-center">
                 <a
                   href="customer-review.html"
@@ -118,7 +125,7 @@
                 </a>
               </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="text-center">
                 <a
                   th:href="@{/customer/history}"
@@ -127,14 +134,7 @@
                 </a>
               </div>
             </div>
-            <div class="col-lg-3">
-              <div class="text-center">
-                <a
-                  class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
-                  <p class="h4">Setting</p>
-                </a>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
