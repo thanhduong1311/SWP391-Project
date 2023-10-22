@@ -304,10 +304,35 @@ public class UserService implements IUserService {
 
         //Generate token
         String jwtToken = JWTService.generateJwtRecoverCode(new tokenEmailConfirm().setCode(String.valueOf(rand)).setEmail(email));
-        recoverPassword.setExpiration(20);
+        recoverPassword.setExpiration(120);
+        recoverPassword.setToken(jwtToken);
         recoverPassword.setEmailDetails(emailDetails);
         //add to respone
         return recoverPassword;
     }
+public void ChangePassword(String email, String password) throws NoSuchAlgorithmException {
+        int checkAccount = checkEmail(email);
+        password=PasswordMD5.encode(password);
+        switch (checkAccount){
+            case 0:{
+                //K tim thay
+                break;
+            }
+            case 1:{
+                //Customer
+                Customer c = customerRepository.findByEmail(email);
+                c.setPassword(password);
+                customerRepository.save(c);
+                break;
+            }
+            case 2:{
+                //Employee
+                Employee e= employeeRepository.findByEmail(email);
+                e.setPassword(password);
+                employeeRepository.save(e);
+                break;
+            }
 
+        }
+}
 }
