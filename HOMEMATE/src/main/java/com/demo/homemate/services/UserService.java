@@ -3,7 +3,6 @@ package com.demo.homemate.services;
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.data.MailContents;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
-import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.dtos.email.EmailDetails;
@@ -15,7 +14,6 @@ import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
-import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
@@ -25,12 +23,7 @@ import com.demo.homemate.utils.PasswordMD5;
 import com.demo.homemate.utils.PhoneValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.swing.text.html.parser.Entity;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +45,52 @@ public class UserService implements IUserService {
     private final ServiceRepository serviceRepository;
 
 
+    public boolean checkLogin(String username, String password) {
+
+
+        Customer c = customerRepository.findByUsername(username);
+        Employee e = employeeRepository.findByUsername(username);
+        Admin a = adminRepository.findByUsername(username);
+
+        if (e == null && a == null && c == null) {
+            return false;
+        } else {
+            PasswordMD5 p5 = new PasswordMD5();
+            try {
+                password =p5.encode(password);
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
+            }
+            //Employee
+            if (c == null && a == null) {
+
+                if (e.getUsername().equals(username) &&
+                        e.getPassword().equals(password)
+                ) {
+                    return true;
+                } else return false;
+            }
+            //Customer
+            if (e == null && a == null) {
+
+                if (c.getUsername().equals(username) &&
+                        c.getPassword().equals(password)
+                ) {
+                    return true;
+                } else return false;
+            }
+            //Admin
+            if (e == null && c == null) {
+
+                if (a.getUsername().equals(username) &&
+                        a.getPassword().equals(password)
+                ) {
+                    return true;
+                } else return false;
+            }
+        }
+        return false;
+    }
     @Override
     public int checkUsername(String username) {
         Employee e = employeeRepository.findByUsername(username);
