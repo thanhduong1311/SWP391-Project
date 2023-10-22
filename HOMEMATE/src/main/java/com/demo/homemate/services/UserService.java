@@ -413,4 +413,39 @@ public class UserService implements IUserService {
 
         }
 }
+
+    @SneakyThrows
+    public boolean checkLogin(String username, String password) {
+
+        int var = checkUsername(username);
+
+        if (var != 0) {
+
+            if (var == 1) {
+                Employee e = employeeRepository.findByUsername(username);
+                if (e.getUsername().equals(username) &&
+                        e.getPassword().equals(PasswordMD5.encode(password))
+                ) {
+                    return true;
+                } else return false;
+
+            } else if (var == 2) {
+                Customer c = customerRepository.findByUsername(username);
+                if (c.getUsername().equals(username) &&
+                        c.getPassword().equals(PasswordMD5.encode(password))
+                ) {
+                    return true;
+                } else return false;
+            } else {
+                Admin a = adminRepository.findByUsername(username);
+                if (a.getUsername().equals(password) &&
+                        a.getPassword().equals(PasswordMD5.encode(password))
+                ) {
+                    return true;
+                } else return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
