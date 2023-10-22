@@ -48,7 +48,7 @@
             class="navbar navbar-expand-lg bg-body-tertiary fs-4">
         <div class="container">
             <a class="navbar-brand fs-2" href="#">
-                <icon class="bi-gem"></icon>
+                <icon class="bi bi-gem"></icon>
                 Homemate
             </a>
             <button
@@ -66,36 +66,39 @@
                     class="collapse navbar-collapse"
                     id="navbarSupportedContent">
                 <ul
-                        class="navbar-nav mx-auto mb-2 mb-lg-0"></ul>
-                <a
-                        th:href="@{/logout}"
-                        class="btn btn-lg btn-dark"
-                >Log out</a
-                >
+                        class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a
+                                th:href="@{/customer}"
+                                class="nav-link"
+                        >Home</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                th:href="@{/customer/bookings}"
+                                class="nav-link"
+                        >Booking</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/customer/history}" class="nav-link"
+                        >History</a
+                        >
+                    </li>
+                </ul>
+
             </div>
         </div>
     </nav>
 </header>
 
 <main>
-    <div
-        class="container mt-5 p-5 d-flex align-items-end">
-        <img
-                class="rounded-5 border me-4"
-                src="/assets/images/defaultUser.png"
-                style="
-            object-fit: cover;
-            object-position: 25% 25%;
-          "
-                alt="User Image"
-                width="100rem"
-                height="100rem" />
-        <h1>Welcome back, Zun</h1>
-    </div>
+
     <div class="row">
 
         <form class="col-lg-8 mx-auto" method="post" th:action="@{/customer/bookings/boooking}">
-            <h3 class="mb-5">BOOKING FORM</h3>
+            <h3 class="mb-5 mt-5">BOOKING FORM</h3>
             <div class="form-group mb-3">
                 <label for="name">Name</label>
                 <input name="name" type="text" class="form-control" id="name" placeholder="Customer name" readonly>
@@ -108,10 +111,7 @@
                 <label for="address">Address</label>
                 <input name="address" type="text" class="form-control" id="address" placeholder="Address" readonly>
             </div>
-            <div class="form-group mb-3">
-                <label for="description">Job description</label>
-                <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
-            </div>
+
             <div class="row mb-3">
 
                 <div class="form-group mb-3 col-md-6">
@@ -143,6 +143,12 @@
 
                     </div>
                 </div>
+
+                <div class="form-group mb-3">
+                    <label for="description">Job description</label>
+                    <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
+                </div>
+
             </div>
 
             <button type="submit" class="col-md-12 btn btn-primary" >Booking</button>

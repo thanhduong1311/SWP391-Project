@@ -21,6 +21,7 @@ import com.demo.homemate.services.EmailService;
 import com.demo.homemate.services.UserService;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
 import com.demo.homemate.services.interfaces.IServiceService;
+import com.demo.homemate.utils.LoginValidate;
 import com.demo.homemate.utils.PasswordMD5;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.security.Password;
@@ -74,6 +75,9 @@ public class AuthController {
                         @RequestParam(value="remember",required = false,defaultValue = "false") boolean rememberMe)
     {
 
+    LoginValidate loginValidate = new LoginValidate();
+    MessageOject messageOject = loginValidate.validateLogin(account.getUsername(),account.getPassword());
+    if(messageOject.getName() ==  null) {
         AuthenticationResponse auth = IAuthenticationService.authentication(account);
         if(auth.getStateCode() == 1) {
             AccountResponse accountResponse = auth.getAccountResponse();
@@ -100,6 +104,12 @@ public class AuthController {
             model.addAttribute("LoginMessage", new MessageOject("Fail","Username or password is incorrect!", null));
             return loginView(model);
         }
+    } else {
+        model.addAttribute("LoginMessage", new MessageOject("Fail","Password must contain at least 6 characters!", null));
+        return loginView(model);
+    }
+
+
     }
 
 
