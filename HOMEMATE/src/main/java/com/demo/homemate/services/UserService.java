@@ -22,6 +22,7 @@ import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IUserService;
 import com.demo.homemate.utils.PasswordMD5;
+import com.demo.homemate.utils.PasswordValidate;
 import com.demo.homemate.utils.PhoneValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -268,6 +269,10 @@ public class UserService implements IUserService {
         return 0;
     }
 
+    public boolean checkNull(String check) {
+        return check.equals("") ? true:false;
+    }
+
     /**
      * @param email
      */
@@ -310,7 +315,80 @@ public class UserService implements IUserService {
         //add to respone
         return recoverPassword;
     }
-public void ChangePassword(String email, String password) throws NoSuchAlgorithmException {
+
+    @Override
+    public int checkChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+        int checkU = checkUsername(username);
+
+        if(checkU != 0) {
+            boolean checkNull  = checkNull(oldPassword);
+            if(!checkNull) {
+                int checkO  =  checkOldPassword(username,oldPassword);
+                if (checkO !=0) {
+                    PasswordValidate pv = new PasswordValidate();
+                    boolean checkV =  pv.checkPasswordValidate(newPassword);
+                    if (checkV) {
+                        int checkN = checkNewPassword(newPassword,confirmPassword);
+                        if(checkN != 0) {
+                            return 5; // ok
+                        } else {
+                            return 4;// confirmPassword is wrong
+                        }
+                    } else {
+                        return 3; // new pass is not valid
+                    }
+                } else {
+                    return 2; // old pass is false
+                }
+            } else {
+                return  1; // password is null
+            }
+        } else {
+            return 0; // username not exist
+        }
+    }
+
+    @Override
+    public int checkOldPassword(String username, String password) {
+        int var = checkUsername(username);
+
+        if (var == 0) {
+            return 0;
+        } else {
+            PasswordMD5 p5 = new PasswordMD5();
+            try {
+                password =p5.encode(password);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (var == 1) {
+                Employee e = employeeRepository.findByUsername(username);
+                if (e.getUsername().equals(username) &&
+                        e.getPassword().equals(password)
+                ) {
+                    return 1;
+                } else return 0;
+
+            } else if (var == 2) {
+                Customer c = customerRepository.findByUsername(username);
+                if (c.getUsername().equals(username) &&
+                        c.getPassword().equals(password)
+                ) {
+                    return 2;
+                } else return 0;
+            } else {
+                Admin a = adminRepository.findByUsername(username);
+                if (a.getUsername().equals(password) &&
+                        a.getPassword().equals(password)
+                ) {
+                    return 3;
+                } else return 0;
+            }
+        }
+    }
+
+    public void ChangePassword(String email, String password) throws NoSuchAlgorithmException {
         int checkAccount = checkEmail(email);
         password=PasswordMD5.encode(password);
         switch (checkAccount){

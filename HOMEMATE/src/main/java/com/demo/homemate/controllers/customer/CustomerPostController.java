@@ -1,16 +1,17 @@
 package com.demo.homemate.controllers.customer;
 
 
+import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.AdminService;
 import com.demo.homemate.services.BookingService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,12 +23,22 @@ public class CustomerPostController {
 
     private final BookingService bookingService;
     private  final AdminService adminService;
+    private final CustomerRepository customerRepository;
 
     @GetMapping("")
-    public String viewBookingsHitory(Model model) {
+    public String viewBookingsHitory(Model model,
+                                     @CookieValue(name = "Token",required = false) String cookieToken,
+                                     @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
+
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+       String username = (String)JWTService.parseJwt(token).get("Username");
 
         //Test with id = hardcode
-        Customer customer = adminService.getACustomer(2);
+        Customer customer = adminService.getACustomer(customerRepository.findByUsername(username).getCustomerId());
 
         List<JobDetail> bookings = bookingService.getCustomerBookings(customer.getCustomerId());
         model.addAttribute("bookings",bookings);
