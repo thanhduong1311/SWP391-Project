@@ -57,7 +57,7 @@ public class CustomerBookingController {
     public String booking(JobRequest request, Model model) {
 
         // test ID: thanhduong01
-        request.setCustomerID(1);
+        request.setCustomerID(2);
 
         double timeService = paymentService.getTotalTime(request.getTimeStart(),request.getTimeEnd());
         double rawPrice = paymentService.getTotalMoney(timeService, request.getServiceId());
