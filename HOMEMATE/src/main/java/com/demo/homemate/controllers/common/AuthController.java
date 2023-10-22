@@ -316,6 +316,7 @@ return "new-password";
             userService.ChangePassword(email, newPass.getRenewPassword());
 
         }else{
+            
             newPass.setMessage("Password not matching");
         }
         return changePassword(model,request,newPass);
