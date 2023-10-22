@@ -1,35 +1,37 @@
-package com.demo.homemate.controllers.customer;
+package com.demo.homemate.controllers.employee;
+
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
-import com.demo.homemate.dtos.customer.response.CustomerResponse;
+import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Admin;
-import com.demo.homemate.entities.Customer;
 import com.demo.homemate.mappings.AccountMapper;
-import com.demo.homemate.repositories.CustomerRepository;
-import com.demo.homemate.services.AdminService;
-import com.demo.homemate.services.CustomerService;
-import com.demo.homemate.services.UserService;
+import com.demo.homemate.mappings.EmployeMapping;
+import com.demo.homemate.repositories.EmployeeRepository;
+import com.demo.homemate.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @Controller
-@RequestMapping("/customer/account")
+@RequestMapping("/employee/account")
 @RequiredArgsConstructor
-public class CustomerAccountController {
+public class EmployeeAccountController {
 
-    private final CustomerRepository customerRepository;
-    private final CustomerService customerService;
+    private final EmployeeRepository employeeRepository;
+
+    private final EmployeeService employeeService;
 
     @GetMapping("/{username}")
     public String viewAccount(@PathVariable("username") String username, Model model) {
 
-        return "";
+        EmployeMapping mapper = new EmployeMapping();
+
+        EmployeeProlife prolife = mapper.toEmployeeProfile(employeeRepository.findByUsername(username));
+        model.addAttribute("profile",prolife);
+        return "employee/profile";
     }
 
     @GetMapping("/changePassword")
@@ -45,25 +47,31 @@ public class CustomerAccountController {
 
         AccountMapper mapper = new AccountMapper();
 
-        AccountResponse customerResponse = mapper.toCustomerResponse(customerRepository.findByUsername(username));
+        AccountResponse emp = mapper.toEmployeeResponse(employeeRepository.findByUsername(username));
 
 
         ChangePasswordRequest cr = new ChangePasswordRequest();
-        cr.setUsername(customerResponse.getUsername());
+        cr.setUsername(emp.getUsername());
 
 
-        model.addAttribute("customer",customerResponse);
+        model.addAttribute("employee",emp);
 
         model.addAttribute("ChangePasswordRequest",cr);
-        return "customer/changePassword";
+        return "employee/changePassword";
     }
 
     @PostMapping("/changePassword")
     public String changePassword(Model model, ChangePasswordRequest request) {
 
-        MessageOject messageOject = customerService.changePassword(request);
+        System.out.println(request.getUsername());
+        System.out.println(request.getOldPassword());
+        System.out.println(request.getNewPassword());
+        System.out.println(request.getConfirmPassword());
 
+        MessageOject messageOject = employeeService.changePassword(request);
 
-        return "redirect:/customer/account/changePassword";
+        System.out.println(messageOject.getMessage());
+        return "redirect:/employee/account/" + request.getUsername();
     }
+
 }

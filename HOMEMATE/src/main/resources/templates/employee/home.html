@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -66,7 +66,11 @@
             class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0"></ul>
+              class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+
+
+            </ul>
             <a
               href="#"
               class="btn btn-lg btn-dark"
@@ -80,6 +84,8 @@
     <main>
       <div
         class="container mt-5 p-5 d-flex align-items-end">
+        <a th:href="@{/employee/account/{username}(username=${AccountInfo.getUsername()})}">
+
         <img
           class="rounded-5 border me-4"
           src="images/customer-example.jpg"
@@ -91,6 +97,8 @@
           alt="User Image"
           width="100rem"
           height="100rem" />
+        </a>
+
         <h1>Welcome back,</h1>
         <span class="h1" th:text="*{AccountInfo.getName()}"></span>
       </div>
@@ -100,42 +108,34 @@
           class="container m-5 mx-auto bg-light p-4 rounded-5 animate__animated animate__fadeInUp">
           <h1>Vui lòng chọn mục:</h1>
           <div class="row mt-5">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="text-center">
                 <a
                   href="employee-todo-list.html"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
-                  <p class="h4">Task</p>
+                  <p class="h4">Jobs</p>
                 </a>
               </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="text-center">
                 <a
                   href="#"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
-                  <p class="h4">Review</p>
+                  <p class="h4">Income</p>
                 </a>
               </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="text-center">
                 <a
                   href="employee-history-income.html"
                   class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
-                  <p class="h4">History</p>
+                  <p class="h4">Schedule</p>
                 </a>
               </div>
             </div>
-            <div class="col-lg-3">
-              <div class="text-center">
-                <a
-                  href="employee-setting.html"
-                  class="btn btn-outline-dark p-5 shadow-lg border rounded-5 hover-luaga">
-                  <p class="h4">Setting</p>
-                </a>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

@@ -34,4 +34,4 @@ build/
 .vscode/
 
 
-*.yaml
+*application.yaml

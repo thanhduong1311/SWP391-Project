@@ -3,7 +3,6 @@ package com.demo.homemate.services;
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.data.MailContents;
 import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
-import com.demo.homemate.dtos.auth.response.AuthenticationResponse;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.dtos.email.EmailDetails;
@@ -15,7 +14,6 @@ import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
-import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.AdminRepository;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
@@ -26,12 +24,7 @@ import com.demo.homemate.utils.PasswordValidate;
 import com.demo.homemate.utils.PhoneValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.swing.text.html.parser.Entity;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +44,7 @@ public class UserService implements IUserService {
     private final AdminRepository adminRepository;
 
     private final ServiceRepository serviceRepository;
+
 
 
     @Override
@@ -317,7 +311,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int checkChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+    public int checkNewChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
         int checkU = checkUsername(username);
 
         if(checkU != 0) {
@@ -446,6 +440,37 @@ public class UserService implements IUserService {
             }
         } else {
             return false;
+        }
+    }
+
+    public boolean checkChangePassword(String username, String oldPassword, String newPassword, String confirmPassword) {
+        int checkU = checkUsername(username);
+
+        if(checkU != 0) {
+            boolean checkNull  = checkNull(oldPassword);
+            if(!checkNull) {
+                int checkO  =  checkOldPassword(username,oldPassword);
+                if (checkO !=0) {
+                    PasswordValidate pv = new PasswordValidate();
+                    boolean checkV =  pv.checkPasswordValidate(newPassword);
+                    if (checkV) {
+                        int checkN = checkNewPassword(newPassword,confirmPassword);
+                        if(checkN != 0) {
+                            return true; // ok
+                        } else {
+                            return false;// confirmPassword is wrong
+                        }
+                    } else {
+                        return false; // new pass is not valid
+                    }
+                } else {
+                    return false; // old pass is false
+                }
+            } else {
+                return  false; // password is null
+            }
+        } else {
+            return false; // username not exist
         }
     }
 }

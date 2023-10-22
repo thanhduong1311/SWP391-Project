@@ -31,7 +31,7 @@ public class CustomerService implements ICustomerService {
             String newPasString= request.getNewPassword();
             String confirmPass = request.getConfirmPassword();
 
-            int check = userService.checkChangePassword(username,oldPas,newPasString,confirmPass);
+            int check = userService.checkNewChangePassword(username,oldPas,newPasString,confirmPass);
 
             if(check == 0 ) {
                 return new MessageOject("Failed","Username is not exist",null);

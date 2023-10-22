@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="/assets/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+    <style></style>
+    <title>Document</title>
+  </head>
+  <body class="bg-light">
+    <header>
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+        <div class="container">
+          <a class="navbar-brand fs-2" href="#">
+            <icon class="bi-gem"></icon>
+            Homemate
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span
+              class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent">
+            <ul
+              class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+              <li class="nav-item">
+                <a
+                        th:href="@{/employee}"
+                        class="nav-link"
+                >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                        th:href="@{/employee/jobs}"
+                        class="nav-link"
+                >Jobs</a
+                >
+              </li>
+            </ul>
+            <a
+              href="#"
+              class="btn btn-lg btn-dark"
+              >Log out</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div
+      class="container rounded bg-white mt-5 mb-5">
+      <form action="">
+        <div class="row">
+          <div class="col-md-3 border-right">
+            <div
+              class="d-flex flex-column align-items-center text-center p-3 py-5">
+              <img
+                class="rounded-circle mt-5"
+                width="150px"
+                th:src="*{profile.getAvatar()}" /><span
+                class="font-weight-bold"
+                 th:text="*{profile.getUsername()}"></span
+              >
+              <i
+                class="text-warning"
+              >Balance: <b th:text="*{profile.getBalance()}"></b></i
+              >
+            </div>
+          </div>
+          <div class="col-md-9 border-right">
+            <div class="p-3 py-5">
+              <div
+                class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="text-right">
+                  My profile
+                </h3>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <label
+                    class="form-label"
+                    >Full Name
+                    </label
+                  >
+                 <h4 th:text="*{profile.getName()}"></h4>
+                </div>
+
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label
+                          class="form-label"
+                  >Email
+                  </label
+                  >
+                  <h4 th:text="*{profile.getEmail()}"></h4>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label
+                            class="form-label"
+                    >ID card
+                    </label
+                    >
+                    <h4 th:text="*{profile.getIDCard()}"></h4>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label
+                            class="form-label"
+                    >Phone number
+                    </label
+                    >
+                    <h4 th:text="*{profile.getPhone()}"></h4>
+                  </div>
+                </div>
+
+
+
+                </div>
+                <div class="col-md-12">
+                  <div class="col-md-12">
+                    <label
+                            class="form-label"
+                    >Address
+                    </label
+                    >
+                    <h4 th:text="*{profile.getAddress()}"></h4>
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="col-md-12">
+                    <label
+                            class="form-label"
+                    >District
+                    </label
+                    >
+                    <h4 th:text="*{profile.getDistrict()}"></h4>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="col-md-12">
+                    <label
+                            class="form-label"
+                    >City
+                    </label
+                    >
+                    <h4 th:text="*{profile.getCity()}"></h4>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="col-md-12">
+                    <label
+                            class="form-label"
+                    >Place of work
+                    </label
+                    >
+                    <h4 th:text="*{profile.getPlaceOfWork()}"></h4>
+                  </div>
+                </div>
+              </div>
+
+                <div class="row mt-2">
+                  <div
+                    class="col-md-6 text-center">
+                    <a
+                      th:href="@{/employee/account/changePassword}"
+                      class="btn btn-md btn-dark"
+                     >
+                      Change Password
+                    </a>
+                  </div>
+                  <div
+                    class="col-md-6 text-center">
+                    <button
+                      class="btn btn-md btn-dark"
+                      type="button">
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+      </form>
+    </div>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
