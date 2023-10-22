@@ -33,10 +33,6 @@ public class TestLogin {
     private UserService userService;
 
 
-
-  
-
-
     @Test
     void UTCID01() {
         assertEquals(false, userService.checkLogin("",""));
