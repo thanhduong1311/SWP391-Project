@@ -1,23 +1,24 @@
-package com.demo.homemate.dtos.employee.response;
-
+package com.demo.homemate.dtos.customer.request;
 
 import lombok.*;
+import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeProlife {
+@Accessors(chain = true)
+@ToString
+public class CustomerEditRequest {
     private String name;
     private String phone;
     private String email;
     private String address;
-    private String IDCard;
     private String city;
+    private Date dob;
     private String district;
-    private String placeOfWork;
     private String username;
     private String avatar;
-    private double balance;
 }

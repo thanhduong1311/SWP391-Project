@@ -84,7 +84,6 @@ public class AuthController {
                 System.out.println("Trước đó: "+session.getAttribute("SessionToken"));
                 session.removeAttribute("SessionToken");
                 System.out.println("Sau đó: "+session.getAttribute("SessionToken"));
-
                 cookie.setMaxAge(60 * 60);
                 cookie.setPath("/");
                 response.addCookie(cookie);
@@ -319,7 +318,7 @@ return "new-password";
         if (newPass.getNewPassword().equals(newPass.getRenewPassword())){
             String email =(String) session.getAttribute("EmailValue");
             userService.ChangePassword(email, newPass.getRenewPassword());
-                return "redirect:/Login";
+                return "redirect:/login";
         }else{
 
             newPass.setMessage("Password not matching");
