@@ -45,4 +45,34 @@ public class JobTimer {
         }
 
     }
+
+    public boolean checkBusy(Date a, Date b, Date c) {
+        // Lấy thời gian theo mili giây
+        long aTime = a.getTime();
+        long bTime = b.getTime();
+        long cTime = c.getTime();
+
+        // So sánh thời gian của `c` với thời gian của `A` và `B`
+        return cTime >= aTime && cTime <= bTime;
+    }
+
+    public boolean checkDone(Date a, Date b) {
+        // Lấy thời gian theo mili giây
+        long aTime = a.getTime();
+        long bTime = b.getTime();
+
+        return bTime >= aTime;
+    }
+
+    public boolean isExpired(Date a) {
+        // Lấy thời gian theo mili giây
+        long aTime = a.getTime();
+        long bTime = (new Date()).getTime(); // now
+
+        return bTime > aTime;
+    }
+
+
+
+
 }

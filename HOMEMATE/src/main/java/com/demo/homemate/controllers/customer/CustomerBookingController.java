@@ -1,5 +1,6 @@
 package com.demo.homemate.controllers.customer;
 
+import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.data.MailContents;
 import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.job.request.JobRequest;
@@ -8,6 +9,7 @@ import com.demo.homemate.dtos.payment.PaymentRequest;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.mappings.ServiceMapper;
+import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.AdminService;
 import com.demo.homemate.services.EmailService;
 import com.demo.homemate.services.PaymentService;
@@ -20,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
@@ -44,6 +43,8 @@ public class CustomerBookingController {
 
     private final AdminService adminService;
 
+    private final CustomerRepository customerRepository;
+
     @GetMapping("/form")
     public String createBooking(Model model) {
 
@@ -54,10 +55,16 @@ public class CustomerBookingController {
     }
 
     @PostMapping("boooking")
-    public String booking(JobRequest request, Model model) {
+    public String booking(JobRequest request, Model model,@CookieValue(name = "Token",required = false) String cookieToken,
+                          @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
 
-        // test ID: thanhduong01
-        request.setCustomerID(2);
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+        String username = (String) JWTService.parseJwt(token).get("Username");
+        request.setCustomerID(customerRepository.findByUsername(username).getCustomerId());
 
         double timeService = paymentService.getTotalTime(request.getTimeStart(),request.getTimeEnd());
         double rawPrice = paymentService.getTotalMoney(timeService, request.getServiceId());
