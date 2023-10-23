@@ -48,8 +48,12 @@ public class PaymentService implements IPaymentService {
         try {
 
             long servicetime = to.getTime() - from.getTime();
+            double time = ((double)servicetime / (1000 * 60 * 60));
+            BigDecimal bd = new BigDecimal(time);
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            time = bd.doubleValue();
 
-            return ((double)servicetime / (1000 * 60 * 60));
+            return time;
         } catch (Exception e) {
             throw new RuntimeException("Error");
         }

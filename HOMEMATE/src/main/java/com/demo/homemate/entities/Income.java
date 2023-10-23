@@ -14,7 +14,7 @@ import java.util.Date;
 @ToString
 public class Income {
 
-    public static final String COLLECTION_NAME = "imcome";
+    public static final String COLLECTION_NAME = "income";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Income {
     private int incomeId;
 
     @ManyToOne
-    @JoinColumn(name="employeet_id")
+    @JoinColumn(name="employee_id")
     private Employee employeeId;
 
     @OneToOne

@@ -1,6 +1,7 @@
 package com.demo.homemate.repositories;
 
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Job;
 import com.demo.homemate.enums.JobStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,12 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
 
     @Query("SELECT j FROM Job j WHERE j.customerId = :customer")
     List<Job> findByCustomerId(@Param("customer") Customer customer);
+
+    @Query("SELECT j FROM Job j WHERE j.employeeId = :employee")
+    List<Job> findByEmployeeId(@Param("employee") Employee employee);
+
+//    @Query("SELECT j FROM Job j WHERE j.employeeId = :employee")
+//    List<Job> findByCustomerIdAndStatus(@Param("employee") Employee employee);
 
     List<Job> findByStatus(JobStatus jobStatus);
 
