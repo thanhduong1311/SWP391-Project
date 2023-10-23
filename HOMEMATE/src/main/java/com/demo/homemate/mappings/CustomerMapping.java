@@ -1,21 +1,19 @@
 package com.demo.homemate.mappings;
 
-import com.demo.homemate.dtos.customer.response.CustomerProfileResponse;
+import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.mappings.interfaces.ICustomerMapping;
-import com.demo.homemate.repositories.CustomerRepository;
 import lombok.SneakyThrows;
 
-import java.sql.Date;
 import java.util.Objects;
 
 public class CustomerMapping implements ICustomerMapping {
 
     @SneakyThrows
     @Override
-    public CustomerProfileResponse toCustomerProfile(Customer customer) {
+    public CustomerProfileRequest toCustomerProfile(Customer customer) {
         try {
-            CustomerProfileResponse prolife = new CustomerProfileResponse();
+            CustomerProfileRequest prolife = new CustomerProfileRequest();
             prolife.setName(customer.getFullName());
             prolife.setPhone(customer.getPhone());
             prolife.setEmail(customer.getEmail());
@@ -32,7 +30,7 @@ public class CustomerMapping implements ICustomerMapping {
             throw new Exception(e.getMessage());
         }
     }
-    public Customer toCustomerFromCustomerProfile(Customer c,CustomerProfileResponse cpr){
+    public Customer toCustomerFromCustomerProfile(Customer c, CustomerProfileRequest cpr){
 
         if (!Objects.equals(cpr.getName(), c.getFullName())){
             c.setFullName(cpr.getName());

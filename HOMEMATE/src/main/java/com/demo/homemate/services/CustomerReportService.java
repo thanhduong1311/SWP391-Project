@@ -52,7 +52,6 @@ public class CustomerReportService implements ICustomerReportService {
     @Override
     public CustomerReportJob getReportDetailByID(int id) {
         Report report  = reportRepository.findById(id);
-
         CustomerReportJob cjd = new CustomerReportJob();
         try {
             Job job = jobRepository.findById(report.getJobId().getJobId());
@@ -72,7 +71,6 @@ public class CustomerReportService implements ICustomerReportService {
             cjd.setAddress(customer.getAddress_detail());
             cjd.setDescription(job.getDescription());
             cjd.setReason(report.getReason());
-
         } catch (Exception e) {
             throw e;
         }

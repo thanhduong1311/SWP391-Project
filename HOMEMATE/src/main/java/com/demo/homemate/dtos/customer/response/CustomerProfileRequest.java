@@ -10,7 +10,7 @@ import java.util.Date;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerProfileResponse {
+public class CustomerProfileRequest {
         private String name;
         private String phone;
         private String email;
