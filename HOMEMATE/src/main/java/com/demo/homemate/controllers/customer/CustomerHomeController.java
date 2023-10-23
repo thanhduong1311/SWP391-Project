@@ -64,7 +64,7 @@ public class CustomerHomeController {
                 throw new RuntimeException(e);
             }
         }
-        else return "redirect:/customer/home";
+        else return "redirect:/home";
     }
 
 

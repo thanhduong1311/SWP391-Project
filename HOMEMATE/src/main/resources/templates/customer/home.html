@@ -47,7 +47,7 @@
       <nav
         class="navbar navbar-expand-lg bg-body-tertiary fs-4">
         <div class="container">
-          <a class="navbar-brand fs-2" href="#">
+          <a class="navbar-brand fs-2" th:href="@{/customer/home}">
             <icon class="bi-gem"></icon>
             Homemate
           </a>
@@ -81,11 +81,9 @@
       <div
         class="container mt-5 p-5 d-flex align-items-end">
         <a
-                th:href="@{/customer/{username}(username=${AccountInfo.getUsername()})}"
+                th:href="@{/customer/account/{username}(username=${AccountInfo.getUsername()})}"
         >
-
-
-        <img
+          <img
           class="rounded-5 border me-4"
           src=""
           th:src="*{AccountInfo.getAvatar()}"
@@ -97,11 +95,9 @@
           width="100rem"
           height="100rem" />
         </a>
-
         <h1>Welcome back, </h1>
         <span class="h1" th:text="*{AccountInfo.getName()}"></span>
       </div>
-
       <div class="bg-secondary p-1 mb-3">
         <div
           class="container m-5 mx-auto bg-light p-4 rounded-5 animate__animated animate__fadeInUp">
