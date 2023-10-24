@@ -154,7 +154,9 @@
                           style="color: red"
                   >(*)</sup
                   ></label>
-                  <input  id="avatar" type="file" th:field="*{avatar}" class="form-control">
+                  <input  id="avatar" name ="avatar" type="file" th:field="*{avatar}" class="form-control" accept="image/png, image/jpeg" >
+                  <p><img id="avatarPreview" alt="Avatar Preview"></p>
+                
                 </div>
                 <div class="col-md-6">
                   <label
@@ -248,6 +250,22 @@
 
       </form>
     </div>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#avatar').change(function(){
+  showPreviewImage(this);
+      });
+    });
+    function showPreviewImage(fileInput){
+        file = fileInput.files[0];
+        reader = new FileReader();
+        reader.onload = function(e){
+          $(#avatarPreview).attr("src",e.target.result);
+        }
+        reader.readAsDataURL(file);
+    };
+  </script>
   </body>
 </html>

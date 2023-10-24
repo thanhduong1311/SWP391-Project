@@ -60,7 +60,7 @@ public class CustomerService implements ICustomerService {
         }
 
     }
-    public MessageOject editProfile(CustomerProfileRequest request) {
+   /* public MessageOject editProfile(CustomerProfileRequest request) {
         try {
 
             CustomerMapping cp= new CustomerMapping();
@@ -96,5 +96,5 @@ public class CustomerService implements ICustomerService {
             return new MessageOject("Error",e.getMessage(),null);
         }
 
-    }
+    }*/
 }

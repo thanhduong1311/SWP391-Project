@@ -1,7 +1,7 @@
 package com.demo.homemate.controllers.admin;
 
-import com.demo.homemate.dtos.homemateService.request.ServiceRequest;
-import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
+import com.demo.homemate.dtos.services.request.ServiceRequest;
+import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.mappings.ServiceMapper;

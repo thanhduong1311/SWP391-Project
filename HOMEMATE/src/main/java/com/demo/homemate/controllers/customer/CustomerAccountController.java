@@ -86,7 +86,11 @@ if (!username.equals(uname)){
     @PostMapping ("/edit")
     public String editProfile(CustomerProfileRequest UserInfo,
                               Model model){
-        MessageOject ms = customerService.editProfile(UserInfo);
+        CustomerMapping cp= new CustomerMapping();
+        Customer c =customerRepository.findByUsername(UserInfo.getUsername());
+        c = cp.toCustomerFromCustomerProfile(c,UserInfo);
+        customerRepository.save(c);
         return "redirect:/customer/account/" + UserInfo.getUsername();
     }
+
 }

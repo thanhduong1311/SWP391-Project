@@ -329,53 +329,48 @@
             <h2>Chúng tôi sẽ phục bạn</h2>
         </div>
         <hr />
-        <div
-                id="carouselExampleCaptions"
-                class="carousel slide">
+
+
+
+
+        <div id="carouselExampleCaptions" class="carousel slide">
             <div class="carousel-indicators">
-                <button
-                        type="button"
-                        data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="0"
-                        class="active"
-                        aria-current="true"
-                        aria-label="Slide 1"></button>
-                <button
-                        type="button"
-                        data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                <button
-                        type="button"
-                        data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                <button
-                        type="button"
-                        data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="3"
-                        aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
             </div>
             <div class="carousel-inner">
-                <th:block th:each="service : ${services}">
-                    <div class="carousel-item active">
-                        <img
-                                src="../assets/images/bedroom.jpg"
-                                class="d-block w-100"
-                                alt="bedroom" />
-                        <div
-                                class="carousel-caption d-none d-md-block">
-                            <h5 th:text="${service.name}"/>
-                            <p th:text="${service.description}"/>
-                        </div>
-                    </div>
-                </th:block>
+                    <div th:each="service,state: ${services}">
+                        <th:block th:if="${state.index % 3 ==0}">
+                            <div th:class="${state.first}? 'carousel-item row active':'carousel-item row'" >
+                                <div class="row d-md-flex mt-5 col-11 m-auto bg-secondary">
+                                    <div class="col-md-4" th:each="i: ${#numbers.sequence(state.index,((state.index + 2)>=(state.size+(-1))? state.size+(-1):(state.index + 2)))}">
+
+                                                <div class="shadow-lg rounded-5">
+                                                    <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getName()})}">
+                                                    <h3 th:text="${services[i].getName()}">Dọn dẹp 1 giờ</h3>
+                                                    <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
+                                                    <hr />
+                                                    <h2 class="ms-2 mt-4" th:text="${services[i].getPrice()}">$<sup>đ</sup></h2>
+                                                    <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                                                    <ul th:each="detail:${services[i].getDetails()}">
+                                                        <li th:text="${detail}">Dọn dẹp</li>
+                                                    </ul>
+                                                    <div class="mt-5">
+                                                        <a class="btn btn-dark w-100" th:href="@{/customer/bookings/form}">Booking now</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </th:block>
+                </div>
             </div>
-            <button
-                    class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
             <span
                     class="carousel-control-prev-icon"
                     aria-hidden="true"></span>
@@ -383,11 +378,7 @@
                 >Previous</span
                 >
             </button>
-            <button
-                    class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
             <span
                     class="carousel-control-next-icon"
                     aria-hidden="true"></span>
@@ -396,8 +387,29 @@
                 >
             </button>
         </div>
+
+
+
+
+
         <hr />
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Price -->
     <div class="container mt-5" id="price">

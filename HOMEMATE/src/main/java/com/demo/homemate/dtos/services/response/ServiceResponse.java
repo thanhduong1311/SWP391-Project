@@ -1,4 +1,4 @@
-package com.demo.homemate.dtos.homemateService.response;
+package com.demo.homemate.dtos.services.response;
 
 import com.demo.homemate.dtos.notification.MessageOject;
 import lombok.*;

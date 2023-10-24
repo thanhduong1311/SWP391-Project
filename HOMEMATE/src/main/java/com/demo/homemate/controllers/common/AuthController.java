@@ -12,6 +12,8 @@ import com.demo.homemate.dtos.employee.response.PartnerResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.password.RecoverPassword;
 import com.demo.homemate.dtos.password.newPasswordRequest;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
+import com.demo.homemate.entities.Service;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.CreateAccountService;
@@ -50,6 +52,7 @@ public class AuthController {
     private final EmployeeRepository employeeRepository;
 
     private final CustomerRepository customerRepository;
+    private final CustomerRepository serviceRepository;
 
     private final UserService userService;
 
@@ -190,8 +193,18 @@ public class AuthController {
 
     @GetMapping("/guest")
     public String guestPage(Model model) {
-        model.addAttribute("services", serviceService.getAllServices());
+        model.addAttribute("services", serviceService.getAllDetailServices());
         return "home";
+    }
+    @GetMapping("/services/{name}")
+    public String getServiceDetail(Model model,
+                                   @PathVariable("name") String name) {
+
+        ServiceDetailResponse service = serviceService.getServiceByName(name);
+        System.out.println(service.getName());
+        System.out.println(service.getIntro());
+        model.addAttribute("Service",service);
+        return "serviceDetail";
     }
 
     @GetMapping("/logout")

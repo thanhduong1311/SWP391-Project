@@ -2,13 +2,10 @@ package com.demo.homemate.controllers.employee;
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
-import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.mappings.AccountMapper;
-import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,9 +14,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.util.WebUtils;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/employee")

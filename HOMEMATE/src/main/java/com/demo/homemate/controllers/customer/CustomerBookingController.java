@@ -2,12 +2,15 @@ package com.demo.homemate.controllers.customer;
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.data.MailContents;
+import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.job.request.JobRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.payment.PaymentRequest;
 import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.enums.Role;
+import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.mappings.ServiceMapper;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.AdminService;
@@ -16,6 +19,7 @@ import com.demo.homemate.services.PaymentService;
 import com.demo.homemate.services.interfaces.*;
 import com.demo.mservice.enums.RequestType;
 import com.demo.mservice.momo.MomoPay;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -46,12 +50,33 @@ public class CustomerBookingController {
     private final CustomerRepository customerRepository;
 
     @GetMapping("/form")
-    public String createBooking(Model model) {
+    public String createBooking(Model model,
+                                @CookieValue(name = "Token",required = false) String cookieToken,
+                                @SessionAttribute(value="SessionToken",required = false) String sessionToken
+    ) {
 
-        model.addAttribute("bookingInfor",new JobRequest());
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+        JWTService jwt = new JWTService();
 
-        model.addAttribute("service", serviceService.getAllServices());
-        return "customer/booking";
+        if (token!=null){
+            try {
+                Claims claim = jwt.parseJwt(token);
+                if(claim.getSubject().equals(Role.CUSTOMER.toString())){
+                    model.addAttribute("bookingInfor",new JobRequest());
+                    model.addAttribute("service", serviceService.getAllServices());
+                    return "customer/booking";
+                }
+                else return "redirect:/home";
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else return "redirect:/home";
+
+
     }
 
     @PostMapping("boooking")

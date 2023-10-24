@@ -3,7 +3,7 @@ package com.demo.homemate.controllers.customer;
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
-import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
+import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
@@ -54,10 +54,9 @@ public class CustomerHomeController {
                     String username = (String)claim.get("Username");
                     AccountResponse customer = new AccountMapper().toCustomerResponse(customerRepository.findByUsername(username));
                    //  List all services
-                   List<ServiceResponse> services = serviceService.getAllServices();
-                   model.addAttribute("services", services);
+                    model.addAttribute("services", serviceService.getAllDetailServices());
                    model.addAttribute("AccountInfo",customer);
-                    return "/customer/home";
+                    return "/customer/customer-home";
                 }
                 else return "redirect:/home";
             } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.demo.homemate.services;
 
-import com.demo.homemate.dtos.homemateService.response.ServiceResponse;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
+import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.entities.Service;
 import com.demo.homemate.mappings.interfaces.IServiceMapping;
 import com.demo.homemate.repositories.ServiceRepository;
@@ -32,7 +33,20 @@ public class ServiceService implements IServiceService {
         Service service = serviceRepository.findById(id);
         return serviceMapper.toServiceResponse(service);
     }
+    @Override
+    public ServiceDetailResponse getServiceByName(String name) {
+        Service service = serviceRepository.findByName(name);
+        return serviceMapper.toServiceDetailResponse(service);
+    }
 
+    @Override
+    public List<ServiceDetailResponse> getAllDetailServices() {
+        List<Service> services =  serviceRepository.findAll();
+        return services
+                .stream()
+                .map(serviceMapper::toServiceDetailResponse)
+                .collect(Collectors.toList());
+    }
 
 
 }

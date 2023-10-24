@@ -79,80 +79,131 @@
 
     <main>
       <div class="container mt-5 p-5 d-flex align-items-end">
-        <img
-          class="rounded-5 border me-4"
-          src="images/user-example.jpg"
-          style="object-fit: cover; object-position: 25% 25%"
-          alt="User Image"
-          width="100rem"
-          height="100rem"
-        />
-        <h1>Let's booking, Zun</h1>
+        <a
+                th:href="@{/customer/account/{username}(username=${AccountInfo.getUsername()})}">
+          <img
+                  class="rounded-5 border me-4"
+                  src=""
+                  th:src="*{AccountInfo.getAvatar()}"
+                  style="
+            object-fit: cover;
+            object-position: 25% 25%;
+          "
+                  alt="User Image"
+                  width="100rem"
+                  height="100rem" />
+        </a>
+        <h1>Welcome back, </h1>
+        <span class="h1" th:text="*{AccountInfo.getName()}"></span>
       </div>
 
       <div class="bg-secondary p-1 mb-3">
         <div
-          class="container m-5 mx-auto bg-light p-4 rounded-5 animate__animated animate__fadeInUp"
-        >
+          class="container m-5 mx-auto bg-light p-4 rounded-5 animate__animated animate__fadeInUp">
           <h1>Vui lòng chọn dịch vụ:</h1>
           <div class="row mt-5">
-            <div class="col-lg-4">
+            <div th:each="service : ${services}">
+
+            </div>
+            <div class="col-md-3" >
               <a class="nav-link" href="#"
+              >
+                <div class="shadow-lg rounded-5 p-5 hover-luaga">
+                <h3 th:text="${service.getName()}">Dọn dẹp 1 giờ</h3>
+                <small>(2 phòng, 55 m<sup>2</sup>)</small>
+                <hr />
+                <h2 class="ms-2 mt-4" th:text="${service.getPrice()}">~ 100.000<sup>đ</sup></h2>
+                <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                <ul>
+                  <li th:text="${service.getDescription()}">Dọn dẹp phòng nhỏ.</li>
+                  <li th:text="${service.getDescription()}">Dọn dẹp nhanh chóng.</li>
+                  <li th:text="${service.getDescription()}">Giá thành rẻ.</li>
+                </ul>
+                <div class="mt-5">
+                  <a class="btn btn-dark w-100"
+                     th:href="@{/customer/bookings/form}">Booking now</a>
+                </div>
+              </div></a>
+            </div>
+            <div class="col-md-3" >
+              <a class="nav-link" href="#"
+              ><div class="shadow-lg rounded-5 p-5 hover-luaga">
+                <h3 th:text="${service.getName()}">Dọn dẹp 1 giờ</h3>
+                <small>(2 phòng, 55 m<sup>2</sup>)</small>
+                <hr />
+                <h2 class="ms-2 mt-4" th:text="${service.getPrice()}">~ 100.000<sup>đ</sup></h2>
+                <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                <ul>
+                  <li th:text="${service.getDescription()}">Dọn dẹp phòng nhỏ.</li>
+                  <li th:text="${service.getDescription()}">Dọn dẹp nhanh chóng.</li>
+                  <li th:text="${service.getDescription()}">Giá thành rẻ.</li>
+                </ul>
+                <div class="mt-5">
+                  <a class="btn btn-dark w-100"
+                     th:href="@{/customer/bookings/form}">Booking now</a>
+                </div>
+              </div></a>
+            </div>
+            <div class="col-md-3" >
+              <a class="nav-link" href="#"
+              ><div class="shadow-lg rounded-5 p-5 hover-luaga">
+                <h3 th:text="${service.getName()}">Dọn dẹp 1 giờ</h3>
+                <small>(2 phòng, 55 m<sup>2</sup>)</small>
+                <hr />
+                <h2 class="ms-2 mt-4" th:text="${service.getPrice()}">~ 100.000<sup>đ</sup></h2>
+                <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                <ul>
+                  <li th:text="${service.getDescription()}">Dọn dẹp phòng nhỏ.</li>
+                  <li th:text="${service.getDescription()}">Dọn dẹp nhanh chóng.</li>
+                  <li th:text="${service.getDescription()}">Giá thành rẻ.</li>
+                </ul>
+                <div class="mt-5">
+                  <a class="btn btn-dark w-100"
+                     th:href="@{/customer/bookings/form}">Booking now</a>
+                </div>
+              </div></a>
+            </div>
+            <div class="col-md-3" >
+              <a class="nav-link" href="#"
+              ><div class="shadow-lg rounded-5 p-5 hover-luaga">
+                <h3 th:text="${service.getName()}">Dọn dẹp 1 giờ</h3>
+                <small>(2 phòng, 55 m<sup>2</sup>)</small>
+                <hr />
+                <h2 class="ms-2 mt-4" th:text="${service.getPrice()}">~ 100.000<sup>đ</sup></h2>
+                <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                <ul>
+                  <li th:text="${service.getDescription()}">Dọn dẹp phòng nhỏ.</li>
+                  <li th:text="${service.getDescription()}">Dọn dẹp nhanh chóng.</li>
+                  <li th:text="${service.getDescription()}">Giá thành rẻ.</li>
+                </ul>
+                <div class="mt-5">
+                  <a class="btn btn-dark w-100"
+                     th:href="@{/customer/bookings/form}">Booking now</a>
+                </div>
+              </div></a>
+            </div>
+            <!--<div th:each="service : ${services}">
+              <div class="col-3" >
+                <a class="nav-link" href="#"
                 ><div class="shadow-lg rounded-5 p-5 hover-luaga">
-                  <h3>Dọn dẹp 1 giờ</h3>
+                  <h3 th:text="${service.getName()}">Dọn dẹp 1 giờ</h3>
                   <small>(2 phòng, 55 m<sup>2</sup>)</small>
                   <hr />
-                  <h2 class="ms-2 mt-4">~ 100.000<sup>đ</sup></h2>
+                  <h2 class="ms-2 mt-4" th:text="${service.getPrice()}">~ 100.000<sup>đ</sup></h2>
                   <h4 class="mt-5">Chi tiết dịch vụ:</h4>
                   <ul>
-                    <li>Dọn dẹp phòng nhỏ.</li>
-                    <li>Dọn dẹp nhanh chóng.</li>
-                    <li>Giá thành rẻ.</li>
+                    <li th:text="${service.getDescription()}">Dọn dẹp phòng nhỏ.</li>
+                    <li th:text="${service.getDescription()}">Dọn dẹp nhanh chóng.</li>
+                    <li th:text="${service.getDescription()}">Giá thành rẻ.</li>
                   </ul>
                   <div class="mt-5">
-                    <button class="btn btn-dark w-100">Chọn ngay</button>
+                    <a class="btn btn-dark w-100"
+                       th:href="@{/customer/bookings/form}">Booking now</a>
                   </div>
-                </div></a
-              >
+                </div></a>
+              </div>-->
             </div>
-            <div class="col-lg-4">
-              <a class="nav-link" href="#"
-                ><div class="shadow-lg rounded-5 p-5 hover-luaga">
-                  <h3>Tên dịch vụ</h3>
-                  <small>(x phòng, x m<sup>2</sup>)</small>
-                  <hr />
-                  <h2 class="ms-2 mt-4">~ Giá<sup>đ</sup></h2>
-                  <h4 class="mt-5">Chi tiết dịch vụ:</h4>
-                  <ul>
-                    <li>Chi tiết 1.</li>
-                    <li>Chi tiết 2.</li>
-                    <li>Chi tiết 3.</li>
-                  </ul>
-                  <div class="mt-5">
-                    <button class="btn btn-dark w-100">Chọn ngay</button>
-                  </div>
-                </div></a
-              >
-            </div>
-            <div class="col-lg-4">
-              <a class="nav-link" href="#"
-                ><div class="shadow-lg rounded-5 p-5 hover-luaga">
-                  <h3>Tên dịch vụ</h3>
-                  <small>(x phòng, x m<sup>2</sup>)</small>
-                  <hr />
-                  <h2 class="ms-2 mt-4">~ Giá<sup>đ</sup></h2>
-                  <h4 class="mt-5">Chi tiết dịch vụ:</h4>
-                  <ul>
-                    <li>Chi tiết 1.</li>
-                    <li>Chi tiết 2.</li>
-                    <li>Chi tiết 3.</li>
-                  </ul>
-                  <div class="mt-5">
-                    <button class="btn btn-dark w-100">Chọn ngay</button>
-                  </div>
-                </div></a
-              >
-            </div>
+
           </div>
         </div>
       </div>
