@@ -1,6 +1,9 @@
 package com.demo.homemate.controllers.employee;
 
 import com.demo.homemate.configurations.JWTService;
+import com.demo.homemate.dtos.employeeCancelRequest.Request.CreateCancelRequest;
+import com.demo.homemate.dtos.job.response.CalendarObject;
+import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Employee;
@@ -40,18 +43,32 @@ public class EmployeeTaskController {
     }
 
     @GetMapping("/incomes")
-    public String viewIncomes(Model model ) {
-        List<Income> incomes = employeeService.getIncomes(12);
+    public String viewIncomes(Model model , @CookieValue(name = "Token",required = false) String cookieToken,
+                              @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
 
-        for (Income i:
-             incomes) {
-            System.out.println(i.toString());
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
         }
-        return "redirect:/employee";
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+        String username = (String) JWTService.parseJwt(token).get("Username");
+
+        int empID = employeeRepository.findByUsername(username).getEmployeeId();
+//
+        List<IncomeDetail> incomes = employeeService.getIncomes(empID);
+
+        model.addAttribute("incomes", incomes);
+
+
+        return "employee/incomes";
     }
 
-    @GetMapping("/imcome/{id}")
-    public String viewDetailIncome(@PathVariable("id") int id) {
+    @GetMapping("/income/{id}")
+    public String viewDetailIncome(@PathVariable("id") int id, Model model) {
+
+        IncomeDetail incomeDetail = employeeService.getDetailIncome(id);
+
+        model.addAttribute("income",incomeDetail);
 
         return "employee/incomeDetail";
     }
@@ -97,9 +114,45 @@ public class EmployeeTaskController {
     }
 
     @GetMapping("/cancel/{id}")
-    public String cancelJob(@PathVariable("id") int id) {
-        return "";
+    public String cancelJobView(@PathVariable("id") int id,Model model) {
+
+        JobDetail  job = employeeService.viewDetailJob(id);
+
+        model.addAttribute("job",job);
+        model.addAttribute("reason",new CreateCancelRequest());
+        return "employee/cancelJob";
     }
 
+    @PostMapping("/cancelJob/{id}")
+    public String cancelJob(@PathVariable("id") int id,CreateCancelRequest reason) {
+
+
+        MessageOject messageOject = employeeService.cancelJob(id, reason.getReason());
+        System.out.println(messageOject.getMessage());
+        return "redirect:/employee/job/jobList";
+    }
+
+
+    @GetMapping("/schedule")
+    public String viewSchedule(Model model, @CookieValue(name = "Token",required = false) String cookieToken,
+                               @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
+
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+        String username = (String) JWTService.parseJwt(token).get("Username");
+
+        int empID = employeeRepository.findByUsername(username).getEmployeeId();
+        CalendarObject calendarObject = new CalendarObject();
+
+        String s = employeeService.getScheduleJSON(empID);
+
+
+        model.addAttribute("schedule", s);
+
+        return "employee/schedule";
+    }
 
 }

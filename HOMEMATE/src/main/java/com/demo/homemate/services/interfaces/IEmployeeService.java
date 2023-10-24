@@ -1,6 +1,7 @@
 package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Employee;
@@ -20,12 +21,15 @@ public interface IEmployeeService {
 
     MessageOject takeJob(int jobID,int employeeID);
 
-    MessageOject cancelJob(int JobID, int employeeID);
+    MessageOject cancelJob(int JobID, String reason);
 
     MessageOject doneJob(int JobID,int employeeID);
 
-    List<Income> getIncomes(int employeeId);
+    List<IncomeDetail> getIncomes(int employeeId);
 
+    IncomeDetail getDetailIncome(int incomeId);
+
+    String getScheduleJSON(int employeeID) ;
 
 
 }
