@@ -140,7 +140,7 @@
               <div class="card-header p-3">
                 <h2 class="mb-0">
                   <i class="fas fa-tasks me-2"></i
-                  >Job information
+                  >Create cancel request
                 </h2>
               </div>
               <div
@@ -208,32 +208,32 @@
                   <span class="ml-2 text-success" th:text="'$' + *{job.getPrice()}"></span>
                 </div>
               </div>
+
+              <form th:action="@{/employee/job/cancelJob/{id}(id=${job.getJobID()})}" method="post">
+
+              <div class="col-md-12">
+                <label for="reason"></label>
+                  <textarea name="reason" type="text" id="reason" class="w-100" th:field="*{reason.reason}">
+
+                  </textarea>
+              </div>
+
+
               <div
                 class="card-footer p-3 d-flex justify-content-end">
-                <a th:if="${job.getStatus().ordinal() == 0}"
-                  th:href="@{/employee/job/take/{id}(id=${job.getJobID()})}"
-                  class="btn btn-success"
-                  >Receive</a
-                >
 
-                <a th:if="${job.getStatus().ordinal() == 1}"
+
+                <button th:if="${job.getStatus().ordinal() == 1}"
                    th:href="@{/employee/job/cancel/{id}(id=${job.getJobID()})}"
-                   class="btn btn-danger"
-                >Cancel</a
+                   class="btn btn-danger" type="submit"
+                >Cancel</button
                 >
 
-                <a th:if="${job.getStatus().ordinal() == 1}"
-                   th:href="@{/employee/job/done/{id}(id=${job.getJobID()})}"
-                   class="btn btn-success"
-                   style="margin-left: 10px"
-                >Done</a
-                >
 
-                <a th:if="${job.getStatus().ordinal() == 2}"
-                   class="text-success"
-                >Finished</a
-                >
+
               </div>
+              </form>
+
             </div>
           </div>
         </div>

@@ -1,11 +1,14 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.job.response.CalendarObject;
+import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.PaymentType;
+import com.demo.homemate.enums.RequestStatus;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IEmployeeService;
 import com.demo.homemate.utils.JobTimer;
@@ -14,9 +17,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 
 @Slf4j
@@ -37,6 +43,8 @@ public class EmployeeService implements IEmployeeService {
     private final UserService userService;
 
     private final IncomeRepository incomeRepository;
+
+    private final EmployeeRequestRepository employeeRequestRepository;
 
     @SneakyThrows
     @Override
@@ -176,64 +184,85 @@ public class EmployeeService implements IEmployeeService {
             if(isBusy) {
                 return new MessageOject("Failed", "You early have job at this time,please check your schedule!", null);
             }else {
-                // check balance;
-                double time = paymentService.getTotalTime(job.getStart(),job.getEnd());
-                double empBalace = employee.getBalance();
-                // Here 0.02 is 2% of commission for each job
-                double commission = paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02;
+                if(employee.getAccountStatus().ordinal() != 1) {
+                    // check balance;
+                    double time = paymentService.getTotalTime(job.getStart(),job.getEnd());
+                    double empBalace = employee.getBalance();
+                    // Here 0.02 is 2% of commission for each job
+                    double commission = paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02;
 
 
-                //for CASH
-                if(job.getPaymentType() == PaymentType.CASH) {
-                    if(empBalace - commission >= 0) {
+                    //for CASH
+                    if(job.getPaymentType() == PaymentType.CASH) {
+                        if(empBalace - commission >= 0) {
+                            job.setStatus(JobStatus.INPROGRESS);
+                            job.setEmployeeId(employee);
+
+                            double outMoney = empBalace-commission;
+                            ///
+                            BigDecimal bd = new BigDecimal(outMoney);
+                            bd = bd.setScale(4, RoundingMode.HALF_UP);
+                            outMoney = bd.doubleValue();
+
+                            employee.setBalance(outMoney);
+
+
+                            employeeRepository.save(employee);
+                            jobRepository.save(job);
+
+                            return new MessageOject("Success", "Receive job is successfully!", null);
+
+
+                        } else {
+                            return new MessageOject("Failed", "Your balance is not enough to take this job! Top up your account and try again!", null);
+                        }
+
+                    } else { // for BANKING
                         job.setStatus(JobStatus.INPROGRESS);
                         job.setEmployeeId(employee);
-                        employee.setBalance(empBalace-commission);
+                        //employee.setBalance(empBalace+(paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) - paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02));
                         ///
 
                         employeeRepository.save(employee);
                         jobRepository.save(job);
 
                         return new MessageOject("Success", "Receive job is successfully!", null);
-
-
-                    } else {
-                        return new MessageOject("Failed", "Your balance is not enough to take this job! Top up your account and try again!", null);
                     }
-
-                } else { // for BANKING
-                    job.setStatus(JobStatus.INPROGRESS);
-                    job.setEmployeeId(employee);
-                    employee.setBalance(empBalace+(paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) - paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02));
-                    ///
-
-                    employeeRepository.save(employee);
-                    jobRepository.save(job);
-
-                    return new MessageOject("Success", "Receive job is successfully!", null);
+                }else {
+                    return new MessageOject("Failed", "Your account is blocked, can not take job!",null);
                 }
             }
-
         } catch (Exception e) {
             return new MessageOject("Error", "There some error when taking job.",null);
         }
     }
 
     @Override
-    public MessageOject cancelJob(int JobID, int employeeID) {
-//        try {
-//            EmployeeRequest request = new EmployeeRequest();
-//            Job job = jobRepository.findById(JobID);
-//            Employee employee =  employeeRepository.findById(employeeID);
-//
-//
-//
-//
-//            return new MessageOject("Success","Request created, you must watting for the approve.",null);
-//        } catch (Exception e) {
-//            return new MessageOject("Error","There some error occur, can not make cancel requets",null);
-//        }
-        return  null;
+    public MessageOject cancelJob(int JobID, String reason) {
+        try {
+            EmployeeRequest request = new EmployeeRequest();
+            Job job = jobRepository.findById(JobID);
+            Employee employee =  employeeRepository.findById(job.getEmployeeId().getEmployeeId());
+            JobTimer timer = new JobTimer();
+
+            boolean checkValid = timer.checkValidCancel(new Date(),job.getStart());
+            if(!checkValid) {
+                return new MessageOject("Failed","You can not cancel this job because time is nearly job start time.",null);
+            } else  {
+                request.setStatus(RequestStatus.WAITING);
+                request.setJobId(job);
+                request.setEmployeeId(employee);
+                request.setReason(reason);
+                request.setCreateAt(new Date());
+                request.setUpdateAt(new Date());
+
+                employeeRequestRepository.save(request);
+
+                return new MessageOject("Success","Cancel request is created, please wait the response.",null);
+            }
+        } catch (Exception e) {
+            return new MessageOject("Error","There some error occur, can not make cancel request",null);
+        }
     }
 
     @Override
@@ -254,10 +283,30 @@ public class EmployeeService implements IEmployeeService {
                     income.setCreateAt(new Date());
                     income.setUpdateAt(new Date());
 
-                    jobRepository.save(job);
-                    incomeRepository.save(income);
+                    double empBalace = employee.getBalance();
+                    // Here 0.02 is 2% of commission for each job
+                    double commission = paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02;
 
-                    return new MessageOject("Success","Job complete, you can check at your incomes",null);
+
+                    if(job.getPaymentType() == PaymentType.CASH) {
+                            incomeRepository.save(income);
+                            return new MessageOject("Success", "Job completed, you can check in your income!", null);
+
+                    } else { // for BANKING
+                        double inMoney = empBalace+(paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) - paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02);
+                        ///
+                        BigDecimal bd = new BigDecimal(inMoney);
+                        bd = bd.setScale(4, RoundingMode.HALF_UP);
+                        inMoney = bd.doubleValue();
+
+                        employee.setBalance(inMoney);
+
+
+                        employeeRepository.save(employee);
+                        incomeRepository.save(income);
+
+                        return new MessageOject("Success", "Job completed, you can check in your income!", null);
+                    }
 
                 } else {
                     return new MessageOject("Failed","You cannot complete the work at this time",null);
@@ -271,14 +320,161 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public List<Income> getIncomes(int employeeID) {
+    public List<IncomeDetail> getIncomes(int employeeID) {
         try {
-            Employee employee = employeeRepository.findById(employeeID);
-            List<Income> incomes = incomeRepository.findByEmployeeId(employee);
-            return  incomes;
+            List<IncomeDetail> result = new ArrayList<>();
+            List<Income> incomes = incomeRepository.findIncomeByEmployeeId(employeeRepository.findById(employeeID));
+
+
+
+            if (incomes != null) {
+                for (Income i : incomes
+                     ) {
+                    IncomeDetail incDel = new IncomeDetail();
+
+                    double totalTime = paymentService.getTotalTime(
+                            jobRepository.findById(i.getJobId().getJobId()).getStart(),
+                            jobRepository.findById(i.getJobId().getJobId()).getEnd());
+
+
+                    double amount =paymentService.getTotalMoney(totalTime,
+                            jobRepository.findById(i.getJobId().getJobId()).getServiceId().getServiceId());
+
+
+                    double commission = amount*0.02;
+
+                    BigDecimal bd = new BigDecimal(commission);
+                    bd = bd.setScale(2, RoundingMode.HALF_UP);
+                    commission = bd.doubleValue();
+
+                    double realAmount = amount - commission;
+
+                    BigDecimal bd2 = new BigDecimal(realAmount);
+                    bd2 = bd2.setScale(2, RoundingMode.HALF_UP);
+                    realAmount = bd2.doubleValue();
+
+
+
+                    incDel.setIncomeId(i.getIncomeId());
+                    incDel.setCustomerName(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getFullName());
+                    incDel.setCustomerPhone(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getPhone());
+                    incDel.setAddress(
+                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getAddress_detail()+", "+
+                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getDistrict() + "," +
+                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getCity()
+                    );
+                    incDel.setRealAmount(realAmount);
+                    incDel.setAmountFromJob(realAmount);
+                    incDel.setCommission(commission);
+                    incDel.setPaymentType(jobRepository.findById(i.getJobId().getJobId()).getPaymentType());
+                    incDel.setTotalTime(totalTime);
+                    incDel.setForm(jobRepository.findById(i.getJobId().getJobId()).getStart());
+                    incDel.setTo(jobRepository.findById(i.getJobId().getJobId()).getEnd());
+                    incDel.setDateOfIncome(i.getCreateAt());
+                    incDel.setServiceName(jobRepository.findById(i.getJobId().getJobId()).getServiceId().getName());
+                    incDel.setNote(i.getNote());
+                    result.add(incDel);
+                }
+            }
+
+            return result;
+
         } catch (Exception e) {
-             return  null;
+            System.out.println(e.getMessage());
         }
+        return null;
+    }
+
+    @SneakyThrows
+    @Override
+    public IncomeDetail getDetailIncome(int incomeId) {
+        try {
+            Income i = incomeRepository.findIncomeByIncomeId(incomeId);
+
+            IncomeDetail incDel = new IncomeDetail();
+
+            double totalTime = paymentService.getTotalTime(
+                    jobRepository.findById(i.getJobId().getJobId()).getStart(),
+                    jobRepository.findById(i.getJobId().getJobId()).getEnd());
+
+
+            double amount =paymentService.getTotalMoney(totalTime,
+                    jobRepository.findById(i.getJobId().getJobId()).getServiceId().getServiceId());
+
+
+            double commission = amount*0.02;
+
+            BigDecimal bd = new BigDecimal(commission);
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            commission = bd.doubleValue();
+
+            double realAmount = amount - commission;
+
+            BigDecimal bd2 = new BigDecimal(realAmount);
+            bd2 = bd2.setScale(2, RoundingMode.HALF_UP);
+            realAmount = bd2.doubleValue();
+
+
+
+            incDel.setIncomeId(i.getIncomeId());
+            incDel.setCustomerName(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getFullName());
+            incDel.setCustomerPhone(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getPhone());
+            incDel.setAddress(
+                    customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getAddress_detail()+", "+
+                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getDistrict() + "," +
+                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getCity()
+            );
+            incDel.setRealAmount(realAmount);
+            incDel.setAmountFromJob(realAmount);
+            incDel.setCommission(commission);
+            incDel.setPaymentType(jobRepository.findById(i.getJobId().getJobId()).getPaymentType());
+            incDel.setTotalTime(totalTime);
+            incDel.setForm(jobRepository.findById(i.getJobId().getJobId()).getStart());
+            incDel.setTo(jobRepository.findById(i.getJobId().getJobId()).getEnd());
+            incDel.setDateOfIncome(i.getCreateAt());
+            incDel.setServiceName(jobRepository.findById(i.getJobId().getJobId()).getServiceId().getName());
+            incDel.setNote(i.getNote());
+
+            return  incDel;
+        } catch (Exception e){
+            throw new Exception(e);
+        }
+    }
+
+    @SneakyThrows
+    @Override
+    public String getScheduleJSON(int employeeID) {
+        try {
+            String schedule ="[";
+
+            List<Job> jobs = jobRepository.findByEmployeeId(employeeRepository.findById(employeeID));
+
+            JobTimer jobTimer = new JobTimer();
+            if(jobs !=  null) {
+                for (Job j :jobs  ) {
+                    if(j.getStatus().ordinal() == 1) {
+                        CalendarObject c = new CalendarObject();
+                        c.setId(String.valueOf(j.getJobId()));
+                        c.setName(j.getServiceId().getName());
+                        c.setType("holiday");
+                        c.setDescription(
+                                j.getStart().getHours() + ":" + j.getStart().getMinutes() +" - "+
+                                j.getEnd().getHours() + ":" + j.getEnd().getMinutes() + " " + j.getDescription()
+                        );
+                        c.setDate(jobTimer.convertDateToString(j.getStart()));
+                        schedule += c.toString() + ",";
+
+                    }
+                }
+                return schedule.substring(0,schedule.length()-1) + "]";
+            } else {
+                return schedule +"]";
+            }
+
+        } catch (Exception e) {
+            throw  new Exception(e.getMessage());
+        }
+
     }
 
 

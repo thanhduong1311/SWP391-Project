@@ -4,11 +4,14 @@ import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
 import com.demo.homemate.dtos.employeeCancelRequest.Response.EmployeeCancelJobRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
+import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.RequestStatus;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IEmployeeRequestService;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +29,8 @@ public class EmployeeRequestService implements IEmployeeRequestService {
     private final CustomerRepository customerRepository;
 
     private final ServiceRepository serviceRepository;
+
+    private final PaymentService paymentService;
 
 
     @Override
@@ -94,9 +99,45 @@ public class EmployeeRequestService implements IEmployeeRequestService {
            if(er == null) {
                return new MessageOject("Failed", "Can not approve this request",null);
            } else {
+               Job job = jobRepository.findById(employeeRequestRepository.findById(requestID).getJobId().getJobId());
+               Employee employee = employeeRepository.findById(employeeRequestRepository.findById(requestID).getEmployeeId().getEmployeeId());
+               EmployeeRequest request = employeeRequestRepository.findById(requestID);
+               Customer customer = customerRepository.findById(jobRepository.findById(employeeRequestRepository.findById(requestID).getJobId().getJobId()).getCustomerId().getCustomerId());
+
+               double totalTime = paymentService.getTotalTime(job.getStart(),job.getEnd());
+               double rawPrice = paymentService.getTotalMoney(totalTime,job.getServiceId().getServiceId());
+               double realMoney = rawPrice -rawPrice*0.02;
+
+                if(job.getPaymentType().ordinal() == 0) {
+
+                    double money = customer.getBalance() + rawPrice;
+
+                    BigDecimal bd = new BigDecimal(money);
+                    bd = bd.setScale(4, RoundingMode.HALF_UP);
+                    money = bd.doubleValue();
+
+                    customer.setBalance(money);
+                    customerRepository.save(customer);
+                }
+
+               if(job.getPaymentType().ordinal() == 1) {
+
+                   double money =employee.getBalance() - rawPrice*0.02;
+
+                   BigDecimal bd = new BigDecimal(money);
+                   bd = bd.setScale(4, RoundingMode.HALF_UP);
+                   money = bd.doubleValue();
+
+                   employee.setBalance(money);
+                   employeeRepository.save(employee);
+               }
+
+               job.setStatus(JobStatus.CANCEL);
+
                er.setDecisionAt(new Date());
                er.setStatus(RequestStatus.APPROVED);
                employeeRequestRepository.save(er);
+               jobRepository.save(job);
                return new MessageOject("Success", "Request is approved",null);
            }
        } catch (Exception e) {

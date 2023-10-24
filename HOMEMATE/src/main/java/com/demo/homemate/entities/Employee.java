@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.coyote.Request;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -80,7 +81,5 @@ public class Employee{
             inverseJoinColumns = @JoinColumn(name = "serviceId")
     )
     private List<Service> services;
-
-
 
 }

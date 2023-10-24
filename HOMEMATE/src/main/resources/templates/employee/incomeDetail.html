@@ -97,23 +97,18 @@
             <ul
               class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a
-                  th:href="@{/templates/customer}"
-                  class="nav-link"
-                  >Home</a
-                >
+                <a th:href="@{/employee}" class="nav-link">Home</a>
               </li>
               <li class="nav-item">
-                <a
-                   th:href="@{/customer/bookings}"
-                  class="nav-link"
-                  >Booking</a
-                >
+                <a th:href="@{/employee/job/jobList}" class="nav-link">Jobs</a>
               </li>
+
               <li class="nav-item">
-                <a th:href="@{/customer/history}" class="nav-link"
-                  >History</a
-                >
+                <a th:href="@{/employee/job/schedule}" class="nav-link">Schedule</a>
+              </li>
+
+              <li class="nav-item">
+                <a th:href="@{/employee/job/incomes}" class="nav-link">Income</a>
               </li>
             </ul>
 
@@ -128,80 +123,84 @@
         <div
           class="first d-flex justify-content-between align-items-center mb-3">
           <div class="info">
-            <span class="h5 d-block name"
-              >Thank you, <span th:text="*{jobDetail.getCustomerName()}"></span></span
-            >
-            <b>
-            <span class="order" th:text="*{jobDetail.getServiceName()}"
+
+            <span class="order" th:text="*{income.getServiceName()}"
               >
             </span>
             </b>
           </div>
         </div>
         <div class="detail">
-          <span class="d-block summery">Status:
+          <span class="d-block summery">Payment type:
               <span class="col-lg-3 col-12 d-grid text-info"
-                   th:if="*{jobDetail.getStatus().ordinal() == 0}">PROCESSING</span>
-                      <span class="col-lg-3 col-12 d-grid text-warning"
-                           th:if="*{jobDetail.getStatus().ordinal() == 1}">IN_PROGRESS</span>
-                      <span class="col-lg-3 col-12 d-grid text-success"
-                           th:if="*{jobDetail.getStatus().ordinal() == 2}">COMPLETED</span>
-                      <span class="col-lg-3 col-12 d-grid text-danger"
-                           th:if="*{jobDetail.getStatus().ordinal() == 3}">CANCELED</span>
+                   th:if="*{income.getPaymentType().toString()}"></span>
+
           </span>
         </div>
         <hr />
+        <div class="col-md-8">
+
+        </div>
         <div class="text">
-          <span class="d-block new mb-1" th:text="*{jobDetail.getCustomerName()}"
+          <span class="d-block new mb-1" th:text="*{income.getCustomerName()}"
             ></span
           >
         </div>
         <div class="text">
-          <span class="d-block new mb-1"th:text="*{jobDetail.getPhone()}"
+          <span class="d-block new mb-1"th:text="*{income.getCustomerPhone()}"
             ></span
           >
         </div>
-        <span class="d-block address mb-3" th:text="*{jobDetail.getAddress()}"
+        <span class="d-block address mb-3" th:text="*{income.getAddress()}"
           ></span
         >
         <span style="color: #000; font-weight: 500">
-          Maid:
-        <span class="text-black-50" th:text="*{jobDetail.getEmployeeName()}"> </span>
+        <span class="text-black-50" th:text="*{income.getServiceName()}"> </span>
         </span>
 
         <span style="color: #000; font-weight: 500">From:
-        <span class="text-black-50" th:text="*{jobDetail.getStart()}"></span>
+        <span class="text-black-50" th:text="*{income.getForm()}"></span>
         </span>
 
         <span style="color: #000; font-weight: 500">
           To:
-        <span class="text-black-50" th:text="*{jobDetail.getEnd()}"></span>
+        <span class="text-black-50" th:text="*{income.getTo()}"></span>
         </span>
 
         <span style="color: #000; font-weight: 500">
-          Description:
-        <span class="text-black-50" th:text="*{jobDetail.getJobDescription()}"></span>
+          Total time:
+        <span class="text-black-50" th:text="*{income.getTotalTime()}"></span>
         </span>
 
         <span style="color: #000; font-weight: 500">
           Payment type:
-        <span class="text-black-50" th:text="*{jobDetail.getPaymentType().toString()}"></span>
+        <span class="text-black-50" th:text="*{income.getPaymentType().toString()}"></span>
         </span>
 
 
+        <div class="col-md-5">
 
-        <div
-          class="money d-flex flex-row mt-2 align-items-center">
-          <h4 class="ml-2 ">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
+          <div
+                  class="money d-flex flex-row mt-2 align-items-center">  From Job:
+            <h5 class="ml-2 ">$<span th:text="*{income.getAmountFromJob()}"></span></h5>
+          </div>
+
+          <div
+                  class="money d-flex flex-row mt-2 align-items-center"> Commission:
+            <h5 class="ml-2 ">$<span th:text="*{income.getCommission()}"></span></h5>
+          </div>
+
+          <div
+                  class="money d-flex flex-row mt-2 align-items-center"> Real income:
+            <h5 class="ml-2 ">$<span th:text="*{income.getRealAmount()}"></span></h5>
+          </div>
+
+          <div
+                  class="money d-flex flex-row mt-2 align-items-center"> Date:
+            <h5 class="ml-2 "><span th:text="*{income.getDateOfIncome()}"></span></h5>
+          </div>
         </div>
-        <div
-          class="card-footer p-3 d-flex justify-content-end">
-          <a
-            href=""
-            class="btn btn-dark btn-outline-light"
-            >Feedback</a
-          >
-        </div>
+
       </div>
     </div>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>

@@ -64,12 +64,35 @@ public class JobTimer {
         return bTime >= aTime;
     }
 
+    public boolean checkValidCancel(Date a,Date b) {
+        // Lấy thời gian theo mili giây
+        long aTime = a.getTime();
+        long bTime =b.getTime();
+
+        long diff = bTime - aTime;
+
+        // Kiểm tra xem khoảng thời gian nhỏ hơn 1 tiếng
+        return diff > (1000 * 60 * 60);
+    }
+
     public boolean isExpired(Date a) {
         // Lấy thời gian theo mili giây
         long aTime = a.getTime();
         long bTime = (new Date()).getTime(); // now
 
         return bTime > aTime;
+    }
+
+
+    public static String convertDateToString(Date date) {
+        // Create a SimpleDateFormat object with the desired format.
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+        // Use the SimpleDateFormat object's format() method to format the Date object.
+        String formattedDate = formatter.format(date);
+
+        // Return the formatted date string.
+        return formattedDate;
     }
 
 
