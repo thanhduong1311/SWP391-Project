@@ -1,6 +1,7 @@
 package com.demo.homemate.controllers.admin;
 
 import com.demo.homemate.dtos.services.request.ServiceRequest;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Service;
@@ -31,7 +32,7 @@ public class ServiceController {
     // View add service
     @GetMapping("/add")
     public String viewAddService(Model model) {
-        model.addAttribute("newService", new ServiceRequest());
+        model.addAttribute("newService", new ServiceDetailResponse());
         return "admin/addService";
     }
 

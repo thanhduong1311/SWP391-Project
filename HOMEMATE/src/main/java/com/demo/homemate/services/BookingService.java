@@ -191,7 +191,6 @@ public class BookingService implements IJobService {
             Service service = serviceRepository.findById(job.getServiceId().getServiceId());
             Employee employee = employeeRepository.findById(job.getEmployeeId() == null ? new Employee().getEmployeeId():job.getEmployeeId().getEmployeeId());
 
-
             JobDetail jobDetail = new JobDetail();
 
             if(employee != null ) {
@@ -199,10 +198,8 @@ public class BookingService implements IJobService {
                 jobDetail.setEmployeeName(employee.getFullName());
                 jobDetail.setEmployeeAvt(employee.getAvatar());
             }
-
             jobDetail.setCustomerID(customer.getCustomerId());
-
-
+            jobDetail.setJobID(jobID);
             jobDetail.setCustomerName(customer.getFullName());
             jobDetail.setServiceName(service.getName());
             jobDetail.setAddress(customer.getAddress_detail() + ", " + customer.getDistrict() + ", " + customer.getCity());
@@ -210,7 +207,6 @@ public class BookingService implements IJobService {
             jobDetail.setEnd(job.getEnd());
             jobDetail.setPhone(customer.getPhone());
             jobDetail.setJobDescription(job.getDescription());
-
             jobDetail.setPaymentType(job.getPaymentType());
             jobDetail.setStatus(job.getStatus());
 

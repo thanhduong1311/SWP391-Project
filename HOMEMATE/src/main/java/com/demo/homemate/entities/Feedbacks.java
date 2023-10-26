@@ -33,7 +33,6 @@ public class Feedbacks {
     @JoinColumn(name = "job_id",referencedColumnName = "job_id")
     private Job jobId;
 
-
     @OneToMany(mappedBy = "jobId")
     private List<Job> jobs;
 }

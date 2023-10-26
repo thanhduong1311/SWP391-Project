@@ -101,6 +101,7 @@
                   method="post"
                   th:object="${newService}">
                   <div class="form-floating pb-3">
+                    <label for="floatingNameService">Name</label>
                     <input
                       type="text"
                       th:field="*{name}"
@@ -108,9 +109,19 @@
                       id="floatingNameService"
                       placeholder=""
                       required />
+
+                  </div>
+                  <div class="form-floating pb-3">
+                    <input
+                            type="text"
+                            th:field="*{img}"
+                            class="form-control"
+                            id="floatingImageService"
+                            placeholder=""
+                            required />
                     <label
-                      for="floatingNameService"
-                      >Name</label
+                            for="floatingImageService"
+                    >Image</label
                     >
                   </div>
                   <div class="form-floating pb-3">
@@ -139,25 +150,13 @@
                       >Discount</label
                     >
                   </div>
+
                   <div class="form-floating pb-3">
                     <input
                       type="text"
-                      th:field="*{img}"
+                      th:field="*{intro}"
                       class="form-control"
-                      id="floatingImageService"
-                      placeholder=""
-                      required />
-                    <label
-                      for="floatingImageService"
-                      >Image</label
-                    >
-                  </div>
-                  <div class="form-floating pb-3">
-                    <input
-                      type="text"
-                      th:field="*{description}"
-                      class="form-control"
-                      id="floatingDescriptionService"
+                      id="floatingIntroService"
                       placeholder=""
                       required />
                     <label
@@ -165,6 +164,20 @@
                       >Description</label
                     >
                   </div>
+                  <div class="form-floating pb-3">
+                    <input
+                            type="text"
+                            th:field="*{description}"
+                            class="form-control"
+                            id="floatingDescriptionService"
+                            placeholder=""
+                            required />
+                    <label
+                            for="floatingDescriptionService"
+                    >Description</label
+                    >
+                  </div>
+
                   <div
                     class="d-flex justify-content-center">
                     <button

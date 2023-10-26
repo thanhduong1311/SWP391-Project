@@ -1,8 +1,12 @@
 package com.demo.homemate.mappings;
 
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
+import com.demo.homemate.dtos.feedback.FeedbackRequest;
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Feedbacks;
+import com.demo.homemate.entities.Job;
 import com.demo.homemate.mappings.interfaces.ICustomerMapping;
+import com.demo.homemate.repositories.CustomerRepository;
 import lombok.SneakyThrows;
 
 import java.util.Objects;
@@ -55,5 +59,34 @@ public class CustomerMapping implements ICustomerMapping {
         }
         return c;
     }
+    public FeedbackRequest tofeedbackRequest(Feedbacks fb) {
+        FeedbackRequest rbR = new FeedbackRequest();
+        rbR.setFeedbackId(fb.getFeedbackId());
+        rbR.setCustomerId(fb.getCustomerId().getCustomerId());
+        rbR.setJobId(fb.getJobId().getJobId());
+        rbR.setPoint(fb.getPoint());
+        rbR.setDetail(fb.getDetail());
+ return rbR;
+    }
+    public Feedbacks tofeedback(FeedbackRequest fb, Customer c, Job j) {
+         final CustomerRepository customerRepository;
+        Feedbacks feedbacks = new Feedbacks();
+        feedbacks.setFeedbackId(fb.getFeedbackId());
+        feedbacks.setCustomerId(c);
+        feedbacks.setJobId(j);
+        if (String.valueOf(fb.getPoint())!=null){
+            System.out.println("------");
+            System.out.println(String.valueOf(fb.getPoint()));
+            System.out.println("------");
+           /* fb.setPoint(0);*/
+        }
+        feedbacks.setPoint(fb.getPoint());
+        feedbacks.setDetail(fb.getDetail());
+        return feedbacks;
+    }
+
+
+
+
 
 }

@@ -121,7 +121,14 @@
         messageDiv.parentNode.removeChild(messageDiv);
       }, 5000);
 
+      function myFunction() {
+        // Your code to be executed when the page has fully loaded
+        var messageDiv = document.getElementById('message');
+        messageDiv.innerHTML="bruhhh";
+      }
 
+      window.addEventListener("load", myFunction);
     </script>
+
   </body>
 </html>

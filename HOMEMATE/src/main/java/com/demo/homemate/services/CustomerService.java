@@ -1,11 +1,15 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
-import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
+import com.demo.homemate.dtos.feedback.FeedbackRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Feedbacks;
+import com.demo.homemate.entities.Job;
 import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.repositories.CustomerRepository;
+import com.demo.homemate.repositories.FeedbackRepository;
+import com.demo.homemate.repositories.JobRepository;
 import com.demo.homemate.services.interfaces.ICustomerService;
 import com.demo.homemate.utils.PasswordMD5;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,12 @@ public class CustomerService implements ICustomerService {
     private final UserService userService;
 
     private final CustomerRepository customerRepository;
+
+    private final FeedbackRepository feedbackRepository;
+
+    private final JobRepository jobRepository;
+
+
 
     @SneakyThrows
     @Override
@@ -60,6 +70,39 @@ public class CustomerService implements ICustomerService {
         }
 
     }
+
+    @Override
+    public FeedbackRequest getFeeback(int jobId) {
+        FeedbackRequest fb = new FeedbackRequest();
+        CustomerMapping cm = new CustomerMapping();
+        try {
+            if (feedbackRepository.findById(jobId)!=null){
+                fb =cm.tofeedbackRequest(feedbackRepository.findById(jobId));
+            }
+            System.out.println(fb.getDetail());
+            return fb;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return fb;
+    }
+
+    @Override
+    public MessageOject feedback(FeedbackRequest feedbackRequest, String username) {
+    CustomerMapping customerMapping= new CustomerMapping();
+    try {
+        Customer customer = customerRepository.findByUsername(username);
+        Job job = jobRepository.findById(feedbackRequest.getJobId());
+        Feedbacks feedbacks = customerMapping.tofeedback(feedbackRequest, customer, job);
+        feedbackRepository.save(feedbacks);
+        MessageOject mo = new MessageOject("Success", "Save feedback", null);
+        return mo;
+    }catch(Exception e){
+        System.out.println(e.getMessage());
+    }
+
+        return new MessageOject("Fail","Error save feedback",null);
+    }
    /* public MessageOject editProfile(CustomerProfileRequest request) {
         try {
 
@@ -97,4 +140,5 @@ public class CustomerService implements ICustomerService {
         }
 
     }*/
+
 }

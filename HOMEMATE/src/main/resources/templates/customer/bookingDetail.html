@@ -135,6 +135,9 @@
             <span class="order" th:text="*{jobDetail.getServiceName()}"
               >
             </span>
+              <span class="order" th:text="*{jobDetail.getJobID()}"
+              >
+            </span>
             </b>
           </div>
         </div>
@@ -153,17 +156,14 @@
         <hr />
         <div class="text">
           <span class="d-block new mb-1" th:text="*{jobDetail.getCustomerName()}"
-            ></span
-          >
+            ></span>
         </div>
         <div class="text">
           <span class="d-block new mb-1"th:text="*{jobDetail.getPhone()}"
-            ></span
-          >
+            ></span>
         </div>
         <span class="d-block address mb-3" th:text="*{jobDetail.getAddress()}"
-          ></span
-        >
+          ></span>
         <span style="color: #000; font-weight: 500">
           Maid:
         <span class="text-black-50" th:text="*{jobDetail.getEmployeeName()}"> </span>
@@ -195,9 +195,10 @@
           <h4 class="ml-2 ">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
         </div>
         <div
+                th:if="*{jobDetail.getStatus().ordinal() == 2}"
           class="card-footer p-3 d-flex justify-content-end">
           <a
-            href=""
+            th:href="@{/customer/history/feedback/{id}(id=${jobDetail.getJobID()})}"
             class="btn btn-dark btn-outline-light"
             >Feedback</a
           >

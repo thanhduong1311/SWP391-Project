@@ -56,7 +56,7 @@ public class CustomerHomeController {
                    //  List all services
                     model.addAttribute("services", serviceService.getAllDetailServices());
                    model.addAttribute("AccountInfo",customer);
-                    return "/customer/customer-home";
+                    return "customer/home";
                 }
                 else return "redirect:/home";
             } catch (Exception e) {
