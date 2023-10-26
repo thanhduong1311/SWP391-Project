@@ -93,15 +93,16 @@ public class AuthController {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
                 session.setAttribute("SessionToken",auth.getToken());
+
                 return "redirect:/home";
             }
         }else {
 //            session.removeAttribute("Login Failed");
-            model.addAttribute("LoginMessage", new MessageOject("Fail","Username or password is incorrect!", null));
+            model.addAttribute("LoginMessage", new MessageOject("Failed","Username or password is incorrect!", null));
             return loginView(model);
         }
     } else {
-        model.addAttribute("LoginMessage", new MessageOject("Fail","Password must contain at least 6 characters!", null));
+        model.addAttribute("LoginMessage", new MessageOject("Failed","Password must contain at least 6 characters!", null));
         return loginView(model);
     }
 
@@ -133,7 +134,8 @@ public class AuthController {
     @GetMapping(value = "/home")
         public String viewHomePage(Model model,
                                    @CookieValue(name = "Token",required = false) String cookieToken,
-                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken
+                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken,
+                                   HttpSession session
                                    ){
             model.getAttribute("User");
             if (cookieToken == null&& sessionToken==null) {
@@ -145,12 +147,15 @@ public class AuthController {
                 if (claim==null) {return "/login";}
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
+                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
+                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
                         return "redirect:/customer";
                     }
                     case "EMPLOYEE" -> {
+                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
                         return "redirect:/employee";
                     }
                     default -> {

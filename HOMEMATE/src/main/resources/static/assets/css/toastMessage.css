@@ -7,7 +7,7 @@
 
 .toastMessage {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
     width: 300px;
     box-shadow: 1px 2px 2px 1px #ccc;
@@ -17,6 +17,7 @@
 }
 
 .toastBody {
+    text-align: left;
     min-width: 228px;
     padding: 0 10px 0 20px;
 }
