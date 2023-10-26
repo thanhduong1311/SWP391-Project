@@ -35,5 +35,5 @@ public class JobDetail {
     private String customerAvt;
     private String employeeAvt;
 
-
+    private String jobInCalendar;
 }

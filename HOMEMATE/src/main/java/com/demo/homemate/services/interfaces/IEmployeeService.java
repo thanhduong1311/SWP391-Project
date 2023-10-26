@@ -34,4 +34,8 @@ public interface IEmployeeService {
 
 
     MessageOject updateProfile(EmployeeProlife request);
+
+    List<JobDetail> viewOwnJob(int employeeID);
+
+    String toJSONJobs(int employeeID) ;
 }

@@ -171,8 +171,12 @@ public class EmployeeTaskController {
 
         String s = employeeService.getScheduleJSON(empID);
 
+        String jobs = employeeService.toJSONJobs(empID);
+
+        System.out.println(jobs);
 
         model.addAttribute("schedule", s);
+        model.addAttribute("jobs",jobs);
 
         return "employee/schedule";
     }

@@ -80,11 +80,11 @@
         </div>
       </nav>
     </header>
-    <section
-      class="vh-100"
-      style="background-color: #eee">
-      <div class="container py-5">
 
+      <div class="container py-5">
+        <section
+                class=""
+                style="background-color: #eee">
         <div id="schedule">
 
           <div id="evoCalendar"></div>
@@ -97,20 +97,34 @@
           <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script>
 
 
+        </div>
+    </section>
 
 
-          <div style="display: none" id="data" th:text="*{schedule}">
+        <div class=" mt-4"
+             data-mdb-perfect-scrollbar="true"
+             style="display: flex; justify-content: center;align-items: center">
 
-          </div>
+          <table class="w-100">
+            <thead>
+            </thead>
+            <tbody id="bodyTable">
+
+            </tbody>
+          </table>
+        </div>
+
+
+          <div style="display: none" id="data" th:text="*{schedule}"></div>
+          <div style="display: none" id="jobs" th:text="*{jobs}"></div>
 
           <script src="/assets/js/schedule.js"></script>
 
-          <input type="text" id="activeDate">
+          <input style="display: none" oninput="loadDateEvents(this.value)" type="text" id="activeDate">
 
-        </div>
 
-      </div>
-    </section>
+       </div>
+
 
 
 

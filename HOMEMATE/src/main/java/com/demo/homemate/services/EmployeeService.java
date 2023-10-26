@@ -14,6 +14,7 @@ import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IEmployeeService;
 import com.demo.homemate.utils.JobTimer;
 import com.demo.homemate.utils.PasswordMD5;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -109,6 +110,8 @@ public class EmployeeService implements IEmployeeService {
             jobDetail.setPaymentType(job.getPaymentType());
             jobDetail.setStatus(job.getStatus());
             jobDetail.setCustomerAvt(customer.getAvatar());
+
+            jobDetail.setJobInCalendar(JobTimer.convertDateToString(job.getStart()));
 
             jobDetail.setServiceTime(paymentService.getTotalTime(job.getStart(),job.getEnd()));
             jobDetail.setPrice(paymentService.getTotalMoney(paymentService.getTotalTime(job.getStart(),job.getEnd()),job.getServiceId().getServiceId()));
@@ -460,14 +463,24 @@ public class EmployeeService implements IEmployeeService {
                         CalendarObject c = new CalendarObject();
                         c.setId(String.valueOf(j.getJobId()));
                         c.setName(j.getServiceId().getName());
-                        c.setType("holiday");
+                        c.setType("birthday");
                         c.setDescription(
                                 j.getStart().getHours() + ":" + j.getStart().getMinutes() +" - "+
                                 j.getEnd().getHours() + ":" + j.getEnd().getMinutes() + " " + j.getDescription()
                         );
                         c.setDate(jobTimer.convertDateToString(j.getStart()));
                         schedule += c.toString() + ",";
-
+                    } else {
+//                        CalendarObject c = new CalendarObject();
+//                        c.setId(String.valueOf(j.getJobId()));
+//                        c.setName(j.getServiceId().getName());
+//                        c.setType("holiday");
+//                        c.setDescription(
+//                                j.getStart().getHours() + ":" + j.getStart().getMinutes() +" - "+
+//                                        j.getEnd().getHours() + ":" + j.getEnd().getMinutes() + " " + j.getDescription()
+//                        );
+//                        c.setDate(jobTimer.convertDateToString(j.getStart()));
+//                        schedule += c.toString() + ",";
                     }
                 }
                 return schedule.substring(0,schedule.length()-1) + "]";
@@ -513,5 +526,38 @@ public class EmployeeService implements IEmployeeService {
         }
     }
 
+    @SneakyThrows
+    @Override
+    public List<JobDetail> viewOwnJob(int employeeID) {
+       try {
+            List<JobDetail> result = new ArrayList<>();
+           List<Job> jobs = jobRepository.findByEmployeeId(employeeRepository.findById(employeeID));
+           for (Job j: jobs) {
+               JobDetail jd = viewDetailJob(j.getJobId());
+               result.add(jd);
+           }
 
+           return result;
+
+       } catch (Exception e) {
+           throw new Exception(e.getMessage());
+       }
+
+}
+
+    @SneakyThrows
+    @Override
+    public String toJSONJobs(int employeeID) {
+        try {
+            List<JobDetail> result = viewOwnJob(employeeID);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String listAsJson = mapper.writeValueAsString(result);
+
+            return  listAsJson;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
+    }
 }
