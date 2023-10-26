@@ -6,10 +6,12 @@ import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Ranking;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.CustomerService;
+import com.demo.homemate.services.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ public class CustomerAccountController {
 
     private final CustomerRepository customerRepository;
     private final CustomerService customerService;
+    private final RankingService rankingService;
 
     @GetMapping("/{username}")
     public String viewAccount(@PathVariable("username") String username, Model model) {
@@ -94,4 +97,12 @@ if (!username.equals(uname)){
         return "redirect:/customer/account/" + UserInfo.getUsername();
     }
 
+
+    @GetMapping("/rank")
+    public String viewRank() {
+
+        Ranking rank = rankingService.getRank(customerRepository.findById(1));
+        System.out.println(rank.toString() + " absdjhbaskdhbasyudg678wygdukjashgdiastd678yuasgudkjahgsydgasiudas");
+        return "";
+    }
 }

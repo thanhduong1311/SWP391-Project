@@ -1,10 +1,16 @@
 package com.demo.homemate.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Member {
 
     @EmbeddedId
