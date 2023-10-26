@@ -2,11 +2,13 @@ package com.demo.homemate.controllers.admin;
 
 
 import com.demo.homemate.configurations.JWTService;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.services.AdminService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.util.WebUtils;
 
 @Controller
@@ -26,9 +29,24 @@ public class AdminHomeController {
     @GetMapping(value = {"", "dashboard"})
     public String viewDashboard(Model model,
                                 HttpServletRequest request,
+                                HttpSession session,
                                 @CookieValue(name = "Token",required = false) String cookieToken,
                                 @SessionAttribute(value="SessionToken",required = false) String sessionToken
     ) {
+
+        if (model.getAttribute("loginSuccess") == null) {
+            model.addAttribute("loginSuccess", new MessageOject("","",null));
+        }
+
+        MessageOject messageOject = new MessageOject();
+        messageOject =(MessageOject) session.getAttribute("Message");
+        session.removeAttribute("Message");
+
+        model.addAttribute("loginSuccess",messageOject);
+
+
+
+
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";

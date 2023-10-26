@@ -1,19 +1,24 @@
 
-function toast({ title = '', message = '', type = "success", duration = 3000 }) {
+function toast( { title = '', message = '', type = "success", duration = 3000 }) {
     const main = document.getElementById("toast");
-    console.log(main)
     if (main) {
         const toast = document.createElement('div');
-        toast.style.animation = `slideInLeft ease .5s , fadeOut linear 1s ${duration/1000}s forwards`
+        toast.onclick = function (e) {
+            if (e.target.closest('.toastClose')) {
+                main.removeChild(toast);
+            }
+
+        };
+        toast.style.animation = `slideInLeft ease .5s , fadeOut linear 1s ${duration / 1000}s forwards`;
         const icons = {
-            success:'fa-solid fa-circle-check',
-            error:'fa-solid fa-circle-exclamation',
-            warning:'fa-solid fa-triangle-exclamation'
-        }
+            success: 'bi bi-check-circle-fill',
+            error: 'bi bi-exclamation-circle-fill',
+            warning: 'bi bi-exclamation-triangle-fill'
+        };
 
         const icon = icons[type];
 
-        toast.classList.add("toastMessage",`${type}`);
+        toast.classList.add("toastMessage", `${type}`);
         toast.innerHTML = `
         <div class="toastIcon">
         <i class="${icon}"></i>
@@ -22,42 +27,41 @@ function toast({ title = '', message = '', type = "success", duration = 3000 }) 
         <h3>${title}</h3>
         <p>${message}</p>
          </div>
-         <div class="toastClose">
-        <i class="fa-solid fa-xmark"></i>
+         <div onclick="closeMessage()" class="toastClose">
+        <i class="bi bi-x"></i>
          </div>
         `;
         main.appendChild(toast);
-        setTimeout(function() {
-            main.removeChild(toast)
-        },duration+1000)
+        setTimeout(function () {
+            main.removeChild(toast);
+        }, duration + 1000);
     }
 }
 
 
 
-
-function showSuccesToast () {
+function showSuccesToast (mes) {
     toast({
         title: 'Success',
-        message: 'Show toast message',
+        message: mes,
         type: 'success',
         duration: 3000
     })
 }
 
-function showErrorToast () {
+function showErrorToast (mes) {
     toast({
-        title: 'Success',
-        message: 'Show toast message',
+        title: 'Failed',
+        message: mes,
         type: 'error',
         duration: 3000
     })
 }
 
-function showWaringToast () {
+function showWaringToast (mes) {
     toast({
-        title: 'Success',
-        message: 'Show toast message',
+        title: 'Warning',
+        message: mes,
         type: 'warning',
         duration: 3000
     })
