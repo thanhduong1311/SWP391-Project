@@ -84,9 +84,7 @@ public class AuthController {
 
             cookie = new Cookie("Token", auth.getToken());
             if (rememberMe){
-                System.out.println("Trước đó: "+session.getAttribute("SessionToken"));
                 session.removeAttribute("SessionToken");
-                System.out.println("Sau đó: "+session.getAttribute("SessionToken"));
                 cookie.setMaxAge(60 * 60);
                 cookie.setPath("/");
                 response.addCookie(cookie);
@@ -98,6 +96,7 @@ public class AuthController {
                 return "redirect:/home";
             }
         }else {
+//            session.removeAttribute("Login Failed");
             model.addAttribute("LoginMessage", new MessageOject("Fail","Username or password is incorrect!", null));
             return loginView(model);
         }
