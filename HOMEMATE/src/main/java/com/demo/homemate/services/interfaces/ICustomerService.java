@@ -8,6 +8,6 @@ public interface ICustomerService {
 
     MessageOject changePassword(ChangePasswordRequest request) ;
     FeedbackRequest getFeeback(int jobId);
+    MessageOject feedback(FeedbackRequest fb, int customerID);
 
-    MessageOject feedback(FeedbackRequest fb, String username);
 }

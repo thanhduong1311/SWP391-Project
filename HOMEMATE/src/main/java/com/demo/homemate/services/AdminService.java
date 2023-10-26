@@ -1,11 +1,13 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.services.request.ServiceRequest;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
+import com.demo.homemate.mappings.ServiceMapper;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IAdminService;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +27,19 @@ public class AdminService implements IAdminService  {
 
     private final ServiceRepository serviceRepository;
 
+    private final ServiceService serviceService;
 
-
+    ServiceMapper serviceMapper = new ServiceMapper();
 
 
     @Override
-    public List<Service> getAllService() {
-        List<Service> services = serviceRepository.findAll();
-        return services;
+    public List<ServiceDetailResponse> getAllService() {
+        return serviceService.getAllDetailServices();
     }
 
     @Override
-    public Service getAService(int serviceID) {
-        Service service = serviceRepository.findById(serviceID);
+    public ServiceDetailResponse getAService(int serviceID) {
+        ServiceDetailResponse service = serviceMapper.toServiceDetailResponse(serviceRepository.findById(serviceID));
         return service;
     }
 
@@ -175,30 +177,34 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public ServiceResponse addService(ServiceRequest request) {
-        ServiceResponse response = new ServiceResponse();
+    public MessageOject addService(ServiceDetailResponse response,String detail) {
+        ServiceRequest request = new ServiceRequest();
         try {
-            if (handelAddNewService(request) == 1) {
-                response.setName(request.getName());
-                response.setImg(request.getImg());
-                response.setPrice(request.getPrice());
-                response.setDiscount(request.getDiscount());
-                response.setDescription(request.getDescription());
+            request.setServiceId(response.getServiceId());
+            request.setImg(response.getImg());
+            request.setName(response.getName());
+            request.setPrice(response.getPrice());
+            request.setDiscount(response.getDiscount());
+        String [] listDetail = detail.split("\n");
+            String joinedString = String.join("###", listDetail);
+            String responseDiscription = response.getIntro()+">>>>>"
+                    + response.getDescription()+">>>>>"
+                    + joinedString;
+            request.setDescription(responseDiscription);
 
-                response.setMessageOject(new MessageOject("Success", "Add service successfully!",null));
-                return response;
+
+            if (handelAddNewService(request) == 1) {
+                return new MessageOject("Success", "Add service successfully!",null);
             }
-            response.setMessageOject(new MessageOject("Failed", "Add service failed!",null));
-            return response;
+            return new MessageOject("Failed", "Add service failed!",null);
         } catch (Exception e) {
-            response.setMessageOject(new MessageOject("Failed", e.getMessage(),null));
-            return null;
+            return new MessageOject("Error", "Add service error!",null);
         }
 
     }
 
     @Override
-    public MessageOject updateService(ServiceRequest request) {
+    public MessageOject updateService(ServiceDetailResponse request,String detail) {
         try {
             Service service = serviceRepository.findById(request.getServiceId());
             if(service != null) {
@@ -206,9 +212,14 @@ public class AdminService implements IAdminService  {
                 service.setImage(request.getImg());
                 service.setPrice(request.getPrice());
                 service.setDiscount(request.getDiscount());
-                service.setDescription(request.getDescription());
+                String [] listDetail = detail.split("\n");
+                String joinedString = String.join("###", listDetail);
+                String responseDiscription = request.getIntro()+">>>>>"
+                        + request.getDescription()+">>>>>"
+                        + joinedString;
+                service.setDescription(responseDiscription);
                 serviceRepository.save(service);
-                return new MessageOject("Succes","Update service successfully!",null);
+                return new MessageOject("Success","Update service successfully!",null);
             }
             return new MessageOject("Failed","Update service Failed!",null);
         } catch (Exception e) {

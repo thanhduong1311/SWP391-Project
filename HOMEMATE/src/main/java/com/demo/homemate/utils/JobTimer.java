@@ -95,6 +95,18 @@ public class JobTimer {
         return formattedDate;
     }
 
+    public String toBirthDay(Date date) {
+        String result = "";
+        String splitDate = date.toString().trim();
+        String s = "2000-02-01 00:00:00.0";
+        String stringDate = date.toString().split(" ")[0];
+        result += stringDate.split("-")[2]+"/";
+        result += stringDate.split("-")[1]+"/";
+        result += stringDate.split("-")[0];
+
+
+        return result;
+    }
 
 
 

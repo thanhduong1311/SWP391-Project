@@ -24,8 +24,7 @@ public class ServiceController {
     //View service management page;
     @GetMapping(value = "")
     public String viewServiceManagement(Model model){
-        List<Service> services = adminService.getAllService();
-        model.addAttribute("ServiceList", services);
+        model.addAttribute("ServiceList", adminService.getAllService());
         return "admin/service-management";
     }
 
@@ -38,44 +37,50 @@ public class ServiceController {
 
     // Add service handle
     @PostMapping("/add")
-    public String addService(Model model, ServiceRequest request) {
-        System.out.println(request.toString());
-        ServiceResponse response = adminService.addService(request);
-        System.out.println(response.getMessageOject().getMessage());
-        return "redirect:/admin/services";
-    }
-
-
-
-    // Delete service handle
-    @GetMapping("/delete/{id}")
-    public String deleteService(@PathVariable("id") int id) {
-       MessageOject messageOject =  adminService.deleteService(id);
+    public String addService(Model model, ServiceDetailResponse request,
+                             @ModelAttribute("txtDetails") String details) {
+        MessageOject messageOject = adminService.addService(request,details);
+        System.out.println(messageOject.getName()+messageOject.getMessage());
         return "redirect:/admin/services";
     }
 
     // Details service view
     @GetMapping("/detail/{id}")
     public String viewDetailService(@PathVariable("id") int id, Model model) {
-        Service response = adminService.getAService(id);
+        ServiceDetailResponse response = adminService.getAService(id);
         model.addAttribute("ServiceDetail", response);
         return "admin/detailService";
     }
 
+
+
     // Edit service View
     @GetMapping("/edit/{id}")
     public String viewEditlService(@PathVariable("id") int id, Model model) {
-        Service response = adminService.getAService(id);
-        ServiceRequest request = new ServiceMapper().toServiceRequest(response);
+        ServiceDetailResponse request = adminService.getAService(id);
+        String joinedText = String.join("\n", request.getDetails());
+        model.addAttribute("joinedText", joinedText);
         model.addAttribute("ServiceEdit", request);
         return "admin/UpdateService";
     }
 
     //Edit service handle
-    @PostMapping("/edit/{id}")
-    public String editlService(@PathVariable("id") int id, Model model,ServiceRequest request) {
-        MessageOject messageOject = adminService.updateService(request);
+    @PostMapping("/edit")
+    public String editlService(Model model,ServiceDetailResponse request,
+                               @ModelAttribute("txtDetails") String details) {
+        MessageOject messageOject = adminService.updateService(request,details);
+        System.out.println(messageOject.getName()+messageOject.getMessage());
         return "redirect:/admin/services";
     }
+
+
+    // Delete service handle
+    @GetMapping("/delete/{id}")
+    public String deleteService(@PathVariable("id") int id) {
+        MessageOject messageOject =  adminService.deleteService(id);
+        System.out.println(messageOject.getName()+messageOject.getMessage());
+        return "redirect:/admin/services";
+    }
+
 
 }

@@ -6,9 +6,14 @@ import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Feedbacks;
 import com.demo.homemate.entities.Job;
 import com.demo.homemate.mappings.interfaces.ICustomerMapping;
+
 import com.demo.homemate.repositories.CustomerRepository;
+
+import com.demo.homemate.utils.JobTimer;
+
 import lombok.SneakyThrows;
 
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class CustomerMapping implements ICustomerMapping {
@@ -18,6 +23,7 @@ public class CustomerMapping implements ICustomerMapping {
     public CustomerProfileRequest toCustomerProfile(Customer customer) {
         try {
             CustomerProfileRequest prolife = new CustomerProfileRequest();
+            JobTimer jobTimer = new JobTimer();
             prolife.setName(customer.getFullName());
             prolife.setPhone(customer.getPhone());
             prolife.setEmail(customer.getEmail());
@@ -27,13 +33,14 @@ public class CustomerMapping implements ICustomerMapping {
             prolife.setAvatar(customer.getAvatar());
             prolife.setUsername(customer.getUsername());
             prolife.setBalance(customer.getBalance());
-            prolife.setDob(customer.getDob());
+            prolife.setDob(jobTimer.toBirthDay(customer.getDob()));
             prolife.setTotalSpend(customer.getTotalSpend());
             return prolife;
         } catch (Exception e)  {
             throw new Exception(e.getMessage());
         }
     }
+    @SneakyThrows
     public Customer toCustomerFromCustomerProfile(Customer c, CustomerProfileRequest cpr){
 
         if (!Objects.equals(cpr.getName(), c.getFullName())){
@@ -42,8 +49,9 @@ public class CustomerMapping implements ICustomerMapping {
         if (!Objects.equals(cpr.getPhone(), c.getPhone())){
             c.setPhone(cpr.getPhone());
         }
-        if (cpr.getDob()!=c.getDob()){
-            c.setDob(cpr.getDob());
+        if (cpr.getDob().equals(c.getDob())){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            c.setDob(simpleDateFormat.parse(cpr.getDob()));
         }
         if (!Objects.equals(cpr.getAddress(), c.getAddress_detail())){
             c.setAddress_detail(cpr.getAddress());
@@ -74,12 +82,6 @@ public class CustomerMapping implements ICustomerMapping {
         feedbacks.setFeedbackId(fb.getFeedbackId());
         feedbacks.setCustomerId(c);
         feedbacks.setJobId(j);
-        if (String.valueOf(fb.getPoint())!=null){
-            System.out.println("------");
-            System.out.println(String.valueOf(fb.getPoint()));
-            System.out.println("------");
-           /* fb.setPoint(0);*/
-        }
         feedbacks.setPoint(fb.getPoint());
         feedbacks.setDetail(fb.getDetail());
         return feedbacks;

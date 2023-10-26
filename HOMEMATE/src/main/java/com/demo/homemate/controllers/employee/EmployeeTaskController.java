@@ -8,6 +8,7 @@ import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Income;
+import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,26 +28,40 @@ public class EmployeeTaskController {
 
     private final EmployeeRepository employeeRepository;
     @GetMapping("/jobList")
-    public String viewJObs(Model model) {
-        List<JobDetail> jobs = employeeService.getAvailableJob();
+    public String viewJObs(Model model ,@CookieValue(name = "Token",required = false) String cookieToken,
+                           @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
+
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+        String username = (String) JWTService.parseJwt(token).get("Username");
+
+        Employee auth = employeeRepository.findByUsername(username);
+
+        List<JobDetail> jobs = new ArrayList<>();
+
+    if(auth.getAccountStatus() == AccountStatus.WAIT_FOR_APPROVE) {
+        model.addAttribute("jobs", jobs );
+
+    } else {
+        jobs = employeeService.getAvailableJob();
         model.addAttribute("jobs",jobs);
+    }
         return "employee/jobList";
     }
 
     @GetMapping("/{id}")
     public String viewJobDetail(Model model, @PathVariable("id") int id) {
-
         JobDetail  job = employeeService.viewDetailJob(id);
-
         model.addAttribute("job",job);
-
         return "employee/jobDetail";
     }
 
     @GetMapping("/incomes")
     public String viewIncomes(Model model , @CookieValue(name = "Token",required = false) String cookieToken,
                               @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
-
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }

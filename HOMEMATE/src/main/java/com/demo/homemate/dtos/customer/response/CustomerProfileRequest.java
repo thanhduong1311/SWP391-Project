@@ -17,7 +17,7 @@ public class CustomerProfileRequest {
         private String address;
         private double totalSpend;
         private String city;
-        private Date dob;
+        private String dob;
         private String district;
         private String username;
         private String avatar;

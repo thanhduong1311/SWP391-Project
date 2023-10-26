@@ -84,9 +84,7 @@ public class AuthController {
 
             cookie = new Cookie("Token", auth.getToken());
             if (rememberMe){
-                System.out.println("Trước đó: "+session.getAttribute("SessionToken"));
                 session.removeAttribute("SessionToken");
-                System.out.println("Sau đó: "+session.getAttribute("SessionToken"));
                 cookie.setMaxAge(60 * 60);
                 cookie.setPath("/");
                 response.addCookie(cookie);
@@ -98,6 +96,7 @@ public class AuthController {
                 return "redirect:/home";
             }
         }else {
+//            session.removeAttribute("Login Failed");
             model.addAttribute("LoginMessage", new MessageOject("Fail","Username or password is incorrect!", null));
             return loginView(model);
         }
@@ -140,17 +139,10 @@ public class AuthController {
             if (cookieToken == null&& sessionToken==null) {
                 return "/customer/home";
             }else {
-                String v = null;
-                Claims claim=null;
-                if (cookieToken!=null){
-                    claim = JWTService.parseJwt(cookieToken);
-                    System.out.println("token"+cookieToken);
-                }
-                else if(sessionToken!= null) {
-                    claim = JWTService.parseJwt(sessionToken);
-                    System.out.println("session"+sessionToken);
-                }
-                System.out.println(claim.getSubject());
+                String token=cookieToken!=null?cookieToken:sessionToken;
+                Claims claim = null;
+                claim = JWTService.parseJwt(token);
+                if (claim==null) {return "/login";}
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         return "redirect:/admin";

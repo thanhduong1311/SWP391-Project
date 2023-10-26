@@ -1,6 +1,7 @@
 package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.services.request.ServiceRequest;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
@@ -14,7 +15,7 @@ public interface IAdminService {
      * get all service
      * @return
      */
-    public List<Service> getAllService();
+    public List<ServiceDetailResponse> getAllService();
 
     /**
      * get a service
@@ -22,7 +23,7 @@ public interface IAdminService {
      * @param serviceID
      * @return
      */
-    public Service getAService(int serviceID);
+    public ServiceDetailResponse getAService(int serviceID);
 
     /**
      *  handel for add new service
@@ -104,14 +105,14 @@ public interface IAdminService {
      * @param request
      * @return
      */
-    public ServiceResponse addService(ServiceRequest request);
+    public MessageOject addService(ServiceDetailResponse request,String details);
 
     /**
      *  update service
      * @param request
      * @return
      */
-    public MessageOject updateService(ServiceRequest request);
+    public MessageOject updateService(ServiceDetailResponse request,String detail);
 
 
     /**

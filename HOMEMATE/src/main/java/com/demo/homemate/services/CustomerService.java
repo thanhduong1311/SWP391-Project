@@ -79,7 +79,6 @@ public class CustomerService implements ICustomerService {
             if (feedbackRepository.findById(jobId)!=null){
                 fb =cm.tofeedbackRequest(feedbackRepository.findById(jobId));
             }
-            System.out.println(fb.getDetail());
             return fb;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -88,10 +87,10 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public MessageOject feedback(FeedbackRequest feedbackRequest, String username) {
+    public MessageOject feedback(FeedbackRequest feedbackRequest, int customerID) {
     CustomerMapping customerMapping= new CustomerMapping();
     try {
-        Customer customer = customerRepository.findByUsername(username);
+        Customer customer = customerRepository.findById(customerID);
         Job job = jobRepository.findById(feedbackRequest.getJobId());
         Feedbacks feedbacks = customerMapping.tofeedback(feedbackRequest, customer, job);
         feedbackRepository.save(feedbacks);
@@ -100,7 +99,6 @@ public class CustomerService implements ICustomerService {
     }catch(Exception e){
         System.out.println(e.getMessage());
     }
-
         return new MessageOject("Fail","Error save feedback",null);
     }
    /* public MessageOject editProfile(CustomerProfileRequest request) {

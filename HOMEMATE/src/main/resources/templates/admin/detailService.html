@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -101,12 +101,17 @@
                 ">
               </div>
               <div>
-                <img class="w-25" style="width: 300px; height: auto" th:src="*{ServiceDetail.getImage()}" th:alt="*{ServiceDetail.getImage()}">
-                <span th:text ="*{ServiceDetail.getServiceId()}"></span>
-                <span th:text ="*{ServiceDetail.getName()}"></span>
-                <span th:text ="*{ServiceDetail.getPrice()}"></span>
-                <span th:text ="*{ServiceDetail.getDiscount()}"></span>
-                <span th:text ="*{ServiceDetail.getDescription()}"></span>
+                <img class="w-25" style="width: 300px; height: auto" th:src="*{ServiceDetail.getImg()}" th:alt="*{ServiceDetail.getName()}">
+                <h1 th:text ="*{ServiceDetail.getName()}"></h1>
+                <div>Price: <span th:text ="*{ServiceDetail.getPrice()}"></span></div>
+                <div>Discount: <span th:text ="*{ServiceDetail.getDiscount()}"></span></div>
+                <div>Introduction: <span th:text ="${ServiceDetail.getIntro()}"></span></div>
+                <div> Description:  <span th:text ="${ServiceDetail.getDescription()}"></span></div>
+                <div>Details:
+                    <ul th:each="detail:${ServiceDetail.getDetails()}">
+                      <li th:text="${detail}"></li>
+                    </ul>
+                </div>
                 <a th:href="@{/admin/services/edit/{id}(id=${ServiceDetail.getServiceId()})}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/admin/services/delete/{id}(id=${ServiceDetail.getServiceId()})}" class="btn btn-danger">Delete</a>
               </div>

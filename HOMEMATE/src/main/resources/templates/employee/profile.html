@@ -104,6 +104,18 @@
                 </div>
 
               </div>
+
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <label
+                          class="form-label"
+                  >Birth day
+                  </label
+                  >
+                  <h4 th:text="*{profile.getDob()}"></h4>
+                </div>
+
+              </div>
               <div class="row mt-3">
                 <div class="col-md-12">
                   <label
@@ -192,11 +204,11 @@
                   </div>
                   <div
                     class="col-md-6 text-center">
-                    <button
+                    <a th:href="@{/employee/account/edit/{username}(username=${profile.getUsername()})}"
                       class="btn btn-md btn-dark"
                       type="button">
                       Edit
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>

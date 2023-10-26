@@ -1,6 +1,7 @@
 package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
@@ -32,4 +33,5 @@ public interface IEmployeeService {
     String getScheduleJSON(int employeeID) ;
 
 
+    MessageOject updateProfile(EmployeeProlife request);
 }

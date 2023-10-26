@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -20,7 +20,7 @@
       <nav
         class="navbar navbar-expand-lg bg-body-tertiary fs-4">
         <div class="container">
-          <a class="navbar-brand fs-2" href="#">
+          <a class="navbar-brand fs-2" th:href="@{/customer/home}">
             <icon class="bi-gem"></icon>
             Homemate
           </a>
@@ -42,7 +42,7 @@
               class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a
-                  href="customer-home.html"
+                        th:href="@{/customer/home}"
                   class="nav-link"
                   >Home</a
                 >
@@ -83,7 +83,7 @@
     </header>
     <div
       class="container rounded bg-white mt-5 mb-5">
-      <form action="">
+      <form  th:action="@{/employee/account/edit}" method="post" th:object="${employeeProfile}">
         <div class="row">
           <div class="col-md-3 border-right">
             <div
@@ -91,18 +91,16 @@
               <img
                 class="rounded-circle mt-5"
                 width="150px"
-                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" /><span
-                class="font-weight-bold"
-                >Employee</span
-              ><span class="text-black-50"
-                >MSNV0912</span
-              ><i
-                class="bi bi-star-fill text-warning"
-                >5.0</i
-              >
+                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
+              <label class="link-info" for="avatar" style="cursor:pointer">Change avatar</label>
+              <span
+                class="font-weight-bold" th:text="${employeeProfile.getName()}"
+                >Customer</span
+              ><span class="text-black-50" th:text="${employeeProfile.getEmail()}"
+                ></span>
             </div>
           </div>
-          <div class="col-md-5 border-right">
+          <div class="col-md-7 border-right">
             <div class="p-3 py-5">
               <div
                 class="d-flex justify-content-between align-items-center mb-3">
@@ -111,23 +109,7 @@
                 </h3>
               </div>
               <div class="row mt-2">
-                <div class="col-md-6">
-                  <label
-                    class="form-label"
-                    for="userLastName"
-                    >Last name<sup
-                      style="color: red"
-                      >(*)</sup
-                    ></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="userLastName"
-                    placeholder=""
-                    value=""
-                    required />
-                </div>
+
                 <div class="col-md-6">
                   <label
                     class="form-label"
@@ -137,112 +119,194 @@
                     ></label
                   >
                   <input
+                          th:field="*{name}"
+                          th:value="*{name}"
                     type="text"
                     class="form-control"
                     id="userName"
                     placeholder=""
-                    value=""
+
                     required />
+                </div>
+                <div class="col-md-6">
+                  <label
+                          class="form-label"
+                          for="userDob"
+                  >DoB<sup style="color: red"
+                  >(*)</sup
+                  ></label
+                  ><input
+
+
+                        th:field="*{dob}"
+                        th:value="*{dob}"
+
+                        type="date"
+                        class="form-control"
+                        id="userDob"
+                />
                 </div>
               </div>
               <div class="row mt-3">
-                <div class="col-md-12">
+
+
+                <div class="col-md-6">
                   <label
-                    class="form-label"
-                    for="userPhonenumber"
-                    >Phone number<sup
-                      style="color: red"
-                      >(*)</sup
-                    ></label
-                  ><input
-                    type="text"
-                    class="form-control"
-                    id="userPhonenumber"
-                    placeholder=""
-                    value=""
-                    required />
+                          class="form-label"
+                          for="avatar"
+                  >Avatar<sup
+                          style="color: red"
+                  >(*)</sup
+                  ></label>
+                  <input  id="avatar" name ="avatar" type="file" th:field="*{avatar}" class="form-control" accept="image/png, image/jpeg" >
+                  <p><img id="avatarPreview" alt="Avatar Preview"></p>
+                
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <label
-                    class="labels"
-                    for="userEmail"
-                    >Email<sup style="color: red"
-                      >(*)</sup
-                    ></label
+                          class="form-label"
+                          for="userPhonenumber"
+                  >Phone number<sup
+                          style="color: red"
+                  >(*)</sup
+                  ></label
                   ><input
-                    type="text"
-                    class="form-control"
-                    id="userEmail"
-                    placeholder=""
-                    value=""
-                    required />
+                        th:field="*{phone}"
+                        th:value="*{phone}"
+                        type="text"
+                        class="form-control"
+                        id="userPhonenumber"
+                        placeholder=""
+                        required />
                 </div>
-                <div class="col-md-12">
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4">
                   <label
-                    class="labels"
-                    for="userAddress"
-                    >Address<sup
-                      style="color: red"
-                      >(*)</sup
-                    ></label
-                  ><input
-                    type="text"
-                    class="form-control"
-                    id="userAddress"
-                    placeholder=""
-                    value=""
-                    required />
+                        class="labels"
+                        for="userAddress">Address<sup
+                        style="color: red">(*)
+                        </sup>
+                  </label>
+                  <input
+                        th:field="*{address}"
+                        th:value="*{address}"
+                        type="text"
+                        class="form-control"
+                        id="userAddress"
+                        placeholder=""
+                        value=""
+                        required
+                  />
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-4">
                   <label
-                    class="labels"
-                    for="userUsername"
-                    >Username</label
-                  ><input
-                    type="text"
-                    class="form-control"
-                    id="userUsername"
-                    placeholder=""
-                    value="" />
+                          class="labels"
+                          for="userAddress">District<sup
+                          style="color: red">(*)
+                  </sup>
+                  </label>
+                  <input
+                          th:field="*{district}"
+                          th:value="*{district}"
+                          type="text"
+                          class="form-control"
+                          placeholder=""
+
+                          required
+                  />
                 </div>
+                <div class="col-md-4">
+                  <label
+                          class="labels"
+                          for="userAddress">City<sup
+                          style="color: red">(*)
+                  </sup>
+                  </label>
+                  <input
+                          th:field="*{city}"
+                          th:value="*{city}"
+                          type="text"
+                          class="form-control"
+                          required
+                  />
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <label
+                          class="form-label"
+                          for="IDcard"
+                  >ID Card Number<sup
+                          style="color: red"
+                  >(*)</sup
+                  ></label
+                  ><input
+                        th:field="*{IDCard}"
+                        th:value="*{IDCard}"
+                        type="text"
+                        class="form-control"
+                        id="IDcard"
+                        placeholder=""
+                        required />
+                </div>
+                <div class="col-md-6">
+                  <label
+                          class="form-label"
+                          for="placeOfwork"
+                  >Phone number<sup
+                          style="color: red"
+                  >(*)</sup
+                  ></label
+                  ><input
+                        th:field="*{placeOfWork}"
+                        th:value="*{placeOfWork}"
+                        type="text"
+                        class="form-control"
+                        id="placeOfwork"
+                        placeholder=""
+                        required />
+                </div>
+              </div>
+              <input
+                      hidden
+                      th:field="*{username}"
+                      th:value="*{username}"
+                      type="text"
+                      class="form-control"
+
+              />
+              <br />
+              <hr>
                 <br />
-                <div class="col-md-12">
-                  <label
-                    class="labels"
-                    for="userPassword"
-                    >Password</label
-                  ><input
-                    type="password"
-                    class="form-control"
-                    id="userPassword"
-                    placeholder=""
-                    value="" />
-                </div>
-                <div class="row mt-2">
-                  <div
-                    class="col-md-6 text-center">
-                    <a
-                      href="employee-change-password.html"
-                      class="btn btn-md btn-dark"
-                      type="button">
-                      Change Password
-                    </a>
-                  </div>
-                  <div
-                    class="col-md-6 text-center">
-                    <button
-                      class="btn btn-md btn-dark"
-                      type="button">
-                      Edit
-                    </button>
-                  </div>
-                </div>
+              <div class="col-md-12 text-center">
+                <input class="btn btn-md btn-dark" type="submit" value="Save">
+                <input class="btn btn-md btn-dark" type="reset" value="Reset">
+              </div>
               </div>
             </div>
           </div>
-        </div>
+
       </form>
     </div>
+    <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#avatar').change(function(){
+  showPreviewImage(this);
+      });
+    });
+    function showPreviewImage(fileInput){
+        file = fileInput.files[0];
+        reader = new FileReader();
+        reader.onload = function(e){
+          $(#avatarPreview).attr("src",e.target.result);
+        }
+        reader.readAsDataURL(file);
+    };
+  </script>
   </body>
 </html>

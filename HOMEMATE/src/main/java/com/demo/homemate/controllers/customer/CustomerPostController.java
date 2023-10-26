@@ -66,9 +66,7 @@ public class CustomerPostController {
                 return "redirect:/customer/history";
             }
             if (customerService.getFeeback(jobId)!=null){
-                System.out.println("dda co feedbacjk roi");
                 feedRequest =customerService.getFeeback(jobId);
-                System.out.println(feedRequest.getPoint()+feedRequest.getDetail());
             }else{
                 feedRequest.setJobId(jobId).setFeedbackId(jobId).setCustomerId(jobDetail.getCustomerID());
             }
@@ -87,13 +85,11 @@ public class CustomerPostController {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
-
-        String token=cookieToken!=null?cookieToken:sessionToken;
+        String token = cookieToken!=null?cookieToken:sessionToken;
         String username = (String)JWTService.parseJwt(token).get("Username");
-        MessageOject mo = customerService.feedback(feedbackInfo,username);
-        model.addAttribute("MessageFeedback",mo);
-        System.out.println(mo.getName()+mo.getMessage());
 
+        MessageOject mo = customerService.feedback(feedbackInfo,feedbackInfo.getCustomerId());
+        model.addAttribute("MessageFeedback",mo);
         return "redirect:/customer/history";
     }
 

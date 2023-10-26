@@ -25,32 +25,32 @@ public class AdminSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(adminRepository.count() ==0 ) {
-            Admin admin = new Admin();
-            admin.setUsername("Admin01");
-            admin.setPassword(PasswordMD5.encode("123"));
-            admin.setRole(Role.ADMIN);
+//        if(adminRepository.count() ==0 ) {
+//            Admin admin = new Admin();
+//            admin.setUsername("Admin01");
+//            admin.setPassword(PasswordMD5.encode("123"));
+//            admin.setRole(Role.ADMIN);
+//
+//            Admin admin1 = new Admin();
+//            admin.setUsername("Admin02");
+//            admin.setPassword(PasswordMD5.encode("1234"));
+//            admin.setRole(Role.ADMIN);
+//
+//            Admin admin2 = new Admin();
+//            admin.setUsername("Admin03");
+//            admin.setPassword(PasswordMD5.encode("123@"));
+//            admin.setRole(Role.ADMIN);
+//
+//            Admin admin3 = new Admin();
+//            admin.setUsername("Admin04");
+//            admin.setPassword(PasswordMD5.encode("1234@"));
+//            admin.setRole(Role.ADMIN);
+//
+//            adminRepository.save(admin);
+//            adminRepository.save(admin1);
+//            adminRepository.save(admin2);
+//            adminRepository.save(admin3);
 
-            Admin admin1 = new Admin();
-            admin.setUsername("Admin02");
-            admin.setPassword(PasswordMD5.encode("1234"));
-            admin.setRole(Role.ADMIN);
-
-            Admin admin2 = new Admin();
-            admin.setUsername("Admin03");
-            admin.setPassword(PasswordMD5.encode("123@"));
-            admin.setRole(Role.ADMIN);
-
-            Admin admin3 = new Admin();
-            admin.setUsername("Admin04");
-            admin.setPassword(PasswordMD5.encode("1234@"));
-            admin.setRole(Role.ADMIN);
-
-            adminRepository.save(admin);
-            adminRepository.save(admin1);
-            adminRepository.save(admin2);
-            adminRepository.save(admin3);
-
-        }
+ //       }
     }
 }

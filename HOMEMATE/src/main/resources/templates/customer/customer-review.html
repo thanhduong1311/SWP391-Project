@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta
@@ -60,12 +60,14 @@
     }
     .rating .star {
       cursor: pointer;
+      color: rgb(128, 128, 128);
     }
     .rating .star.active {
       opacity: 0;
       animation: animate 0.5s
       calc(var(--i) * 0.1s) ease-in-out
       forwards;
+      color:gold;
     }
 
     @keyframes animate {
@@ -227,9 +229,9 @@
                   name="description"
                   id="description"
                   placeholder="Your review description" />
-          <input  th:field="*{feedbackId}" th:value="*{feedbackId}">
-          <input th:field="*{customerId}" th:value="${JobInfo.getCustomerID()}">
-          <input th:field="*{jobId}" th:value="${JobInfo.getJobID()}">
+          <input hidden readonly th:field="*{feedbackId}" th:value="*{feedbackId}">
+          <input hidden readonly th:field="*{customerId}" th:value="${JobInfo.getCustomerID()}">
+          <input hidden readonly th:field="*{jobId}" th:value="${JobInfo.getJobID()}">
           <div class="text-center">
             <button
                     class="btn btn-dark mt-3 w-25"
@@ -256,50 +258,40 @@
 <!-- Footer -->
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script>
-  const allStar = document.querySelectorAll(
-    '.rating .star'
-  );
-  const ratingValue = document.querySelector(
-    '.rating input'
-  );
+  const allStar = document.querySelectorAll('.rating .star');
+  const ratingValue = document.querySelector('.rating input');
+
+  function setStars(value) {
+    ratingValue.value = value;
+    allStar.forEach((i, idx) => {
+      if (idx < value) {
+        i.classList.add('active');
+
+      } else {
+        i.classList.remove('active');
+      }
+    });
+  }
+  window.addEventListener('load', () => {
+    setStars(parseInt(ratingValue.value));
+  });
+  ratingValue.addEventListener('input', function () {
+    const inputValue = parseInt(ratingValue.value);
+    if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= allStar.length) {
+      setStars(inputValue);
+    }
+  });
 
   allStar.forEach((item, idx) => {
-    item.addEventListener(
-      'click',
-      function () {
-        let click = 0;
-        ratingValue.value = idx + 1;
-
-        allStar.forEach((i) => {
-          i.classList.replace(
-            'bxs-star',
-            'bx-star'
-          );
-          i.classList.remove('active');
-        });
-        for (
-          let i = 0;
-          i < allStar.length;
-          i++
-        ) {
-          if (i <= idx) {
-            allStar[i].classList.replace(
-              'bx-star',
-              'bxs-star'
-            );
-            allStar[i].classList.add(
-              'active'
-            );
-          } else {
-            allStar[i].style.setProperty(
-              '--i',
-              click
-            );
-            click++;
-          }
-        }
+    item.addEventListener('click', function () {
+      if (item.classList.contains('active') && idx === parseInt(ratingValue.value) - 1) {
+        // Clicking on the same star that is already selected, so undo the selection
+        setStars(idx);
+      } else {
+        // Clicking on a different star or an unselected star
+        setStars(idx + 1);
       }
-    );
+    });
   });
 </script>
 </body>

@@ -15,6 +15,7 @@ public class EmployeeProlife {
     private String address;
     private String IDCard;
     private String city;
+    private String dob;
     private String district;
     private String placeOfWork;
     private String username;
