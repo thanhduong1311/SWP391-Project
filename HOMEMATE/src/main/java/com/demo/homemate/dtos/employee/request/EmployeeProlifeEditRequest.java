@@ -1,4 +1,4 @@
-package com.demo.homemate.dtos.employee.response;
+package com.demo.homemate.dtos.employee.request;
 
 
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeProlife {
+public class EmployeeProlifeEditRequest {
     private String name;
     private String phone;
     private String email;

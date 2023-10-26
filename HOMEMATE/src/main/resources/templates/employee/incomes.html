@@ -62,7 +62,7 @@
           <!-- card -->
           <div class="card">
             <!-- card body-->
-            <div  class="card-body" th:if="${incomes != null}">
+            <div  class="card-body" th:if="${incomes.size() != 0}">
               <div class="mb-6">
                 <h4 class="mb-0">
                   Your Incomes
@@ -113,7 +113,7 @@
               </div>
             </div>
 
-            <div class="card-body text-center" th:if="${incomes == null}">Hmm, Look like you do not
+            <div class="card-body text-center" th:if="${incomes.size() == 0}">Hmm, Look like you do not
               have any incomes.</div>
           </div>
         </div>

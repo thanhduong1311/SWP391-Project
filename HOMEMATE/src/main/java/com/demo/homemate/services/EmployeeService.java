@@ -1,6 +1,7 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.job.response.CalendarObject;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -173,10 +175,12 @@ public class EmployeeService implements IEmployeeService {
 
             for (Job j: myJob) {
                 // check is employee busy
-                if(jobTimer.checkBusy(j.getStart(),j.getEnd(),job.getStart()) ||
-                        jobTimer.checkBusy(j.getStart(),j.getEnd(),job.getEnd())) {
-                    isBusy = true;
-                    break;
+                if(j.getStatus() == JobStatus.INPROGRESS) {
+                    if(jobTimer.checkBusy(j.getStart(),j.getEnd(),job.getStart()) ||
+                            jobTimer.checkBusy(j.getStart(),j.getEnd(),job.getEnd())) {
+                        isBusy = true;
+                        break;
+                    }
                 }
             }
 
@@ -475,6 +479,38 @@ public class EmployeeService implements IEmployeeService {
             throw  new Exception(e.getMessage());
         }
 
+    }
+
+    @SneakyThrows
+    @Override
+    public MessageOject updateProfile(EmployeeProlife request) {
+        try {
+                Employee employee = employeeRepository.findByUsername(request.getUsername());
+                if (employee != null) {
+
+                    // set date
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    employee.setDob(sdf.parse(request.getDob()));
+
+                    employee.setFullName(request.getName());
+                    employee.setAvatar(request.getAvatar());
+                    employee.setPhone(request.getPhone());
+                    employee.setAddress_detail(request.getAddress());
+                    employee.setCity(request.getCity());
+                    employee.setDistrict(request.getDistrict());
+                    employee.setIdCardNumber(request.getIDCard());
+                    employee.setWork_place(request.getPlaceOfWork());
+                    employee.setUpdateAt(new Date());
+
+                    employeeRepository.save(employee);
+                    return new MessageOject("Success", "Profile update successfully",null);
+                }
+
+
+        return new MessageOject("Failed","Can not update profile",null);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
 

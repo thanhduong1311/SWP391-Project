@@ -21,48 +21,48 @@ public class CustomerSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(repository.count() == 0) {
-
-            Customer user = new Customer();
-            user.setCustomerId(1);
-            user.setUsername("thanhduong01");
-            user.setPassword(PasswordMD5.encode("01"));
-            user.setRole(Role.CUSTOMER);
-            user.setAccountStatus(AccountStatus.ACTIVE);
-            user.setFullName("Nguyen Thanh Duong");
-            user.setAvatar("/assets/images/DSC01989.png");
-            user.setEmail("thanhduongjnguyen@gmail.com");
-            user.setPhone("0813113149");
-            user.setGender("male");
-            user.setCity("Can Tho");
-            user.setDistrict("Ninh Kieu");
-            user.setAddress_detail("Tam Vu, Hung Loi");
-            user.setBalance(1300);
-            user.setTotalSpend(215);
-            user.setCreateAt(null);
-            user.setUpdateAt(null);
-
-
-
-
-            Customer user2 = new Customer();
-            user2.setCustomerId(2);
-            user2.setUsername("thanhduong02");
-            user2.setPassword(PasswordMD5.encode("02"));
-            user2.setRole(Role.CUSTOMER);
-            user2.setAccountStatus(AccountStatus.ACTIVE);
-            user2.setFullName("Thanh Duong");
-            user2.setAvatar("/assets/images/D1.jpg");
-            user2.setEmail("thanhduong02@gmail.com");
-            user2.setPhone("0813113466");
-            user2.setGender("male");
-            user2.setCity("Can Tho");
-            user2.setDistrict("Ninh Kieu");
-            user2.setAddress_detail("Tran Hoang Na, Hung Loi");
-            user2.setBalance(1000);
-            user2.setTotalSpend(200);
-            user2.setCreateAt(null);
-            user2.setUpdateAt(null);
+//        if(repository.count() == 0) {
+//
+//            Customer user = new Customer();
+//            user.setCustomerId(1);
+//            user.setUsername("thanhduong01");
+//            user.setPassword(PasswordMD5.encode("01"));
+//            user.setRole(Role.CUSTOMER);
+//            user.setAccountStatus(AccountStatus.ACTIVE);
+//            user.setFullName("Nguyen Thanh Duong");
+//            user.setAvatar("/assets/images/DSC01989.png");
+//            user.setEmail("thanhduongjnguyen@gmail.com");
+//            user.setPhone("0813113149");
+//            user.setGender("male");
+//            user.setCity("Can Tho");
+//            user.setDistrict("Ninh Kieu");
+//            user.setAddress_detail("Tam Vu, Hung Loi");
+//            user.setBalance(1300);
+//            user.setTotalSpend(215);
+//            user.setCreateAt(null);
+//            user.setUpdateAt(null);
+//
+//
+//
+//
+//            Customer user2 = new Customer();
+//            user2.setCustomerId(2);
+//            user2.setUsername("thanhduong02");
+//            user2.setPassword(PasswordMD5.encode("02"));
+//            user2.setRole(Role.CUSTOMER);
+//            user2.setAccountStatus(AccountStatus.ACTIVE);
+//            user2.setFullName("Thanh Duong");
+//            user2.setAvatar("/assets/images/D1.jpg");
+//            user2.setEmail("thanhduong02@gmail.com");
+//            user2.setPhone("0813113466");
+//            user2.setGender("male");
+//            user2.setCity("Can Tho");
+//            user2.setDistrict("Ninh Kieu");
+//            user2.setAddress_detail("Tran Hoang Na, Hung Loi");
+//            user2.setBalance(1000);
+//            user2.setTotalSpend(200);
+//            user2.setCreateAt(null);
+//            user2.setUpdateAt(null);
 
 //            Customer user3 = new Customer();
 //            user3.setCustomerId(2);
@@ -140,15 +140,15 @@ public class CustomerSeeder implements CommandLineRunner {
 //            user6.setCreateAt(null);
 //            user6.setUpdateAt(null);
 
-            repository.save(user);
-            repository.save(user2);
-//            repository.save(user3);
-//            repository.save(user4);
-//            repository.save(user4);
-//            repository.save(user6);
-
-
-
-        }
+//            repository.save(user);
+//            repository.save(user2);
+////            repository.save(user3);
+////            repository.save(user4);
+////            repository.save(user4);
+////            repository.save(user6);
+//
+//
+//
+//        }
     }
 }

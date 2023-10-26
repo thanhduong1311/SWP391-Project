@@ -59,6 +59,7 @@ public class CustomerAccountController {
     @PostMapping("/changePassword")
     public String changePassword(Model model, ChangePasswordRequest request) {
         MessageOject messageOject = customerService.changePassword(request);
+        System.out.println(messageOject.getMessage());
         return "redirect:/customer/account/changePassword";
     }
 

@@ -64,6 +64,8 @@ public class BookingService implements IJobService {
                 job.setUpdateAt(new Date());
                 jobRepository.save(job);
 
+
+
                 MailContents mailContents = new MailContents();
                 mailContents.setSubjectName(customer.getFullName());
                 mailContents.setTitle("[HOMEMATE] BOOKING SUCCESSFULLY");
