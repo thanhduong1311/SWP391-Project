@@ -1,12 +1,10 @@
 package com.demo.homemate.services.interfaces;
 
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.dtos.services.request.ServiceRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
-import com.demo.homemate.dtos.services.response.ServiceResponse;
-import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Service;
 
 import java.util.List;
 
@@ -105,14 +103,14 @@ public interface IAdminService {
      * @param request
      * @return
      */
-    public MessageOject addService(ServiceDetailResponse request,String details);
+    public MessageObject addService(ServiceDetailResponse request, String details);
 
     /**
      *  update service
      * @param request
      * @return
      */
-    public MessageOject updateService(ServiceDetailResponse request,String detail);
+    public MessageObject updateService(ServiceDetailResponse request, String detail);
 
 
     /**
@@ -120,7 +118,7 @@ public interface IAdminService {
      * @param id
      * @return
      */
-    public MessageOject deleteService(int id);
+    public MessageObject deleteService(int id);
 
 
     /**
@@ -128,52 +126,52 @@ public interface IAdminService {
      * @param id
      * @return
      */
-    public MessageOject blockCustomer(int id);
+    public MessageObject blockCustomer(int id);
 
     /**
      * un block customer account
      * @param id
      * @return
      */
-    public MessageOject unBlockCustomer(int id);
+    public MessageObject unBlockCustomer(int id);
 
     /**
      *
      * @param id
      * @return
      */
-    public MessageOject deleteCustomer(int id);
+    public MessageObject deleteCustomer(int id);
 
 
-    public MessageOject blockEmployee(int id);
+    public MessageObject blockEmployee(int id);
 
     /**
      * un block customer account
      * @param id
      * @return
      */
-    public MessageOject unBlockEmployee(int id);
+    public MessageObject unBlockEmployee(int id);
 
     /**
      * delete employee
      * @param id
      * @return
      */
-    public MessageOject deleteEmployee(int id);
+    public MessageObject deleteEmployee(int id);
 
     /**
      * approve partner
      * @param id
      * @return
      */
-    public MessageOject approvePartner(int id);
+    public MessageObject approvePartner(int id);
 
     /**
      * reject partner
      * @param id
      * @return
      */
-    public MessageOject rejectPartner(int id);
+    public MessageObject rejectPartner(int id);
 
 
 

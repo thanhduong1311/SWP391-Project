@@ -1,6 +1,6 @@
 package com.demo.homemate.controllers.admin;
 
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.services.AdminService;
@@ -85,51 +85,51 @@ public class UserManagementController {
     // Block customer handle
     @GetMapping("/customer/block/{id}")
     public String blockCustomer(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.blockCustomer(id);
+        MessageObject messageObject = adminService.blockCustomer(id);
         return "redirect:/admin/userManagement/customer/"+id;
     }
 
     @GetMapping("/customer/unblock/{id}")
     public String unblockCustomer(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.unBlockCustomer(id);
+        MessageObject messageObject = adminService.unBlockCustomer(id);
         return "redirect:/admin/userManagement/customer/"+id;
     }
     // delete customer handle
     @GetMapping("/customer/delete/{id}")
     public String deleteCustomer(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.deleteCustomer(id);
+        MessageObject messageObject = adminService.deleteCustomer(id);
         return "redirect:/admin/userManagement/customers";
     }
 
     // block employee
     @GetMapping("/employee/block/{id}")
     public String blockEmployee(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.blockEmployee(id);
+        MessageObject messageObject = adminService.blockEmployee(id);
         return "redirect:/admin/userManagement/employee/"+id;
     }
 
     //unblock employee
     @GetMapping("/employee/unblock/{id}")
     public String unblockEmployee(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.unBlockEmployee(id);
+        MessageObject messageObject = adminService.unBlockEmployee(id);
         return "redirect:/admin/userManagement/employee/"+id;
     }
     // delete customer handle
     @GetMapping("/employee/delete/{id}")
     public String deleteEmployee(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.deleteEmployee(id);
+        MessageObject messageObject = adminService.deleteEmployee(id);
         return "redirect:/admin/userManagement/employees";
     }
 
     @GetMapping("/employee/approve/{id}")
     public String approvePartner(@PathVariable("id") int id, Model model) {
-        MessageOject messageOject = adminService.approvePartner(id);
+        MessageObject messageObject = adminService.approvePartner(id);
         return "redirect:/admin/userManagement/applies";
     }
 
     @GetMapping("/employee/reject/{id}")
     public String rejectPartner(@PathVariable("id") int id, Model model) {
-        //MessageOject messageOject = adminService.rejectPartner(id);
+        //MessageObject messageOject = adminService.rejectPartner(id);
         return "redirect:/admin/userManagement/applies";
     }
 

@@ -12,6 +12,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Random;
 
@@ -105,8 +107,16 @@ public class JWTService {
     }
 
     public static void main(String[] args) {
-       Random rd = new Random();
-       int rand = rd.nextInt(999999-100000+1)+100000;
-        System.out.println(rand);
+String filen = "anh1.png";
+String tenfolder = "customer";
+String tam = "src/main/resources/static/assets/images/";
+        String uploadDir = "src/main/resources/static/assets/images/"+tenfolder;
+        Path uploadPath = Paths.get(uploadDir);
+        Path r = Paths.get(tam);
+        Path filePath = uploadPath.resolve("anh.png");
+        System.out.println("filePath:" + filePath.toFile().getPath());
+        String url=tenfolder+"\\"+filen;
+        System.out.println("url:" + url );
+        System.out.println(r.resolve(url).toFile().getPath());
     }
 }

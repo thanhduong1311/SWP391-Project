@@ -9,11 +9,10 @@ import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.customer.response.CustomerResponse;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.dtos.employee.response.PartnerResponse;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.dtos.password.RecoverPassword;
 import com.demo.homemate.dtos.password.newPasswordRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
-import com.demo.homemate.entities.Service;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.CreateAccountService;
@@ -98,11 +97,11 @@ public class AuthController {
             }
         }else {
 //            session.removeAttribute("Login Failed");
-            model.addAttribute("LoginMessage", new MessageOject("Failed","Username or password is incorrect!", null));
+            model.addAttribute("LoginMessage", new MessageObject("Failed","Username or password is incorrect!", null));
             return loginView(model);
         }
     } else {
-        model.addAttribute("LoginMessage", new MessageOject("Failed","Password must contain at least 6 characters!", null));
+        model.addAttribute("LoginMessage", new MessageObject("Failed","Password must contain at least 6 characters!", null));
         return loginView(model);
     }
 
@@ -120,7 +119,7 @@ public class AuthController {
         model.addAttribute("account", new AuthenticationRequest());
 
         if (model.getAttribute("LoginMessage") == null) {
-            model.addAttribute("LoginMessage", new MessageOject());
+            model.addAttribute("LoginMessage", new MessageObject());
         }
         return "signin";
     }
@@ -147,15 +146,15 @@ public class AuthController {
                 if (claim==null) {return "/login";}
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
-                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
+                        session.setAttribute("Message", new MessageObject("Success","Login Success",null));
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
-                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
+                        session.setAttribute("Message", new MessageObject("Success","Login Success",null));
                         return "redirect:/customer";
                     }
                     case "EMPLOYEE" -> {
-                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
+                        session.setAttribute("Message", new MessageObject("Success","Login Success",null));
                         return "redirect:/employee";
                     }
                     default -> {
@@ -170,7 +169,7 @@ public class AuthController {
     public String viewSignPage(Model model) {
         model.addAttribute("RequestRegister", new RegisterRequest());
         if (model.getAttribute("UserRegiter") == null) {
-            model.addAttribute("UserRegiter", new MessageOject());
+            model.addAttribute("UserRegiter", new MessageObject());
         }
         return "signup";
     }
@@ -179,11 +178,11 @@ public class AuthController {
     public String signup(Model model, RegisterRequest request) {
         CustomerResponse response = createAccountService.createAccount(request);
         if(response.getStateCode() == 1) {
-            model.addAttribute("UserRegiter", response.getMessageOject());
-            emailService.sendEmail(response.getMessageOject().getEmailMessage());
+            model.addAttribute("UserRegiter", response.getMessageObject());
+            emailService.sendEmail(response.getMessageObject().getEmailMessage());
             return "redirect:/login";
         }else {
-            model.addAttribute("UserRegiter", response.getMessageOject());
+            model.addAttribute("UserRegiter", response.getMessageObject());
             return viewSignPage(model);
         }
     }
@@ -348,14 +347,14 @@ return "new-password";
         System.out.println(request.toString());
         PartnerResponse response = createAccountService.createAccount(request);
         if(response.getStateCode() == 1) {
-            model.addAttribute("PartnerRegiter", response.getMessageOject());
-            emailService.sendEmail(response.getMessageOject().getEmailMessage());
-            System.out.println(response.getMessageOject().getMessage());
+            model.addAttribute("PartnerRegiter", response.getMessageObject());
+            emailService.sendEmail(response.getMessageObject().getEmailMessage());
+            System.out.println(response.getMessageObject().getMessage());
             System.out.println("********************************************************************************** SUCCESS");
             return "redirect:/guest";
         }else {
-            model.addAttribute("PartnerRegiter", response.getMessageOject().getMessage());
-            System.out.println(response.getMessageOject());
+            model.addAttribute("PartnerRegiter", response.getMessageObject().getMessage());
+            System.out.println(response.getMessageObject());
             System.out.println("********************************************************************************** FAILED");
             return viewPartnerRegister(model);
         }

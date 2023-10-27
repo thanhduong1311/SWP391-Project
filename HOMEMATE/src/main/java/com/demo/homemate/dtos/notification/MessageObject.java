@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageOject {
+public class MessageObject {
     private String name;
     private String message;
     private EmailDetails emailMessage;

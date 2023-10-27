@@ -1,9 +1,6 @@
 package com.demo.homemate.dtos.services.response;
 
-import com.demo.homemate.dtos.notification.MessageOject;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter

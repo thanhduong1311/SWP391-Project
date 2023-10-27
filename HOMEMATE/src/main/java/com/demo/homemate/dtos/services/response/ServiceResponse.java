@@ -1,6 +1,6 @@
 package com.demo.homemate.dtos.services.response;
 
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import lombok.*;
 
 @Getter
@@ -15,5 +15,5 @@ public class ServiceResponse {
     private double price;
     private double discount;
     private String description;
-    private MessageOject messageOject;
+    private MessageObject messageObject;
 }

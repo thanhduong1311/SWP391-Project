@@ -1,36 +1,23 @@
 package com.demo.homemate.controllers.customer;
 
 import com.demo.homemate.configurations.JWTService;
-import com.demo.homemate.data.MailContents;
-import com.demo.homemate.dtos.account.response.AccountResponse;
-import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.job.request.JobRequest;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.dtos.payment.PaymentRequest;
-import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.enums.Role;
-import com.demo.homemate.mappings.AccountMapper;
-import com.demo.homemate.mappings.ServiceMapper;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.AdminService;
 import com.demo.homemate.services.EmailService;
-import com.demo.homemate.services.PaymentService;
 import com.demo.homemate.services.interfaces.*;
 import com.demo.mservice.enums.RequestType;
 import com.demo.mservice.momo.MomoPay;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.SQLOutput;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/customer/bookings")
@@ -109,10 +96,10 @@ public class CustomerBookingController {
                 model.addAttribute("JobRequest", request);
                 model.addAttribute("PaymentRequest",pr);
 
-                MessageOject messageOject = bookingService.createJobWithoutPayment(request);
-                System.out.println(messageOject.getMessage());
+                MessageObject messageObject = bookingService.createJobWithoutPayment(request);
+                System.out.println(messageObject.getMessage());
 
-                if( messageOject.getName().equals("Success")) {
+                if( messageObject.getName().equals("Success")) {
                     return checkOut(model);
 
                 } else {
@@ -120,11 +107,11 @@ public class CustomerBookingController {
                 }
 
         } else {
-          MessageOject messageOject = bookingService.createJob(request);
-            emailService.sendEmail(messageOject.getEmailMessage());
-            System.out.println(messageOject.getMessage());
+          MessageObject messageObject = bookingService.createJob(request);
+            emailService.sendEmail(messageObject.getEmailMessage());
+            System.out.println(messageObject.getMessage());
 
-            if( messageOject.getName().equals("Success")) {
+            if( messageObject.getName().equals("Success")) {
                 return "redirect:/customer";
             } else {
                 return  "redirect:/customer/bookings/form";
@@ -168,16 +155,16 @@ public class CustomerBookingController {
         Customer customer = adminService.getACustomer(id);
 
         if (customer == null) {
-            MessageOject messageOject = new MessageOject("Failed", "There some error occur", null);
-            System.out.println(messageOject.getMessage());
+            MessageObject messageObject = new MessageObject("Failed", "There some error occur", null);
+            System.out.println(messageObject.getMessage());
             return "redirect:/customer/bookings/form";
         } else {
 
-            MessageOject messageOject = bookingService.completeCreateJob(id);
+            MessageObject messageObject = bookingService.completeCreateJob(id);
 
-            emailService.sendEmail(messageOject.getEmailMessage());
+            emailService.sendEmail(messageObject.getEmailMessage());
 
-            System.out.println(messageOject.getMessage());
+            System.out.println(messageObject.getMessage());
 
             return "redirect:/customer";
         }

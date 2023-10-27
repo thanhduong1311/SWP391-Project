@@ -2,11 +2,10 @@ package com.demo.homemate.controllers.admin;
 
 
 import com.demo.homemate.configurations.JWTService;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.services.AdminService;
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.FlashMap;
-import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,14 +32,14 @@ public class AdminHomeController {
     ) {
 
         if (model.getAttribute("loginSuccess") == null) {
-            model.addAttribute("loginSuccess", new MessageOject("","",null));
+            model.addAttribute("loginSuccess", new MessageObject("","",null));
         }
 
-        MessageOject messageOject = new MessageOject();
-        messageOject =(MessageOject) session.getAttribute("Message");
+        MessageObject messageObject = new MessageObject();
+        messageObject =(MessageObject) session.getAttribute("Message");
         session.removeAttribute("Message");
 
-        model.addAttribute("loginSuccess",messageOject);
+        model.addAttribute("loginSuccess", messageObject);
 
 
 

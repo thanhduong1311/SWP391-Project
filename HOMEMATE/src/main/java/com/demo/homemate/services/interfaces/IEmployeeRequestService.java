@@ -2,7 +2,7 @@ package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
 import com.demo.homemate.dtos.employeeCancelRequest.Response.EmployeeCancelJobRequest;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public interface IEmployeeRequestService {
 
     public CancelJobDetail getCancelJobDetailByRequest(int EmployeeRequestID) ;
 
-    public MessageOject apporveRequest(int requestID);
-    public MessageOject rejectRequest(int requestID);
+    public MessageObject apporveRequest(int requestID);
+    public MessageObject rejectRequest(int requestID);
 
-    public MessageOject deleteRequest(int requestID);
+    public MessageObject deleteRequest(int requestID);
 
 }

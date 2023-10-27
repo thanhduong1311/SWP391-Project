@@ -1,7 +1,7 @@
 package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public interface ICustomerReportService {
 
     public CustomerReportJob getReportDetailByID(int id);
 
-    public MessageOject deleteReport(int id);
+    public MessageObject deleteReport(int id);
 
 }

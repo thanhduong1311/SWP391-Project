@@ -2,7 +2,7 @@ package com.demo.homemate.controllers.admin;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
 import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.services.AdminService;
 import com.demo.homemate.services.CustomerReportService;
 import com.demo.homemate.services.EmployeeRequestService;
@@ -51,20 +51,20 @@ public class TaskController {
 
     @GetMapping("reject/{id}")
     public String rejectRequest(@PathVariable("id") int id) {
-        MessageOject ms = employeeRequestService.rejectRequest(id);
+        MessageObject ms = employeeRequestService.rejectRequest(id);
         return "redirect:/admin/tasks/request/" + id;
     }
 
     @GetMapping("approve/{id}")
     public String apporveRequest(@PathVariable("id") int id) {
-        MessageOject ms = employeeRequestService.apporveRequest(id);
+        MessageObject ms = employeeRequestService.apporveRequest(id);
         return "redirect:/admin/tasks/request/" + id;
     }
 
 
     @GetMapping("delete/{id}")
     public String deleteRequest(@PathVariable("id") int id) {
-        MessageOject ms = employeeRequestService.deleteRequest(id);
+        MessageObject ms = employeeRequestService.deleteRequest(id);
         return "redirect:/admin/tasks/requests";
     }
 
@@ -77,7 +77,7 @@ public class TaskController {
 
     @GetMapping("deleteReport/{id}")
     public String deleteReport(@PathVariable("id") int id) {
-        MessageOject ms = customerReportService.deleteReport(id);
+        MessageObject ms = customerReportService.deleteReport(id);
         return "redirect:/admin/tasks/reports";
     }
 }

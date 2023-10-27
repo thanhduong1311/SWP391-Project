@@ -5,9 +5,8 @@ import com.demo.homemate.dtos.employeeCancelRequest.Request.CreateCancelRequest;
 import com.demo.homemate.dtos.job.response.CalendarObject;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Income;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.EmployeeService;
@@ -102,9 +101,9 @@ public class EmployeeTaskController {
 
         int empID = employeeRepository.findByUsername(username).getEmployeeId();
 
-        MessageOject messageOject = employeeService.takeJob(id,empID);
+        MessageObject messageObject = employeeService.takeJob(id,empID);
 
-        System.out.println(messageOject.getMessage());
+        System.out.println(messageObject.getMessage());
 
         return "redirect:/employee/job/" + id;
     }
@@ -122,9 +121,9 @@ public class EmployeeTaskController {
 
         int empID = employeeRepository.findByUsername(username).getEmployeeId();
 
-        MessageOject messageOject = employeeService.doneJob(id,empID);
+        MessageObject messageObject = employeeService.doneJob(id,empID);
 
-        System.out.println(messageOject.getMessage());
+        System.out.println(messageObject.getMessage());
 
         return "redirect:/employee/job/" + id;
     }
@@ -143,8 +142,8 @@ public class EmployeeTaskController {
     public String cancelJob(@PathVariable("id") int id,CreateCancelRequest reason) {
 
 
-        MessageOject messageOject = employeeService.cancelJob(id, reason.getReason());
-        System.out.println(messageOject.getMessage());
+        MessageObject messageObject = employeeService.cancelJob(id, reason.getReason());
+        System.out.println(messageObject.getMessage());
         return "redirect:/employee/job/jobList";
     }
 

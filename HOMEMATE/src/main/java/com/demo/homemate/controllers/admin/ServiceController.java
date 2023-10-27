@@ -1,18 +1,12 @@
 package com.demo.homemate.controllers.admin;
 
-import com.demo.homemate.dtos.services.request.ServiceRequest;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
-import com.demo.homemate.dtos.services.response.ServiceResponse;
-import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Service;
-import com.demo.homemate.mappings.ServiceMapper;
 import com.demo.homemate.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin/services")
@@ -39,8 +33,8 @@ public class ServiceController {
     @PostMapping("/add")
     public String addService(Model model, ServiceDetailResponse request,
                              @ModelAttribute("txtDetails") String details) {
-        MessageOject messageOject = adminService.addService(request,details);
-        System.out.println(messageOject.getName()+messageOject.getMessage());
+        MessageObject messageObject = adminService.addService(request,details);
+        System.out.println(messageObject.getName()+ messageObject.getMessage());
         return "redirect:/admin/services";
     }
 
@@ -68,8 +62,8 @@ public class ServiceController {
     @PostMapping("/edit")
     public String editlService(Model model,ServiceDetailResponse request,
                                @ModelAttribute("txtDetails") String details) {
-        MessageOject messageOject = adminService.updateService(request,details);
-        System.out.println(messageOject.getName()+messageOject.getMessage());
+        MessageObject messageObject = adminService.updateService(request,details);
+        System.out.println(messageObject.getName()+ messageObject.getMessage());
         return "redirect:/admin/services";
     }
 
@@ -77,8 +71,8 @@ public class ServiceController {
     // Delete service handle
     @GetMapping("/delete/{id}")
     public String deleteService(@PathVariable("id") int id) {
-        MessageOject messageOject =  adminService.deleteService(id);
-        System.out.println(messageOject.getName()+messageOject.getMessage());
+        MessageObject messageObject =  adminService.deleteService(id);
+        System.out.println(messageObject.getName()+ messageObject.getMessage());
         return "redirect:/admin/services";
     }
 

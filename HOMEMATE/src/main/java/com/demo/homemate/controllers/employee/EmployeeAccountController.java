@@ -4,13 +4,9 @@ package com.demo.homemate.controllers.employee;
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
-import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
-import com.demo.homemate.dtos.employee.request.EmployeeProfileEditRequest;
 import com.demo.homemate.dtos.employee.response.EmployeeProlife;
-import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Customer;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.mappings.AccountMapper;
-import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.mappings.EmployeMapping;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.EmployeeService;
@@ -76,9 +72,9 @@ public class EmployeeAccountController {
         System.out.println(request.getNewPassword());
         System.out.println(request.getConfirmPassword());
 
-        MessageOject messageOject = employeeService.changePassword(request);
+        MessageObject messageObject = employeeService.changePassword(request);
 
-        System.out.println(messageOject.getMessage());
+        System.out.println(messageObject.getMessage());
         return "redirect:/employee/account/" + request.getUsername();
     }
 
@@ -109,9 +105,9 @@ public class EmployeeAccountController {
 
         System.out.println("Request: " + request.toString());
 
-        MessageOject messageOject = employeeService.updateProfile(request);
+        MessageObject messageObject = employeeService.updateProfile(request);
 
-        System.out.println(messageOject.getMessage());
+        System.out.println(messageObject.getMessage());
 
         return "redirect:/employee/account/" + request.getUsername();
     }

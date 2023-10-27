@@ -4,10 +4,7 @@ import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
 import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
-import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Income;
-import com.demo.homemate.entities.Job;
+import com.demo.homemate.dtos.notification.MessageObject;
 
 import java.util.List;
 
@@ -16,15 +13,15 @@ public interface IEmployeeService {
 
     JobDetail viewDetailJob(int jobId);
 
-    MessageOject changePassword(ChangePasswordRequest request);
+    MessageObject changePassword(ChangePasswordRequest request);
 
     List<JobDetail> getAvailableJobForSpecialEmployee(int employeeID);
 
-    MessageOject takeJob(int jobID,int employeeID);
+    MessageObject takeJob(int jobID, int employeeID);
 
-    MessageOject cancelJob(int JobID, String reason);
+    MessageObject cancelJob(int JobID, String reason);
 
-    MessageOject doneJob(int JobID,int employeeID);
+    MessageObject doneJob(int JobID, int employeeID);
 
     List<IncomeDetail> getIncomes(int employeeId);
 
@@ -33,7 +30,7 @@ public interface IEmployeeService {
     String getScheduleJSON(int employeeID) ;
 
 
-    MessageOject updateProfile(EmployeeProlife request);
+    MessageObject updateProfile(EmployeeProlife request);
 
     List<JobDetail> viewOwnJob(int employeeID);
 

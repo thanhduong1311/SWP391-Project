@@ -11,6 +11,7 @@ import com.demo.homemate.repositories.CustomerRepository;
 
 import com.demo.homemate.utils.JobTimer;
 
+import com.demo.homemate.utils.UploadPicture;
 import lombok.SneakyThrows;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ public class CustomerMapping implements ICustomerMapping {
     @Override
     public CustomerProfileRequest toCustomerProfile(Customer customer) {
         try {
+            UploadPicture uploadPicture = new UploadPicture();
             CustomerProfileRequest prolife = new CustomerProfileRequest();
             JobTimer jobTimer = new JobTimer();
             prolife.setName(customer.getFullName());
@@ -42,29 +44,13 @@ public class CustomerMapping implements ICustomerMapping {
     }
     @SneakyThrows
     public Customer toCustomerFromCustomerProfile(Customer c, CustomerProfileRequest cpr){
-
-        if (!Objects.equals(cpr.getName(), c.getFullName())){
             c.setFullName(cpr.getName());
-        }
-        if (!Objects.equals(cpr.getPhone(), c.getPhone())){
             c.setPhone(cpr.getPhone());
-        }
-        if (cpr.getDob().equals(c.getDob())){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            c.setDob(simpleDateFormat.parse(cpr.getDob()));
-        }
-        if (!Objects.equals(cpr.getAddress(), c.getAddress_detail())){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            c.setDob(sdf.parse(cpr.getDob()));
             c.setAddress_detail(cpr.getAddress());
-        }
-        if (!Objects.equals(cpr.getCity(), c.getCity())){
             c.setCity(cpr.getCity());
-        }
-        if (!Objects.equals(cpr.getDistrict(), c.getDistrict())){
             c.setDistrict(cpr.getDistrict());
-        }
-        if (!Objects.equals(cpr.getAvatar(), c.getAvatar())){
-            c.setAvatar(cpr.getAvatar());
-        }
         return c;
     }
     public FeedbackRequest tofeedbackRequest(Feedbacks fb) {

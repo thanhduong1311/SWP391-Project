@@ -1,8 +1,10 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.dtos.feedback.FeedbackRequest;
-import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.dtos.image.ImageResponse;
+import com.demo.homemate.dtos.notification.MessageObject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Feedbacks;
 import com.demo.homemate.entities.Job;
@@ -12,10 +14,14 @@ import com.demo.homemate.repositories.FeedbackRepository;
 import com.demo.homemate.repositories.JobRepository;
 import com.demo.homemate.services.interfaces.ICustomerService;
 import com.demo.homemate.utils.PasswordMD5;
+import com.demo.homemate.utils.UploadPicture;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @Slf4j
@@ -30,11 +36,34 @@ public class CustomerService implements ICustomerService {
 
     private final JobRepository jobRepository;
 
+    public CustomerProfileRequest getProfile(String username){
+        CustomerMapping customerMapping = new CustomerMapping();
+        Customer customer = customerRepository.findByUsername(username);
+        return customerMapping.toCustomerProfile(customer);
+    }
+    public MessageObject editProfile(CustomerProfileRequest UserInfo,
+                                     MultipartFile multipartFile,
+                                     String foldername) throws IOException {
+        try {
+            UploadPicture uploadPicture = new UploadPicture();
+            ImageResponse imageResponse = uploadPicture.uploadImage(multipartFile, foldername);
+            CustomerMapping cp = new CustomerMapping();
+            Customer c = customerRepository.findByUsername(UserInfo.getUsername());
+            if (!imageResponse.getMessageObject().getName().equals("Error")) {
+                c.setAvatar(imageResponse.getImgUrl());
+            }
+            c = cp.toCustomerFromCustomerProfile(c, UserInfo);
+            customerRepository.save(c);
+            return new MessageObject("Success","Edit profile successfully!\nInformation may take few second to load on!",null);
+        }catch(Exception e){
+            return new MessageObject("Failed","Fail to edit profile!",null);
 
+        }
+    }
 
     @SneakyThrows
     @Override
-    public MessageOject changePassword(ChangePasswordRequest request) {
+    public MessageObject changePassword(ChangePasswordRequest request) {
         try {
             String username = request.getUsername();
             String oldPas = request.getOldPassword();
@@ -44,29 +73,29 @@ public class CustomerService implements ICustomerService {
             int check = userService.checkNewChangePassword(username,oldPas,newPasString,confirmPass);
 
             if(check == 0 ) {
-                return new MessageOject("Failed","Username is not exist",null);
+                return new MessageObject("Failed","Username is not exist",null);
             }
             if(check == 1 ) {
-                return new MessageOject("Failed","Not allow password null here",null);
+                return new MessageObject("Failed","Not allow password null here",null);
             }
             if(check == 2) {
-                return new MessageOject("Failed","Old password is incorrect",null);
+                return new MessageObject("Failed","Old password is incorrect",null);
             }
             if(check == 3) {
-                return new MessageOject("Failed","New password at least 6 character and include uppercase, lowercase and special characters",null);
+                return new MessageObject("Failed","New password at least 6 character and include uppercase, lowercase and special characters",null);
             }
             if(check == 4) {
-                return new MessageOject("Failed","New password is not match with confirm password",null);
+                return new MessageObject("Failed","New password is not match with confirm password",null);
             }
             if(check == 5) {
                 Customer customer = customerRepository.findByUsername(username);
                 customer.setPassword(PasswordMD5.encode(newPasString));
                 customerRepository.save(customer);
-                return new MessageOject("Success","Change password successfully",null);
+                return new MessageObject("Success","Change password successfully",null);
             }
-            return new MessageOject("Failed","Something went wrong when chaning password",null);
+            return new MessageObject("Failed","Something went wrong when chaning password",null);
         } catch (Exception e) {
-            return new MessageOject("Error",e.getMessage(),null);
+            return new MessageObject("Error",e.getMessage(),null);
         }
 
     }
@@ -87,21 +116,21 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public MessageOject feedback(FeedbackRequest feedbackRequest, int customerID) {
+    public MessageObject feedback(FeedbackRequest feedbackRequest, int customerID) {
     CustomerMapping customerMapping= new CustomerMapping();
     try {
         Customer customer = customerRepository.findById(customerID);
         Job job = jobRepository.findById(feedbackRequest.getJobId());
         Feedbacks feedbacks = customerMapping.tofeedback(feedbackRequest, customer, job);
         feedbackRepository.save(feedbacks);
-        MessageOject mo = new MessageOject("Success", "Save feedback", null);
+        MessageObject mo = new MessageObject("Success", "Save feedback", null);
         return mo;
     }catch(Exception e){
         System.out.println(e.getMessage());
     }
-        return new MessageOject("Fail","Error save feedback",null);
+        return new MessageObject("Fail","Error save feedback",null);
     }
-   /* public MessageOject editProfile(CustomerProfileRequest request) {
+   /* public MessageObject editProfile(CustomerProfileRequest request) {
         try {
 
             CustomerMapping cp= new CustomerMapping();
@@ -112,29 +141,29 @@ public class CustomerService implements ICustomerService {
             int check = userService.checkNewChangePassword(username,oldPas,newPasString,confirmPass);
 
             if(check == 0 ) {
-                return new MessageOject("Failed","Username is not exist",null);
+                return new MessageObject("Failed","Username is not exist",null);
             }
             if(check == 1 ) {
-                return new MessageOject("Failed","Not allow password null here",null);
+                return new MessageObject("Failed","Not allow password null here",null);
             }
             if(check == 2) {
-                return new MessageOject("Failed","Old password is incorrect",null);
+                return new MessageObject("Failed","Old password is incorrect",null);
             }
             if(check == 3) {
-                return new MessageOject("Failed","New password at least 6 character and include uppercase, lowercase and special characters",null);
+                return new MessageObject("Failed","New password at least 6 character and include uppercase, lowercase and special characters",null);
             }
             if(check == 4) {
-                return new MessageOject("Failed","New password is not match with confirm password",null);
+                return new MessageObject("Failed","New password is not match with confirm password",null);
             }
             if(check == 5) {
                 Customer customer = customerRepository.findByUsername(username);
                 customer.setPassword(PasswordMD5.encode(newPasString));
                 customerRepository.save(customer);
-                return new MessageOject("Success","Change password successfully",null);
+                return new MessageObject("Success","Change password successfully",null);
             }
-            return new MessageOject("Failed","Something went wrong when chaning password",null);
+            return new MessageObject("Failed","Something went wrong when chaning password",null);
         } catch (Exception e) {
-            return new MessageOject("Error",e.getMessage(),null);
+            return new MessageObject("Error",e.getMessage(),null);
         }
 
     }*/
