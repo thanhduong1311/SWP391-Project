@@ -72,50 +72,76 @@
     <title>Document</title>
   </head>
   <body>
-    <header>
-      <nav
-        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-          <a class="navbar-brand fs-2" href="#">
-            <icon class="bi bi-gem"></icon>
-            Homemate
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+  <header>
+    <nav
+            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+      <div class="container">
+        <a class="navbar-brand fs-2" href="/employee">
+          <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
+        </a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
             <span
-              class="navbar-toggler-icon"></span>
-          </button>
-          <div
-            class="collapse navbar-collapse"
-            id="navbarSupportedContent">
-            <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a th:href="@{/employee}" class="nav-link">Home</a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/employee/job/jobList}" class="nav-link">Jobs</a>
-              </li>
+                    class="navbar-toggler-icon"></span>
+        </button>
+        <div
+                class="collapse navbar-collapse"
+                id="navbarSupportedContent">
+          <ul
+                  class="navbar-nav mx-auto mb-2 mb-lg-0">
 
-              <li class="nav-item">
-                <a th:href="@{/employee/job/schedule}" class="nav-link">Schedule</a>
-              </li>
+            <li class="nav-item">
+              <a th:href="@{/employee}"  class="nav-link"
+              >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/employee/job/jobList}"  class="nav-link"
+              >Jobs</a
+              >
+            </li>
+            <li class="nav-item" >
+              <a th:href="@{/employee/job/incomes}"   class="nav-link"
+              >Income</a
+              >
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/employee/job/schedule}" class="nav-link"
+              >Schedule
+              </a
+              >
+            </li>
 
-              <li class="nav-item">
-                <a th:href="@{/employee/job/incomes}" class="nav-link">Income</a>
-              </li>
-            </ul>
+            <li class="nav-item">
+              <a th:href="@{/admin/tasks}" class="nav-link"
+              >Account
+              </a
+              >
+            </li>
 
-          </div>
+            <li class="nav-item">
+
+                <img
+                        class="rounded-5 border me-4"
+                        src="images/customer-example.jpg"
+                        style="
+                           object-fit: cover; width: 60px;
+                           object-position: 25% 25%;"
+                        />
+            </li>
+
+          </ul>
+
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
     <div
       class="container-lg mt-5 d-flex justify-content-center">
       <div

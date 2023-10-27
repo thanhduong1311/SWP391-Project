@@ -10,6 +10,7 @@ import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.mappings.EmployeMapping;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.EmployeeService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ public class EmployeeAccountController {
     private final EmployeeService employeeService;
 
     @GetMapping("/{username}")
-    public String viewAccount(@PathVariable("username") String username, Model model) {
+    public String viewAccount(@PathVariable("username") String username, Model model, HttpSession session) {
 
         EmployeMapping mapper = new EmployeMapping();
 
@@ -34,13 +35,17 @@ public class EmployeeAccountController {
         System.out.println("profile : " + prolife.toString());
         System.out.println("profile dob: " + employeeRepository.findByUsername(username).getDob());
 
+        String s  = (String) session.getAttribute("AccountMessage");
+        session.removeAttribute("AccountMessage");
+        model.addAttribute("AccountMessage",s);
+
         model.addAttribute("profile",prolife);
         return "employee/profile";
     }
 
     @GetMapping("/changePassword")
     public String changePasswordView(Model model,@CookieValue(name = "Token",required = false) String cookieToken,
-                                     @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
+                                     @SessionAttribute(value="SessionToken",required = false) String sessionToken,HttpSession session) {
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
@@ -57,6 +62,10 @@ public class EmployeeAccountController {
         ChangePasswordRequest cr = new ChangePasswordRequest();
         cr.setUsername(emp.getUsername());
 
+        String s  = (String) session.getAttribute("ChangePassMessage");
+        session.removeAttribute("ChangePassMessage");
+        model.addAttribute("ChangePassMessage",s);
+
 
         model.addAttribute("employee",emp);
 
@@ -65,7 +74,7 @@ public class EmployeeAccountController {
     }
 
     @PostMapping("/changePassword")
-    public String changePassword(Model model, ChangePasswordRequest request) {
+    public String changePassword(Model model, ChangePasswordRequest request,HttpSession session) {
 
         System.out.println(request.getUsername());
         System.out.println(request.getOldPassword());
@@ -74,13 +83,17 @@ public class EmployeeAccountController {
 
         MessageOject messageOject = employeeService.changePassword(request);
 
+        session.setAttribute("ChangePassMessage", messageOject.getName()
+                +"#" +messageOject.getMessage());
+
         System.out.println(messageOject.getMessage());
-        return "redirect:/employee/account/" + request.getUsername();
+        return "redirect:/employee/account/changePassword";
     }
 
     @GetMapping ("/edit/{username}")
     public String viewEditProfile(@PathVariable("username") String username,
                                   Model model,
+                                  HttpSession session,
                                   @CookieValue(name = "Token",required = false) String cookieToken,
                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken
     ){
@@ -94,6 +107,7 @@ public class EmployeeAccountController {
             return "error";
         }
 
+
         EmployeMapping mapping = new EmployeMapping();
         EmployeeProlife employeeProfile = mapping.toEmployeeProfile(employeeRepository.findByUsername(uname));
         System.out.println(employeeProfile.toString() );
@@ -101,12 +115,15 @@ public class EmployeeAccountController {
         return "employee/editProfile";
     }
     @PostMapping ("/edit")
-    public String editProfile(Model model, EmployeeProlife request){
+    public String editProfile(Model model, EmployeeProlife request,HttpSession session){
 
         System.out.println("Request: " + request.toString());
 
         MessageOject messageOject = employeeService.updateProfile(request);
 
+
+        session.setAttribute("AccountMessage", messageOject.getName()
+                +"#" +messageOject.getMessage());
         System.out.println(messageOject.getMessage());
 
         return "redirect:/employee/account/" + request.getUsername();

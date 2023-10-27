@@ -10,6 +10,7 @@ import com.demo.homemate.entities.Employee;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.EmployeeService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,8 +53,13 @@ public class EmployeeTaskController {
     }
 
     @GetMapping("/{id}")
-    public String viewJobDetail(Model model, @PathVariable("id") int id) {
+    public String viewJobDetail(Model model, @PathVariable("id") int id, HttpSession session) {
         JobDetail  job = employeeService.viewDetailJob(id);
+
+        String s  = (String) session.getAttribute("JobMessage");
+        session.removeAttribute("JobMessage");
+        model.addAttribute("JobMessage",s);
+
         model.addAttribute("job",job);
         return "employee/jobDetail";
     }
@@ -89,7 +95,7 @@ public class EmployeeTaskController {
     }
 
     @GetMapping("/take/{id}")
-    public  String takeJob(@PathVariable("id") int id, @CookieValue(name = "Token",required = false) String cookieToken,
+    public  String takeJob(@PathVariable("id") int id,HttpSession session, @CookieValue(name = "Token",required = false) String cookieToken,
                            @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
 
         if (cookieToken == null && sessionToken==null) {
@@ -104,12 +110,14 @@ public class EmployeeTaskController {
         MessageOject messageOject = employeeService.takeJob(id,empID);
 
         System.out.println(messageOject.getMessage());
+        session.setAttribute("JobMessage", messageOject.getName()+"#"+messageOject.getMessage());
+
 
         return "redirect:/employee/job/" + id;
     }
 
     @GetMapping("/done/{id}")
-    public  String doneJob(@PathVariable("id") int id, @CookieValue(name = "Token",required = false) String cookieToken,
+    public  String doneJob(@PathVariable("id") int id,HttpSession session, @CookieValue(name = "Token",required = false) String cookieToken,
                            @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
 
         if (cookieToken == null && sessionToken==null) {
@@ -122,6 +130,9 @@ public class EmployeeTaskController {
         int empID = employeeRepository.findByUsername(username).getEmployeeId();
 
         MessageOject messageOject = employeeService.doneJob(id,empID);
+
+        session.setAttribute("JobMessage", messageOject.getName()
+                +"#" +messageOject.getMessage());
 
         System.out.println(messageOject.getMessage());
 
@@ -139,12 +150,18 @@ public class EmployeeTaskController {
     }
 
     @PostMapping("/cancelJob/{id}")
-    public String cancelJob(@PathVariable("id") int id,CreateCancelRequest reason) {
+    public String cancelJob(HttpSession session,@PathVariable("id") int id,CreateCancelRequest reason) {
 
 
         MessageOject messageOject = employeeService.cancelJob(id, reason.getReason());
+
+        session.setAttribute("JobMessage", messageOject.getName()
+        +"#" +messageOject.getMessage());
+
+        System.out.println(messageOject.getName());
+
         System.out.println(messageOject.getMessage());
-        return "redirect:/employee/job/jobList";
+        return "redirect:/employee/job/" + id;
     }
 
 

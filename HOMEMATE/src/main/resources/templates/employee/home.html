@@ -24,6 +24,10 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link
       rel="stylesheet"
       href="assets/css/home.css" />
@@ -45,37 +49,73 @@
     <!-- Header -->
     <header>
       <nav
-        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+              class="navbar navbar-expand-lg bg-body-tertiary fs-4">
         <div class="container">
-          <a class="navbar-brand fs-2" href="#">
-            <icon class="bi-gem"></icon>
-            Homemate
+          <a class="navbar-brand fs-2" href="/employee">
+            <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
           </a>
           <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+                  class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation">
             <span
-              class="navbar-toggler-icon"></span>
+                    class="navbar-toggler-icon"></span>
           </button>
           <div
-            class="collapse navbar-collapse"
-            id="navbarSupportedContent">
+                  class="collapse navbar-collapse"
+                  id="navbarSupportedContent">
             <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    class="navbar-nav mx-auto mb-2 mb-lg-0">
 
+              <li class="nav-item">
+                <a th:href="@{/employee}"  class="nav-link"
+                >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/employee/job/jobList}"  class="nav-link"
+                >Jobs</a
+                >
+              </li>
+              <li class="nav-item" >
+                <a th:href="@{/employee/job/incomes}"   class="nav-link"
+                >Income</a
+                >
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/employee/job/schedule}" class="nav-link"
+                >Schedule
+                </a
+                >
+              </li>
 
+              <li class="nav-item">
+                <a th:href="@{/admin/tasks}" class="nav-link"
+                >Account
+                </a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a th:href="@{/employee/account/{username}(username=${AccountInfo.getUsername()})}">
+
+                  <img
+                          class="rounded-5 border me-4"
+                          src="images/customer-example.jpg"
+                          th:src="*{AccountInfo.getAvatar()}"
+                          style="
+                           object-fit: cover; width: 60px;
+                           object-position: 25% 25%;"
+                          alt="User Image" />
+                </a>
+              </li>
 
             </ul>
-            <a
-              href="/logout"
-              class="btn btn-lg btn-dark"
-              >Log out</a
-            >
+
           </div>
         </div>
       </nav>
@@ -84,23 +124,10 @@
     <main>
       <div
         class="container mt-5 p-5 d-flex align-items-end">
-        <a th:href="@{/employee/account/{username}(username=${AccountInfo.getUsername()})}">
 
-        <img
-          class="rounded-5 border me-4"
-          src="images/customer-example.jpg"
-          th:src="*{AccountInfo.getAvatar()}"
-          style="
-            object-fit: cover;
-            object-position: 25% 25%;
-          "
-          alt="User Image"
-          width="100rem"
-          height="100rem" />
-        </a>
 
-        <h1>Welcome back,</h1>
-        <span class="h1" th:text="*{AccountInfo.getName()}"></span>
+        <h1>Welcome back, </h1>
+        <span class="h1" th:text="*{ ' '+ AccountInfo.getName()}"></span>
       </div>
 
       <div class="bg-secondary p-1 mb-3">
@@ -150,5 +177,19 @@
     </footer>
     <!-- Footer -->
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <div id="toast"></div>
+
+    <script src="/assets/js/toast.js"></script>
+
+    <script src="/assets/js/signupValidation.js"></script>
+
+    <div style="display: none" id="script" th:text="*{LoginMessage}"> </div>
+
+
+    <script >
+      var mes = document .getElementById("script").innerText
+      splitMessase(mes.trim())
+    </script>
   </body>
 </html>

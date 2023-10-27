@@ -7,6 +7,7 @@ import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.EmployeeRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +26,14 @@ public class EmployeeHomeController {
     public String viewEmployeePage(Model model,
                                    HttpServletRequest request,
                                    @CookieValue(name = "Token",required = false) String cookieToken,
-                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken
+                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken,
+                                   HttpSession session
     ){
+
+        String s  = (String) session.getAttribute("LoginMessage");
+        session.removeAttribute("LoginMessage");
+        model.addAttribute("LoginMessage",s);
+
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }

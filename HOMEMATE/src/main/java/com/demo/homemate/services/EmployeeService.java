@@ -255,17 +255,26 @@ public class EmployeeService implements IEmployeeService {
             if(!checkValid) {
                 return new MessageOject("Failed","You can not cancel this job because time is nearly job start time.",null);
             } else  {
-                request.setStatus(RequestStatus.WAITING);
-                request.setJobId(job);
-                request.setEmployeeId(employee);
-                request.setReason(reason);
-                request.setCreateAt(new Date());
-                request.setUpdateAt(new Date());
 
-                employeeRequestRepository.save(request);
+                EmployeeRequest er = employeeRequestRepository.findByJobId(job);
 
-                return new MessageOject("Success","Cancel request is created, please wait the response.",null);
-            }
+                if (er != null) {
+                    return new MessageOject("Failed","You are early request a cancel in this job, please wait for approve.",null);
+                } else {
+                    request.setStatus(RequestStatus.WAITING);
+                    request.setJobId(job);
+                    request.setEmployeeId(employee);
+                    request.setReason(reason);
+                    request.setCreateAt(new Date());
+                    request.setUpdateAt(new Date());
+
+                    employeeRequestRepository.save(request);
+
+                    return new MessageOject("Success","Cancel request is created, please wait the response.",null);
+
+                }
+
+                 }
         } catch (Exception e) {
             return new MessageOject("Error","There some error occur, can not make cancel request",null);
         }
@@ -315,7 +324,7 @@ public class EmployeeService implements IEmployeeService {
                     }
 
                 } else {
-                    return new MessageOject("Failed","You cannot complete the work at this time",null);
+                    return new MessageOject("Warning","You cannot complete the work at this time",null);
                 }
             }
             return new MessageOject("Error", "There some error occur, try again",null);
@@ -505,7 +514,11 @@ public class EmployeeService implements IEmployeeService {
                     employee.setDob(sdf.parse(request.getDob()));
 
                     employee.setFullName(request.getName());
-                    employee.setAvatar(request.getAvatar());
+
+                    if(employee.getAvatar() != request.getAvatar()) {
+                        employee.setAvatar(request.getAvatar());
+
+                    }
                     employee.setPhone(request.getPhone());
                     employee.setAddress_detail(request.getAddress());
                     employee.setCity(request.getCity());
