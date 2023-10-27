@@ -77,7 +77,7 @@ function splitMessase(s) {
         if(sts == 'Success') {
             showSuccesToast(mes)
         }
-        if(sts =='Failed' ) {
+        if(sts =='Failed' || sts == 'Error') {
             showErrorToast(mes)
         }
         if(sts == 'Warning') {

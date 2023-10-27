@@ -1,4 +1,4 @@
-const dobInput = document.getElementById('floatingBirthday');
+const dobInput = document.getElementById('userDob');
 
 dobInput.addEventListener('focusout', function(event) {
     const dob = event.target.value;
@@ -7,16 +7,16 @@ dobInput.addEventListener('focusout', function(event) {
     if (isDateUnderage(dob)) {
         // Display an error message
         const messageDiv = document.getElementById('message');
-        showErrorToast("You must be at least 16 years old to register.")
+        showErrorToast("Invalid age.")
 
         // Disable the submit button
-        const submitButton = document.querySelector('button[type="submit"]');
+        const submitButton = document.querySelector("#saveEdit");
         submitButton.disabled = true;
     } else {
         // Clear the error message and enable the submit button
         const messageDiv = document.getElementById('message');
 
-        const submitButton = document.querySelector('button[type="submit"]');
+        const submitButton = document.querySelector("#saveEdit");
         submitButton.disabled = false;
     }
 });
@@ -30,12 +30,12 @@ function isDateUnderage(dob) {
     const age = today.getFullYear() - dobDate.getFullYear();
 
     // Check if the user is under 16 years old
-    return age < 16;
+    return age <= 18;
 }
 
-const passwordInput = document.getElementById('floatingPassword');
+const passwordInput = document.getElementById('userNewPassword');
 
-passwordInput.addEventListener('focusout', function(event) {
+passwordInput.addEventListener('change', function(event) {
     const password = event.target.value;
 
     // Check if the password meets the requirements
