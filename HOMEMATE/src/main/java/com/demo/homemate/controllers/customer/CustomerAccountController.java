@@ -4,14 +4,15 @@ import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
-import com.demo.homemate.dtos.image.ImageResponse;
-import com.demo.homemate.dtos.notification.MessageObject;
-import com.demo.homemate.entities.Customer;
+import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.entities.Ranking;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.CustomerService;
-import com.demo.homemate.utils.UploadPicture;
+
+import com.demo.homemate.services.RankingService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class CustomerAccountController {
 
     private final CustomerRepository customerRepository;
     private final CustomerService customerService;
+    private final RankingService rankingService;
 
     @GetMapping("/{username}")
     public String viewAccount(@PathVariable("username") String username, Model model) {
@@ -58,8 +60,8 @@ public class CustomerAccountController {
 
     @PostMapping("/changePassword")
     public String changePassword(Model model, ChangePasswordRequest request) {
-        MessageObject messageObject = customerService.changePassword(request);
-        System.out.println(messageObject.getMessage());
+        MessageOject messageOject = customerService.changePassword(request);
+        System.out.println(messageOject.getMessage());
         return "redirect:/customer/account/changePassword";
     }
 
@@ -87,8 +89,16 @@ public class CustomerAccountController {
                               Model model,
                               @RequestParam("txtavatar") MultipartFile multipartFile) throws IOException {
 
-        MessageObject messageObject = customerService.editProfile(UserInfo,multipartFile,"customer");
+        MessageOject messageOject = customerService.editProfile(UserInfo,multipartFile,"customer");
         return "redirect:/customer/account/" + UserInfo.getUsername();
     }
 
+
+    @GetMapping("/rank")
+    public String viewRank() {
+
+        Ranking rank = rankingService.getRank(customerRepository.findById(1));
+        System.out.println(rank.toString() + " absdjhbaskdhbasyudg678wygdukjashgdiastd678yuasgudkjahgsydgasiudas");
+        return "";
+    }
 }

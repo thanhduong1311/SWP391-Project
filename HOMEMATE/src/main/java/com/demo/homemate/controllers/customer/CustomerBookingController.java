@@ -2,7 +2,7 @@ package com.demo.homemate.controllers.customer;
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.job.request.JobRequest;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.payment.PaymentRequest;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.enums.Role;
@@ -96,10 +96,10 @@ public class CustomerBookingController {
                 model.addAttribute("JobRequest", request);
                 model.addAttribute("PaymentRequest",pr);
 
-                MessageObject messageObject = bookingService.createJobWithoutPayment(request);
-                System.out.println(messageObject.getMessage());
+                MessageOject messageOject = bookingService.createJobWithoutPayment(request);
+                System.out.println(messageOject.getMessage());
 
-                if( messageObject.getName().equals("Success")) {
+                if( messageOject.getName().equals("Success")) {
                     return checkOut(model);
 
                 } else {
@@ -107,11 +107,11 @@ public class CustomerBookingController {
                 }
 
         } else {
-          MessageObject messageObject = bookingService.createJob(request);
-            emailService.sendEmail(messageObject.getEmailMessage());
-            System.out.println(messageObject.getMessage());
+          MessageOject messageOject = bookingService.createJob(request);
+            emailService.sendEmail(messageOject.getEmailMessage());
+            System.out.println(messageOject.getMessage());
 
-            if( messageObject.getName().equals("Success")) {
+            if( messageOject.getName().equals("Success")) {
                 return "redirect:/customer";
             } else {
                 return  "redirect:/customer/bookings/form";
@@ -155,16 +155,16 @@ public class CustomerBookingController {
         Customer customer = adminService.getACustomer(id);
 
         if (customer == null) {
-            MessageObject messageObject = new MessageObject("Failed", "There some error occur", null);
-            System.out.println(messageObject.getMessage());
+            MessageOject messageOject = new MessageOject("Failed", "There some error occur", null);
+            System.out.println(messageOject.getMessage());
             return "redirect:/customer/bookings/form";
         } else {
 
-            MessageObject messageObject = bookingService.completeCreateJob(id);
+            MessageOject messageOject = bookingService.completeCreateJob(id);
 
-            emailService.sendEmail(messageObject.getEmailMessage());
+            emailService.sendEmail(messageOject.getEmailMessage());
 
-            System.out.println(messageObject.getMessage());
+            System.out.println(messageOject.getMessage());
 
             return "redirect:/customer";
         }

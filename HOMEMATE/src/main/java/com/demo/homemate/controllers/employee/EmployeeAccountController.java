@@ -5,7 +5,7 @@ import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
 import com.demo.homemate.dtos.employee.response.EmployeeProlife;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.mappings.EmployeMapping;
 import com.demo.homemate.repositories.EmployeeRepository;
@@ -72,9 +72,9 @@ public class EmployeeAccountController {
         System.out.println(request.getNewPassword());
         System.out.println(request.getConfirmPassword());
 
-        MessageObject messageObject = employeeService.changePassword(request);
+        MessageOject messageOject = employeeService.changePassword(request);
 
-        System.out.println(messageObject.getMessage());
+        System.out.println(messageOject.getMessage());
         return "redirect:/employee/account/" + request.getUsername();
     }
 
@@ -105,9 +105,9 @@ public class EmployeeAccountController {
 
         System.out.println("Request: " + request.toString());
 
-        MessageObject messageObject = employeeService.updateProfile(request);
+        MessageOject messageOject = employeeService.updateProfile(request);
 
-        System.out.println(messageObject.getMessage());
+        System.out.println(messageOject.getMessage());
 
         return "redirect:/employee/account/" + request.getUsername();
     }

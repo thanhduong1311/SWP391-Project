@@ -4,7 +4,7 @@ import com.demo.homemate.data.MailContents;
 import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.job.request.JobRequest;
 import com.demo.homemate.dtos.job.response.JobDetail;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.entities.Job;
@@ -42,14 +42,14 @@ public class BookingService implements IJobService {
     private final PaymentService paymentService;
 
     @Override
-    public MessageObject createJob(JobRequest request) {
+    public MessageOject createJob(JobRequest request) {
         try {
 
             Customer customer = customerRepository.findById(request.getCustomerID());
             Service service = serviceRepository.findById(request.getServiceId());
 
             if(customer.getAccountStatus().ordinal() == 1) {
-                return new MessageObject("Failed", "Your account is blocked, can not making this booking", null);
+                return new MessageOject("Failed", "Your account is blocked, can not making this booking", null);
             } else {
                 Job job = new Job();
                 JobTimer jobTimer = new JobTimer();
@@ -76,33 +76,33 @@ public class BookingService implements IJobService {
                 emailDetails.setSubject(mailContents.getTitle());
                 emailDetails.setMsgBody(mailContents.bookingSuccess());
 
-                return new MessageObject("Success","Booking completed",emailDetails);
+                return new MessageOject("Success","Booking completed",emailDetails);
 
             }
         } catch (Exception e) {
-            return new MessageObject("Failed","Can not create booking, try again",null);
+            return new MessageOject("Failed","Can not create booking, try again",null);
         }
     }
 
     @Override
-    public MessageObject updateJob(JobRequest request) {
+    public MessageOject updateJob(JobRequest request) {
         return null;
     }
 
     @Override
-    public MessageObject cancelJob(int jobID) {
+    public MessageOject cancelJob(int jobID) {
         return null;
     }
 
     @Override
-    public MessageObject createJobWithoutPayment(JobRequest request) {
+    public MessageOject createJobWithoutPayment(JobRequest request) {
         try {
 
             Customer customer = customerRepository.findById(request.getCustomerID());
             Service service = serviceRepository.findById(request.getServiceId());
 
             if(customer.getAccountStatus().ordinal() == 1) {
-                return new MessageObject("Failed", "Your account is blocked, can not making this booking", null);
+                return new MessageOject("Failed", "Your account is blocked, can not making this booking", null);
             } else {
                 Job job = new Job();
                 JobTimer jobTimer = new JobTimer();
@@ -117,24 +117,24 @@ public class BookingService implements IJobService {
                 job.setUpdateAt(new Date());
                 jobRepository.save(job);
 
-                return new MessageObject("Success",null,null);
+                return new MessageOject("Success",null,null);
 
             }
         } catch (Exception e) {
-            return new MessageObject("Failed","Can not create booking, try again",null);
+            return new MessageOject("Failed","Can not create booking, try again",null);
         }
     }
 
 
     @Override
-    public MessageObject completeCreateJob(int customerId) {
+    public MessageOject completeCreateJob(int customerId) {
         try {
             Customer customer = customerRepository.findById(customerId);
 
             Job job = jobRepository.findFirstByCustomerIdAndCreateAtDesc(customer);
 
             if(job == null) {
-                return new MessageObject("Failed","There some error when create booking, We will contact to you as soon as possible ",null);
+                return new MessageOject("Failed","There some error when create booking, We will contact to you as soon as possible ",null);
             } else {
                 job.setStatus(JobStatus.AVAILABLE);
                 jobRepository.save(job);
@@ -148,10 +148,10 @@ public class BookingService implements IJobService {
                 emailDetails.setSubject(mailContents.getTitle());
                 emailDetails.setMsgBody(mailContents.bookingSuccess());
 
-                return new MessageObject("Success", "Booking completed", emailDetails);
+                return new MessageOject("Success", "Booking completed", emailDetails);
             }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null);
+            return new MessageOject("Failed",e.getMessage(),null);
         }
     }
 

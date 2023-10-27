@@ -4,7 +4,7 @@ package com.demo.homemate.controllers.customer;
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.feedback.FeedbackRequest;
 import com.demo.homemate.dtos.job.response.JobDetail;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.repositories.CustomerRepository;
@@ -61,7 +61,7 @@ public class CustomerPostController {
             FeedbackRequest feedRequest = new FeedbackRequest();
             JobDetail jobDetail = bookingService.getAJob(jobId);
             if (jobDetail.getStatus() != JobStatus.DONE){
-                MessageObject mo = new MessageObject("Fail","This job hasn't done yet",null);
+                MessageOject mo = new MessageOject("Fail","This job hasn't done yet",null);
                 model.addAttribute("MessageResult",mo);
                 return "redirect:/customer/history";
             }
@@ -88,7 +88,7 @@ public class CustomerPostController {
         String token = cookieToken!=null?cookieToken:sessionToken;
         String username = (String)JWTService.parseJwt(token).get("Username");
 
-        MessageObject mo = customerService.feedback(feedbackInfo,feedbackInfo.getCustomerId());
+        MessageOject mo = customerService.feedback(feedbackInfo,feedbackInfo.getCustomerId());
         model.addAttribute("MessageFeedback",mo);
         return "redirect:/customer/history";
     }

@@ -1,7 +1,7 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.ICustomerReportService;
@@ -78,14 +78,14 @@ public class CustomerReportService implements ICustomerReportService {
     }
 
     @Override
-    public MessageObject deleteReport(int id) {
+    public MessageOject deleteReport(int id) {
         try {
             Report report = reportRepository.findById(id);
             if(report == null) {
-                return new MessageObject("Failed", "Can not delete this report",null);
+                return new MessageOject("Failed", "Can not delete this report",null);
             } else {
                 reportRepository.delete(report);
-                return new MessageObject("Success", "Report is deleted",null);
+                return new MessageOject("Success", "Report is deleted",null);
             }
         } catch (Exception e) {
             throw e;

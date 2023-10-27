@@ -1,6 +1,6 @@
 package com.demo.homemate.dtos.employee.response;
 
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import lombok.*;
 
 @Getter
@@ -18,6 +18,6 @@ public class PartnerResponse {
 
     private int stateCode;
 
-    private MessageObject messageObject;
+    private MessageOject messageOject;
 
 }

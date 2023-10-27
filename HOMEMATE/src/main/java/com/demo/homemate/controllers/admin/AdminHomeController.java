@@ -2,7 +2,7 @@ package com.demo.homemate.controllers.admin;
 
 
 import com.demo.homemate.configurations.JWTService;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.services.AdminService;
 import io.jsonwebtoken.Claims;
@@ -30,20 +30,15 @@ public class AdminHomeController {
                                 @CookieValue(name = "Token",required = false) String cookieToken,
                                 @SessionAttribute(value="SessionToken",required = false) String sessionToken
     ) {
-
         if (model.getAttribute("loginSuccess") == null) {
-            model.addAttribute("loginSuccess", new MessageObject("","",null));
+            model.addAttribute("loginSuccess", new MessageOject("","",null));
         }
 
-        MessageObject messageObject = new MessageObject();
-        messageObject =(MessageObject) session.getAttribute("Message");
+        MessageOject messageOject = new MessageOject();
+        messageOject =(MessageOject) session.getAttribute("Message");
         session.removeAttribute("Message");
 
-        model.addAttribute("loginSuccess", messageObject);
-
-
-
-
+        model.addAttribute("loginSuccess", messageOject);
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
@@ -55,7 +50,7 @@ public class AdminHomeController {
             try {
                 Claims claim = jwt.parseJwt(token);
                 if(claim.getSubject().equals(Role.ADMIN.toString())){
-                    return "admin/dashboard";
+                    return "redirect:/admin/userManagement";
                 }
                 else return "redirect:/home";
             } catch (Exception e) {

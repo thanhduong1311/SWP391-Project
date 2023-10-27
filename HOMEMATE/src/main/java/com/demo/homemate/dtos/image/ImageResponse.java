@@ -1,6 +1,6 @@
 package com.demo.homemate.dtos.image;
 
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -12,5 +12,5 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
     public class ImageResponse {
         private String imgUrl;
-        private MessageObject messageObject;
+        private MessageOject messageOject;
     }

@@ -1,7 +1,7 @@
 package com.demo.homemate.dtos.customer.response;
 
 
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +22,6 @@ public class CustomerResponse {
 
     private int stateCode;
 
-    private MessageObject messageObject;
+    private MessageOject messageOject;
 
 }

@@ -1,7 +1,7 @@
 package com.demo.homemate.utils;
 
 import com.demo.homemate.dtos.image.ImageResponse;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,7 @@ public class UploadPicture {
     public ImageResponse uploadImage(MultipartFile multipartFile, String folderName) throws IOException {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         if (filename==null||filename.isEmpty()){
-            return new ImageResponse("Error", new MessageObject("Error","There is an error in upload process!",null));
+            return new ImageResponse("Error", new MessageOject("Error","There is an error in upload process!",null));
 
         }
         String uploadDir = "src/main/resources/static/assets/images/"+folderName;
@@ -31,14 +31,14 @@ public class UploadPicture {
             Path filePath = uploadPath.resolve(filename);
             System.out.println("filePath:"+filePath.toFile().getAbsolutePath());
             if(Files.exists(filePath)){
-                return new ImageResponse(avatarURL, new MessageObject("Failed","This image is already exist in this folder !",null));
+                return new ImageResponse(avatarURL, new MessageOject("Failed","This image is already exist in this folder !",null));
             }else{
                 Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
-             return new ImageResponse(avatarURL, new MessageObject("Success","Upload image successfully!",null));
+             return new ImageResponse(avatarURL, new MessageOject("Success","Upload image successfully!",null));
             }
 
         }catch(IOException e){
-         return new ImageResponse(null, new MessageObject("Error","There is an error in upload process!",null));
+         return new ImageResponse(null, new MessageOject("Error","There is an error in upload process!",null));
         }
     }
     public String getImageUrl(String url){

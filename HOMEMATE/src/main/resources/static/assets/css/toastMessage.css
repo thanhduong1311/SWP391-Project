@@ -3,6 +3,7 @@
     top: 100px;
     right: 32px;
     transition: linear 0.3s;
+
 }
 
 .toastMessage {
@@ -14,6 +15,8 @@
     padding: 10px 20px;
     border-left: 4px solid;
     margin-bottom: 16px;
+    background-color: #fff;
+
 }
 
 .toastBody {

@@ -1,6 +1,6 @@
 package com.demo.homemate.services;
 
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.services.request.ServiceRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.dtos.services.response.ServiceResponse;
@@ -177,7 +177,7 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public MessageObject addService(ServiceDetailResponse response, String detail) {
+    public MessageOject addService(ServiceDetailResponse response, String detail) {
         ServiceRequest request = new ServiceRequest();
         try {
             request.setServiceId(response.getServiceId());
@@ -194,17 +194,17 @@ public class AdminService implements IAdminService  {
 
 
             if (handelAddNewService(request) == 1) {
-                return new MessageObject("Success", "Add service successfully!",null);
+                return new MessageOject("Success", "Add service successfully!",null);
             }
-            return new MessageObject("Failed", "Add service failed!",null);
+            return new MessageOject("Failed", "Add service failed!",null);
         } catch (Exception e) {
-            return new MessageObject("Error", "Add service error!",null);
+            return new MessageOject("Error", "Add service error!",null);
         }
 
     }
 
     @Override
-    public MessageObject updateService(ServiceDetailResponse request, String detail) {
+    public MessageOject updateService(ServiceDetailResponse request, String detail) {
         try {
             Service service = serviceRepository.findById(request.getServiceId());
             if(service != null) {
@@ -219,175 +219,179 @@ public class AdminService implements IAdminService  {
                         + joinedString;
                 service.setDescription(responseDiscription);
                 serviceRepository.save(service);
-                return new MessageObject("Success","Update service successfully!",null);
+                return new MessageOject("Success","Update service successfully!",null);
             }
-            return new MessageObject("Failed","Update service Failed!",null);
+            return new MessageOject("Failed","Update service Failed!",null);
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null);
+            return new MessageOject("Failed",e.getMessage(),null);
         }
     }
 
     @Override
-    public MessageObject deleteService(int id) {
+    public MessageOject deleteService(int id) {
         try {
             ServiceResponse response= new ServiceResponse();
             Service service = serviceRepository.findById(id);
 
             if (service == null) {
-                return new MessageObject("Failed","Can not find service with ID = " + id,null);
+                return new MessageOject("Failed","Can not find service with ID = " + id,null);
             } else {
                 serviceRepository.delete(service);
                 service = serviceRepository.findById(id);
                 if (service != null) {
-                    return  (new MessageObject("Failed","Can not delete service with ID = " + id,null));
+                    return  (new MessageOject("Failed","Can not delete service with ID = " + id,null));
                 } else {
-                    return (new MessageObject("Success","Service delete successfully!",null));
+                    return (new MessageOject("Success","Service delete successfully!",null));
                 }
             }
         } catch (Exception e) {
-            return (new MessageObject("Success",e.getMessage(),null));
+<<<<<<< HEAD
+            return (new MessageOject("Success",e.getMessage(),null));
+=======
+            return (new MessageOject("Failed",e.getMessage(),null));
+>>>>>>> 827b54b3d6cfb671628fe341b7cad2174ac9b579
         }
 
     }
 
     @Override
-    public MessageObject blockCustomer(int id) {
+    public MessageOject blockCustomer(int id) {
         try {
             Customer customer = customerRepository.findById(id);
 
             if (customer == null) {
-                return new MessageObject("Failed","Can not block this account!",null );
+                return new MessageOject("Failed","Can not block this account!",null );
             }  else {
                 customer.setAccountStatus(AccountStatus.BLOCKED);
                 customerRepository.save(customer);
                 customer = customerRepository.findById(id);
                 if(customer.getAccountStatus().ordinal() == 1) {
-                    return new MessageObject("Success","Account is blocked",null );
+                    return new MessageOject("Success","Account is blocked",null );
                 }
-                return new MessageObject("Failed","Can not block this account!",null );
+                return new MessageOject("Failed","Can not block this account!",null );
             }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null );
+            return new MessageOject("Failed",e.getMessage(),null );
         }
 
     }
 
     @Override
-    public MessageObject unBlockCustomer(int id) {
+    public MessageOject unBlockCustomer(int id) {
         try {
         Customer customer = customerRepository.findById(id);
 
         if (customer == null) {
-            return new MessageObject("Failed","Can not unblock this account!",null );
+            return new MessageOject("Failed","Can not unblock this account!",null );
         }  else {
             customer.setAccountStatus(AccountStatus.ACTIVE);
             customerRepository.save(customer);
             customer = customerRepository.findById(id);
             if(customer.getAccountStatus().ordinal() == 0) {
-                return new MessageObject("Success","Account is unblocked",null );
+                return new MessageOject("Success","Account is unblocked",null );
             } else {
-                return new MessageObject("Failed","Can not unblock this account!",null );
+                return new MessageOject("Failed","Can not unblock this account!",null );
             }
         }
     } catch (Exception e) {
-        return new MessageObject("Failed",e.getMessage(),null );
+        return new MessageOject("Failed",e.getMessage(),null );
     }
     }
 
     @Override
-    public MessageObject deleteCustomer(int id) {
+    public MessageOject deleteCustomer(int id) {
         Customer customer = customerRepository.findById(id);
 
         try {
             if (customer == null) {
-                return new MessageObject("Failed","Can not delete this account!",null );
+                return new MessageOject("Failed","Can not delete this account!",null );
             }  else {
                 customerRepository.delete(customer);
                 customer = customerRepository.findById(id);
                 if(customer == null) {
-                    return new MessageObject("Success","Account is deleted",null );
+                    return new MessageOject("Success","Account is deleted",null );
                 } else {
-                    return new MessageObject("Failed","Can not delete this account!",null );
+                    return new MessageOject("Failed","Can not delete this account!",null );
                 }
             }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null );
+            return new MessageOject("Failed",e.getMessage(),null );
         }
 
 
     }
 
     @Override
-    public MessageObject blockEmployee(int id) {
+    public MessageOject blockEmployee(int id) {
         try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
-            return new MessageObject("Failed","Can not block this account!",null );
+            return new MessageOject("Failed","Can not block this account!",null );
         }  else {
             employee.setAccountStatus(AccountStatus.BLOCKED);
             employeeRepository.save(employee);
             employee = employeeRepository.findById(id);
             if(employee.getAccountStatus().ordinal() == 1) {
-                return new MessageObject("Success","Account is blocked",null );
+                return new MessageOject("Success","Account is blocked",null );
             }
-            return new MessageObject("Failed","Can not block this account!",null );
+            return new MessageOject("Failed","Can not block this account!",null );
         }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null );
+            return new MessageOject("Failed",e.getMessage(),null );
         }
     }
 
     @Override
-    public MessageObject unBlockEmployee(int id) {
+    public MessageOject unBlockEmployee(int id) {
         try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
-            return new MessageObject("Failed","Can not unblock this account!",null );
+            return new MessageOject("Failed","Can not unblock this account!",null );
         }  else {
             employee.setAccountStatus(AccountStatus.ACTIVE);
             employeeRepository.save(employee);
             employee= employeeRepository.findById(id);
             if(employee.getAccountStatus().ordinal() == 0) {
-                return new MessageObject("Success","Account is unblocked",null );
+                return new MessageOject("Success","Account is unblocked",null );
             } else {
-                return new MessageObject("Failed","Can not unblock this account!",null );
+                return new MessageOject("Failed","Can not unblock this account!",null );
             }
         }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null );
+            return new MessageOject("Failed",e.getMessage(),null );
         }
     }
 
     @Override
-    public MessageObject deleteEmployee(int id) {
+    public MessageOject deleteEmployee(int id) {
         try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
-            return new MessageObject("Failed","Can not delete this account!",null );
+            return new MessageOject("Failed","Can not delete this account!",null );
         }  else {
             employeeRepository.delete(employee);
             employee = employeeRepository.findById(id);
             if(employee == null) {
-                return new MessageObject("Success","Account is deleted",null );
+                return new MessageOject("Success","Account is deleted",null );
             } else {
-                return new MessageObject("Failed","Can not delete this account!",null );
+                return new MessageOject("Failed","Can not delete this account!",null );
             }
         }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null );
+            return new MessageOject("Failed",e.getMessage(),null );
         }
     }
 
     @Override
-    public MessageObject approvePartner(int id) {
+    public MessageOject approvePartner(int id) {
         try {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
-            return new MessageObject("Failed","Can not approve this partner!",null );
+            return new MessageOject("Failed","Can not approve this partner!",null );
         }  else {
             employee.setAccountStatus(AccountStatus.ACTIVE);
             employee.setRole(Role.EMPLOYEE);
@@ -399,20 +403,20 @@ public class AdminService implements IAdminService  {
 
 
             if(employee.getAccountStatus().ordinal() == 0 && employee.getRole().ordinal() == 2) {
-                return new MessageObject("Success","Partner is approved",null );
+                return new MessageOject("Success","Partner is approved",null );
             } else {
-                return new MessageObject("Failed","Can not approve this partner!",null );
+                return new MessageOject("Failed","Can not approve this partner!",null );
             }
         }
         } catch (Exception e) {
-            return new MessageObject("Failed",e.getMessage(),null );
+            return new MessageOject("Failed",e.getMessage(),null );
         }
     }
 
     @Override
-    public MessageObject rejectPartner(int id) {
+    public MessageOject rejectPartner(int id) {
         deleteEmployee(id);
-        return new MessageObject("Succes","Partner is rejected",null);
+        return new MessageOject("Succes","Partner is rejected",null);
     }
 
 }

@@ -5,7 +5,7 @@ import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.job.response.CalendarObject;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.PaymentType;
@@ -122,7 +122,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public MessageObject changePassword(ChangePasswordRequest request) {
+    public MessageOject changePassword(ChangePasswordRequest request) {
         try {
             String username = request.getUsername();
             String oldPas = request.getOldPassword();
@@ -132,29 +132,29 @@ public class EmployeeService implements IEmployeeService {
             int check = userService.checkNewChangePassword(username,oldPas,newPasString,confirmPass);
 
             if(check == 0 ) {
-                return new MessageObject("Failed","Username is not exist",null);
+                return new MessageOject("Failed","Username is not exist",null);
             }
             if(check == 1 ) {
-                return new MessageObject("Failed","Not allow password null here",null);
+                return new MessageOject("Failed","Not allow password null here",null);
             }
             if(check == 2) {
-                return new MessageObject("Failed","Old password is incorrect",null);
+                return new MessageOject("Failed","Old password is incorrect",null);
             }
             if(check == 3) {
-                return new MessageObject("Failed","New password at least 6 character and include uppercase, lowercase and special characters",null);
+                return new MessageOject("Failed","New password at least 6 character and include uppercase, lowercase and special characters",null);
             }
             if(check == 4) {
-                return new MessageObject("Failed","New password is not match with confirm password",null);
+                return new MessageOject("Failed","New password is not match with confirm password",null);
             }
             if(check == 5) {
                 Employee employee = employeeRepository.findByUsername(username);
                 employee.setPassword(PasswordMD5.encode(newPasString));
                 employeeRepository.save(employee);
-                return new MessageObject("Success","Change password successfully",null);
+                return new MessageOject("Success","Change password successfully",null);
             }
-            return new MessageObject("Failed","Something went wrong when chaning password",null);
+            return new MessageOject("Failed","Something went wrong when chaning password",null);
         } catch (Exception e) {
-            return new MessageObject("Error",e.getMessage(),null);
+            return new MessageOject("Error",e.getMessage(),null);
         }
     }
 
@@ -164,7 +164,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public MessageObject takeJob(int jobID, int employeeID) {
+    public MessageOject takeJob(int jobID, int employeeID) {
         try {
 
             //GET job and employee, get employee job;
@@ -188,7 +188,7 @@ public class EmployeeService implements IEmployeeService {
 
             // refuse if employee is busy
             if(isBusy) {
-                return new MessageObject("Failed", "You early have job at this time,please check your schedule!", null);
+                return new MessageOject("Failed", "You early have job at this time,please check your schedule!", null);
             }else {
                 if(employee.getAccountStatus().ordinal() != 1) {
                     // check balance;
@@ -216,11 +216,11 @@ public class EmployeeService implements IEmployeeService {
                             employeeRepository.save(employee);
                             jobRepository.save(job);
 
-                            return new MessageObject("Success", "Receive job is successfully!", null);
+                            return new MessageOject("Success", "Receive job is successfully!", null);
 
 
                         } else {
-                            return new MessageObject("Failed", "Your balance is not enough to take this job! Top up your account and try again!", null);
+                            return new MessageOject("Failed", "Your balance is not enough to take this job! Top up your account and try again!", null);
                         }
 
                     } else { // for BANKING
@@ -232,19 +232,19 @@ public class EmployeeService implements IEmployeeService {
                         employeeRepository.save(employee);
                         jobRepository.save(job);
 
-                        return new MessageObject("Success", "Receive job is successfully!", null);
+                        return new MessageOject("Success", "Receive job is successfully!", null);
                     }
                 }else {
-                    return new MessageObject("Failed", "Your account is blocked, can not take job!",null);
+                    return new MessageOject("Failed", "Your account is blocked, can not take job!",null);
                 }
             }
         } catch (Exception e) {
-            return new MessageObject("Error", "There some error when taking job.",null);
+            return new MessageOject("Error", "There some error when taking job.",null);
         }
     }
 
     @Override
-    public MessageObject cancelJob(int JobID, String reason) {
+    public MessageOject cancelJob(int JobID, String reason) {
         try {
             EmployeeRequest request = new EmployeeRequest();
             Job job = jobRepository.findById(JobID);
@@ -253,7 +253,7 @@ public class EmployeeService implements IEmployeeService {
 
             boolean checkValid = timer.checkValidCancel(new Date(),job.getStart());
             if(!checkValid) {
-                return new MessageObject("Failed","You can not cancel this job because time is nearly job start time.",null);
+                return new MessageOject("Failed","You can not cancel this job because time is nearly job start time.",null);
             } else  {
                 request.setStatus(RequestStatus.WAITING);
                 request.setJobId(job);
@@ -264,15 +264,15 @@ public class EmployeeService implements IEmployeeService {
 
                 employeeRequestRepository.save(request);
 
-                return new MessageObject("Success","Cancel request is created, please wait the response.",null);
+                return new MessageOject("Success","Cancel request is created, please wait the response.",null);
             }
         } catch (Exception e) {
-            return new MessageObject("Error","There some error occur, can not make cancel request",null);
+            return new MessageOject("Error","There some error occur, can not make cancel request",null);
         }
     }
 
     @Override
-    public MessageObject doneJob(int JobID, int employeeID) {
+    public MessageOject doneJob(int JobID, int employeeID) {
         try {
             Job job = jobRepository.findById(JobID);
             Employee employee = employeeRepository.findById(employeeID);
@@ -296,7 +296,7 @@ public class EmployeeService implements IEmployeeService {
 
                     if(job.getPaymentType() == PaymentType.CASH) {
                             incomeRepository.save(income);
-                            return new MessageObject("Success", "Job completed, you can check in your income!", null);
+                            return new MessageOject("Success", "Job completed, you can check in your income!", null);
 
                     } else { // for BANKING
                         double inMoney = empBalace+(paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) - paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02);
@@ -311,17 +311,17 @@ public class EmployeeService implements IEmployeeService {
                         employeeRepository.save(employee);
                         incomeRepository.save(income);
 
-                        return new MessageObject("Success", "Job completed, you can check in your income!", null);
+                        return new MessageOject("Success", "Job completed, you can check in your income!", null);
                     }
 
                 } else {
-                    return new MessageObject("Failed","You cannot complete the work at this time",null);
+                    return new MessageOject("Failed","You cannot complete the work at this time",null);
                 }
             }
-            return new MessageObject("Error", "There some error occur, try again",null);
+            return new MessageOject("Error", "There some error occur, try again",null);
 
         } catch (Exception e) {
-            return new MessageObject("Error", "There some error occur, try again",null);
+            return new MessageOject("Error", "There some error occur, try again",null);
         }
     }
 
@@ -495,7 +495,7 @@ public class EmployeeService implements IEmployeeService {
 
     @SneakyThrows
     @Override
-    public MessageObject updateProfile(EmployeeProlife request) {
+    public MessageOject updateProfile(EmployeeProlife request) {
         try {
                 Employee employee = employeeRepository.findByUsername(request.getUsername());
                 if (employee != null) {
@@ -515,11 +515,11 @@ public class EmployeeService implements IEmployeeService {
                     employee.setUpdateAt(new Date());
 
                     employeeRepository.save(employee);
-                    return new MessageObject("Success", "Profile update successfully",null);
+                    return new MessageOject("Success", "Profile update successfully",null);
                 }
 
 
-        return new MessageObject("Failed","Can not update profile",null);
+        return new MessageOject("Failed","Can not update profile",null);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

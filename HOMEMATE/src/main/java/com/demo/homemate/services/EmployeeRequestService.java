@@ -2,7 +2,7 @@ package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.employeeCancelRequest.Response.CancelJobDetail;
 import com.demo.homemate.dtos.employeeCancelRequest.Response.EmployeeCancelJobRequest;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.RequestStatus;
@@ -93,11 +93,11 @@ public class EmployeeRequestService implements IEmployeeRequestService {
     }
 
     @Override
-    public MessageObject apporveRequest(int requestID) {
+    public MessageOject apporveRequest(int requestID) {
        try {
            EmployeeRequest er = employeeRequestRepository.findById(requestID);
            if(er == null) {
-               return new MessageObject("Failed", "Can not approve this request",null);
+               return new MessageOject("Failed", "Can not approve this request",null);
            } else {
                Job job = jobRepository.findById(employeeRequestRepository.findById(requestID).getJobId().getJobId());
                Employee employee = employeeRepository.findById(employeeRequestRepository.findById(requestID).getEmployeeId().getEmployeeId());
@@ -138,7 +138,7 @@ public class EmployeeRequestService implements IEmployeeRequestService {
                er.setStatus(RequestStatus.APPROVED);
                employeeRequestRepository.save(er);
                jobRepository.save(job);
-               return new MessageObject("Success", "Request is approved",null);
+               return new MessageOject("Success", "Request is approved",null);
            }
        } catch (Exception e) {
            throw e;
@@ -146,16 +146,16 @@ public class EmployeeRequestService implements IEmployeeRequestService {
     }
 
     @Override
-    public MessageObject rejectRequest(int requestID) {
+    public MessageOject rejectRequest(int requestID) {
         try {
             EmployeeRequest er = employeeRequestRepository.findById(requestID);
             if(er == null) {
-                return new MessageObject("Failed", "Can not reject this request",null);
+                return new MessageOject("Failed", "Can not reject this request",null);
             } else {
                 er.setDecisionAt(new Date());
                 er.setStatus(RequestStatus.REJECTED);
                 employeeRequestRepository.save(er);
-                return new MessageObject("Success", "Request is rejected",null);
+                return new MessageOject("Success", "Request is rejected",null);
             }
         } catch (Exception e) {
             throw e;
@@ -163,14 +163,14 @@ public class EmployeeRequestService implements IEmployeeRequestService {
     }
 
     @Override
-    public MessageObject deleteRequest(int requestID) {
+    public MessageOject deleteRequest(int requestID) {
         try {
             EmployeeRequest er = employeeRequestRepository.findById(requestID);
             if(er == null) {
-                return new MessageObject("Failed", "Can not delete this request",null);
+                return new MessageOject("Failed", "Can not delete this request",null);
             } else {
                 employeeRequestRepository.delete(er);
-                return new MessageObject("Success", "Request is deleted",null);
+                return new MessageOject("Success", "Request is deleted",null);
             }
         } catch (Exception e) {
             throw e;

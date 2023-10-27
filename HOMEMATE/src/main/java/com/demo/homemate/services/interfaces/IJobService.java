@@ -2,20 +2,20 @@ package com.demo.homemate.services.interfaces;
 
 import com.demo.homemate.dtos.job.request.JobRequest;
 import com.demo.homemate.dtos.job.response.JobDetail;
-import com.demo.homemate.dtos.notification.MessageObject;
+import com.demo.homemate.dtos.notification.MessageOject;
 
 import java.util.List;
 
 public interface IJobService {
-    MessageObject createJob(JobRequest request);
+    MessageOject createJob(JobRequest request);
 
-    MessageObject updateJob(JobRequest request);
+    MessageOject updateJob(JobRequest request);
 
-    MessageObject cancelJob(int jobID) ;
+    MessageOject cancelJob(int jobID) ;
 
-    MessageObject createJobWithoutPayment(JobRequest request);
+    MessageOject createJobWithoutPayment(JobRequest request);
 
-    MessageObject completeCreateJob(int customerId);
+    MessageOject completeCreateJob(int customerId);
 
     List<JobDetail> getCustomerBookings(int customerID);
 
