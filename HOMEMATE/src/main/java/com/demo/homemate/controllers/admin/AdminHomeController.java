@@ -34,8 +34,7 @@ public class AdminHomeController {
             model.addAttribute("loginSuccess", new MessageOject("","",null));
         }
 
-        MessageOject messageOject = new MessageOject();
-        messageOject =(MessageOject) session.getAttribute("Message");
+        MessageOject messageOject =(MessageOject) session.getAttribute("Message");
         session.removeAttribute("Message");
 
         model.addAttribute("loginSuccess", messageOject);

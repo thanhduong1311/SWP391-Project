@@ -107,16 +107,7 @@ public class JWTService {
     }
 
     public static void main(String[] args) {
-String filen = "anh1.png";
-String tenfolder = "customer";
-String tam = "src/main/resources/static/assets/images/";
-        String uploadDir = "src/main/resources/static/assets/images/"+tenfolder;
-        Path uploadPath = Paths.get(uploadDir);
-        Path r = Paths.get(tam);
-        Path filePath = uploadPath.resolve("anh.png");
-        System.out.println("filePath:" + filePath.toFile().getPath());
-        String url=tenfolder+"\\"+filen;
-        System.out.println("url:" + url );
-        System.out.println(r.resolve(url).toFile().getPath());
+String j ="one###two##three###";
+        System.out.println(j.substring(0,j.length()-3));
     }
 }

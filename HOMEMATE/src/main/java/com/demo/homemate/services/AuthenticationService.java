@@ -78,9 +78,6 @@ public class AuthenticationService implements IAuthenticationService {
                    return new AuthenticationResponse().setStateCode(0);
            }
     }
-
-
-
     @Override
     public Optional<Admin> getCurrentAuthenticatedAccount() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -89,11 +86,6 @@ public class AuthenticationService implements IAuthenticationService {
         }
         return Optional.ofNullable(adminRepository.findByUsername(principal.toString()));
     }
-
-
-
-
-
     @Override
     public Optional<String> getCurrentAuthentication() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -105,7 +97,6 @@ public class AuthenticationService implements IAuthenticationService {
         }
         return Optional.of(username);
     }
-
     @Override
     public List<String> getCurrentAuthenticationRoles() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -117,7 +108,6 @@ public class AuthenticationService implements IAuthenticationService {
         }
         return roles;
     }
-
     @Override
     public boolean isAdmin() {
         return getCurrentAuthenticationRoles()

@@ -185,11 +185,17 @@ public class AdminService implements IAdminService  {
             request.setName(response.getName());
             request.setPrice(response.getPrice());
             request.setDiscount(response.getDiscount());
+            String joinedString="";
         String [] listDetail = detail.split("\n");
-            String joinedString = String.join("###", listDetail);
+            for (String eachDetail: listDetail) {
+                if (!eachDetail.isBlank()){
+                    joinedString+=eachDetail.trim()+"###";
+                }
+            }
+
             String responseDiscription = response.getIntro()+">>>>>"
                     + response.getDescription()+">>>>>"
-                    + joinedString;
+                    + joinedString.substring(0,joinedString.length()-3);
             request.setDescription(responseDiscription);
 
 

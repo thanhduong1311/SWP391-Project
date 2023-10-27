@@ -6,6 +6,7 @@ import com.demo.homemate.dtos.auth.request.AuthenticationRequest;
 import com.demo.homemate.dtos.customer.request.RegisterRequest;
 import com.demo.homemate.dtos.employee.request.PartnerRegisterRequest;
 import com.demo.homemate.dtos.email.EmailDetails;
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.password.RecoverPassword;
 import com.demo.homemate.dtos.password.tokenEmailConfirm;
 import com.demo.homemate.entities.Admin;
@@ -23,6 +24,7 @@ import com.demo.homemate.utils.JobTimer;
 import com.demo.homemate.utils.PasswordMD5;
 import com.demo.homemate.utils.PasswordValidate;
 import com.demo.homemate.utils.PhoneValidator;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
@@ -88,7 +90,7 @@ public class UserService implements IUserService {
                 return 2;
             }
         }
-        return -1;
+        return 0;
     }
 
     @Override
@@ -477,5 +479,22 @@ public class UserService implements IUserService {
         } else {
             return false; // username not exist
         }
+    }
+    public MessageOject checkOTPEmail(String rtoken,String code,String email){
+         Claims claim = JWTService.parseJwt(rtoken);
+        //neu co noi dung token
+        if (claim!=null){
+            String emailToken = claim.getSubject();
+            String codeToken = (String) claim.get("tokenConfirm");
+            //kiem tra emai vs code co dung vs token khong ( o email dc set ve readonly truoc do de nguoi dung khong thay doi dc
+            if (emailToken.equals(email) && code.trim().equals(codeToken)){
+               return new MessageOject("Success","Confirm successfully!",null);
+            }else {
+                return new MessageOject("Failed","Wrong OTP! Please enter again!",null);
+            }
+        }else{
+            return new MessageOject("Failed","There are no claims!",null);
+        }
+
     }
 }
