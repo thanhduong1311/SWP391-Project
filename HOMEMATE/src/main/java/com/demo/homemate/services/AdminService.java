@@ -245,7 +245,7 @@ public class AdminService implements IAdminService  {
                 }
             }
         } catch (Exception e) {
-            return (new MessageOject("Success",e.getMessage(),null));
+            return (new MessageOject("Failed",e.getMessage(),null));
         }
 
     }

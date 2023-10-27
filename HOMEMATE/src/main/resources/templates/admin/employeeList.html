@@ -11,6 +11,12 @@
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+
     <style>
       .disabled-link {
         pointer-events: none;
@@ -22,60 +28,54 @@
     <title>Employee List</title>
   </head>
   <body>
-    <header>
-      <nav
-        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-          <a class="navbar-brand fs-2" href="#">
-            <icon class="bi bi-gem"></icon>
-            Homemate
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+  <header>
+    <nav
+            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+      <div class="container">
+        <a class="navbar-brand fs-2" href="/admin/dashboard">
+          <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
+        </a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
             <span
-              class="navbar-toggler-icon"></span>
-          </button>
-          <div
-            class="collapse navbar-collapse"
-            id="navbarSupportedContent">
-            <ul
-                    class="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a th:href="@{/admin/userManagement}" style="font-weight: 500; color:#000" class="nav-link"
-                >Account Manager</a
-                >
-              </li>
-              <li class="nav-item" >
-                <a th:href="@{/admin/services}" class="nav-link"
-                >Service Manager</a
-                >
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/admin/tasks}" class="nav-link"
-                >Task Manager</a
-                >
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link"
-                >Setting</a
-                >
-              </li>
-            </ul>
-            <a
-                    th:href="@{/logout}"
-              class="btn btn-lg btn-dark"
-              >Log out</a
-            >
-          </div>
+                    class="navbar-toggler-icon"></span>
+        </button>
+        <div
+                class="collapse navbar-collapse"
+                id="navbarSupportedContent">
+          <ul
+                  class="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a th:href="@{/admin/userManagement}" style="font-weight: 500; color:#000" class="nav-link"
+              >Account management</a
+              >
+            </li>
+            <li class="nav-item" >
+              <a th:href="@{/admin/services}"   class="nav-link"
+              >Service management</a
+              >
+            </li>
+            <li class="nav-item">
+              <a th:href="@{/admin/tasks}" class="nav-link"
+              >Request management</a
+              >
+            </li>
+          </ul>
+          <a
+                  th:href="@{/logout}"
+                  class="btn btn-lg btn-outline-danger"
+          >Log out</a
+          >
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
     <section
       class="vh-100"
       style="background-color: #eee">
@@ -194,5 +194,24 @@
     </script>
 
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+  <div id="toast"></div>
+
+
+  <script src="/assets/js/toast.js"></script>
+
+
+  <script th:if="${DeleteAccountMessage}">
+    showSuccesToast("Delete account successfully");
+  </script>
+
+  <script th:if="${ApproveMessage}">
+    showSuccesToast("Approve partner successfully");
+  </script>
+
+  <script th:if="${DeleteAccountFailed}">
+    showErrorToast("Delete account failed!");
+  </script>
+
   </body>
 </html>

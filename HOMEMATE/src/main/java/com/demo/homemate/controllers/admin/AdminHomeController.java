@@ -34,20 +34,6 @@ public class AdminHomeController {
                                 @SessionAttribute(value="SessionToken",required = false) String sessionToken
     ) {
 
-        if (model.getAttribute("loginSuccess") == null) {
-            model.addAttribute("loginSuccess", new MessageOject("","",null));
-        }
-
-        MessageOject messageOject = new MessageOject();
-        messageOject =(MessageOject) session.getAttribute("Message");
-        session.removeAttribute("Message");
-
-        model.addAttribute("loginSuccess",messageOject);
-
-
-
-
-
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
@@ -58,7 +44,7 @@ public class AdminHomeController {
             try {
                 Claims claim = jwt.parseJwt(token);
                 if(claim.getSubject().equals(Role.ADMIN.toString())){
-                    return "admin/dashboard";
+                    return "redirect:/admin/userManagement";
                 }
                 else return "redirect:/home";
             } catch (Exception e) {
