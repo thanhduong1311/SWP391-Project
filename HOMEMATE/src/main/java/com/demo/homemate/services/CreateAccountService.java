@@ -46,22 +46,26 @@ public class CreateAccountService {
         } else {
             if(check == 2) {
                 response.setStateCode(0);
-                response.setMessageOject(new MessageOject("Fail", "Username is early exist!",null));
+                response.setMessageOject(new MessageOject("Failed", "Username is early exist!",null));
             }
 
             if (check == 4) {
                 response.setStateCode(0);
-                response.setMessageOject(new MessageOject("Fail", "Phone number is invalid with Vietnamese phone number format!", null));
+                response.setMessageOject(new MessageOject("Failed", "Phone number is invalid with Vietnamese phone number format!", null));
             }
 
             if(check == 3) {
                 response.setStateCode(0);
-                response.setMessageOject(new MessageOject("Fail", "New password is not match with confirm password!",null));
+                response.setMessageOject(new MessageOject("Failed", "Email is early exit!",null));
             }
 
             if(check == 5) {
                 response.setStateCode(0);
-                response.setMessageOject(new MessageOject("Fail", "Email is early exit!",null));
+                response.setMessageOject(new MessageOject("Failed", "New password is not match with confirm password!",null));
+            }
+            if(check == 6) {
+                response.setStateCode(0);
+                response.setMessageOject(new MessageOject("Failed", "Sorry, you age is not enough to register account",null));
             }
             return response;
         }

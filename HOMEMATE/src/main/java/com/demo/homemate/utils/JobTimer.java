@@ -1,6 +1,9 @@
 package com.demo.homemate.utils;
 
+import lombok.SneakyThrows;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class JobTimer {
@@ -121,6 +124,23 @@ public class JobTimer {
         return result;
     }
 
+
+    @SneakyThrows
+    public int checkAge(String dob) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = (sdf.parse(dob));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+
+        Calendar today = Calendar.getInstance();
+        int todayYear = today.get(Calendar.YEAR);
+
+        int age = todayYear - year;
+
+        return age > 16 ? 1 : 0;
+    }
 
 
 }

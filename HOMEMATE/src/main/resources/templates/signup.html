@@ -38,6 +38,11 @@
     <link
       rel="icon"
       href="/docs/5.0/assets/img/favicons/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
     <meta name="theme-color" content="#7952b3" />
     <title>Register | Homemate</title>
     <style>
@@ -57,12 +62,12 @@
     </style>
   </head>
   <body
-    class="text-center animate__animated animate__fadeIn" style="padding: 0">
+    class="text-center " style="padding: 0">
     <main class="form-signin">
       <form th:action="@{/signup}"  th:object="${RequestRegister}"  method="post">
         <img
           class="mb-4"
-          src="../assets/images/Homemate-logo-black.png"
+          src="/assets/images/HomeMate.png"
           alt=""
           width="300px"
           height="180px"
@@ -70,7 +75,6 @@
         <h1 class="h3 mb-3 fw-normal" style="margin: 0 0 5px 0">
           Register
         </h1>
-        <p class="message color-danger" style="color: red" th:text="${UserRegiter.getMessage()}"></p>
 
         <div class="form-input">
           <div class="form-floating">
@@ -79,7 +83,9 @@
               type="text"
               class="form-control"
               id="floatingUsername"
+                    required
               placeholder="name@example.com" />
+
             <label for="floatingUsername"
               >Username</label
             >
@@ -90,13 +96,16 @@
               type="password"
               class="form-control"
               id="floatingPassword"
+                    required
               placeholder="Password" />
+
             <label for="floatingPassword"
               >Password</label
             >
           </div>
           <div class="form-floating">
             <input
+                    required
                     th:field="*{confirmPassword}"
               type="password"
               class="form-control"
@@ -108,6 +117,7 @@
           </div>
           <div class="form-floating">
             <input
+                    required
                     th:field="*{lastName}"
               type="text"
               class="form-control"
@@ -119,6 +129,7 @@
           </div>
           <div class="form-floating">
             <input
+                    required
                     th:field="*{firstName}"
               type="text"
               class="form-control"
@@ -130,6 +141,7 @@
           </div>
           <div class="form-floating">
             <input
+                    required
                     th:field="*{phone}"
               type="text"
               class="form-control"
@@ -141,6 +153,7 @@
           </div>
           <div class="form-floating">
             <input
+                    required
                     th:field="*{email}"
               type="email"
               class="form-control"
@@ -152,6 +165,7 @@
           </div>
           <div class="form-floating">
             <input
+                    required
                     th:field="*{dob}"
               type="date"
               class="form-control"
@@ -182,12 +196,16 @@
       </form>
     </main>
 
-    <script>
-      // Đợi 10 giây trước khi xóa div
-      setTimeout(function () {
-        var messageDiv = document.getElementById('message');
-        messageDiv.parentNode.removeChild(messageDiv);
-      }, 5000);
+    <div id="toast"></div>
+
+    <script src="/assets/js/toast.js"></script>
+
+    <div style="display: none" id="script" th:text="*{SignupMessage}"> </div>
+
+
+    <script >
+      var mes = document .getElementById("script").innerText
+      splitMessase(mes.trim())
     </script>
   </body>
 </html>

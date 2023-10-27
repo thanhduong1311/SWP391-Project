@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -122,14 +122,6 @@
 
     <div id="toast"></div>
 
-    <script>
-    //  Đợi 10 giây trước khi xóa div
-      setTimeout(function () {
-        var messageDiv = document.getElementById('message');
-        messageDiv.parentNode.removeChild(messageDiv);
-      }, 5000);
-
-    </script>
     <script src="/assets/js/toast.js"></script>
 
     <script th:if="${LoginMessage.getName() == 'Failed'}">

@@ -19,6 +19,7 @@ import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IUserService;
+import com.demo.homemate.utils.JobTimer;
 import com.demo.homemate.utils.PasswordMD5;
 import com.demo.homemate.utils.PasswordValidate;
 import com.demo.homemate.utils.PhoneValidator;
@@ -171,10 +172,13 @@ public class UserService implements IUserService {
     @Override
     public int createCustomer(RegisterRequest request) {
 
+        JobTimer jobTimer = new JobTimer();
+
         int checkPhone = checkPhone(request.getPhone());
         int checkEmail = checkEmail(request.getEmail());
         int checkNewPass = checkNewPassword(request.getPassword(), request.getConfirmPassword());
         int checkUsername = checkUsername(request.getUsername());
+        int checkAge = jobTimer.checkAge(request.getDob());
 
 
         if(checkPhone != 0 && checkEmail ==0 && checkNewPass !=0 && checkUsername ==0) {
@@ -200,9 +204,10 @@ public class UserService implements IUserService {
          return  customerRepository.findByUsername(request.getUsername()) != null ? 1:0;
         } else {
             if (checkUsername != 0) return 2;
-            if (checkNewPass ==0 ) return 3;
+            if (checkNewPass ==0 ) return 5;
             if  (checkPhone == 0) return 4;
-            if (checkEmail != 0) return 5;
+            if (checkEmail != 0) return 3;
+//            if(checkAge != 0) return 6;
         }
             return 0;
     }

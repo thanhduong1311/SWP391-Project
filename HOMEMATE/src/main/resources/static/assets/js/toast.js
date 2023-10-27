@@ -67,3 +67,21 @@ function showWaringToast (mes) {
     })
 }
 
+
+function splitMessase(s) {
+
+    if (s != "") {
+        var sts = s.slice(0, s.indexOf("#"));
+        var mes = s.slice(s.indexOf("#") + 1, s.length);
+
+        if(sts == 'Success') {
+            showSuccesToast(mes)
+        }
+        if(sts =='Failed' ) {
+            showErrorToast(mes)
+        }
+        if(sts == 'Warning') {
+            showWaringToast(mes)
+        }
+    }
+}
