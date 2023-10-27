@@ -4,7 +4,6 @@ import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.services.AdminService;
-import com.sun.net.httpserver.Authenticator;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -149,6 +148,7 @@ public class UserManagementController {
 
     // Block customer handle
     @GetMapping("/customer/block/{id}")
+
     public String blockCustomer(@PathVariable("id") int id, Model model,HttpSession session) {
         MessageOject messageOject = adminService.blockCustomer(id);
         System.out.println(messageOject.getMessage());
@@ -165,16 +165,14 @@ public class UserManagementController {
     }
     // delete customer handle
     @GetMapping("/customer/delete/{id}")
+
     public String deleteCustomer(@PathVariable("id") int id, Model model,HttpSession session) {
         MessageOject messageOject = adminService.deleteCustomer(id);
-
         if(messageOject.getName() == "Success") {
             session.setAttribute("DeleteAccountMessage", new MessageOject("Success","Delete account successfully",null));
         }else {
             session.setAttribute("DeleteAccountFailed", new MessageOject("Failed","Delete account failed",null));
-
         }
-
         return "redirect:/admin/userManagement/customers";
     }
 
@@ -188,15 +186,15 @@ public class UserManagementController {
     }
 
     //unblock employee
-    @GetMapping("/employee/unblock/{id}")
+
     public String unblockEmployee(@PathVariable("id") int id, Model model, HttpSession session) {
         MessageOject messageOject = adminService.unBlockEmployee(id);
         session.setAttribute("UnLockAccountMessage", new MessageOject("Success","Unblock account successfully",null));
-
         return "redirect:/admin/userManagement/employee/"+id;
     }
     // delete customer handle
     @GetMapping("/employee/delete/{id}")
+
     public String deleteEmployee(@PathVariable("id") int id, Model model,HttpSession session) {
         MessageOject messageOject = adminService.deleteEmployee(id);
 

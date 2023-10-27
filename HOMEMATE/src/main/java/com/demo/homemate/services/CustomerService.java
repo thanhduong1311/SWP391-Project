@@ -1,7 +1,9 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.dtos.feedback.FeedbackRequest;
+import com.demo.homemate.dtos.image.ImageResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Feedbacks;
@@ -12,10 +14,14 @@ import com.demo.homemate.repositories.FeedbackRepository;
 import com.demo.homemate.repositories.JobRepository;
 import com.demo.homemate.services.interfaces.ICustomerService;
 import com.demo.homemate.utils.PasswordMD5;
+import com.demo.homemate.utils.UploadPicture;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @Slf4j
@@ -30,7 +36,30 @@ public class CustomerService implements ICustomerService {
 
     private final JobRepository jobRepository;
 
+    public CustomerProfileRequest getProfile(String username){
+        CustomerMapping customerMapping = new CustomerMapping();
+        Customer customer = customerRepository.findByUsername(username);
+        return customerMapping.toCustomerProfile(customer);
+    }
+    public MessageOject editProfile(CustomerProfileRequest UserInfo,
+                                    MultipartFile multipartFile,
+                                    String foldername) throws IOException {
+        try {
+            UploadPicture uploadPicture = new UploadPicture();
+            ImageResponse imageResponse = uploadPicture.uploadImage(multipartFile, foldername);
+            CustomerMapping cp = new CustomerMapping();
+            Customer c = customerRepository.findByUsername(UserInfo.getUsername());
+            if (!imageResponse.getMessageOject().getName().equals("Error")) {
+                c.setAvatar(imageResponse.getImgUrl());
+            }
+            c = cp.toCustomerFromCustomerProfile(c, UserInfo);
+            customerRepository.save(c);
+            return new MessageOject("Success","Edit profile successfully!\nInformation may take few second to load on!",null);
+        }catch(Exception e){
+            return new MessageOject("Failed","Fail to edit profile!",null);
 
+        }
+    }
 
     @SneakyThrows
     @Override

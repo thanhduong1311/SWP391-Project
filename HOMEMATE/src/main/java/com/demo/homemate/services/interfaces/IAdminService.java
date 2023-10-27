@@ -1,12 +1,10 @@
 package com.demo.homemate.services.interfaces;
 
+import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.services.request.ServiceRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
-import com.demo.homemate.dtos.services.response.ServiceResponse;
-import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Service;
 
 import java.util.List;
 
@@ -105,14 +103,14 @@ public interface IAdminService {
      * @param request
      * @return
      */
-    public MessageOject addService(ServiceDetailResponse request,String details);
+    public MessageOject addService(ServiceDetailResponse request, String details);
 
     /**
      *  update service
      * @param request
      * @return
      */
-    public MessageOject updateService(ServiceDetailResponse request,String detail);
+    public MessageOject updateService(ServiceDetailResponse request, String detail);
 
 
     /**

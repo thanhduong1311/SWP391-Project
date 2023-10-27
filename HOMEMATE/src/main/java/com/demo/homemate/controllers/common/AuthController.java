@@ -13,7 +13,6 @@ import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.password.RecoverPassword;
 import com.demo.homemate.dtos.password.newPasswordRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
-import com.demo.homemate.entities.Service;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.CreateAccountService;

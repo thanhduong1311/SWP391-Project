@@ -70,6 +70,7 @@ public class TaskController {
     }
 
     @GetMapping("reject/{id}")
+
     public String rejectRequest(@PathVariable("id") int id,HttpSession session) {
         MessageOject ms = employeeRequestService.rejectRequest(id);
         session.setAttribute("RejectMessage", new MessageOject("Success","Delete account successfully",null));
@@ -77,6 +78,7 @@ public class TaskController {
     }
 
     @GetMapping("approve/{id}")
+
     public String apporveRequest(@PathVariable("id") int id,HttpSession session) {
         MessageOject ms = employeeRequestService.apporveRequest(id);
         session.setAttribute("ApproveMessage", new MessageOject("Success","Delete account successfully",null));
@@ -85,6 +87,7 @@ public class TaskController {
 
 
     @GetMapping("delete/{id}")
+
     public String deleteRequest(@PathVariable("id") int id,HttpSession session ) {
         MessageOject ms = employeeRequestService.deleteRequest(id);
         session.setAttribute("DeleteRequestMessage", new MessageOject("Success","Delete account successfully",null));
@@ -99,6 +102,7 @@ public class TaskController {
     }
 
     @GetMapping("deleteReport/{id}")
+
     public String deleteReport(@PathVariable("id") int id,HttpSession session) {
         MessageOject ms = customerReportService.deleteReport(id);
         session.setAttribute("DeleteMessage", new MessageOject("Success","Delete account successfully",null));

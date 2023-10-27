@@ -73,9 +73,11 @@
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5">
               <img
-                class="rounded-circle mt-5"
+                      class="rounded-5 border me-4"
                 width="150px"
-                th:src="*{profile.getAvatar()}" /><span
+                      height="auto"
+                th:src="*{profile.getAvatar()}" />
+              <span
                 class="font-weight-bold"
                  th:text="*{profile.getUsername()}"></span
               >

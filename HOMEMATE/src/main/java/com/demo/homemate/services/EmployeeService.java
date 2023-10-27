@@ -25,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 
 @Slf4j
@@ -165,7 +164,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public MessageOject takeJob(int jobID,int employeeID) {
+    public MessageOject takeJob(int jobID, int employeeID) {
         try {
 
             //GET job and employee, get employee job;

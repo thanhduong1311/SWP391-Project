@@ -1,19 +1,13 @@
 package com.demo.homemate.controllers.admin;
 
-import com.demo.homemate.dtos.services.request.ServiceRequest;
-import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
-import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Service;
-import com.demo.homemate.mappings.ServiceMapper;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.services.AdminService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin/services")
@@ -64,7 +58,7 @@ public class ServiceController {
     // Add service handle
     @PostMapping("/add")
     public String addService(Model model, ServiceDetailResponse request,
-                             @ModelAttribute("txtDetails") String details, HttpSession session) {
+                   @ModelAttribute("txtDetails") String details, HttpSession session) {
         MessageOject messageOject = adminService.addService(request,details);
 
         if(messageOject.getName() == "Success") {
@@ -72,6 +66,7 @@ public class ServiceController {
         } else {
             session.setAttribute("AddServiceFailed", new MessageOject("Failed","",null));
         }
+
         return "redirect:/admin/services";
     }
 
@@ -99,7 +94,7 @@ public class ServiceController {
     //Edit service handle
     @PostMapping("/edit")
     public String editlService(Model model,ServiceDetailResponse request,
-                               @ModelAttribute("txtDetails") String details,HttpSession session) {
+                      @ModelAttribute("txtDetails") String details,HttpSession session) {
         MessageOject messageOject = adminService.updateService(request,details);
 
         System.out.println(messageOject.getMessage() + messageOject.getName());
@@ -115,6 +110,7 @@ public class ServiceController {
 
     // Delete service handle
     @GetMapping("/delete/{id}")
+
     public String deleteService(@PathVariable("id") int id,HttpSession session) {
         MessageOject messageOject =  adminService.deleteService(id);
         System.out.println(messageOject.getName()+messageOject.getMessage());
@@ -124,9 +120,6 @@ public class ServiceController {
         }else {
             session.setAttribute("DeleteServiceFailed", new MessageOject("Success","Block account successfully",null));
         }
-
-
-
         return "redirect:/admin/services";
     }
 

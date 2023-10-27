@@ -7,7 +7,6 @@ import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Income;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.repositories.EmployeeRepository;
 import com.demo.homemate.services.EmployeeService;
