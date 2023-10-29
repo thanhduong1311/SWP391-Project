@@ -40,7 +40,15 @@ for (var i =0;i<dayBtn.length;i++) {
         loadDateEvents(d)
     })
 }
-
+var eventOverView = document.getElementsByClassName("calendar-events");
+for (var i =0;i<eventOverView.length;i++) {
+    eventOverView[i].addEventListener("click",()=>{
+        document.getElementById("activeDate").value =
+            document.getElementsByClassName("day calendar-active")[0].getAttribute("data-date-val")
+        var d = document.getElementById("activeDate").value
+        loadDateEvents(d)
+    })
+}
 
 /// render
 

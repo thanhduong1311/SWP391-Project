@@ -119,9 +119,9 @@
                         <div class="d-md-flex">
                           <div class="ms-md-4 mt-2 mt-lg-0">
                             <!-- text -->
-                            <h5 class="mb-1">
-
-                            </h5>
+                            <div class="mb-1">
+                              <img style="width: 40px" th:src="*{income.getCustomerAvt()}" alt="">
+                            </div>
                             <!-- color -->
                             <span ><b>Service:</b> <span th:text="*{income.getServiceName()}"></span></span>
                             <br>
@@ -134,12 +134,15 @@
 
 
 
-                      <div class="col-md-4 d-grid text-info" th:text="*{income.getDateOfIncome()}"
+                      <div class="col-md-3 d-grid text-info" th:text="*{income.getDateOfIncome()}"
                       ></div>
 
-                      <div class="mt-3 col-md-1 text-success">
-                        <h4 th:text="*{'$'+income.getRealAmount()}"> </h4>
+                      <div class="mt-3 col-md-2 ">
+                        <h4 class="text-success" th:if="${income.getRealAmount() >= 0}" th:text="*{'+$'+income.getRealAmount()}"> </h4>
+                        <h4 class="text-danger" th:if="${income.getRealAmount() < 0}" th:text="*{'-$'+(income.getRealAmount()*-1)}"> </h4>
+
                       </div>
+
 
                     </div>
                   </a>

@@ -1,5 +1,6 @@
 package com.demo.homemate.dtos.job.response;
 
+import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.PaymentType;
 import lombok.*;
 
@@ -14,18 +15,20 @@ public class IncomeDetail {
 
     private int incomeId;
     private String customerName;
+    private String customerAvt;
     private String address;
+
     private String serviceName;
     private double realAmount;
     private double amountFromJob;
     private double commission;
     private String customerPhone;
+    private JobStatus status;
     private Date form;
     private Date to;
     private double totalTime;
     private Date dateOfIncome;
     private PaymentType paymentType;
-
     private String note;
 
 

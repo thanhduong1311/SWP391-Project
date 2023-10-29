@@ -30,12 +30,14 @@ public class UserManagementController {
             model.addAttribute("loginSuccess", new MessageOject("","",null));
         }
 
-        MessageOject messageOject = new MessageOject();
-        String s  = (String) session.getAttribute("Message");
-        session.removeAttribute("Message");
+        String s  = (String) session.getAttribute("LoginMessage");
+        session.removeAttribute("LoginMessage");
+        model.addAttribute("LoginMessage",s);
+
+        System.out.println(s);
 
 
-        model.addAttribute("loginSuccess",messageOject);
+
 
         List<Customer> customerList = adminService.getAllCustomer();
         List<Employee> employeeList = adminService.getAllEmployee();

@@ -57,7 +57,7 @@ public class BookingService implements IJobService {
                 job.setServiceId(service);
                 job.setPaymentType(request.getPaymentType() == 0 ? PaymentType.BANKING:PaymentType.CASH);
                 job.setStart(jobTimer.getTimeStart(request.getTimeStart()));
-                job.setEnd(jobTimer.getTimeEnd(request.getTimeEnd()));
+                job.setEnd(jobTimer.getEndTime(request.getTimeStart(),request.getTimeService()));
                 job.setStatus(JobStatus.AVAILABLE);
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());
@@ -110,7 +110,7 @@ public class BookingService implements IJobService {
                 job.setServiceId(service);
                 job.setPaymentType(request.getPaymentType() == 0 ? PaymentType.BANKING:PaymentType.CASH);
                 job.setStart(jobTimer.getTimeStart(request.getTimeStart()));
-                job.setEnd(jobTimer.getTimeEnd(request.getTimeEnd()));
+               job.setEnd(jobTimer.getEndTime(request.getTimeStart(),request.getTimeService()));
                 job.setStatus(JobStatus.UN_PAY);
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());

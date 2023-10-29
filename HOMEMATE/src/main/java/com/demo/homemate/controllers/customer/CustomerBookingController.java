@@ -48,11 +48,19 @@ public class CustomerBookingController {
         String token=cookieToken!=null?cookieToken:sessionToken;
         JWTService jwt = new JWTService();
 
+        String username = (String) JWTService.parseJwt(token).get("Username");
+        Customer customer =  customerRepository.findByUsername(username);
+
         if (token!=null){
             try {
                 Claims claim = jwt.parseJwt(token);
                 if(claim.getSubject().equals(Role.CUSTOMER.toString())){
-                    model.addAttribute("bookingInfor",new JobRequest());
+                    JobRequest jr = new JobRequest();
+                    jr.setCustomerName(customer.getFullName());
+                    jr.setCustomerPhone(customer.getPhone());
+                    jr.setCustomerAddress(customer.getAddress_detail()+", " +
+                    customer.getDistrict() + ", " + customer.getCity());
+                    model.addAttribute("bookingInfor",jr);
                     model.addAttribute("service", serviceService.getAllServices());
                     return "customer/booking";
                 }
@@ -78,13 +86,14 @@ public class CustomerBookingController {
         String username = (String) JWTService.parseJwt(token).get("Username");
         request.setCustomerID(customerRepository.findByUsername(username).getCustomerId());
 
-        double timeService = paymentService.getTotalTime(request.getTimeStart(),request.getTimeEnd());
-        double rawPrice = paymentService.getTotalMoney(timeService, request.getServiceId());
+        System.out.println("location : "+ request.getLocation());
+
+        double rawPrice = paymentService.getTotalMoney(request.getTimeService(), request.getServiceId());
         long amount = paymentService.convertMoney(rawPrice);
         String serviceName = serviceService.getServiceDetail(request.getServiceId()).getName();
 
         request.setAmount(amount);
-        request.setTimeService(timeService);
+        request.setTimeService(request.getTimeService());
         request.setServiceName(serviceName);
 
         PaymentRequest pr = new PaymentRequest();

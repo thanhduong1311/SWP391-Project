@@ -27,7 +27,7 @@
   <body>
   <header>
     <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+            class="navbar navbar-expand bg-body-tertiary fs-4">
       <div class="container">
         <a class="navbar-brand fs-2" href="/admin/dashboard">
           <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
@@ -171,12 +171,17 @@
 
     <div id="toast"></div>
 
+  <script src="/assets/js/toast.js"></script>
 
-    <script src="/assets/js/toast.js"></script>
+  <script src="/assets/js/signupValidation.js"></script>
+
+  <div style="display: none" id="script" th:text="*{LoginMessage}"> </div>
 
 
-    <script th:if="${loginSuccess}">
-      showSuccesToast("Login Success");
-    </script>
+  <script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+  </script>
+
   </body>
 </html>

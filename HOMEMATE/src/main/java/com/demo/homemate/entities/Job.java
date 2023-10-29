@@ -48,6 +48,8 @@ public class Job {
 
     private Date updateAt;
 
+    private String location;
+
     @OneToOne(mappedBy = "jobId")
     private Income income;
 

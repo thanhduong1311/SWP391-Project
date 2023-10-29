@@ -5,6 +5,7 @@ import com.demo.homemate.dtos.employeeCancelRequest.Response.EmployeeCancelJobRe
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.JobStatus;
+import com.demo.homemate.enums.PaymentType;
 import com.demo.homemate.enums.RequestStatus;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IEmployeeRequestService;
@@ -108,7 +109,7 @@ public class EmployeeRequestService implements IEmployeeRequestService {
                double rawPrice = paymentService.getTotalMoney(totalTime,job.getServiceId().getServiceId());
                double realMoney = rawPrice -rawPrice*0.02;
 
-                if(job.getPaymentType().ordinal() == 0) {
+                if(job.getPaymentType()== PaymentType.BANKING) {
 
                     double money = customer.getBalance() + rawPrice;
 
@@ -120,7 +121,7 @@ public class EmployeeRequestService implements IEmployeeRequestService {
                     customerRepository.save(customer);
                 }
 
-               if(job.getPaymentType().ordinal() == 1) {
+               if(job.getPaymentType()==PaymentType.CASH) {
 
                    double money =employee.getBalance() - rawPrice*0.02;
 

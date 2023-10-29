@@ -285,7 +285,9 @@ public class EmployeeService implements IEmployeeService {
         try {
             Job job = jobRepository.findById(JobID);
             Employee employee = employeeRepository.findById(employeeID);
+            Customer customer = customerRepository.findById(job.getCustomerId().getCustomerId());
 
+            System.out.println(customer.getUsername() + "ádasjndakjndkjasndkjlasndjas");
             if(employee != null) {
                 JobTimer jobTimer = new JobTimer();
                 if(jobTimer.checkDone(job.getEnd(),new Date())) {
@@ -293,10 +295,12 @@ public class EmployeeService implements IEmployeeService {
                     Income income = new Income();
                     income.setEmployeeId(employee);
                     income.setJobId(job);
-                    double time = paymentService.getTotalTime(job.getStart(),job.getEnd());
-                    income.setAmount(paymentService.getTotalMoney(time, job.getServiceId().getServiceId()));
                     income.setCreateAt(new Date());
                     income.setUpdateAt(new Date());
+
+                    double time = paymentService.getTotalTime(job.getStart(),job.getEnd());
+                   // income.setAmount(paymentService.getTotalMoney(time, job.getServiceId().getServiceId()));
+
 
                     double empBalace = employee.getBalance();
                     // Here 0.02 is 2% of commission for each job
@@ -304,6 +308,19 @@ public class EmployeeService implements IEmployeeService {
 
 
                     if(job.getPaymentType() == PaymentType.CASH) {
+
+                            double spend = paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) + customer.getTotalSpend();
+
+                           BigDecimal bd = new BigDecimal(spend);
+                            bd = bd.setScale(4, RoundingMode.HALF_UP);
+                              spend = bd.doubleValue();
+
+                            customer.setTotalSpend(spend);
+                            customerRepository.save(customer);
+
+
+                            income.setAmount(commission*-1);
+                            employeeRepository.save(employee);
                             incomeRepository.save(income);
                             return new MessageOject("Success", "Job completed, you can check in your income!", null);
 
@@ -314,11 +331,27 @@ public class EmployeeService implements IEmployeeService {
                         bd = bd.setScale(4, RoundingMode.HALF_UP);
                         inMoney = bd.doubleValue();
 
+
                         employee.setBalance(inMoney);
-
-
                         employeeRepository.save(employee);
+
+                        double afterDis = (paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) - paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) * 0.02);
+
+                        BigDecimal bd2 = new BigDecimal(afterDis);
+                        bd2 = bd2.setScale(4, RoundingMode.HALF_UP);
+                        afterDis = bd2.doubleValue();
+                        income.setAmount(afterDis);
+
                         incomeRepository.save(income);
+
+                        double spend = paymentService.getTotalMoney(time,job.getServiceId().getServiceId()) + customer.getTotalSpend();
+
+                        BigDecimal bd3 = new BigDecimal(spend);
+                        bd3 = bd3.setScale(4, RoundingMode.HALF_UP);
+                        spend = bd3.doubleValue();
+
+                        customer.setTotalSpend(spend);
+                        customerRepository.save(customer);
 
                         return new MessageOject("Success", "Job completed, you can check in your income!", null);
                     }
@@ -339,21 +372,17 @@ public class EmployeeService implements IEmployeeService {
         try {
             List<IncomeDetail> result = new ArrayList<>();
             List<Income> incomes = incomeRepository.findIncomeByEmployeeId(employeeRepository.findById(employeeID));
-
-
-
             if (incomes != null) {
                 for (Income i : incomes
                      ) {
                     IncomeDetail incDel = new IncomeDetail();
-
+                    Job job = jobRepository.findById(i.getJobId().getJobId());
                     double totalTime = paymentService.getTotalTime(
                             jobRepository.findById(i.getJobId().getJobId()).getStart(),
                             jobRepository.findById(i.getJobId().getJobId()).getEnd());
 
 
-                    double amount =paymentService.getTotalMoney(totalTime,
-                            jobRepository.findById(i.getJobId().getJobId()).getServiceId().getServiceId());
+                    double amount =paymentService.getTotalMoney(totalTime,jobRepository.findById(i.getJobId().getJobId()).getServiceId().getServiceId());
 
 
                     double commission = amount*0.02;
@@ -362,14 +391,7 @@ public class EmployeeService implements IEmployeeService {
                     bd = bd.setScale(2, RoundingMode.HALF_UP);
                     commission = bd.doubleValue();
 
-                    double realAmount = amount - commission;
-
-                    BigDecimal bd2 = new BigDecimal(realAmount);
-                    bd2 = bd2.setScale(2, RoundingMode.HALF_UP);
-                    realAmount = bd2.doubleValue();
-
-
-
+                    incDel.setStatus(job.getStatus());
                     incDel.setIncomeId(i.getIncomeId());
                     incDel.setCustomerName(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getFullName());
                     incDel.setCustomerPhone(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getPhone());
@@ -378,8 +400,8 @@ public class EmployeeService implements IEmployeeService {
                             customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getDistrict() + "," +
                             customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getCity()
                     );
-                    incDel.setRealAmount(realAmount);
-                    incDel.setAmountFromJob(realAmount);
+                    incDel.setRealAmount(i.getAmount());
+                    incDel.setAmountFromJob(amount);
                     incDel.setCommission(commission);
                     incDel.setPaymentType(jobRepository.findById(i.getJobId().getJobId()).getPaymentType());
                     incDel.setTotalTime(totalTime);
@@ -388,6 +410,7 @@ public class EmployeeService implements IEmployeeService {
                     incDel.setDateOfIncome(i.getCreateAt());
                     incDel.setServiceName(jobRepository.findById(i.getJobId().getJobId()).getServiceId().getName());
                     incDel.setNote(i.getNote());
+                    incDel.setCustomerAvt(customerRepository.findById(jobRepository.findById(i.getJobId().getJobId()).getCustomerId().getCustomerId()).getAvatar());
                     result.add(incDel);
                 }
             }
@@ -407,14 +430,14 @@ public class EmployeeService implements IEmployeeService {
             Income i = incomeRepository.findIncomeByIncomeId(incomeId);
 
             IncomeDetail incDel = new IncomeDetail();
-
+            Customer customer =customerRepository.findById(i.getJobId().getCustomerId().getCustomerId());
+            Job job = jobRepository.findById(i.getJobId().getJobId());
             double totalTime = paymentService.getTotalTime(
-                    jobRepository.findById(i.getJobId().getJobId()).getStart(),
-                    jobRepository.findById(i.getJobId().getJobId()).getEnd());
+                    job.getStart(),
+                    job.getEnd());
 
 
-            double amount =paymentService.getTotalMoney(totalTime,
-                    jobRepository.findById(i.getJobId().getJobId()).getServiceId().getServiceId());
+            double amount =paymentService.getTotalMoney(totalTime,jobRepository.findById(i.getJobId().getJobId()).getServiceId().getServiceId());
 
 
             double commission = amount*0.02;
@@ -423,11 +446,8 @@ public class EmployeeService implements IEmployeeService {
             bd = bd.setScale(2, RoundingMode.HALF_UP);
             commission = bd.doubleValue();
 
-            double realAmount = amount - commission;
-
-            BigDecimal bd2 = new BigDecimal(realAmount);
-            bd2 = bd2.setScale(2, RoundingMode.HALF_UP);
-            realAmount = bd2.doubleValue();
+            incDel.setStatus(job.getStatus());
+            incDel.setIncomeId(i.getIncomeId());
 
 
 
@@ -435,12 +455,12 @@ public class EmployeeService implements IEmployeeService {
             incDel.setCustomerName(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getFullName());
             incDel.setCustomerPhone(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getPhone());
             incDel.setAddress(
-                    customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getAddress_detail()+", "+
-                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getDistrict() + "," +
-                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getCity()
+                    customer.getAddress_detail()+", "+
+                            customer.getDistrict() + "," +
+                            customer.getCity()
             );
-            incDel.setRealAmount(realAmount);
-            incDel.setAmountFromJob(realAmount);
+            incDel.setRealAmount(i.getAmount());
+            incDel.setAmountFromJob(amount);
             incDel.setCommission(commission);
             incDel.setPaymentType(jobRepository.findById(i.getJobId().getJobId()).getPaymentType());
             incDel.setTotalTime(totalTime);
@@ -479,16 +499,16 @@ public class EmployeeService implements IEmployeeService {
                         c.setDate(jobTimer.convertDateToString(j.getStart()));
                         schedule += c.toString() + ",";
                     } else {
-//                        CalendarObject c = new CalendarObject();
-//                        c.setId(String.valueOf(j.getJobId()));
-//                        c.setName(j.getServiceId().getName());
-//                        c.setType("holiday");
-//                        c.setDescription(
-//                                j.getStart().getHours() + ":" + j.getStart().getMinutes() +" - "+
-//                                        j.getEnd().getHours() + ":" + j.getEnd().getMinutes() + " " + j.getDescription()
-//                        );
-//                        c.setDate(jobTimer.convertDateToString(j.getStart()));
-//                        schedule += c.toString() + ",";
+                        CalendarObject c = new CalendarObject();
+                        c.setId(String.valueOf(j.getJobId()));
+                        c.setName(j.getServiceId().getName());
+                        c.setType("holiday");
+                        c.setDescription(
+                                j.getStart().getHours() + ":" + j.getStart().getMinutes() +" - "+
+                                        j.getEnd().getHours() + ":" + j.getEnd().getMinutes() + " " + j.getDescription()
+                        );
+                        c.setDate(jobTimer.convertDateToString(j.getStart()));
+                        schedule += c.toString() + ",";
                     }
                 }
                 return schedule.substring(0,schedule.length()-1) + "]";

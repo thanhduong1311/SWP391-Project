@@ -96,13 +96,14 @@ public class AuthController {
                 return "redirect:/home";
             }
         }else {
+            session.setAttribute("SignupMessage","Failed#Username or password is incorrect!");
 //            session.removeAttribute("Login Failed");
-            model.addAttribute("LoginMessage", new MessageOject("Failed","Username or password is incorrect!", null));
-            return loginView(model);
+            model.addAttribute("SignupMessage", new MessageOject("Failed","Username or password is incorrect!", null));
+            return "redirect:/home";
         }
     } else {
         model.addAttribute("LoginMessage", new MessageOject("Failed","Password must contain at least 6 characters!", null));
-        return loginView(model);
+        return "redirect:/home";
     }
 
 
@@ -115,12 +116,18 @@ public class AuthController {
      * @return
      */
     @GetMapping("login")
-    public String loginView(Model model) {
+    public String loginView(Model model,HttpSession session) {
         model.addAttribute("account", new AuthenticationRequest());
 
         if (model.getAttribute("LoginMessage") == null) {
             model.addAttribute("LoginMessage", new MessageOject());
         }
+
+        String s  = (String) session.getAttribute("SignupMessage");
+        session.removeAttribute("SignupMessage");
+        model.addAttribute("SignupMessage",s);
+        System.out.println(s + "gdjhasbdjkhasbdhjabshjdbasd");
+
         return "signin";
     }
 
@@ -151,7 +158,7 @@ public class AuthController {
                 if (claim==null) {return "/login";}
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
-                        session.setAttribute("Message", "Login okkkkkkee");
+                        session.setAttribute("LoginMessage", "Success#Login successfully");
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
@@ -189,17 +196,15 @@ public class AuthController {
         CustomerResponse response = createAccountService.createAccount(request);
         if(response.getStateCode() == 1) {
 
+            String mes = response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage();
+            session.setAttribute("SignupMessage",mes);
 
             emailService.sendEmail(response.getMessageOject().getEmailMessage());
             return "redirect:/login";
         }else {
             model.addAttribute("UserRegiter", response.getMessageOject());
-            if(response.getMessageOject().getName() == "Success") {
-                session.setAttribute("SignupMessage","Success#Register account successfully!");
-            } else {
                 String mes = response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage();
                 session.setAttribute("SignupMessage",mes);
-            }
             return "redirect:/signup";
         }
     }

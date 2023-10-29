@@ -127,5 +127,17 @@
     <script th:if="${LoginMessage.getName() == 'Failed'}">
       showErrorToast("Username or password is incorrect!");
     </script>
+
+
+
+
+
+    <div style="display: none" id="script" th:text="*{SignupMessage}"> </div>
+
+
+    <script >
+      var mes = document .getElementById("script").innerText
+      splitMessase(mes.trim())
+    </script>
   </body>
 </html>
