@@ -8,10 +8,12 @@
     <link
       rel="stylesheet"
       href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/home.css" />
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
       img {
         display: none;
@@ -101,7 +103,7 @@
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5">
               <img
-                      class="rounded-5 border me-4"
+                      class="rounded-5 border me-4 m-auto"
                       width="150px"
                       height="auto"
                 th:src="${UserInfo.getAvatar()}">
@@ -159,16 +161,11 @@
               <div class="row mt-3">
 
 
-                <div class="col-md-6">
-                  <label
-                          class="form-label"
-                          for="txtavatar"
-                  >Avatar<sup
-                          style="color: red"
-                  >(*)</sup
+                <div class="col-md-6 justify-content-center">
+                  <label class="form-label">Avatar<sup style="color: red">(*)</sup
                   ></label>
                   <img th:src="${UserInfo.getAvatar()}" id="avatarPreview" alt="Avatar Preview">
-                  <input hidden id="txtavatar" name ="txtavatar" type="file" class="form-control" accept="image/*" >
+                  <input id="txtavatar" name ="txtavatar" type="file" class="form-control d-none" accept="image/*" >
 
 
                 </div>
@@ -259,23 +256,23 @@
 
       </form>
     </div>
-    <script src="/assets/js/jquery.min.js"></script>
+
+
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript">
-    const inputFile = document.querySelector('#txtavatar');
-    const img = document.querySelector('#avatarPreview');
+    <script type="text/javascript">
+      const inputFile = document.querySelector('#txtavatar');
+      const img = document.querySelector('#avatarPreview');
 
-    inputFile.addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      const url = URL.createObjectURL(file);
+      inputFile.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const url = URL.createObjectURL(file);
 
-      img.src = url;
-    });
-    const originalSrc = img.getAttribute('src');
-
-    document.querySelector('input[type="reset"]').addEventListener('click', function() {
-      img.src = originalSrc;
-    });
-  </script>
+        img.src = url;
+      });
+      const originalSrc = img.getAttribute('src');
+      document.querySelector('input[type="reset"]').addEventListener('click', function() {
+        img.src = originalSrc;
+      });
+    </script>
   </body>
 </html>

@@ -18,7 +18,6 @@ public class UploadPicture {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         if (filename==null||filename.isEmpty()){
             return new ImageResponse("Error", new MessageOject("Error","There is an error in upload process!",null));
-
         }
         String uploadDir = "src/main/resources/static/assets/images/"+folderName;
         String url=folderName+"\\"+filename;
@@ -29,7 +28,7 @@ public class UploadPicture {
         }
         try (InputStream inputStream = multipartFile.getInputStream()){
             Path filePath = uploadPath.resolve(filename);
-            System.out.println("filePath:"+filePath.toFile().getAbsolutePath());
+//            System.out.println("filePath:"+filePath.toFile().getAbsolutePath());
             if(Files.exists(filePath)){
                 return new ImageResponse(avatarURL, new MessageOject("Failed","This image is already exist in this folder !",null));
             }else{

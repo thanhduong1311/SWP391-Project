@@ -34,10 +34,10 @@ public class AdminHomeController {
             model.addAttribute("loginSuccess", new MessageOject("","",null));
         }
 
-        MessageOject messageOject =(MessageOject) session.getAttribute("Message");
+    /*    MessageOject messageOject =(MessageOject) session.getAttribute("Message");
         session.removeAttribute("Message");
 
-        model.addAttribute("loginSuccess", messageOject);
+        model.addAttribute("loginSuccess", messageOject);*/
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";

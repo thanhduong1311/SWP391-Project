@@ -27,7 +27,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.patterns.NotPointcut;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -145,7 +144,7 @@ public class AuthController {
 
             model.getAttribute("User");
             if (cookieToken == null&& sessionToken==null) {
-                return "/customer/home";
+                return "customer-home";
             }else {
                 String token=cookieToken!=null?cookieToken:sessionToken;
                 Claims claim = null;
@@ -157,7 +156,7 @@ public class AuthController {
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
-                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
+                        session.setAttribute("LoginMessage", "Success#Login successfully");
                         return "redirect:/customer";
                     }
                     case "EMPLOYEE" -> {
