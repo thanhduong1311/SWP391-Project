@@ -60,8 +60,10 @@ public class PaymentService implements IPaymentService {
 
     }
 
-
-
+    @Override
+    public double getTotalTime(Date from, double hour) {
+        return 0;
+    }
 
 
     @Override

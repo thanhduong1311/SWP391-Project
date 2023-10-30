@@ -27,131 +27,170 @@
     <link
             rel="stylesheet"
             href="/assets/css/home.css" />
+
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+
+
+    <link rel="stylesheet" href="/assets/css/booking.css">
+
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+
+
     <title>Zun | Homemate</title>
-    <style>
-        body,
-        html {
-            font-family: 'Roboto', sans-serif;
-        }
-        .hover-luaga {
-            transition: all 1s;
-        }
-        .hover-luaga:hover {
-            transform: scale(1.1);
-        }
-    </style>
+
 </head>
 <body class="animate__animated animate__fadeIn">
 <!-- Header -->
-<header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-            <a class="navbar-brand fs-2" href="#">
-                <icon class="bi bi-gem"></icon>
-                Homemate
+<header class="header">
+    <nav id="navBar">
+        <div class="logoNav">
+            <a class="navbar-brand fs-2" href="/guest">
+                <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-            </button>
-            <div
-                    class="collapse navbar-collapse"
-                    id="navbarSupportedContent">
-                <ul
-                        class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a
-                                th:href="@{/customer}"
-                                class="nav-link"
-                        >Home</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                th:href="@{/customer/bookings}"
-                                class="nav-link"
-                        >Booking</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/customer/history}" class="nav-link"
-                        >History</a
-                        >
-                    </li>
-                </ul>
-
-            </div>
         </div>
+
+        <ul
+                class="">
+            <li class="">
+                <a th:href="@{/customer}" class="nav-link"
+                >Home</a
+                >
+            </li>
+            <li class="">
+                <a th:href="@{/customer/bookings/form}" class="nav-link"
+                >Booking</a
+                >
+            </li>
+            <li class="">
+                <a
+                        href="/customer/history"
+                        class="nav-link"
+                >History</a
+                >
+            </li>
+            <li class="d-none">
+                <a href="#price" class="nav-link"
+                ></a
+                >
+            </li>
+            <li class="">
+                <a
+                        th:href="@{/customer}"
+                        class="nav-link"
+                >Reward</a>
+            </li>
+        </ul>
+
+
+        <a th:href="@{/logout}"
+           class="btn btn-lg signBtn"
+           style=""
+        >Log out</a
+        >
     </nav>
 </header>
-
-<main>
+<main id="bookingMain">
 
     <div class="row">
 
         <form class="col-lg-8 mx-auto" method="post" th:action="@{/customer/bookings/boooking}">
-            <h3 class="mb-5 mt-5">BOOKING FORM</h3>
-            <div class="form-group mb-3">
-                <label for="name">Name</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Customer name" readonly>
-            </div>
-            <div class="form-group mb-3">
-                <label for="phoneNumber">Phone number</label>
-                <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Phone number" readonly>
-            </div>
-            <div class="form-group mb-3">
-                <label for="address">Address</label>
-                <input name="address" type="text" class="form-control" id="address" placeholder="Address" readonly>
-            </div>
+            <h3 class="mb-5 mt-5 text-center">BOOKING FORM</h3>
+            <div class="row">
 
-            <div class="row mb-3">
+            <div class="row col-md-6">
+
+            <div class="form-group mb-3 col-md-6">
+                <label for="name">Name</label>
+                <input th:value="*{bookingInfor.getCustomerName()}" name="name" type="text" class="form-control" id="name" placeholder="Customer name" readonly>
+            </div>
+            <div class="form-group mb-3 col-md-6">
+                <label for="phoneNumber">Phone number</label>
+                <input th:value="*{bookingInfor.getCustomerPhone()}" name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Phone number" readonly>
+            </div>
+            <div class="form-group mb-3 col-md-12">
+                <label for="address">Address</label>
+                <input readonly onchange="locate(this.value)" name="address" th:value="*{bookingInfor.customerAddress}"  type="text" class="form-control" id="address" placeholder="Address">
+            </div>
 
                 <div class="form-group mb-3 col-md-6">
                     <label for="start">Start</label>
-                    <input th:field="*{bookingInfor.timeStart}" name="time" type="datetime-local" class="form-control" id="start" placeholder="Time Start">
+                    <input th:field="*{bookingInfor.timeStart}"  name="time" type="datetime-local" class="form-control" id="start" placeholder="Time Start">
                 </div>
+
+
                 <div class="form-group mb-3 col-md-6">
-                    <label for="end">End</label>
-                    <input  th:field="*{bookingInfor.timeEnd}"  name="time" type="datetime-local" class="form-control" id="end" placeholder="Time End">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group mb-3 col-md-6">
-                    <label for="exampleFormControlSelect1">Select Service</label>
-                    <select class="form-control" id="exampleFormControlSelect1"  th:field="*{bookingInfor.serviceId}">
-                        <div th:each="ser:${service}">
-                            <option th:value="*{ser.getServiceId()}" th:text="*{ser.getName()}"></option>
-                        </div>
+                    <label for="forTime">Time service</label>
+                    <select id="forTime" class="form-control" th:field="*{bookingInfor.timeService}">
+                        <option value="0.5">0.5h</option>
+                        <option value="1.0">1h</option>
+                        <option value="1.5">1.5h</option>
+                        <option value="2.0">2h</option>
+                        <option value="2.5">2.5h</option>
+                        <option value="3.0">3h</option>
+                        <option value="3.5">3.5h</option>
+                        <option value="4.0">4.0h</option>
+                        <option value="4.5">4.5h</option>
+                        <option value="5.0">5.0h</option>
+                        <option value="5.5">5.5h</option>
+                        <option value="6.0">6.0h</option>
+                        <option value="6.5">6.5h</option>
+                        <option value="7.0">7.0h</option>
+                        <option value="7.5">7.5h</option>
+                        <option value="8.0">8.0h</option>
+                        <option value="8.5">8.5h</option>
                     </select>
                 </div>
-                <div class="form-group mb-3 col-md-6">
-                    <div class="payment-type">
-                        <p>Payment type</p>
-                       <input name="name" value="0"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="banking">
-                        <label for="banking">Banking</label>
-
-                        <input name="name" value="1"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="cash" >
-                        <label for="cash">Cash</label>
-
+                    <div class=" mb-3 col-md-6">
+                        <label for="exampleFormControlSelect1">Select Service</label>
+                        <select class="form-control" id="exampleFormControlSelect1"  th:field="*{bookingInfor.serviceId}">
+                            <div th:each="ser:${service}">
+                                <option th:value="*{ser.getServiceId()}" th:text="*{ser.getName()}"></option>
+                            </div>
+                        </select>
                     </div>
-                </div>
+                    <div class=" mb-3 col-md-6">
+                        <div class="payment-type">
+                            <p>Payment type</p>
+                            <input name="name" value="0"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="banking">
+                            <label for="banking">Banking</label>
 
-                <div class="form-group mb-3">
-                    <label for="description">Job description</label>
-                    <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
-                </div>
+                            <input name="name" value="1"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="cash" >
+                            <label for="cash">Cash</label>
+
+                        </div>
+                    </div>
+
+                    <div class=" mb-3">
+                        <label for="description">Job description</label>
+                        <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
+                    </div>
+
 
             </div>
 
-            <button type="submit" class="col-md-12 btn btn-primary" >Booking</button>
+                <input style="display: none" type="text" id="loca" th:field="*{bookingInfor.location}">
+
+
+             <div class="col-md-6">
+                 <div style="width: 100%; height: 90%" id="map"></div>
+             </div>
+
+                <button type="submit" id="bookingBtn" class=" row col-md-12 btn" >Booking</button>
+
+            </div>
+
+
+
+
         </form>
     </div>
 </main>
@@ -163,7 +202,34 @@
     </div>
     <!-- Copyright -->
 </footer>
+
+
 <!-- Footer -->
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+<div id="toast"></div>
+
+<script src="/assets/js/toast.js"></script>
+
+<script src="/assets/js/booking.js"></script>
+
+
+<script src="/assets/js/signupValidation.js"></script>
+
+<script src="/assets/js/MapService.js"></script>
+
+<!--<div style="display: none" id="script" th:text="*{SignupMessage}"> </div>-->
+
+
+<script >
+
+    var lo = document.getElementById("address").value
+
+    locate(lo);
+
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+</script>
+
 </body>
 </html>

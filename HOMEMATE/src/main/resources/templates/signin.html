@@ -45,28 +45,14 @@
 
     <meta name="theme-color" content="#7952b3" />
     <title>Log in | Homemate</title>
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
   </head>
   <body
-    class="text-center">
+    class="text-center" id="login-main">
     <main class="form-signin">
       <form th:action="@{/login}" th:object="${account}" method="post" >
         <img
-          class="mb-4"
+          class="mb-4 logo"
           src="/assets/images/HomeMate.png"
           alt=""
           width="300px"
@@ -74,7 +60,7 @@
         <h1 class="h3 mb-3 fw-bold">Sign in</h1>
 
         <div class="form-floating mb-3" >
-          <input  th:field="*{username}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+          <input th:field="*{username}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
           <label for="floatingInput"
             >Username</label
           >
@@ -89,8 +75,9 @@
 
 
         <div class="checkbox mb-3">
-          <label>
+          <label class="lbRemember">
             <input
+
               type="checkbox"
               value="True"
               name = "remember"
@@ -100,19 +87,19 @@
         </div>
 
         <button
-                class="w-100 btn btn-lg btn-outline-dark fw-normal"
+                class="w-100 btn btn-lg btn-outline-dark"
                 type="submit">
           Login
         </button>
-        <small class="mt-1">
-          <a th:href="@{/forgetpassword}"
+        <small  class=" mt-1">
+          <a class="recoverLink" th:href="@{/forgetpassword}"
             >Forgot your password?</a
           >
         </small>
         <br />
-        <small class="mt-1"
+        <small class="mt-1 "
           >If you do not have an account, please
-          <a th:href="@{/signup}">Register</a
+          <a class="regiterLink" th:href="@{/signup}">Register</a
           >.</small
 >
         <p class="mt-5 mb-3 text-muted" ></p>
@@ -124,8 +111,12 @@
 
     <script src="/assets/js/toast.js"></script>
 
-    <script th:if="${LoginMessage.getName() == 'Failed'}">
-      showErrorToast("Username or password is incorrect!");
+
+    <div style="display: none" id="script" th:text="*{SignupMessage}"> </div>
+
+    <script >
+      var mes = document .getElementById("script").innerText
+      splitMessase(mes.trim())
     </script>
   </body>
 </html>

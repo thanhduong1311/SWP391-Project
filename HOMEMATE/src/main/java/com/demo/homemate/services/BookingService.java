@@ -57,7 +57,7 @@ public class BookingService implements IJobService {
                 job.setServiceId(service);
                 job.setPaymentType(request.getPaymentType() == 0 ? PaymentType.BANKING:PaymentType.CASH);
                 job.setStart(jobTimer.getTimeStart(request.getTimeStart()));
-                job.setEnd(jobTimer.getTimeEnd(request.getTimeEnd()));
+                job.setEnd(jobTimer.getEndTime(request.getTimeStart(),request.getTimeService()));
                 job.setStatus(JobStatus.AVAILABLE);
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());
@@ -110,13 +110,12 @@ public class BookingService implements IJobService {
                 job.setServiceId(service);
                 job.setPaymentType(request.getPaymentType() == 0 ? PaymentType.BANKING:PaymentType.CASH);
                 job.setStart(jobTimer.getTimeStart(request.getTimeStart()));
-                job.setEnd(jobTimer.getTimeEnd(request.getTimeEnd()));
+               job.setEnd(jobTimer.getEndTime(request.getTimeStart(),request.getTimeService()));
                 job.setStatus(JobStatus.UN_PAY);
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());
                 job.setUpdateAt(new Date());
                 jobRepository.save(job);
-
                 return new MessageOject("Success",null,null);
 
             }
@@ -124,7 +123,6 @@ public class BookingService implements IJobService {
             return new MessageOject("Failed","Can not create booking, try again",null);
         }
     }
-
 
     @Override
     public MessageOject completeCreateJob(int customerId) {
@@ -138,11 +136,9 @@ public class BookingService implements IJobService {
             } else {
                 job.setStatus(JobStatus.AVAILABLE);
                 jobRepository.save(job);
-
                 MailContents mailContents = new MailContents();
                 mailContents.setSubjectName(customer.getFullName());
                 mailContents.setTitle("[HOMEMATE] BOOKING SUCCESSFULLY");
-
                 EmailDetails emailDetails = new EmailDetails();
                 emailDetails.setRecipient(customer.getEmail());
                 emailDetails.setSubject(mailContents.getTitle());
@@ -154,7 +150,6 @@ public class BookingService implements IJobService {
             return new MessageOject("Failed",e.getMessage(),null);
         }
     }
-
     @SneakyThrows
     @Override
     public List<JobDetail> getCustomerBookings(int customerID) {
@@ -171,6 +166,8 @@ public class BookingService implements IJobService {
                 jobOverView.setEmployeeName(employee == null ? "":employee.getFullName());
                 jobOverView.setStatus(j.getStatus());
                 jobOverView.setJobID(j.getJobId());
+                jobOverView.setEmployeeAvt(employee == null ? "":employee.getAvatar());
+                jobOverView.setJobInCalendar(JobTimer.convertDateToString(j.getStart()));
                 bookings.add(jobOverView);
             }
 

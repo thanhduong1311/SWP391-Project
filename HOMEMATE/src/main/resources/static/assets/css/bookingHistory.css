@@ -1,0 +1,59 @@
+#db-wrapper {
+    margin-top: 120px;
+}
+
+#page-content section{
+    margin-top: 120px;
+}
+
+section {
+    margin: 0 40px;
+}
+
+.empName {
+    color:#ff9b5ce3;
+}
+
+.empAvt {
+    width: 40px;height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ff9b5ce3;
+}
+
+.bookings {
+    cursor: pointer;
+    height: 150px;
+}
+
+.mb-6>.bookings:hover {
+    background-color: #ff9b5c1a ;
+}
+
+.bookinginfor {
+    padding: 5px 0;
+}
+
+.main-booking-detail {
+    margin-top: 120px;
+}
+
+.main-booking-detail .card {
+    border: 2px solid #ff9b5ce3;
+}
+
+.spanDetail {
+    color: #000; font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+}
+
+.feedBackBtn {
+    background-color: #ff9b5ce3;
+    color: #ffff;
+}
+
+.feedBackBtn:hover {
+    transform: scale(1.05);
+    background-color: #ff9b5ce3;
+    color: #ffff;
+}

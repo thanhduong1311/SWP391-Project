@@ -1,26 +1,26 @@
-<h1>NHAM TRANG HOMEPAGE</h1>
 <!--
+<h1>NHAM TRANG HOMEPAGE</h1>
+&lt;!&ndash;
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-  <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-  />
+
+  <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/home.css" />
+  <link rel="stylesheet" href="/assets/css/toastMessage.css">
   <link
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet"
-  />
+          rel="stylesheet"/>
   <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-  <link rel="stylesheet" href="assets/css/home.css" />
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
   <title>Zun | Booking | Homemate</title>
   <style>
     body,
@@ -36,6 +36,7 @@
   </style>
 </head>
 <body class="animate__animated animate__fadeIn">
+<<<<<<< HEAD:HOMEMATE/src/main/resources/templates/customer/oldCUSTOMERHome.html
 &lt;!&ndash; Header &ndash;&gt;
 <header>
   <nav
@@ -44,62 +45,55 @@
       <a class="navbar-brand fs-2" th:href="@{/customer/home}">
         <icon class="bi-gem"></icon>
         Homemate
+=======
+&lt;!&ndash; Header &ndash;&gt;
+<header class="header">
+  <nav id="navBar">
+    <div class="logoNav">
+      <a class="navbar-brand fs-2" href="/guest">
+        <img src="/assets/images/HomeMate.png" alt="" class="logo">
+>>>>>>> 511408786e30e87962e25ec3d1dac254dce10990:HOMEMATE/src/main/resources/templates/customer/customer-homeErr.html
       </a>
-      <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-      </button>
-      <div
-              class="collapse navbar-collapse"
-              id="navbarSupportedContent">
-        <ul
-                class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a
-                    th:href="@{/customer}"
-                    class="nav-link"
-            >Home</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-                    th:href="@{/customer/bookings/form}"
-                    class="nav-link"
-            >Booking</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-                    href="customer-review.html"
-                    class="nav-link"
-            >Review</a
-            >
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/customer/history}" class="nav-link"
-            >History</a
-            >
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link"
-            >Setting</a
-            >
-          </li>
-        </ul>
-        <a
-                href="/logout"
-                class="btn btn-lg btn-dark"
-        >Log out</a
-        >
-      </div>
     </div>
+
+    <ul
+            class="">
+      <li class="">
+        <a th:href="@{/guest}" class="nav-link"
+        >Home</a
+        >
+      </li>
+      <li class="">
+        <a th:href="@{/}" class="nav-link"
+        >About</a
+        >
+      </li>
+      <li class="">
+        <a
+                href="#service"
+                class="nav-link"
+        >Service</a
+        >
+      </li>
+      <li class="d-none">
+        <a href="#price" class="nav-link"
+        >Price</a
+        >
+      </li>
+      <li class="">
+        <a
+                th:href="@{/partnerRegister}"
+                class="nav-link"
+        >Become Maid</a>
+      </li>
+    </ul>
+
+
+    <a th:href="@{/login}"
+       class="btn btn-lg signBtn"
+       style=""
+    >Sign In</a
+    >
   </nav>
 </header>
 
@@ -146,7 +140,7 @@
           <div th:each="service,state: ${services}">
             <th:block th:if="${state.index % 3 ==0}">
               <div th:class="${state.first}? 'carousel-item row active':'carousel-item row'" >
-                <div class="row d-md-flex mt-5 col-11 m-auto bg-secondary">
+                <div class="row d-md-flex mt-5 col-11 m-auto">
                   <div class="col-md-4" th:each="i: ${#numbers.sequence(state.index,((state.index + 2)>=(state.size+(-1))? state.size+(-1):(state.index + 2)))}">
 
                     <div class="shadow-lg rounded-5">
@@ -200,22 +194,28 @@
   </div>
 </main>
 
+<<<<<<< HEAD:HOMEMATE/src/main/resources/templates/customer/oldCUSTOMERHome.html
 &lt;!&ndash; Footer &ndash;&gt;
+=======
+<div id="toast"></div>
+
+&lt;!&ndash; Footer &ndash;&gt;
+>>>>>>> 511408786e30e87962e25ec3d1dac254dce10990:HOMEMATE/src/main/resources/templates/customer/customer-homeErr.html
 <footer class="text-center text-dark">
   <div class="text-center p-3">© 2023 Homemade</div>
   &lt;!&ndash; Copyright &ndash;&gt;
 </footer>
+<<<<<<< HEAD:HOMEMATE/src/main/resources/templates/customer/oldCUSTOMERHome.html
 &lt;!&ndash; Footer &ndash;&gt;
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <div id="toast"></div>
 
+=======
+&lt;!&ndash; Footer &ndash;&gt;
+<div style="display: none" id="script" th:text="${LoginMessage}"> </div>
+>>>>>>> 511408786e30e87962e25ec3d1dac254dce10990:HOMEMATE/src/main/resources/templates/customer/customer-homeErr.html
 <script src="/assets/js/toast.js"></script>
-
-<script src="/assets/js/signupValidation.js"></script>
-
-<div style="display: none" id="script" th:text="${Login}"> </div>
-
-
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
 <script >
   var mes = document .getElementById("script").innerText
   splitMessase(mes.trim())
@@ -223,4 +223,5 @@
 
 </body>
 </html>
+&ndash;&gt;
 -->

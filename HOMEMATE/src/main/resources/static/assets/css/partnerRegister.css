@@ -1,0 +1,23 @@
+body {
+    margin-top: 100px;
+}
+
+body #main {
+    margin: 0 auto;
+    background-color: #ff914d17;
+}
+
+h3 {
+    color: #ffa66e;
+}
+
+.form-input .row label {
+    top: -3px;
+    left: 10px;
+    background-color: transparent;
+}
+
+.major {
+    top: -3px;
+    left: 10px;
+}

@@ -5,6 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link
+          rel="stylesheet"
+          href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/home.css">
+  <link rel="stylesheet" href="/assets/css/bookingHistory.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <style>
     .disabled-link {
@@ -15,35 +20,52 @@
 </head>
 
 <body>
-<header>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-    <div class="container">
-      <a class="navbar-brand fs-2" href="#">
-        <icon class="bi bi-gem"></icon>
-        Homemate
+<header class="header">
+  <nav id="navBar">
+    <div class="logoNav">
+      <a class="navbar-brand fs-2" href="/guest">
+        <img src="/assets/images/HomeMate.png" alt="" class="logo">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a th:href="@{/customer}" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/customer/bookings/form}" class="nav-link">Booking</a>
-          </li>
-
-          <li class="nav-item">
-            <a th:href="@{/customer/history}" class="nav-link">History</a>
-          </li>
-
-        </ul>
-
-      </div>
     </div>
+
+    <ul
+            class="">
+      <li class="">
+        <a th:href="@{/customer}" class="nav-link"
+        >Home</a
+        >
+      </li>
+      <li class="">
+        <a th:href="@{/customer/bookings/form}" class="nav-link"
+        >Booking</a
+        >
+      </li>
+      <li class="">
+        <a
+                href="/customer/history"
+                class="nav-link"
+        >History</a
+        >
+      </li>
+      <li class="d-none">
+        <a href="#price" class="nav-link"
+        ></a
+        >
+      </li>
+      <li class="">
+        <a
+                th:href="@{/customer}"
+                class="nav-link"
+        >Reward</a>
+      </li>
+    </ul>
+
+
+    <a th:href="@{/logout}"
+       class="btn btn-lg signBtn"
+       style=""
+    >Log out</a
+    >
   </nav>
 </header>
 <!-- Wrapper -->
@@ -51,7 +73,7 @@
   <!-- Page Content -->
   <main id="page-content ">
     <!-- Container fluid -->
-    <section class="container shadow-lg mt-5 bg-light p-3 rounded">
+    <section class=" shadow-lg mt-5 bg-light p-3 rounded">
       <!-- row -->
       <div class="row">
         <div class="col">
@@ -60,33 +82,39 @@
             <!-- card body-->
             <div th:if="${bookings.size() != 0}" class="card-body">
               <div class="mb-6">
-                <h4 class="mb-0">
-                  Your Booking
-                </h4>
-                <p>
-                  Check the status of recent
-                  services, manage cancel.
-                </p>
+                <div>
+                  <h4 class="mb-0">
+                    Your Booking
+                  </h4>
+                  <p>
+                    Check the status of recent
+                    services, manage cancel.
+                  </p>
+                </div>
+
+
+
               </div>
               <div class="mb-6">
                 <!-- text -->
 
-                <div th:each="booking:${bookings}" style="cursor: pointer">
+                <div th:each="booking:${bookings}" class="bookings">
                   <hr class="my-3" />
                   <a class="mb-6" style="text-decoration: none; color: #000" th:href="@{/customer/history/detailBooking/{id}(id=${booking.getJobID()})}">
                     <!-- row -->
                     <div class="row justify-content-between align-items-center">
-                      <div class="col-lg-8 col-12">
+                      <div class="col-lg-6 col-12">
                         <div class="d-md-flex">
-                          <div class="ms-md-4 mt-2 mt-lg-0">
+                          <div class="ms-md-4 mt-2 mt-lg-0 bookinginfor">
                             <!-- text -->
-                            <h5 class="mb-1" th:text="*{booking.getServiceName()}">
+                            <h4 class="mb-1 empName" th:text="*{booking.getServiceName()}">
 
-                            </h5>
+                            </h4>
                             <!-- color -->
-                            <span th:if="${booking.getEmployeeName() != ''}">Maid:
+                            <div th:if="${booking.getEmployeeName() != ''}">
+                              <img class="empAvt" th:src="*{booking.getEmployeeAvt()}" alt="">
                                                                 <span th:text="*{booking.getEmployeeName()}"></span>
-                                                            </span>
+                                                            </div>
                             <!-- text -->
                             <div class="mt-3">
                               <h4 th:text="'$' +*{booking.getPrice()}"> </h4>
@@ -94,14 +122,19 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg-3 col-12 d-grid text-info"
+
+                      <div class="col-lg-3 col-12 text-center bookinginfor" th:text="*{booking.getJobInCalendar()}"></div>
+
+                      <div class="col-lg-3 col-12 d-grid text-info text-center bookinginfor"
                            th:if="*{booking.getStatus().ordinal() == 0}">PROCESSING</div>
-                      <div class="col-lg-3 col-12 d-grid text-warning"
-                           th:if="*{booking.getStatus().ordinal() == 1}">IN_PROGRESS</div>
-                      <div class="col-lg-3 col-12 d-grid text-success"
+                      <div class="col-lg-3 col-12 d-grid text-warning text-center bookinginfor"
+                           th:if="*{booking.getStatus().ordinal() == 1} ">IN_PROGRESS</div>
+                      <div class="col-lg-3 col-12 d-grid text-success text-center bookinginfor"
                            th:if="*{booking.getStatus().ordinal() == 2}">COMPLETED</div>
-                      <div class="col-lg-3 col-12 d-grid text-danger"
+                      <div class="col-lg-3 col-12 d-grid text-danger text-center bookinginfor"
                            th:if="*{booking.getStatus().ordinal() == 3}">CANCELED</div>
+                      <div class="col-lg-3 col-12 d-grid text-danger text-center bookinginfor"
+                           th:if="*{booking.getStatus().ordinal() == 4}"></div>
                     </div>
                   </a>
 
@@ -125,6 +158,8 @@
   <!-- Copyright -->
 </footer>
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
 
 </html>

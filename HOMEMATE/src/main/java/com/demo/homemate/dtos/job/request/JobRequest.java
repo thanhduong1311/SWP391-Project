@@ -15,15 +15,20 @@ import java.util.Date;
 public class JobRequest {
 
     private int CustomerID;
+    private String CustomerName;
+    private String CustomerPhone;
+    private String CustomerAddress;
+
     private String jobDescription;
     private Date date ;
     private String timeStart;
-    private String timeEnd;
     private int serviceId;
     private int paymentType;
     private int paymentMethod;
     private double timeService;
     private long amount;
     private String serviceName;
+
+    private String location;
 
 }

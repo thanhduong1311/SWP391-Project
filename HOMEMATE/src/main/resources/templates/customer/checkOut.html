@@ -27,6 +27,8 @@
     <link
             rel="stylesheet"
             href="/assets/css/home.css" />
+
+    <link rel="stylesheet" href="/assets/css/booking.css">
     <title>Zun | Homemate</title>
     <style>
         body,
@@ -43,55 +45,57 @@
 </head>
 <body class="animate__animated animate__fadeIn">
 <!-- Header -->
-<header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-            <a class="navbar-brand fs-2" href="#">
-                <icon class="bi-gem"></icon>
-                Homemate
+<header class="header" >
+    <nav id="navBar">
+        <div class="logoNav">
+            <a class="navbar-brand fs-2" href="/guest">
+                <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-            </button>
-            <div
-                    class="collapse navbar-collapse"
-                    id="navbarSupportedContent">
-                <ul
-                        class="navbar-nav mx-auto mb-2 mb-lg-0"></ul>
-                <a
-                        th:href="@{/logout}"
-                        class="btn btn-lg btn-dark"
-                >Log out</a
-                >
-            </div>
         </div>
+
+        <ul
+                class="">
+            <li class="d-none">
+                <a th:href="@{/customer}" class="nav-link"
+                >Home</a
+                >
+            </li>
+            <li class="d-none">
+                <a th:href="@{/customer/bookings/form}" class="nav-link"
+                >Booking</a
+                >
+            </li>
+            <li class="d-none">
+                <a
+                        href="/customer/history"
+                        class="nav-link"
+                >History</a
+                >
+            </li>
+            <li class="d-none">
+                <a href="#price" class="nav-link"
+                ></a
+                >
+            </li>
+            <li class="d-none">
+                <a
+                        th:href="@{/customer}"
+                        class="nav-link"
+                >Reward</a>
+            </li>
+        </ul>
+
+
+        <a th:href="@{/logout}"
+           class="btn btn-lg signBtn d-none"
+           style=""
+        >Log out</a
+        >
     </nav>
 </header>
 
-<main>
-    <div
-        class="container mt-5 p-5 d-flex align-items-end">
-        <img
-                class="rounded-5 border me-4"
-                src="/assets/images/defaultUser.png"
-                style="
-            object-fit: cover;
-            object-position: 25% 25%;
-          "
-                alt="User Image"
-                width="100rem"
-                height="100rem" />
-        <h1>Welcome back,</h1>
-    </div>
+<main class="main-check-out">
+
     <div class="row">
 <!--        th:action="@{/customer/checoutWithPayment/{price}(price=${PaymentRequest.getPrice()})}"-->
         <form method="post" th:action="@{/customer/bookings/checkOutWithPayment}">
@@ -103,26 +107,24 @@
                         <h4 class="text-center mb-4">Total payment: <b th:text="*{JobRequest.getAmount()  + ' VND'} "></b></h4>
                         <input type="hidden"  name="amount"  th:field="*{PaymentRequest.amount} "/>
                         <input type="hidden" name="customerID" th:field="*{PaymentRequest.customerID}">
-                        <h5 class="text-start me-auto">Choose your payment methods</h5>
+                        <h5 class="text-start me-auto text-center">Choose your payment methods</h5>
                     </div>
 
                     <div class="paymentMethod">
-                        <div>
-                            <div class="momo-radio"><label class="label" for="momoPay"><img
+                        <div  class="method">
+                            <div class="momo-radio">
+                                <label class="label" for="momoPay"><img
                                     src="https://test-payment.momo.vn/v2/gateway/images/logo-momo-3b8deb874c6d3b77f976f35310d8e50a.png"
                                     alt="captureWallet" class="image">
-                                <div style="overflow:hidden">
-                                    <div class="label-title" style="white-space:nowrap">Ví MoMo</div>
-                                </div>
-                            </label><input id="momoPay" type="radio" th:field="*{PaymentRequest.paymentType}" name="paymentMethod" value="captureWallet" checked></div>
+                                <span>Momo e-wallet</span>
+                            </label>
+                                <input id="momoPay" type="radio"  th:field="*{PaymentRequest.paymentType}" name="paymentMethod" value="captureWallet" checked></div>
                         </div>
-                        <div>
+                        <div  class="method">
                             <div class="momo-radio "><label class="label" for="atmPay"><img
                                     src="https://test-payment.momo.vn/v2/gateway/images/credit/atm-a2eaf925d65062641bdef898d3cc0fe8.svg"
                                     alt="payWithATM" class="image">
-                                <div style="overflow:hidden">
-                                    <div class="label-title" style="white-space:nowrap">Thẻ ATM nội địa</div>
-                                </div>
+                                <span>ATM</span>
                             </label><input id="atmPay" type="radio" name="paymentMethod"  th:field="*{PaymentRequest.paymentType}" value="payWithATM"></div>
                         </div>
                     </div>
@@ -131,9 +133,9 @@
                     <div class="ticket-norch"></div>
                     <div class="ticket-norch ticket-norch-right"></div>
                 </div>
-                <div class="ticket-body">
+                <div class="ticket-body text-center">
                     <div>
-                        <button class="btn-momo active">Pay now</button>
+                        <button class="btn-momo active btnpay">Pay now</button>
                     </div>
                 </div>
             </div>
@@ -143,7 +145,7 @@
 </main>
 
 <!-- Footer -->
-<footer class="text-center text-dark">
+<footer class="text-center text-dark footerBooking-detail">
     <div class="text-center p-3">
         © 2023 Homemade
     </div>

@@ -26,109 +26,81 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link
             rel="stylesheet"
-            href="../assets/css/home.css" />
+            href="/assets/css/home.css" />
 
     <link rel="stylesheet" href="/assets/css/toastMessage.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
     <title>Home | Homemate</title>
-    <style>
-        .hover-luaga {
-            transition: all 1s;
-        }
-        .hover-luaga:hover {
-            transform: scale(1.1);
-        }
-    </style>
+
 </head>
 <body class="animate__animated animate__fadeIn">
 <!-- Header -->
-<header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-            <a class="navbar-brand fs-2" href="#">
-                <icon class="bi-gem"></icon>
-                Homemate
+<header class="header">
+    <nav id="navBar">
+        <div class="logoNav">
+            <a class="navbar-brand fs-2" href="/guest">
+                <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-            </button>
-            <div
-                    class="collapse navbar-collapse"
-                    id="navbarSupportedContent">
+        </div>
+
                 <ul
-                        class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                        class="">
+                    <li class="">
                         <a th:href="@{/guest}" class="nav-link"
                         >Home</a
                         >
                     </li>
-                    <li class="nav-item">
+                    <li class="">
                         <a th:href="@{/}" class="nav-link"
                         >About</a
                         >
                     </li>
-                    <li class="nav-item">
+                    <li class="">
                         <a
                                 href="#service"
                                 class="nav-link"
                         >Service</a
                         >
                     </li>
-                    <li class="nav-item">
+                    <li class="d-none">
                         <a href="#price" class="nav-link"
                         >Price</a
                         >
                     </li>
-                    <li class="nav-item">
+                    <li class="">
                         <a
                                 th:href="@{/partnerRegister}"
                                 class="nav-link"
                         >Become Maid</a>
                     </li>
                 </ul>
-                <a
-                        th:href="@{/login}"
-                        class="btn btn-lg btn-dark"
-                        style=""
-                >Sign In</a
-                >
 
-<!--                <div style="height: 100%; display: flex; justify-content: center;align-items: center;" >-->
-<!--                    <img th:src="*{Userinfor.getAvatar()}"  th:alt="*{Userinfor.getUsername()}"-->
-<!--                         style="width: 60px;height: 60px; border-radius: 50%; border: 1px solid #000;margin: auto 0;">-->
-<!--                    <p style="margin: 0 10px; font-weight: 500;"  th:value="${Userinfor.getUsername()}"></p>-->
-<!--                </div>-->
-            </div>
-        </div>
+
+            <a th:href="@{/login}"
+                    class="btn btn-lg signBtn"
+                    style=""
+            >Sign In</a
+            >
     </nav>
 </header>
 
-<main>
+<main class="text-center">
     <header>
         <!-- Image header -->
         <div
                 class="card mb-3"
                 style="max-width: 100%">
-            <div class="row g-0">
-                <div class="col-xl-7">
+            <div class="row bodyIntro">
+                <div class="col-md-7">
                     <img
                             src="../assets/images/start-home-img.jpg"
                             class="img-fluid rounded-start rounded-end w-100"
                             alt="..." />
                 </div>
                 <div
-                        class="col-xl-4 d-flex align-items-center">
+                        class="col-md-5 d-flex align-items-center">
                     <div class="card-body">
                         <h5 class="card-title h1">
                             Phục vụ theo giờ Homemate
@@ -151,7 +123,7 @@
                         </p>
                         <a
                                 class="btn mt-4 btn-lg btn-outline-dark"
-                                href="#">
+                                href="/guest">
                             Tìm hiểu thêm
                         </a>
                     </div>
@@ -161,9 +133,8 @@
     </header>
 
     <!-- Info -->
-    <div
-            class="container border p-5 rounded-3 mt-5 shadow-lg"
-            id="about">
+    <div  class="border shadow-lg"
+            id="aboutHome">
         <h2>
             Homemate giải pháp phục vụ theo giờ hiệu
             quả
@@ -214,8 +185,7 @@
         </p>
     </div>
 
-    <div
-            class="mt-5 container px-4 py-5"
+    <div  class="mt-5 px-4 py-5 reasonIntro"
             id="featured-3">
         <h2 class="pb-2 border-bottom">
             Lý do để bạn chọn Homemate
@@ -328,42 +298,33 @@
     </div>
 
     <div
-            class="container mt-5 mb-5"
+            class=" topService mt-5 mb-5"
             id="service">
         <div class="text-center">
             <h2>Chúng tôi sẽ phục bạn</h2>
         </div>
         <hr />
 
-
-
-
         <div id="carouselExampleCaptions" class="carousel slide">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
             <div class="carousel-inner">
                     <div th:each="service,state: ${services}">
                         <th:block th:if="${state.index % 3 ==0}">
                             <div th:class="${state.first}? 'carousel-item row active':'carousel-item row'" >
-                                <div class="row d-md-flex mt-5 col-11 m-auto bg-secondary">
+                                <div class="row d-md-flex mt-5 col-11 m-auto ">
                                     <div class="col-md-4" th:each="i: ${#numbers.sequence(state.index,((state.index + 2)>=(state.size+(-1))? state.size+(-1):(state.index + 2)))}">
 
-                                                <div class="shadow-lg rounded-5">
+                                                <div class="shadow-lg serviceItem">
                                                     <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getName()})}">
-                                                    <h3 th:text="${services[i].getName()}">Dọn dẹp 1 giờ</h3>
+                                                    <h3 th:text="${services[i].getName()}"></h3>
                                                     <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
                                                     <hr />
-                                                    <h2 class="ms-2 mt-4" th:text="${services[i].getPrice()}">$<sup>đ</sup></h2>
+                                                    <h2 class="ms-2 mt-4" th:text="${'$'+services[i].getPrice()}"></h2> <sup>Per hour</sup>
                                                     <h4 class="mt-5">Chi tiết dịch vụ:</h4>
                                                     <ul th:each="detail:${services[i].getDetails()}">
-                                                        <li th:text="${detail}">Dọn dẹp</li>
+                                                        <li th:text="${detail}"></li>
                                                     </ul>
-                                                    <div class="mt-5">
-                                                        <a class="btn btn-dark w-100" th:href="@{/customer/bookings/form}">Booking now</a>
+                                                    <div class="btnBook">
+                                                        <a class="btn w-100 fw-normal" th:href="@{/customer/bookings/form}">Booking now</a>
                                                     </div>
                                                     </a>
                                                 </div>
@@ -379,7 +340,7 @@
             <span
                     class="carousel-control-prev-icon"
                     aria-hidden="true"></span>
-                <span class="visually-hidden"
+                <span class="visually-hidden nextCarBtn"
                 >Previous</span
                 >
             </button>
@@ -417,7 +378,7 @@
 
 
     <!-- Price -->
-    <div class="container mt-5" id="price">
+    <div class=" mt-5 d-none" id="price">
         <h2>Bảng giá sản phẩm của chúng tôi:</h2>
         <div class="row mt-5">
             <div class="col-lg-4 hover-luaga">
@@ -479,41 +440,39 @@
             </div>
         </div>
     </div>
-    <div class="mt-5 p-5 container">
+    <div class="mt-5 p-5 note">
         <h2>
-            <icon class="bi-gem"></icon> Lưu ý:
+            <img class="imgNote" src="/assets/images/HomeMate.png" alt="">
         </h2>
-        <ul>
-            <li>
+            <span>
                 Giá ở trên chỉ mang tính chất tham
                 khảo có thể tăng hoặc giảm theo thời
                 gian.
-            </li>
-            <li>
+            </span><br>
+            <span>
                 Giá dịch vụ có thể tự động điều chỉnh
                 tùy vào khu vực, cuối tuần, giờ cao
                 điểm (trước 8h và sau 17h) hay lễ tết.
-            </li>
-        </ul>
+            </span>
     </div>
 
     <!-- Sign Up -->
     <div
-            class="container shadow-lg p-5 text-center border rounded-4 mb-4">
+            class=" shadow-lg p-5 text-center border rounded-4 mb-4">
         <h1>
             Bạn muốn sử dụng dịch vụ của chúng tôi?
         </h1>
         <a
                 th:href="@{/signup}"
-                class="btn btn-dark btn-lg mt-5"
-        >Đăng ký ngay</a
+                class="btn btn-lg mt-5 register-btn"
+        >Register</a
         >
     </div>
 </main>
 
 <!-- Footer -->
 <footer
-        class="bg-dark text-center text-white">
+        class=" text-center text-white">
     <div
             class="text-center p-3"
             style="

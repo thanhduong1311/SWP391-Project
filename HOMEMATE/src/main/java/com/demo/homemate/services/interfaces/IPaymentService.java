@@ -12,4 +12,5 @@ public interface IPaymentService {
     public long convertMoney(double amount);
 
     public double getTotalTime(Date from, Date to);
+    public double getTotalTime(Date from, double hour);
 }

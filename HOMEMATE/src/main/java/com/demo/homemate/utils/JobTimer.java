@@ -142,4 +142,28 @@ public class JobTimer {
     }
 
 
+    public Date getEndTime(String from, double hour) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date fromDate = sdf.parse(from);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fromDate);
+            calendar.add(Calendar.HOUR, (int) Math.floor(hour));
+            calendar.add(Calendar.MINUTE, (int) Math.round((hour - Math.floor(hour)) * 60));
+            Date endTime = calendar.getTime();
+
+            return endTime;
+        } catch (Exception e) {
+            throw new RuntimeException("Error");
+        }
+    }
+
+
+    public static void main(String[] args) {
+        JobTimer j = new JobTimer();
+
+        System.out.println(j.getEndTime("2023-10-29T11:46",1.5));
+    }
+
 }
