@@ -8,6 +8,8 @@
     <link
       rel="stylesheet"
       href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/profile.css">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -16,59 +18,58 @@
     <title>Document</title>
   </head>
   <body class="bg-light">
-    <header>
-      <nav
-        class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-          <a class="navbar-brand fs-2" th:href="@{/customer/home}">
-            <icon class="bi-gem"></icon>
-            Homemate
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span
-              class="navbar-toggler-icon"></span>
-          </button>
-          <div
-            class="collapse navbar-collapse"
-            id="navbarSupportedContent">
-            <ul
-              class="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-              <li class="nav-item">
-                <a
-                        th:href="@{/customer/home}"
-                        class="nav-link"
-                >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
+  <header class="header">
+    <nav id="navBar">
+      <div class="logoNav">
+        <a class="navbar-brand fs-2" href="/guest">
+          <img src="/assets/images/HomeMate.png" alt="" class="logo">
+        </a>
+      </div>
 
-                        class="nav-link"
-                >Booking</a
-                >
-              </li>
-            </ul>
-            <a
-              href="#"
-              class="btn btn-lg btn-dark"
-              >Log out</a
-            >
-          </div>
-        </div>
-      </nav>
-    </header>
+      <ul
+              class="">
+        <li class="">
+          <a th:href="@{/customer}" class="nav-link"
+          >Home</a
+          >
+        </li>
+        <li class="">
+          <a th:href="@{/customer/bookings/form}" class="nav-link"
+          >Booking</a
+          >
+        </li>
+        <li class="">
+          <a
+                  href="/customer/history"
+                  class="nav-link"
+          >History</a
+          >
+        </li>
+        <li class="d-none">
+          <a href="#price" class="nav-link"
+          ></a
+          >
+        </li>
+        <li class="">
+          <a
+                  th:href="@{/customer}"
+                  class="nav-link"
+          >Reward</a>
+        </li>
+      </ul>
+
+
+      <a th:href="@{/logout}"
+         class="btn btn-lg signBtn"
+         style=""
+      >Log out</a
+      >
+    </nav>
+  </header>
     <div
-      class="container rounded bg-white mt-5 mb-5">
+      class=" rounded bg-white mt-5 mb-5">
 
-        <div class="row">
+        <div class="row main-profile">
           <div class="col-md-3 border-right">
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5">

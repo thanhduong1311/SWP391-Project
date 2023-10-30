@@ -6,3 +6,212 @@ body {
 .btn {
   transition: all 1s;
 }
+
+logoNav {
+  height: 100%;
+}
+.logo {
+  width: 80px;
+  aspect-ratio: 1;
+}
+
+.header {
+  height: 80px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  border-bottom: 99px solid #ff9b5ce3;
+}
+
+.container {
+  margin: 0 40px;
+  width: 100%;
+}
+
+main {
+  margin-top: 80px;
+}
+
+.hover-luaga {
+  transition: all 1s;
+}
+.hover-luaga:hover {
+  transform: scale(1.1);
+}
+
+
+#navBar {
+  min-height:97px;;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+
+}
+
+#navBar ul {
+  display:  flex;
+  list-style-type: none;
+}
+#navBar ul li {
+  display:  block;
+  height: 100%;
+  width: 200px;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 80px;
+  text-align: center;
+
+}
+
+#navBar ul li:hover {
+  background-color: rgb(238, 161, 119);
+  color: #fff;
+}
+
+.signBtn ,.register-btn{
+  background-color: #ff9b5ce3;
+  color: #fff;
+}
+
+.signBtn:hover,.register-btn:hover {
+  transform: scale(1.05);
+  background-color: #ff9b5ce3;
+  color: #fff;
+}
+.bodyIntro {
+  margin: 0 auto;
+}
+
+#aboutHome ,.reasonIntro,.topService{
+  width: 100%;
+  padding: 20px 40px;
+}
+
+
+.carousel-indicators {
+  bottom: -36px;
+}
+
+
+.carousel-control-prev {
+  left: -40px;
+}
+
+.carousel-control-next {
+  right: -40px;
+}
+
+#carouselExampleCaptions {
+
+}
+
+.serviceItem {
+  position: relative;
+  padding-top: 5px ;
+  border-radius: 16px;
+  min-height: 400px;
+  margin-bottom: 20px;
+}
+
+.serviceItem h3 {
+  color: rgb(234, 148, 97);
+}
+
+.serviceItem ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.btnBook{
+  position: absolute;
+  bottom: -10px;
+  right: 0;
+  left: 0;
+  background-color: #ff9b5ce3;
+  color: #fff;
+  margin: 10px 0;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.btnBook:hover {
+  background-color: #ff9b5ce3;
+  color: #fff;
+}
+
+.imgNote {
+  width: 80px;
+  height: 80px;
+}
+
+.note {
+ color: #ff9b5ce3;
+}
+
+footer {
+  background-color: rgb(255 166 110);
+}
+
+.detailService,.serviceInfo {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.serviceInfo img {
+  width: 100%;
+  height: 60vh;
+  margin-bottom: 10px;
+}
+
+.serviceInfo span {
+  font-weight: 700;
+  color:#ff9b5ce3 ;
+}
+
+.btnBookforDetail {
+  background-color: #ff9b5ce3;
+  color: #fff;
+  margin: 10px 0;
+  border-radius: 12px;
+}
+
+.btnBookforDetail:hover {
+  transform: scale(1.06);
+  background-color: #ff9b5ce3;
+  color: #fff;
+}
+
+.registerBtn  {
+  background-color: #ff9b5ce3;
+  color: #fff;
+  margin: 10px 0;
+  border-radius: 12px;
+  transition: linear .5s;
+}
+
+.registerBtn:hover {
+  background-color: #ff9b5ce3;
+  color: #fff;
+  border: 2px solid #ff9b5ce3 ;
+  transform: scale(1.005);
+}
+
+.home-link {
+  color: rgba(45, 41, 39, 0.71);
+}
+
+.home-link:hover {
+  color: #ff9b5ce3;
+}
+
+.footerBooking-detail {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left:0;
+}

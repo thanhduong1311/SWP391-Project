@@ -1,0 +1,167 @@
+
+body,
+html {
+    font-family: 'Roboto', sans-serif;
+}
+.hover-luaga {
+    transition: all 1s;
+}
+.hover-luaga:hover {
+    transform: scale(1.1);
+}
+
+#map {
+    width: 50%;
+    height: 50%;
+}
+
+body {
+    margin-top: 100px;
+    min-height: calc(100vh - 80px);
+    position: relative;
+    overflow: hidden;
+}
+.card {
+    background-color: #fff;
+    width: 800px;
+    border: none;
+    border-radius: 16px;
+}
+
+.info {
+    line-height: 19px;
+}
+
+.name {
+    color: #4c40e0;
+    font-weight: 600;
+}
+
+.order {
+    font-weight: 400;
+    color: #2b2b2b;
+}
+.detail {
+    line-height: 19px;
+}
+
+.summery {
+    color: #2b2b2b;
+    font-weight: 400;
+}
+
+.text {
+    line-height: 15px;
+}
+.new {
+    color: #000;
+    font-weight: 600;
+}
+.money {
+    font-weight: 500;
+}
+.address {
+    color: #2b2b2b;
+    font-weight: 500;
+}
+
+.last {
+    font-weight: 500;
+}
+
+.address-line {
+    color: #4c40e0;
+    font-weight: 700;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+#bookingMain .row {
+    margin: 0;
+}
+
+#paymentMethod  {
+    background-color: #ff9b5ce3;
+    color: #fff;
+    margin: 10px 0;
+    border-radius: 12px;
+    transition: linear .5s;
+    outline: none;
+    border: 2px solid #ff9b5ce3 ;
+
+}
+
+#bookingBtn:hover {
+    background-color: #ff9b5ce3;
+    color: #fff;
+    transform: scale(1.005);
+}
+
+#bookingBtn {
+    background-color: #ff9b5ce3;
+    color: #fff;
+}
+
+form {
+    border: 2px dashed #ff9b5ce3 ;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+h3  {
+    color: #ff9b5ce3;
+}
+
+.main-check-out {
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.main-check-out form {
+    width: 600px;
+}
+
+.paymentMethod {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.paymentMethod img {
+    width: 50px;
+
+}
+
+.paymentMethod .method {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    line-height:100px ;
+}
+
+.paymentMethod .method input {
+
+}
+
+.btnpay {
+    background-color: #ff9b5ce3;
+    color: #fff;
+    margin: 10px 0;
+    border-radius: 16px;
+    border: 1px solid #ff9b5ce3;
+    padding: 10px;
+}
+
+.btnBook:hover {
+    transform: scale(1.05);
+    background-color: #ff9b5ce3;
+    color: #fff;
+}

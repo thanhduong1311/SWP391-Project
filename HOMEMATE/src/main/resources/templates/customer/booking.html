@@ -36,90 +36,74 @@
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
 
 
+    <link rel="stylesheet" href="/assets/css/booking.css">
 
     <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
 
 
     <title>Zun | Homemate</title>
-    <style>
-        body,
-        html {
-            font-family: 'Roboto', sans-serif;
-        }
-        .hover-luaga {
-            transition: all 1s;
-        }
-        .hover-luaga:hover {
-            transform: scale(1.1);
-        }
 
-        #map {
-            width: 50%;
-            height: 50%;
-        }
-    </style>
 </head>
 <body class="animate__animated animate__fadeIn">
 <!-- Header -->
-<header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-        <div class="container">
-            <a class="navbar-brand fs-2" href="#">
-                <icon class="bi bi-gem"></icon>
-                Homemate
+<header class="header">
+    <nav id="navBar">
+        <div class="logoNav">
+            <a class="navbar-brand fs-2" href="/guest">
+                <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-            </button>
-            <div
-                    class="collapse navbar-collapse"
-                    id="navbarSupportedContent">
-                <ul
-                        class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a
-                                th:href="@{/customer}"
-                                class="nav-link"
-                        >Home</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                                th:href="@{/customer/bookings}"
-                                class="nav-link"
-                        >Booking</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/customer/history}" class="nav-link"
-                        >History</a
-                        >
-                    </li>
-                </ul>
-
-            </div>
         </div>
+
+        <ul
+                class="">
+            <li class="">
+                <a th:href="@{/customer}" class="nav-link"
+                >Home</a
+                >
+            </li>
+            <li class="">
+                <a th:href="@{/customer/bookings/form}" class="nav-link"
+                >Booking</a
+                >
+            </li>
+            <li class="">
+                <a
+                        href="/customer/history"
+                        class="nav-link"
+                >History</a
+                >
+            </li>
+            <li class="d-none">
+                <a href="#price" class="nav-link"
+                ></a
+                >
+            </li>
+            <li class="">
+                <a
+                        th:href="@{/customer}"
+                        class="nav-link"
+                >Reward</a>
+            </li>
+        </ul>
+
+
+        <a th:href="@{/logout}"
+           class="btn btn-lg signBtn"
+           style=""
+        >Log out</a
+        >
     </nav>
 </header>
-
-<main>
+<main id="bookingMain">
 
     <div class="row">
 
         <form class="col-lg-8 mx-auto" method="post" th:action="@{/customer/bookings/boooking}">
-            <h3 class="mb-5 mt-5">BOOKING FORM</h3>
+            <h3 class="mb-5 mt-5 text-center">BOOKING FORM</h3>
             <div class="row">
 
             <div class="row col-md-6">
@@ -134,7 +118,7 @@
             </div>
             <div class="form-group mb-3 col-md-12">
                 <label for="address">Address</label>
-                <input name="address" th:value="*{bookingInfor.customerAddress}"  type="text" class="form-control" id="address" placeholder="Address">
+                <input readonly onchange="locate(this.value)" name="address" th:value="*{bookingInfor.customerAddress}"  type="text" class="form-control" id="address" placeholder="Address">
             </div>
 
                 <div class="form-group mb-3 col-md-6">
@@ -165,8 +149,7 @@
                         <option value="8.5">8.5h</option>
                     </select>
                 </div>
-                <div class="row">
-                    <div class="form-group mb-3 col-md-6">
+                    <div class=" mb-3 col-md-6">
                         <label for="exampleFormControlSelect1">Select Service</label>
                         <select class="form-control" id="exampleFormControlSelect1"  th:field="*{bookingInfor.serviceId}">
                             <div th:each="ser:${service}">
@@ -174,7 +157,7 @@
                             </div>
                         </select>
                     </div>
-                    <div class="form-group mb-3 col-md-6">
+                    <div class=" mb-3 col-md-6">
                         <div class="payment-type">
                             <p>Payment type</p>
                             <input name="name" value="0"  type="radio" th:field="*{bookingInfor.paymentType}" class="mr-5" id="banking">
@@ -186,12 +169,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group mb-3">
+                    <div class=" mb-3">
                         <label for="description">Job description</label>
                         <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
                     </div>
 
-                </div>
 
             </div>
 
@@ -202,7 +184,7 @@
                  <div style="width: 100%; height: 90%" id="map"></div>
              </div>
 
-                <button type="submit" id="bookingBtn" class=" row col-md-12 btn btn-primary" >Booking</button>
+                <button type="submit" id="bookingBtn" class=" row col-md-12 btn" >Booking</button>
 
             </div>
 

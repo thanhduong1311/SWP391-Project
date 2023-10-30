@@ -98,12 +98,11 @@ public class AuthController {
         }else {
             session.setAttribute("SignupMessage","Failed#Username or password is incorrect!");
 //            session.removeAttribute("Login Failed");
-            model.addAttribute("SignupMessage", new MessageOject("Failed","Username or password is incorrect!", null));
-            return "redirect:/home";
+            return "redirect:/login";
         }
     } else {
-        model.addAttribute("LoginMessage", new MessageOject("Failed","Password must contain at least 6 characters!", null));
-        return "redirect:/home";
+        session.setAttribute("SignupMessage","Failed#Username or password is incorrect!");
+        return "redirect:/login";
     }
 
 
@@ -119,14 +118,10 @@ public class AuthController {
     public String loginView(Model model,HttpSession session) {
         model.addAttribute("account", new AuthenticationRequest());
 
-        if (model.getAttribute("LoginMessage") == null) {
-            model.addAttribute("LoginMessage", new MessageOject());
-        }
 
         String s  = (String) session.getAttribute("SignupMessage");
         session.removeAttribute("SignupMessage");
         model.addAttribute("SignupMessage",s);
-        System.out.println(s + "gdjhasbdjkhasbdhjabshjdbasd");
 
         return "signin";
     }
@@ -156,14 +151,15 @@ public class AuthController {
                 Claims claim = null;
                 claim = JWTService.parseJwt(token);
                 if (claim==null) {return "/login";}
+                System.out.println(claim.getSubject() + "1678468734628764823764");
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
-                        session.setAttribute("Message", new MessageOject("Success","Login Success",null));
-                        return "redirect:/customer";
+                        session.setAttribute("LoginMessage", "Success#Login successfully");
+                          return "redirect:/customer";
                     }
                     case "EMPLOYEE" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
@@ -277,6 +273,8 @@ public class AuthController {
                                  HttpSession session,
                                  @ModelAttribute("txtEmail") String email
                                  ) {
+
+        System.out.println();
 
         if (email==null||email.isEmpty()){
             return "redirect:/forgetpassword";

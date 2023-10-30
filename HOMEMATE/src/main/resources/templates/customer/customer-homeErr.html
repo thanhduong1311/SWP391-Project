@@ -35,69 +35,52 @@
 </head>
 <body class="animate__animated animate__fadeIn">
 <!-- Header -->
-<header>
-  <nav
-          class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-    <div class="container">
-      <a class="navbar-brand fs-2" th:href="@{/customer/home}">
-        <icon class="bi-gem"></icon>
-        Homemate
+<header class="header">
+  <nav id="navBar">
+    <div class="logoNav">
+      <a class="navbar-brand fs-2" href="/guest">
+        <img src="/assets/images/HomeMate.png" alt="" class="logo">
       </a>
-      <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-      </button>
-      <div
-              class="collapse navbar-collapse"
-              id="navbarSupportedContent">
-        <ul
-                class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a
-                    th:href="@{/customer}"
-                    class="nav-link"
-            >Home</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-                    th:href="@{/customer/bookings/form}"
-                    class="nav-link"
-            >Booking</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-                    href="customer-review.html"
-                    class="nav-link"
-            >Review</a
-            >
-          </li>
-          <li class="nav-item">
-            <a th:href="@{/customer/history}" class="nav-link"
-            >History</a
-            >
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link"
-            >Setting</a
-            >
-          </li>
-        </ul>
-        <a
-                href="/logout"
-                class="btn btn-lg btn-dark"
-        >Log out</a
-        >
-      </div>
     </div>
+
+    <ul
+            class="">
+      <li class="">
+        <a th:href="@{/guest}" class="nav-link"
+        >Home</a
+        >
+      </li>
+      <li class="">
+        <a th:href="@{/}" class="nav-link"
+        >About</a
+        >
+      </li>
+      <li class="">
+        <a
+                href="#service"
+                class="nav-link"
+        >Service</a
+        >
+      </li>
+      <li class="d-none">
+        <a href="#price" class="nav-link"
+        >Price</a
+        >
+      </li>
+      <li class="">
+        <a
+                th:href="@{/partnerRegister}"
+                class="nav-link"
+        >Become Maid</a>
+      </li>
+    </ul>
+
+
+    <a th:href="@{/login}"
+       class="btn btn-lg signBtn"
+       style=""
+    >Sign In</a
+    >
   </nav>
 </header>
 
@@ -144,7 +127,7 @@
           <div th:each="service,state: ${services}">
             <th:block th:if="${state.index % 3 ==0}">
               <div th:class="${state.first}? 'carousel-item row active':'carousel-item row'" >
-                <div class="row d-md-flex mt-5 col-11 m-auto bg-secondary">
+                <div class="row d-md-flex mt-5 col-11 m-auto">
                   <div class="col-md-4" th:each="i: ${#numbers.sequence(state.index,((state.index + 2)>=(state.size+(-1))? state.size+(-1):(state.index + 2)))}">
 
                     <div class="shadow-lg rounded-5">

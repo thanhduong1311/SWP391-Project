@@ -64,135 +64,133 @@
     </style>
   </head>
   <body
-    class="text-center " style="padding: 0">
-    <main class="form-signin">
+    class="text-center " style="padding: 0" id="login-main">
+    <main class="form-signup">
       <form th:action="@{/signup}"  th:object="${RequestRegister}"  method="post">
         <img
-          class="mb-4"
+          class="mb-4 logoForgetPass"
           src="/assets/images/HomeMate.png"
           alt=""
-          width="300px"
-          height="180px"
-        style="height: 40px; width: auto;margin: 0 0 5px 0"/>
-        <h1 class="h3 mb-3 fw-normal" style="margin: 0 0 5px 0">
+        />
+        <h1 class="h3 mb-3 fw-normal ">
           Register
         </h1>
 
-        <div class="form-input">
-          <div class="form-floating">
-            <input
-                    th:field="*{username}"
-              type="text"
-              class="form-control"
-              id="floatingUsername"
-                    required
-              placeholder="name@example.com" />
+          <div class="form-input row">
+            <div class="form-floating  col-md-6 register-form">
+              <input
+                      th:field="*{username}"
+                      type="text"
+                      class="form-control"
+                      id="floatingUsername"
+                      required
+                      placeholder="name@example.com" />
 
-            <label for="floatingUsername"
+              <label for="floatingUsername"
               >Username</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    th:field="*{password}"
-              type="password"
-              class="form-control"
-              id="floatingPassword"
-                    required
-              placeholder="Password" />
-
-            <label for="floatingPassword"
-              >Password</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    required
-                    th:field="*{confirmPassword}"
-              type="password"
-              class="form-control"
-              id="floatingConfirmPassword"
-              placeholder="ConfirmPassword" />
-            <label for="floatingConfirmPassword"
-              >Confirm password</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    required
-                    th:field="*{lastName}"
-              type="text"
-              class="form-control"
-              id="floatingLastName"
-              placeholder="LastName" />
-            <label for="floatingLastName"
-              >Last Name</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    required
-                    th:field="*{firstName}"
-              type="text"
-              class="form-control"
-              id="floatingName"
-              placeholder="FirstName" />
-            <label for="floatingName"
-              >First Name</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    required
-                    th:field="*{phone}"
-              type="text"
-              class="form-control"
-              id="floatingPhone"
-              placeholder="name@example.com" />
-            <label for="floatingPhone"
-              >Phone Number</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    required
-                    th:field="*{email}"
-              type="email"
-              class="form-control"
-              id="floatingEmail"
-              placeholder="name@example.com" />
-            <label for="floatingEmail"
+              >
+            </div>
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      required
+                      th:field="*{email}"
+                      type="email"
+                      class="form-control"
+                      id="floatingEmail"
+                      placeholder="name@example.com" />
+              <label for="floatingEmail"
               >Email</label
-            >
-          </div>
-          <div class="form-floating">
-            <input
-                    required
-                    th:field="*{dob}"
-              type="date"
-              class="form-control"
-              id="floatingBirthday"
-              placeholder="00/00/0000" />
-            <label for="floatingBirthday"
+              >
+            </div>
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      th:field="*{password}"
+                      type="password"
+                      class="form-control"
+                      id="floatingPassword"
+                      required
+                      placeholder="Password" />
+
+              <label for="floatingPassword"
+              >Password</label
+              >
+            </div>
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      required
+                      th:field="*{confirmPassword}"
+                      type="password"
+                      class="form-control"
+                      id="floatingConfirmPassword"
+                      placeholder="ConfirmPassword" />
+              <label for="floatingConfirmPassword"
+              >Confirm password</label
+              >
+            </div>
+
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      required
+                      th:field="*{lastName}"
+                      type="text"
+                      class="form-control"
+                      id="floatingLastName"
+                      placeholder="LastName" />
+              <label for="floatingLastName"
+              >Last Name</label
+              >
+            </div>
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      required
+                      th:field="*{firstName}"
+                      type="text"
+                      class="form-control"
+                      id="floatingName"
+                      placeholder="FirstName" />
+              <label for="floatingName"
+              >First Name</label
+              >
+            </div>
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      required
+                      th:field="*{phone}"
+                      type="text"
+                      class="form-control"
+                      id="floatingPhone"
+                      placeholder="name@example.com" />
+              <label for="floatingPhone"
+              >Phone Number</label
+              >
+            </div>
+            <div class="form-floating col-md-6 register-form">
+              <input
+                      required
+                      th:field="*{dob}"
+                      type="date"
+                      class="form-control"
+                      id="floatingBirthday"
+                      placeholder="00/00/0000" />
+              <label for="floatingBirthday"
               >Birthday</label
-            >
-          </div>
+              >
+            </div>
         </div>
 
-        <div id="message" class="message checkbox mb-3 text-danger">
 
         </div>
 
         <button
-          class="w-100 btn btn-lg btn-outline-dark"
+          class="w-100 btn btn-lg"
           type="submit">
           Submit
         </button>
         <small class="mt-1"
           >If you have an account,
-          <a th:href="@{/login}">Log in</a>.</small
+          <a class="regiterLink" th:href="@{/login}">Log in</a>.</small
         >
-        <p class="mt-5 mb-3 text-muted">
+        <p class="mt-2 mb-3 text-muted">
           &copy; Homemate 2023
         </p>
       </form>

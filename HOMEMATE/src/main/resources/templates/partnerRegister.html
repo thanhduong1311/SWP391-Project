@@ -8,38 +8,93 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>Become Maid</title>
     <link
       rel="stylesheet"
       href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/partnerRegister.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
   </head>
+
+  <header class="header">
+    <nav id="navBar">
+      <div class="logoNav">
+        <a class="navbar-brand fs-2" href="/guest">
+          <img src="/assets/images/HomeMate.png" alt="" class="logo">
+        </a>
+      </div>
+
+      <ul
+              class="">
+        <li class="">
+          <a th:href="@{/guest}" class="nav-link"
+          >Home</a
+          >
+        </li>
+        <li class="">
+          <a th:href="@{/}" class="nav-link"
+          >About</a
+          >
+        </li>
+        <li class="">
+          <a
+                  href="#service"
+                  class="nav-link"
+          >Service</a
+          >
+        </li>
+        <li class="d-none">
+          <a href="#price" class="nav-link"
+          >Price</a
+          >
+        </li>
+        <li class="">
+          <a
+                  th:href="@{/partnerRegister}"
+                  class="nav-link"
+          >Become Maid</a>
+        </li>
+      </ul>
+
+
+      <a th:href="@{/login}"
+         class="btn btn-lg signBtn"
+         style=""
+      >Sign In</a
+      >
+    </nav>
+  </header>
+
   <body>
-    <div
-      class="container rounded-5 p-5 bg-light mt-5"
+    <div id="main"
+      class=" rounded-5 p-3 mt-5"
       style="max-width: 50rem">
-      <h1 class="mb-5">Become Partner</h1>
+      <h3 class="mb-5 text-center">Become Partner</h3>
       <form th:action="@{/partnerRegister}" method="post">
 
+        <div class="form-input">
         <div class="row">
           <div class="form-floating mb-3 col-md-6">
             <input
                     type="text"
-                    class="form-control p-2"
-                    id="floatingInput1"
-                    th:field="*{partnerInfo.username}"
+                    class="form-control"
+                    id="floatingUN"
+                    th:field="*{partnerInfo.username}" placeholder=""
                     required />
-            <label for="floatingInput1"
-            >Username</label
-            >
+            <label for="floatingUN"
+            >Username</label>
           </div>
           <div class="form-floating mb-3 col-md-6">
             <input
                     type="password"
                     class="form-control p-2"
                     th:field="*{partnerInfo.password}"
-                    id="floatingInput2"
+                    id="floatingpw" placeholder=""
                     required />
-            <label for="floatingInput2"
+            <label for="floatingpw"
             >Password</label
             >
           </div>
@@ -50,9 +105,9 @@
                     type="email"
                     class="form-control p-2"
                     th:field="*{partnerInfo.email}"
-                    id="floatingInput3"
+                    id="floatingem" placeholder=""
                     required />
-            <label for="floatingInput3"
+            <label for="floatingem"
             >Email</label
             >
           </div>
@@ -61,9 +116,9 @@
                     type="password"
                     class="form-control p-2"
                     th:field="*{partnerInfo.confirmPassword}"
-                    id="floatingInput4"
+                    id="floatingrpw" placeholder=""
                     required />
-            <label for="floatingInput4"
+            <label for="floatingrpw"
             >Confirm password</label
             >
           </div>
@@ -75,9 +130,9 @@
                     type="text"
                     class="form-control p-2"
                     th:field="*{partnerInfo.firstName}"
-                    id="floatingInput5"
+                    id="floatingfn" placeholder=""
                     required />
-            <label for="floatingInput5"
+            <label for="floatingfn"
             >First Name</label
             >
           </div>
@@ -86,9 +141,9 @@
                     type="text"
                     class="form-control p-2"
                     th:field="*{partnerInfo.lastName}"
-                    id="floatingInput6"
+                    id="floatingln" placeholder=""
                     required />
-            <label for="floatingInput6"
+            <label for="floatingln"
             >Last Name</label
             >
           </div>
@@ -100,9 +155,9 @@
                     type="text"
                     class="form-control p-2"
                     th:field="*{partnerInfo.city}"
-                    id="floatingInput7"
+                    id="floatingct" placeholder=""
                     required />
-            <label for="floatingInput7"
+            <label for="floatingct"
             >City</label
             >
           </div>
@@ -111,9 +166,9 @@
                     type="text"
                     class="form-control p-2"
                     th:field="*{partnerInfo.district}"
-                    id="floatingInput8"
+                    id="floatingdt" placeholder=""
                     required />
-            <label for="floatingInput8"
+            <label for="floatingdt"
             >District</label
             >
           </div>
@@ -124,9 +179,11 @@
             type="text"
             class="form-control"
             th:field="*{partnerInfo.detailAddress}"
-            id="floatingInput10"
+            id="floatingaddr"
+            placeholder=""
+
             required />
-          <label for="floatingInput10"
+          <label for="floatingaddr"
           >Detail Address</label>
         </div>
         <div class="row">
@@ -135,10 +192,10 @@
                     type="text"
                     class="form-control"
                     th:field="*{partnerInfo.phone}"
-                    id="floatingInput11"
+                    id="floatingphone"
                     placeholder="Số điện thoại"
                     required />
-            <label for="floatingInput11"
+            <label for="floatingphone"
             >Phone number</label
             >
           </div>
@@ -162,10 +219,10 @@
                     type="text"
                     class="form-control"
                     th:field="*{partnerInfo.cardIdNumber}"
-                    id="floatingInput13"
+                    id="floatingId"
                     placeholder=""
                     required />
-            <label for="floatingInput13"
+            <label for="floatingId"
             >ID Card number</label
             >
           </div>
@@ -177,10 +234,10 @@
                     class=""
                     value="0"
                     th:field="*{partnerInfo.gender}"
-                    id="floatingInput16"
+                    id="floatinggdm"
                     placeholder=""
             />
-            <label for="floatingInput16"
+            <label for="floatinggdm"
             >Male</label
             >
 
@@ -189,10 +246,10 @@
                     name="gender"
                     class=""
                     value="1"
-                    id="floatingInput17"
+                    id="floatinggdf"
                     th:field="*{partnerInfo.gender}"
             />
-            <label for="floatingInput17"
+            <label for="floatinggdf"
             >Female</label
             >
 
@@ -206,33 +263,35 @@
             <input
                     type="text"
                     class="form-control"
-                    th:field="*{partnerInfo.placeOfWork}"
-                    id="floatingInput15"
-                    placeholder="Số điện thoại"
+                    th:field="*{partnerInfo.placeOfWork}" placeholder=""
+                    id="floatingpow"
                     required />
-            <label for="floatingInput15"
+            <label for="floatingpow"
             >Place of work</label
             >
           </div>
           <div class="form-floating mb-3 col-md-6">
-            <label for="selectService">Forte Service</label>
              <select class="form-control" id="selectService"  th:field="*{partnerInfo.forteService}">
                <option value="0"> </option>
                <div th:each="ser:${service}">
                  <option th:value="*{ser.getServiceId()}" th:text="*{ser.getName()}"></option>
                </div>
              </select>
+            <label class="major" for="selectService">Forte Service</label>
+
           </div>
         </div>
 
         <button
           type="submit"
-          class="btn btn-dark w-100 btn-lg mt-3">
+          class="btn registerBtn w-100 btn-lg mt-3">
           Register
         </button>
+        </div>
+
       </form>
       <div class="text-center mt-3">
-        <a class="link-dark" th:href="@{/guest}"
+        <a  class=" home-link" th:href="@{/guest}"
           ><small>Back to Homepage</small></a
         >
       </div>

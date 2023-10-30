@@ -1,47 +1,89 @@
-html,
-body {
-  height: 100%;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
-
-.form-signin {
+#login-main {
+  background-color: #ffffff;
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
+  height: 100vh;
+  display: flex; justify-content:  center; align-items: center;
+ }
+  
+  
+.form-signin {
+    width: 450px;
+    background-color: #ff914d17;
+    padding: 20px;
+    border-radius: 16px; box-shadow: 1px 2px 1px 1px #ccc;
+  }
+
+.form-signup {
+    width:650px;
+    background-color: #ff914d17;
+    padding: 20px;
+    border-radius: 16px; box-shadow: 1px 2px 1px 1px #ccc;
 }
 
-.form-signin .checkbox {
-  font-weight: 400;
+   .logo {
+      width: 60%;aspect-ratio: 1; opacity: 90%;
+     /*border: 1px solid;*/
+   }
+.logoForgetPass {
+    width: 30%;aspect-ratio: 1; opacity: 90%;
+}
+   input[type=checkbox]{
+     margin-top: 20px;
+     cursor: pointer;
+   }
+
+input[type="checkbox"]:checked {
+  background-color: #ff9b5ce3;
+  color: #ffffff;
+  border-color: #ff9b5ce3;
 }
 
-.form-signin .form-floating:focus-within {
-  z-index: 2;
+.lbRemember:hover {
+  cursor: pointer;
+  color: #ff9b5ce3
 }
 
-.form-signin input[type='username'] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+button[type=submit] {
+  font-weight: 500;
+  margin-bottom: 20px;
+    border: 1px solid rgba(255, 155, 92, 0.71);
+    background-color: #ff9b5ce3;
+    border: 1px solid #ff9b5ce3;
+    color: #fff;
+    transition: linear,  0.5s;
 }
 
-.form-signin input[type='password'] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+button[type=submit]:hover {
+    background-color: #ff9b5ce3;
+    border: 1px solid #ff9b5ce3;
+    color: #fff; transform: scale(1.03);
+
 }
 
-.form-input {
-  margin-bottom: 12px;
+input[type=text], input[type=password]{
+    outline:none;
 }
 
-.btn {
-  transition: all 0.7s;
+.regiterLink, .recoverLink {
+    color: rgba(45, 41, 39, 0.71);
 }
+
+ .regiterLink:hover, .recoverLink:hover {
+     color: #ff9b5ce3;
+ }
+
+  .newPassword,.confirmPass {
+      margin-top: 20px;
+      margin-bottom: 20px;
+  }
+
+  .register-form input {
+      margin-bottom:10px ;
+      padding: 5px;
+  }
+
+.register-form label {
+    margin-left:10px ;
+    padding: 5px;
+}
+

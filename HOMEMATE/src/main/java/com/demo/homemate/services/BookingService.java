@@ -173,6 +173,8 @@ public class BookingService implements IJobService {
                 jobOverView.setEmployeeName(employee == null ? "":employee.getFullName());
                 jobOverView.setStatus(j.getStatus());
                 jobOverView.setJobID(j.getJobId());
+                jobOverView.setEmployeeAvt(employee == null ? "":employee.getAvatar());
+                jobOverView.setJobInCalendar(JobTimer.convertDateToString(j.getStart()));
 
                 bookings.add(jobOverView);
             }
