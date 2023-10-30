@@ -163,17 +163,14 @@ public class BookingService implements IJobService {
             Customer customer = customerRepository.findById(customerID);
             List<Job> jobs = jobRepository.findByCustomerId(customer);
 
-
             for (Job j : jobs) {
                 JobDetail jobOverView = new JobDetail();
-
                 Employee employee = employeeRepository.findById(j.getEmployeeId() == null ? new Employee().getEmployeeId():j.getEmployeeId().getEmployeeId());
                 jobOverView.setServiceName(j.getServiceId().getName());
                 jobOverView.setPrice(paymentService.getTotalMoney(paymentService.getTotalTime(j.getStart(),j.getEnd()),j.getServiceId().getServiceId()));
                 jobOverView.setEmployeeName(employee == null ? "":employee.getFullName());
                 jobOverView.setStatus(j.getStatus());
                 jobOverView.setJobID(j.getJobId());
-
                 bookings.add(jobOverView);
             }
 

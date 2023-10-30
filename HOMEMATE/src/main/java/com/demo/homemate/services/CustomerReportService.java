@@ -58,7 +58,6 @@ public class CustomerReportService implements ICustomerReportService {
             Service service = serviceRepository.findById(job.getServiceId().getServiceId());
             Employee employee = employeeRepository.findById(job.getEmployeeId().getEmployeeId());
             Customer customer = customerRepository.findById(job.getCustomerId().getCustomerId());
-
             cjd.setReportId(id);
             cjd.setEmployeeID(employee.getEmployeeId());
             cjd.setCustomerId(customer.getCustomerId());
@@ -76,7 +75,36 @@ public class CustomerReportService implements ICustomerReportService {
         }
         return cjd;
     }
-
+    @Override
+    public CustomerReportJob getReportByJobID(int id) {
+        Job job  = jobRepository.findById(id);
+        CustomerReportJob cjd = new CustomerReportJob();
+        if (job==null){
+            return null;
+        }
+        if(job.getReport()!=null){
+            cjd.setReason(job.getReport().getReason());
+        }
+        try {
+            Service service = serviceRepository.findById(job.getServiceId().getServiceId());
+            Employee employee = employeeRepository.findById(job.getEmployeeId().getEmployeeId());
+            Customer customer = customerRepository.findById(job.getCustomerId().getCustomerId());
+            cjd.setReportId(id);
+            cjd.setEmployeeID(employee.getEmployeeId());
+            cjd.setCustomerId(customer.getCustomerId());
+            cjd.setEmployeeName(employee.getFullName());
+            cjd.setCustomerName(customer.getFullName());
+            cjd.setService(service.getName());
+            cjd.setJobId(job.getJobId());
+            cjd.setStart(job.getStart());
+            cjd.setEnd(job.getEnd());
+            cjd.setAddress(customer.getAddress_detail());
+            cjd.setDescription(job.getDescription());
+        } catch (Exception e) {
+            throw e;
+        }
+        return cjd;
+    }
     @Override
     public MessageOject deleteReport(int id) {
         try {

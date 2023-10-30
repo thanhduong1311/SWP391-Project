@@ -63,9 +63,9 @@ public class CustomerMapping implements ICustomerMapping {
  return rbR;
     }
     public Feedbacks tofeedback(FeedbackRequest fb, Customer c, Job j) {
-         final CustomerRepository customerRepository;
         Feedbacks feedbacks = new Feedbacks();
         feedbacks.setFeedbackId(fb.getFeedbackId());
+        System.out.println("ĐANG CHUẢN HÓA: "+fb.getFeedbackId());
         feedbacks.setCustomerId(c);
         feedbacks.setJobId(j);
         feedbacks.setPoint(fb.getPoint());

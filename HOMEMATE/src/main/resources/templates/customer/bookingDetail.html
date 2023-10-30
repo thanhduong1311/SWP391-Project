@@ -194,15 +194,19 @@
           class="money d-flex flex-row mt-2 align-items-center">
           <h4 class="ml-2 ">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
         </div>
-        <div
-                th:if="*{jobDetail.getStatus().ordinal() == 2}"
-          class="card-footer p-3 d-flex justify-content-end">
-          <a
-            th:href="@{/customer/history/feedback/{id}(id=${jobDetail.getJobID()})}"
-            class="btn btn-dark btn-outline-light"
-            >Feedback</a
-          >
+        <div class="card-footer p-3 d-flex justify-content-end">
+          <a  th:if="*{jobDetail.getStatus().ordinal() != 0}" th:href="@{/customer/history/report/{id}(id=${jobDetail.getJobID()})}"
+             class="btn btn-dark btn-outline-light">
+            Report
+          </a>
+          <div >
+            <a th:if="*{jobDetail.getStatus().ordinal() == 2}" th:href="@{/customer/history/feedback/{id}(id=${jobDetail.getJobID()})}"
+               class="btn btn-dark btn-outline-light">
+              Feedback
+            </a>
+          </div>
         </div>
+
       </div>
     </div>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>

@@ -13,8 +13,7 @@ import java.util.List;
 
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedbacks, Integer> {
-
     Feedbacks findById(int feedbackID);
-    @Query("SELECT fb FROM Feedbacks fb WHERE fb.jobId = :jobID")
+    @Query("SELECT fb FROM Feedbacks fb WHERE fb.jobId.jobId = :jobID")
     Feedbacks findFeedbackByJobID(@Param("jobID") int jobID);
 }

@@ -101,14 +101,15 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public FeedbackRequest getFeeback(int jobId) {
-        FeedbackRequest fb = new FeedbackRequest();
+    public FeedbackRequest getFeeback(int jobID) {
+        FeedbackRequest fb = null;
         CustomerMapping cm = new CustomerMapping();
         try {
-            if (feedbackRepository.findById(jobId)!=null){
-                fb =cm.tofeedbackRequest(feedbackRepository.findById(jobId));
+            Feedbacks feedbacks = feedbackRepository.findFeedbackByJobID(jobID);
+            if (feedbacks!=null){
+                fb =cm.tofeedbackRequest(feedbacks);
+                return fb;
             }
-            return fb;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -121,7 +122,9 @@ public class CustomerService implements ICustomerService {
     try {
         Customer customer = customerRepository.findById(customerID);
         Job job = jobRepository.findById(feedbackRequest.getJobId());
+        System.out.println(customer.getFullName()+job.getDescription());
         Feedbacks feedbacks = customerMapping.tofeedback(feedbackRequest, customer, job);
+        System.out.println("feedback"+feedbacks.getFeedbackId());
         feedbackRepository.save(feedbacks);
         MessageOject mo = new MessageOject("Success", "Save feedback", null);
         return mo;
