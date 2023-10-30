@@ -161,9 +161,7 @@ public class AuthController {
                     }
                     case "CUSTOMER" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
-
                           return "redirect:/customer";
-
                     }
                     case "EMPLOYEE" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");

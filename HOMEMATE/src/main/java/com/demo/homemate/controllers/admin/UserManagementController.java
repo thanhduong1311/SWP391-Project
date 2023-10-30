@@ -32,9 +32,11 @@ public class UserManagementController {
 
 
 
-        MessageOject messageOject = new MessageOject();
-        MessageOject s  = (MessageOject) session.getAttribute("Message");
-        session.removeAttribute("Message");
+
+        String s  = (String) session.getAttribute("LoginMessage");
+        session.removeAttribute("LoginMessage");
+
+        model.addAttribute("LoginMessage",s);
 
 
 
