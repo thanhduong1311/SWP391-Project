@@ -30,11 +30,11 @@ public class UserManagementController {
             model.addAttribute("loginSuccess", new MessageOject("","",null));
         }
 
-        String s  = (String) session.getAttribute("LoginMessage");
-        session.removeAttribute("LoginMessage");
-        model.addAttribute("LoginMessage",s);
 
-        System.out.println(s);
+
+        MessageOject messageOject = new MessageOject();
+        MessageOject s  = (MessageOject) session.getAttribute("Message");
+        session.removeAttribute("Message");
 
 
 

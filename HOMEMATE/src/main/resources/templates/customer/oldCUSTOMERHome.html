@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,11 +18,7 @@
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
   />
-  <link rel="stylesheet" href="/assets/css/home.css" />
-  <link rel="stylesheet" href="/assets/css/toastMessage.css">
-
-
-
+  <link rel="stylesheet" href="assets/css/home.css" />
   <title>Zun | Booking | Homemate</title>
   <style>
     body,
@@ -176,16 +172,26 @@
   </div>
 </main>
 
-<div id="toast"></div>
-
 <!-- Footer -->
 <footer class="text-center text-dark">
   <div class="text-center p-3">© 2023 Homemade</div>
   <!-- Copyright -->
 </footer>
 <!-- Footer -->
-<script src="/assets/js/bootstrap.bundle.min.js">
-  <script src="/assets/js/toast.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<div id="toast"></div>
+
+<script src="/assets/js/toast.js"></script>
+
+<script src="/assets/js/signupValidation.js"></script>
+
+<div style="display: none" id="script" th:text="${Login}"> </div>
+
+
+<script >
+  var mes = document .getElementById("script").innerText
+  splitMessase(mes.trim())
+</script>
 
 </body>
 </html>

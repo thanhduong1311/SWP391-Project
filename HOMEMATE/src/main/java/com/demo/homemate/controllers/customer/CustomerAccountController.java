@@ -13,13 +13,16 @@ import com.demo.homemate.services.CustomerService;
 
 import com.demo.homemate.services.RankingService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 @Controller
@@ -32,12 +35,24 @@ public class CustomerAccountController {
     private final RankingService rankingService;
 
     @GetMapping("/{username}")
-    public String viewAccount(@PathVariable("username") String username, Model model) {
+    public String viewAccount(@PathVariable("username") String username,
+                              Model model,
+                              HttpSession session) {
         CustomerMapping cm = new CustomerMapping();
         CustomerProfileRequest profile =cm.toCustomerProfile(customerRepository.findByUsername(username));
         model.addAttribute("profile",profile);
         System.out.println(profile.getAvatar());
-        return "customer/profile";
+        MessageOject messageOject = (MessageOject)session.getAttribute("EditMessage");
+        session.removeAttribute("EditMessage");
+        if (messageOject!=null){
+            System.out.println(Objects.equals(messageOject.getName(), "Success"));
+            if (Objects.equals(messageOject.getName(), "Success")){
+                model.addAttribute("EditMessage22","Success#Edit profile successfully!");
+            }else{
+                model.addAttribute("EditMessage1","Failed#Fail to edit profile!");
+            }
+        }model.addAttribute("EditMessage","Success#Login successfully");
+        return "customer/customer-profile";
     }
 
     @GetMapping("/changePassword")
@@ -65,7 +80,7 @@ public class CustomerAccountController {
         return "redirect:/customer/account/changePassword";
     }
 
-    @GetMapping ("/edit/{username}")
+    @RequestMapping ("/edit/{username}")
     public String viewEditProfile(@PathVariable("username") String username,
                                   Model model,
                                   @CookieValue(name = "Token",required = false) String cookieToken,
@@ -74,22 +89,24 @@ public class CustomerAccountController {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
+
         String token=cookieToken!=null?cookieToken:sessionToken;
         String uname = (String) JWTService.parseJwt(token).get("Username");
         if (!username.equals(uname)){
             return "error";
         }
         CustomerProfileRequest cpr = customerService.getProfile(username);
-        System.out.println(cpr.getDob());
         model.addAttribute("UserInfo",cpr);
         return "customer/customer-setting";
     }
     @PostMapping ("/edit")
     public String editProfile(CustomerProfileRequest UserInfo,
                               Model model,
-                              @RequestParam("txtavatar") MultipartFile multipartFile) throws IOException {
-
+                              @RequestParam("txtavatar") MultipartFile multipartFile,
+                              HttpSession session
+                              ) throws IOException {
         MessageOject messageOject = customerService.editProfile(UserInfo,multipartFile,"customer");
+        session.setAttribute("EditMessage",messageOject);
         return "redirect:/customer/account/" + UserInfo.getUsername();
     }
 

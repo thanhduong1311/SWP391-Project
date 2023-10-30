@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("")
@@ -145,7 +146,7 @@ public class AuthController {
 
             model.getAttribute("User");
             if (cookieToken == null&& sessionToken==null) {
-                return "/customer/home";
+                return "customer-home";
             }else {
                 String token=cookieToken!=null?cookieToken:sessionToken;
                 Claims claim = null;
@@ -155,11 +156,14 @@ public class AuthController {
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
+
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
+
                           return "redirect:/customer";
+
                     }
                     case "EMPLOYEE" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
@@ -192,8 +196,10 @@ public class AuthController {
         CustomerResponse response = createAccountService.createAccount(request);
         if(response.getStateCode() == 1) {
 
+
             String mes = response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage();
             session.setAttribute("SignupMessage",mes);
+
 
             emailService.sendEmail(response.getMessageOject().getEmailMessage());
             return "redirect:/login";
@@ -238,93 +244,97 @@ public class AuthController {
         return "redirect:/login";
     }
 
-
+    @GetMapping("/returnForgetpassword")
+    public String viewRetypeEmail(HttpSession session,HttpServletRequest request,HttpServletResponse response){
+        session.removeAttribute("InputValue");
+        session.removeAttribute("OTP");
+        Cookie cookie = WebUtils.getCookie(request,"RToken");
+        if (cookie!=null){
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+        return "redirect:/forgetpassword";
+    }
     @GetMapping("/forgetpassword")
-    public String showForgotpassword(HttpServletRequest request,
+    public String viewForgetPassword(HttpServletRequest request,
+                                     @CookieValue(name = "RToken",required = false) String rtoken,
                                      HttpSession session,
                                      Model model){
-
-        String message =(String) session.getAttribute("MessageError");
-        String check = (String) session.getAttribute("checkResult");
-        model.addAttribute("EmailSpace",session.getAttribute("EmailValue"));
-        model.addAttribute("MessageError",message);
-
-        if (WebUtils.getCookie(request,"RToken")!=null && check ==null){
-            model.addAttribute("MessageSuccess","Send email success!Please check your email!");
-            model.addAttribute("Confirm","OK");
-        }
-        else if (WebUtils.getCookie(request,"RToken")!=null && check !=null){
-            if(check.equals("True")){
-                return "redirect:/changepassword";
-            }
-            model.addAttribute("ErrorMessage",message);
-            model.addAttribute("Message","");
-            model.addAttribute("Confirm","OK");
-        }else if(WebUtils.getCookie(request,"RToken")==null && message!=null){
-            model.addAttribute("Confirm","Error");
-            model.addAttribute("ErrorMessage","Code is expired. Please send email again!");
-        }
-
+        MessageOject checkEmail = (MessageOject)session.getAttribute("EmailCheckMessage");
+        session.removeAttribute("EmailCheckMessage");
+        model.addAttribute("InputValue",session.getAttribute("InputValue"));
+       if (rtoken!=null){
+           if (checkEmail!=null) {
+               model.addAttribute("Message","Success#Send email successfully");
+           }
+           if(session.getAttribute("MessageCheckOTP")!=null){
+               MessageOject messageOject =(MessageOject)session.getAttribute("MessageCheckOTP");
+               if (Objects.equals(messageOject.getName(), "Failed")){
+                   model.addAttribute("Message",messageOject.getName()+"#"+messageOject.getMessage());
+                   session.removeAttribute("MessageCheckOTP");
+               }else{
+                   return "redirect:/changepassword";
+               }
+           }
+           session.setAttribute("OTP","Yes");
+           model.addAttribute("OTP","Yes");
+       }else{
+           if (checkEmail==null) {
+               if (session.getAttribute("OTP")=="Yes"){
+                   model.addAttribute("Message","Failed#Code is expired!\nPlease try again");
+                   model.addAttribute("OTP","Yes");
+                   return "forget-password";
+               }
+               model.addAttribute("InputValue",null);
+           }
+           else if (Objects.equals(checkEmail.getName(), "Failed")) {
+               session.removeAttribute("InputValue");
+               model.addAttribute("Message","Failed#This email is not registed yet!");
+               session.setAttribute("OTP","No");
+               model.addAttribute("OTP","No");
+           }else{
+           }
+       }
         return "forget-password";
     }
     @PostMapping("/forgetpassword")
-    public String forgetPassword(HttpServletResponse response,
-                                 Model model,
-                                 HttpSession session,
-                                 @ModelAttribute("txtEmail") String email
+    public String checkToSendEmail(HttpServletResponse response,
+                                   Model model,
+                                   HttpSession session,
+                                   @ModelAttribute("txtEmail") String email
                                  ) {
-
-        System.out.println();
 
         if (email==null||email.isEmpty()){
             return "redirect:/forgetpassword";
         }
-        session.setAttribute("EmailValue",email);
-        System.out.println("===================================================");
-        //Bam nut Send email hoac Confirm code
-        //Neu co token (nhap code xong bam "Confirm"
-       if (customerRepository.findByEmail(email)!=null||employeeRepository.findByEmail(email)!=null)
+        session.setAttribute("InputValue",email);
+       if (userService.checkEmail(email)!=0)//neu email ton tai trong he thong
             {
                 RecoverPassword recover = userService.createCodeRecover(email);
                 emailService.sendEmail(recover.getEmailDetails());
                 Cookie cookie = new Cookie("RToken",recover.getToken());
                 cookie.setMaxAge(recover.getExpiration());
                 response.addCookie(cookie);
-                session.setAttribute("checkResult",null);
+                session.setAttribute("OTPSended","Success");
+                session.setAttribute("EmailCheckMessage",new MessageOject("Success",email,null));
             }
-       else{
-               session.setAttribute("MessageError","This email did not exist!");
-                }
-
+       else{session.setAttribute("EmailCheckMessage",new MessageOject("Failed",email,null));}
         return "redirect:/forgetpassword";
     }
     @PostMapping("/checkCode")
     public String checkForgetPasswordCode(Model model,
                                           HttpSession session,
                                           @CookieValue(name = "RToken",required = false) String rtoken,
-                                          @RequestParam(value="txtCode",required = false) String code
+                                          @RequestParam(value="txtCode",required = false) String code,
+                                          @RequestParam(value="txtEmail",required = false) String emailTxt
     ){
         if (rtoken == null) {
-            session.setAttribute("MessageError","Code is expired. Please send email again!");
             return "redirect:/forgetpassword";
         }
-        Claims claim = JWTService.parseJwt(rtoken);
-        //neu co noi dung token
-        if (claim!=null){
-            String email =(String) session.getAttribute("EmailValue");
-            String emailToken = claim.getSubject();
-            String codeToken = (String) claim.get("tokenConfirm");
-
-            //kiem tra emai vs code co dung vs token khong ( o email dc set ve readonly truoc do de nguoi dung khong thay doi dc
-            if (emailToken.equals(email) && code.trim().equals(codeToken)){
-                session.setAttribute("checkResult","True");
-                return "redirect:/changepassword";
-            }else {
-                session.setAttribute("checkResult","Wrong");
-                session.setAttribute("MessageError","Wrong code please try again!");
-                return "redirect:/forgetpassword";
-            }
-        }
+        String email = String.valueOf(session.getAttribute("InputValue"));
+        if (email==null) email= emailTxt;
+       MessageOject mo = userService.checkOTPEmail(rtoken,code,email);
+       session.setAttribute("MessageCheckOTP",mo);
         return "redirect:/forgetpassword";
     }
     @GetMapping("/changepassword")

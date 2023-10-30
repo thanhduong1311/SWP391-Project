@@ -35,10 +35,12 @@ public class AdminHomeController {
         }
 
 
+
         String s  =(String) session.getAttribute("Message");
         session.removeAttribute("Message");
 
         model.addAttribute("loginSuccess", s);
+
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
