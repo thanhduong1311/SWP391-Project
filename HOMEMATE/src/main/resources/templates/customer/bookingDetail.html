@@ -136,15 +136,21 @@
           <h4 th:if="${jobDetail.getStatus().ordinal() == 3}" class="ml-2 text-danger text-decoration-line-through">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
           <h4 th:if="${jobDetail.getStatus().ordinal() != 3}" class="ml-2 ">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
         </div>
-        <div
-                th:if="*{jobDetail.getStatus().ordinal() == 2}"
-          class=" p-3 d-flex justify-content-end">
-          <a
-            th:href="@{/customer/history/feedback/{id}(id=${jobDetail.getJobID()})}"
-            class="btn feedBackBtn"
-            >Feedback</a
-          >
+
+        <div class="card-footer p-3 d-flex justify-content-end">
+          <a  th:if="*{jobDetail.getStatus().ordinal() != 0}" th:href="@{/customer/history/report/{id}(id=${jobDetail.getJobID()})}"
+             class="btn feedBackBtn">
+            Report
+          </a>
+          <div >
+            <a th:if="*{jobDetail.getStatus().ordinal() == 2}" th:href="@{/customer/history/feedback/{id}(id=${jobDetail.getJobID()})}"
+               class="btn feedBackBtn">
+              Feedback
+            </a>
+          </div>
+
         </div>
+
       </div>
     </div>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>

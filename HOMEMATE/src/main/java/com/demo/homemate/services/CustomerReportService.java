@@ -1,8 +1,10 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
+import com.demo.homemate.dtos.feedback.FeedbackRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
+import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.ICustomerReportService;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +60,6 @@ public class CustomerReportService implements ICustomerReportService {
             Service service = serviceRepository.findById(job.getServiceId().getServiceId());
             Employee employee = employeeRepository.findById(job.getEmployeeId().getEmployeeId());
             Customer customer = customerRepository.findById(job.getCustomerId().getCustomerId());
-
             cjd.setReportId(id);
             cjd.setEmployeeID(employee.getEmployeeId());
             cjd.setCustomerId(customer.getCustomerId());
@@ -76,11 +77,40 @@ public class CustomerReportService implements ICustomerReportService {
         }
         return cjd;
     }
-
+    @Override
+    public CustomerReportJob getReportByJobID(int id) {
+        Job job  = jobRepository.findById(id);
+        CustomerReportJob cjd = new CustomerReportJob();
+        if (job==null){
+            return null;
+        }
+        if(job.getReport()!=null){
+            cjd.setReason(job.getReport().getReason());
+        }
+        try {
+            Service service = serviceRepository.findById(job.getServiceId().getServiceId());
+            Employee employee = employeeRepository.findById(job.getEmployeeId().getEmployeeId());
+            Customer customer = customerRepository.findById(job.getCustomerId().getCustomerId());
+            cjd.setReportId(id);
+            cjd.setEmployeeID(employee.getEmployeeId());
+            cjd.setCustomerId(customer.getCustomerId());
+            cjd.setEmployeeName(employee.getFullName());
+            cjd.setCustomerName(customer.getFullName());
+            cjd.setService(service.getName());
+            cjd.setJobId(job.getJobId());
+            cjd.setStart(job.getStart());
+            cjd.setEnd(job.getEnd());
+            cjd.setAddress(customer.getAddress_detail());
+            cjd.setDescription(job.getDescription());
+        } catch (Exception e) {
+            throw e;
+        }
+        return cjd;
+    }
     @Override
     public MessageOject deleteReport(int id) {
         try {
-            Report report = reportRepository.findById(id);
+            Report report = reportRepository.findReportByJobID(id);
             if(report == null) {
                 return new MessageOject("Failed", "Can not delete this report",null);
             } else {
@@ -91,4 +121,23 @@ public class CustomerReportService implements ICustomerReportService {
             throw e;
         }
     }
+
+    @Override
+    public MessageOject report(CustomerReportJob customerReportJob) {
+        CustomerMapping customerMapping= new CustomerMapping();
+        try {
+            Customer customer = customerRepository.findById(customerReportJob.getCustomerId());
+            Job job = jobRepository.findById(customerReportJob.getJobId());
+            Report oldReport = reportRepository.findReportByJobID(customerReportJob.getJobId());
+            Report report = customerMapping.toReport(customerReportJob,oldReport, customer, job);
+            reportRepository.save(report);
+            MessageOject mo = new MessageOject("Success", "Save report successfully", null);
+            return mo;
+        }catch(Exception e){
+
+            System.out.println(e.getMessage());
+        }
+        return new MessageOject("Fail","Error save report",null);
+    }
+
 }

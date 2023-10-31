@@ -1,3 +1,6 @@
+<!--
+<h1>NHAM TRANG HOMEPAGE</h1>
+&lt;!&ndash;
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
@@ -33,12 +36,23 @@
   </style>
 </head>
 <body class="animate__animated animate__fadeIn">
-<!-- Header -->
+<<<<<<< HEAD:HOMEMATE/src/main/resources/templates/customer/oldCUSTOMERHome.html
+&lt;!&ndash; Header &ndash;&gt;
+<header>
+  <nav
+          class="navbar navbar-expand-lg bg-body-tertiary fs-4">
+    <div class="container">
+      <a class="navbar-brand fs-2" th:href="@{/customer/home}">
+        <icon class="bi-gem"></icon>
+        Homemate
+=======
+&lt;!&ndash; Header &ndash;&gt;
 <header class="header">
   <nav id="navBar">
     <div class="logoNav">
       <a class="navbar-brand fs-2" href="/guest">
         <img src="/assets/images/HomeMate.png" alt="" class="logo">
+>>>>>>> 511408786e30e87962e25ec3d1dac254dce10990:HOMEMATE/src/main/resources/templates/customer/customer-homeErr.html
       </a>
     </div>
 
@@ -132,7 +146,7 @@
                     <div class="shadow-lg rounded-5">
                       <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getName()})}">
                         <h3 th:text="${services[i].getName()}">Dọn dẹp 1 giờ</h3>
-                        <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
+                        &lt;!&ndash;<small>(2 phòng, 55 m<sup>2</sup>)</small>&ndash;&gt;
                         <hr />
                         <h2 class="ms-2 mt-4" th:text="${services[i].getPrice()}">$<sup>đ</sup></h2>
                         <h4 class="mt-5">Chi tiết dịch vụ:</h4>
@@ -180,15 +194,26 @@
   </div>
 </main>
 
+<<<<<<< HEAD:HOMEMATE/src/main/resources/templates/customer/oldCUSTOMERHome.html
+&lt;!&ndash; Footer &ndash;&gt;
+=======
 <div id="toast"></div>
 
-<!-- Footer -->
+&lt;!&ndash; Footer &ndash;&gt;
+>>>>>>> 511408786e30e87962e25ec3d1dac254dce10990:HOMEMATE/src/main/resources/templates/customer/customer-homeErr.html
 <footer class="text-center text-dark">
   <div class="text-center p-3">© 2023 Homemade</div>
-  <!-- Copyright -->
+  &lt;!&ndash; Copyright &ndash;&gt;
 </footer>
-<!-- Footer -->
+<<<<<<< HEAD:HOMEMATE/src/main/resources/templates/customer/oldCUSTOMERHome.html
+&lt;!&ndash; Footer &ndash;&gt;
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<div id="toast"></div>
+
+=======
+&lt;!&ndash; Footer &ndash;&gt;
 <div style="display: none" id="script" th:text="${LoginMessage}"> </div>
+>>>>>>> 511408786e30e87962e25ec3d1dac254dce10990:HOMEMATE/src/main/resources/templates/customer/customer-homeErr.html
 <script src="/assets/js/toast.js"></script>
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
 <script >
@@ -198,3 +223,5 @@
 
 </body>
 </html>
+&ndash;&gt;
+-->

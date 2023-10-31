@@ -144,11 +144,13 @@
                 </div>
                     <div class=" mb-3 col-md-6">
                         <label for="exampleFormControlSelect1">Select Service</label>
-                        <select class="form-control" id="exampleFormControlSelect1"  th:field="*{bookingInfor.serviceId}">
+                        <select class="form-control #selectTag" id="exampleFormControlSelect1" th:field="*{bookingInfor.serviceId}">
                             <div th:each="ser:${service}">
                                 <option th:value="*{ser.getServiceId()}" th:text="*{ser.getName()}"></option>
                             </div>
                         </select>
+
+
                     </div>
                     <div class=" mb-3 col-md-6">
                         <div class="payment-type">
@@ -161,7 +163,14 @@
 
                         </div>
                     </div>
-
+                <div class="form-group mb-3 col-md-6">
+                    <label for="RankDiscount">Discount:</label>
+                    <input th:value="'Rank '+${ranking.getName()}+': '+'-'+${ranking.getDiscount()}+'%'" name="RankDiscount" type="text" class="form-control" id="RankDiscount" readonly>
+                </div>
+                <div class="form-group mb-3 col-md-6">
+                    <label for="ServiceDiscount">Discount:</label>
+                    <input th:value="'Rank '+${ranking.getName()}+': '+'-'+${ranking.getDiscount()}+'%'" name="ServiceDiscount" type="text" class="form-control" id="ServiceDiscount" readonly>
+                </div>
                     <div class=" mb-3">
                         <label for="description">Job description</label>
                         <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>
@@ -212,7 +221,6 @@
 <script src="/assets/js/MapService.js"></script>
 
 <!--<div style="display: none" id="script" th:text="*{SignupMessage}"> </div>-->
-
 
 <script >
 

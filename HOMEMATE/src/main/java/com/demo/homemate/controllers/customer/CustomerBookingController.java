@@ -5,10 +5,12 @@ import com.demo.homemate.dtos.job.request.JobRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.payment.PaymentRequest;
 import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Ranking;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.AdminService;
 import com.demo.homemate.services.EmailService;
+import com.demo.homemate.services.RankingService;
 import com.demo.homemate.services.interfaces.*;
 import com.demo.mservice.enums.RequestType;
 import com.demo.mservice.momo.MomoPay;
@@ -36,6 +38,8 @@ public class CustomerBookingController {
 
     private final CustomerRepository customerRepository;
 
+    private final RankingService rankingService;
+
     @GetMapping("/form")
     public String createBooking(Model model,
                                 @CookieValue(name = "Token",required = false) String cookieToken,
@@ -60,6 +64,10 @@ public class CustomerBookingController {
                     jr.setCustomerPhone(customer.getPhone());
                     jr.setCustomerAddress(customer.getAddress_detail()+", " +
                     customer.getDistrict() + ", " + customer.getCity());
+                    Ranking ranking = rankingService.getRank(username);
+                    if (ranking!=null){
+                        model.addAttribute("ranking",ranking);
+                    }
                     model.addAttribute("bookingInfor",jr);
                     model.addAttribute("service", serviceService.getAllServices());
                     return "customer/booking";
@@ -87,9 +95,14 @@ public class CustomerBookingController {
         request.setCustomerID(customerRepository.findByUsername(username).getCustomerId());
 
         System.out.println("location : "+ request.getLocation());
-
+        Ranking ranking = rankingService.getRank(username);
+        int rankID=0;
+        if (ranking!=null){
+           rankID = ranking.getRankId();
+        }
         double rawPrice = paymentService.getTotalMoney(request.getTimeService(), request.getServiceId());
-        long amount = paymentService.convertMoney(rawPrice);
+        double discountedPrice = paymentService.getDiscount(rawPrice,rankID,request.getServiceId());
+        long amount = paymentService.convertMoney(discountedPrice);
         String serviceName = serviceService.getServiceDetail(request.getServiceId()).getName();
 
         request.setAmount(amount);
@@ -100,11 +113,9 @@ public class CustomerBookingController {
         pr.setAmount(amount);
         pr.setCustomerID(request.getCustomerID());
 
-
         if(request.getPaymentType() == 0) {
                 model.addAttribute("JobRequest", request);
                 model.addAttribute("PaymentRequest",pr);
-
                 MessageOject messageOject = bookingService.createJobWithoutPayment(request);
                 System.out.println(messageOject.getMessage());
 

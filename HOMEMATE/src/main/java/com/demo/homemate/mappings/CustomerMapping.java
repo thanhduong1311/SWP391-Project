@@ -1,20 +1,24 @@
 package com.demo.homemate.mappings;
 
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
+import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
 import com.demo.homemate.dtos.feedback.FeedbackRequest;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Feedbacks;
 import com.demo.homemate.entities.Job;
+import com.demo.homemate.entities.Report;
 import com.demo.homemate.mappings.interfaces.ICustomerMapping;
 
 import com.demo.homemate.repositories.CustomerRepository;
 
+import com.demo.homemate.repositories.ReportRepository;
 import com.demo.homemate.utils.JobTimer;
 
 import com.demo.homemate.utils.UploadPicture;
 import lombok.SneakyThrows;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class CustomerMapping implements ICustomerMapping {
@@ -63,14 +67,30 @@ public class CustomerMapping implements ICustomerMapping {
  return rbR;
     }
     public Feedbacks tofeedback(FeedbackRequest fb, Customer c, Job j) {
-         final CustomerRepository customerRepository;
         Feedbacks feedbacks = new Feedbacks();
         feedbacks.setFeedbackId(fb.getFeedbackId());
+        System.out.println("ĐANG CHUẢN HÓA: "+fb.getFeedbackId());
         feedbacks.setCustomerId(c);
         feedbacks.setJobId(j);
         feedbacks.setPoint(fb.getPoint());
         feedbacks.setDetail(fb.getDetail());
         return feedbacks;
+    }
+    public Report toReport(CustomerReportJob crj,Report old, Customer c, Job j) {
+        Report report = new Report();
+        report.setCustomerId(c);
+        report.setJobId(j);
+        if (crj.getReason()!=null){
+            report.setReason(crj.getReason());
+        }
+        if (old!=null){
+            report.setReportId(old.getReportId());
+            report.setCreateAt(old.getCreateAt());
+            report.setUpdateAt(new Date());
+        }else{
+            report.setCreateAt(new Date());
+        }
+        return report;
     }
 
 

@@ -5,13 +5,17 @@ import com.demo.homemate.entities.Customer;
 import com.demo.homemate.enums.PaymentType;
 import com.demo.homemate.enums.RequestStatus;
 import com.demo.homemate.enums.Role;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+@Builder
 public class CustomerReportJob {
     private int reportId;
     private int jobId;

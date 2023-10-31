@@ -49,9 +49,7 @@ public class AuthenticationService implements IAuthenticationService {
      */
     public AuthenticationResponse authentication(AuthenticationRequest request) {
 
-
            int check =  userService.checkLogin(request);
-
 
            if(check ==1 ) {
                var user = employeeRepository.findByUsername(request.getUsername());

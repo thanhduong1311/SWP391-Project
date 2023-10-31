@@ -33,6 +33,7 @@ public class EmployeeRequestService implements IEmployeeRequestService {
 
     private final PaymentService paymentService;
 
+    private final RankingService rankingService;
 
     @Override
     public List<EmployeeCancelJobRequest> getRequestList() {
@@ -110,9 +111,12 @@ public class EmployeeRequestService implements IEmployeeRequestService {
                double realMoney = rawPrice -rawPrice*0.02;
 
                 if(job.getPaymentType()== PaymentType.BANKING) {
-
-                    double money = customer.getBalance() + rawPrice;
-
+                    Ranking ranking = rankingService.getRank(request.getJobId().getCustomerId().getUsername());
+                    int rankID=0;
+                    if (ranking!=null){
+                        rankID = ranking.getRankId();
+                    }
+                    double money = customer.getBalance() + paymentService.getDiscount(rawPrice,rankID,request.getJobId().getServiceId().getServiceId());
                     BigDecimal bd = new BigDecimal(money);
                     bd = bd.setScale(4, RoundingMode.HALF_UP);
                     money = bd.doubleValue();
@@ -134,7 +138,6 @@ public class EmployeeRequestService implements IEmployeeRequestService {
                }
 
                job.setStatus(JobStatus.CANCEL);
-
                er.setDecisionAt(new Date());
                er.setStatus(RequestStatus.APPROVED);
                employeeRequestRepository.save(er);

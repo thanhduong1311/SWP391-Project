@@ -105,11 +105,7 @@ public class AuthController {
         session.setAttribute("SignupMessage","Failed#Username or password is incorrect!");
         return "redirect:/login";
     }
-
-
     }
-
-
     /**
      * view của login
      * @param model
@@ -152,11 +148,9 @@ public class AuthController {
                 Claims claim = null;
                 claim = JWTService.parseJwt(token);
                 if (claim==null) {return "/login";}
-                System.out.println(claim.getSubject() + "1678468734628764823764");
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
-
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {
@@ -289,6 +283,7 @@ public class AuthController {
            if (checkEmail==null) {
                if (session.getAttribute("OTP")=="Yes"){
                    model.addAttribute("Message","Failed#Code is expired!\nPlease try again");
+
                    model.addAttribute("OTP","Yes");
                    return "forget-password";
                }
@@ -300,6 +295,7 @@ public class AuthController {
                session.setAttribute("OTP","No");
                model.addAttribute("OTP","No");
            }else{
+
            }
        }
         return "forget-password";
@@ -352,18 +348,24 @@ public class AuthController {
             model.addAttribute("newPass",new newPasswordRequest());
         }else{
             model.addAttribute("newPass",newPass);
-        }
-
-return "new-password";
+        } return "new-password";
     }
     @PostMapping("/changepassword")
     public String checkChangePassword(Model model,
                                       HttpSession session,
                                       HttpServletRequest request,
+                                      HttpServletResponse response,
                                       newPasswordRequest newPass) throws NoSuchAlgorithmException {
         if (newPass.getNewPassword().equals(newPass.getRenewPassword())){
             String email =(String) session.getAttribute("EmailValue");
             userService.ChangePassword(email, newPass.getRenewPassword());
+            session.removeAttribute("MessageCheckOTP");
+            session.removeAttribute("OTP");
+            Cookie cookie = WebUtils.getCookie(request,"RToken");
+            if (cookie!=null){
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
                 return "redirect:/login";
         }else{
 
