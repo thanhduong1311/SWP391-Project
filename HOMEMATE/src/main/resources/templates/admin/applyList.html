@@ -12,6 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
+    <link rel="stylesheet" href="/assets/css/admin.css">
+
     <link rel="stylesheet" href="/assets/css/toastMessage.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -77,8 +79,7 @@
     </nav>
   </header>
     <section
-      class="vh-100"
-      style="background-color: #eee">
+      class=" " >
       <div class="container py-5">
         <div
           class="row d-flex justify-content-center align-items-center">
@@ -90,21 +91,21 @@
                   <h3 class="mb-0 col-2">
                     <a
                        th:href="@{/admin/userManagement/customers}"
-                      class="btn btn-dark"
+                      class="btn adminBtn w-100"
                       >Customer List</a
                     >
                   </h3>
                   <h3 class="mb-0 col-2">
                     <a
                             th:href="@{/admin/userManagement/employees}"
-                            class="btn btn-dark"
+                            class="btn adminBtn w-100"
                     >Employee List</a
                     >
                   </h3>
                   <h3 class="mb-0 col-2">
                     <a
                             th:href="@{/admin/userManagement/applies}"
-                            class="btn btn-dark  disabled-link"
+                            class="btn adminBtn  disabled-link w-100"
                     >Apply List</a
                     >
                   </h3>
@@ -118,7 +119,7 @@
                   position: relative;
                   height: 400px;
                 ">
-                <h3>Apply List</h3>
+                <h3 class="text-center">Apply List</h3>
 
                 <table class="table mb-0">
                   <thead>
@@ -150,7 +151,7 @@
                         class="align-middle td-btn">
                         <a
                                 th:href="@{/admin/userManagement/partner/{id}(id=${partner.getEmployeeId()})}"
-                          class="btn btn-primary"
+                          class="btn adminBtn"
                           >Detail</a
                         >
                       </td>
@@ -168,6 +169,13 @@
       </div>
     </section>
 
+
+  <footer class="text-center text-dark mt-3">
+    <div class="text-center p-3">
+      © 2023 Homemade
+    </div>
+    <!-- Copyright -->
+  </footer>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
   <div id="toast"></div>

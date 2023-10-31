@@ -191,6 +191,7 @@ public class UserManagementController {
 
     //unblock employee
 
+    @GetMapping("/employee/unblock/{id}")
     public String unblockEmployee(@PathVariable("id") int id, Model model, HttpSession session) {
         MessageOject messageOject = adminService.unBlockEmployee(id);
         session.setAttribute("UnLockAccountMessage", new MessageOject("Success","Unblock account successfully",null));
