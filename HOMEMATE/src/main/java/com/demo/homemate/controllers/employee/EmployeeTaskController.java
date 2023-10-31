@@ -56,9 +56,9 @@ public class EmployeeTaskController {
     public String viewJobDetail(Model model, @PathVariable("id") int id, HttpSession session) {
         JobDetail  job = employeeService.viewDetailJob(id);
 
-        String s  = (String) session.getAttribute("JobMessage");
-        session.removeAttribute("JobMessage");
-        model.addAttribute("JobMessage",s);
+        String s  = (String) session.getAttribute("EmployeeMessage");
+        session.removeAttribute("EmployeeMessage");
+        model.addAttribute("EmployeeMessage",s);
 
         model.addAttribute("job",job);
         return "employee/jobDetail";
@@ -110,7 +110,7 @@ public class EmployeeTaskController {
         MessageOject messageOject = employeeService.takeJob(id,empID);
 
         System.out.println(messageOject.getMessage());
-        session.setAttribute("JobMessage", messageOject.getName()+"#"+messageOject.getMessage());
+        session.setAttribute("EmployeeMessage", messageOject.getName()+"#"+messageOject.getMessage());
 
 
         return "redirect:/employee/job/" + id;
@@ -131,18 +131,23 @@ public class EmployeeTaskController {
 
         MessageOject messageOject = employeeService.doneJob(id,empID);
 
-        session.setAttribute("JobMessage", messageOject.getName()
+        session.setAttribute("EmployeeMessage", messageOject.getName()
                 +"#" +messageOject.getMessage());
 
-        System.out.println(messageOject.getMessage());
+
 
         return "redirect:/employee/job/" + id;
     }
 
     @GetMapping("/cancel/{id}")
-    public String cancelJobView(@PathVariable("id") int id,Model model) {
+    public String cancelJobView(HttpSession session,@PathVariable("id") int id,Model model) {
 
         JobDetail  job = employeeService.viewDetailJob(id);
+
+        String s  = (String) session.getAttribute("EmployeeMessage");
+        session.removeAttribute("EmployeeMessage");
+        model.addAttribute("EmployeeMessage",s);
+
 
         model.addAttribute("job",job);
         model.addAttribute("reason",new CreateCancelRequest());
@@ -155,12 +160,10 @@ public class EmployeeTaskController {
 
         MessageOject messageOject = employeeService.cancelJob(id, reason.getReason());
 
-        session.setAttribute("JobMessage", messageOject.getName()
+        System.out.println(messageOject.getMessage());
+        session.setAttribute("EmployeeMessage", messageOject.getName()
         +"#" +messageOject.getMessage());
 
-        System.out.println(messageOject.getName());
-
-        System.out.println(messageOject.getMessage());
         return "redirect:/employee/job/" + id;
     }
 

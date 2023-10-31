@@ -1,0 +1,51 @@
+.main-schedule {
+    width: 100%;
+    margin-top: 70px;
+    padding: 0 80px;
+}
+
+.calendar-sidebar {
+    background-color: #ff9b5ce3;
+}
+
+.month active-month {
+    background-color: #c26a32;
+}
+
+.calendar-sidebar>.month-list>.calendar-months>li.active-month {
+     background-color: #c26a32;
+ }
+
+.calendar-sidebar>span#sidebarToggler {
+    background-color: #ff9b5ce3;
+
+}
+
+th[colspan="7"] {
+    color: #ff9b5ce3;
+}
+
+#eventListToggler  {
+    background-color: #ff9b5ce3;
+}
+
+.event-container>.event-icon>div.event-bullet-holiday, .event-indicator>.type-bullet>div.type-holiday {
+
+}
+
+.schedule {
+    margin: 0 160px;
+}
+
+#evoCalendar {
+}
+
+.detailBtn {
+    border: 1px solid #ff9b5ce3;
+    color: #000;
+}
+
+.detailBtn:hover {
+    background-color: #ff9b5ce3;
+    color: #fff;
+}

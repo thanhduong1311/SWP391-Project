@@ -72,6 +72,7 @@ public class EmployeeService implements IEmployeeService {
                 jobOverView.setJobID(j.getJobId());
                 jobOverView.setCustomerAvt(j.getCustomerId().getAvatar());
                 jobOverView.setPaymentType(j.getPaymentType());
+                    jobOverView.setJobInCalendar(JobTimer.convertDateToString(j.getStart()));
 
                 availableJob.add(jobOverView);
             }}

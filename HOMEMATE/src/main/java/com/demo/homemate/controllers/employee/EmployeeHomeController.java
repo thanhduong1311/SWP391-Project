@@ -5,6 +5,7 @@ import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.EmployeeRepository;
+import com.demo.homemate.services.ServiceService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @RequiredArgsConstructor
 public class EmployeeHomeController {
 
+    private final ServiceService serviceService;
     private final EmployeeRepository employeeRepository;
+
     @GetMapping({"", "home"})
     public String viewEmployeePage(Model model,
                                    HttpServletRequest request,
@@ -32,7 +35,7 @@ public class EmployeeHomeController {
 
         String s  = (String) session.getAttribute("LoginMessage");
         session.removeAttribute("LoginMessage");
-        model.addAttribute("LoginMessage",s);
+        model.addAttribute("EmployeeMessage",s);
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
@@ -49,6 +52,7 @@ public class EmployeeHomeController {
                     AccountResponse employee = new AccountMapper().toEmployeeResponse(employeeRepository.findByUsername(username));
                     //  List all services
                     model.addAttribute("AccountInfo",employee);
+                    model.addAttribute("services", serviceService.getAllDetailServices());
                     return "/employee/home";
                 }
                 else return "redirect:/home";

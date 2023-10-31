@@ -1,0 +1,130 @@
+main {
+    width: 100%;
+
+}
+
+.options a:hover {
+    background-color: #ff914d17;
+    color: #000;
+}
+
+section {
+    margin-top: 120px;
+    margin-bottom: 60px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+section.sectionCancel {
+    margin-top: 90px;
+    margin-bottom: 60px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.cusAvt {
+   width: 55px;
+height: 55px;
+    border: 1px solid #ff9b5ce3;
+}
+
+.detailBtn {
+    border: 1px solid #ff9b5ce3;
+    color: #000;
+}
+
+.detailBtn:hover {
+    background-color: #ff9b5ce3;
+    color: #fff;
+}
+
+.card {
+
+}
+
+footer.footerJoblist {
+    position: relative;
+    margin: 0;
+    right: 0;
+    left: 0;
+    position: unset;
+}
+body {
+}
+
+section .row {
+    margin: 0;
+}
+
+.card-header {
+    background-color: #ff9b5ce3;
+}
+
+
+
+
+.info {
+    line-height: 19px;
+}
+
+.name {
+    color: #4c40e0;
+    font-weight: 600;
+}
+
+.order {
+    font-weight: 400;
+    color: #2b2b2b;
+}
+.detail {
+    line-height: 19px;
+}
+
+.summery {
+    color: #2b2b2b;
+    font-weight: 400;
+}
+
+.text {
+    line-height: 15px;
+}
+.new {
+    color: #000;
+    font-weight: 600;
+}
+.money {
+    font-weight: 500;
+}
+.address {
+    color: #2b2b2b;
+    font-weight: 500;
+}
+
+.main-jobDetail {
+
+}
+
+ h2 {
+    color: #fff;
+}
+
+ .jobDTInfor {
+     display: flex;
+     justify-content: space-between;
+ }
+
+#map {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 600px; height: 600px
+}
+
+.main-empProfile {
+    margin-top: 120px;
+    width: 100%;
+    padding: 0 80px ;
+}
+
+#avatarPreview {
+    height: 100px;
+}

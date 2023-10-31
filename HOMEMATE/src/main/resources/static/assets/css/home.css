@@ -11,7 +11,7 @@ logoNav {
   height: 100%;
 }
 .logo {
-  width: 80px;
+  width: 100px;
   aspect-ratio: 1;
 }
 
@@ -22,7 +22,7 @@ logoNav {
   right: 0;
   left: 0;
   z-index: 50;
-  border-bottom: 99px solid #ff9b5ce3;
+  border-bottom: 102px solid #ff9b5ce3;
 }
 
 .container {
@@ -214,4 +214,11 @@ footer {
   bottom: 0;
   right: 0;
   left:0;
+}
+
+.footerAbsolute {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }

@@ -210,8 +210,11 @@ public class AuthController {
     }
 
     @GetMapping("/guest")
-    public String guestPage(Model model) {
+    public String guestPage(Model model,HttpSession session) {
         model.addAttribute("services", serviceService.getAllDetailServices());
+        String s = (String) session.getAttribute("RegisterPartner");
+        session.removeAttribute("RegisterPartner");
+        model.addAttribute("RegisterPartner",s);
         return "home";
     }
     @GetMapping("/services/{name}")
@@ -358,7 +361,8 @@ return "new-password";
                 return "redirect:/login";
         }else{
 
-            newPass.setMessage("Password not matching");
+            String mes = "Failed#Password and confirm password is not matching";
+            session.setAttribute("SignupMessage",mes);
         }
         return changePassword(model,request,newPass);
     }
@@ -371,19 +375,16 @@ return "new-password";
     }
 
     @PostMapping("/partnerRegister")
-    public String partnerRegister(Model model, PartnerRegisterRequest request) {
+    public String partnerRegister(Model model, PartnerRegisterRequest request,HttpSession session) {
         System.out.println(request.toString());
         PartnerResponse response = createAccountService.createAccount(request);
         if(response.getStateCode() == 1) {
             model.addAttribute("PartnerRegiter", response.getMessageOject());
             emailService.sendEmail(response.getMessageOject().getEmailMessage());
-            System.out.println(response.getMessageOject().getMessage());
-            System.out.println("********************************************************************************** SUCCESS");
+            session.setAttribute("RegisterPartner",response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage());
             return "redirect:/guest";
         }else {
-            model.addAttribute("PartnerRegiter", response.getMessageOject().getMessage());
-            System.out.println(response.getMessageOject());
-            System.out.println("********************************************************************************** FAILED");
+            session.setAttribute("RegisterPartner",response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage());
             return viewPartnerRegister(model);
         }
     }

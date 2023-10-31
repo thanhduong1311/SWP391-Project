@@ -91,7 +91,7 @@ public class CreateAccountService {
             emailDetails.setSubject(mailContents.getTitle());
             emailDetails.setMsgBody(mailContents.EmployeeRegisterSucess());
 
-            response.setMessageOject(new MessageOject("Success", "Create account successfully!",emailDetails));
+            response.setMessageOject(new MessageOject("Success", "Partner register successfully! Please wait for approve to start working!",emailDetails));
 
             return response;
         } else {

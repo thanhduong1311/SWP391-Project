@@ -484,5 +484,18 @@
 </footer>
 <!-- Footer -->
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+
+<div id="toast"></div>
+
+<script src="/assets/js/toast.js"></script>
+
+
+<div style="display: none" id="script" th:text="*{RegisterPartner}"> </div>
+
+<script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+</script>
 </body>
 </html>
