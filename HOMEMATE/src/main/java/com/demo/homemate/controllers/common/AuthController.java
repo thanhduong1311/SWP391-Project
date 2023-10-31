@@ -148,11 +148,9 @@ public class AuthController {
                 Claims claim = null;
                 claim = JWTService.parseJwt(token);
                 if (claim==null) {return "/login";}
-                System.out.println(claim.getSubject() + "1678468734628764823764");
                 switch (claim.getSubject()) {
                     case "ADMIN" -> {
                         session.setAttribute("LoginMessage", "Success#Login successfully");
-
                         return "redirect:/admin";
                     }
                     case "CUSTOMER" -> {

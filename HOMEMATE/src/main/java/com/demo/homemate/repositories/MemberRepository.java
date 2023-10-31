@@ -7,9 +7,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Ranking,Integer> {
+public interface MemberRepository extends JpaRepository<Member,Integer> {
 
-        @Query("SELECT m FROM Member m WHERE m.customer = :customer")
-        Member findByCustomer(@Param("customer") Customer customer);
+        @Query("SELECT m " +
+                "FROM Member m " +
+                "WHERE m.customer.customerId = :customerID " +
+                "ORDER BY m.upRank_date DESC " +
+                "limit 1")
+        Member findByCustomerID(@Param("customerID") int customerID);
 
 }

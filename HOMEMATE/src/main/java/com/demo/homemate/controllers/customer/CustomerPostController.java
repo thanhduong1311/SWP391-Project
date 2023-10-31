@@ -116,13 +116,13 @@ public class CustomerPostController {
     public String report(Model model,
                            @CookieValue(name = "Token",required = false) String cookieToken,
                            @SessionAttribute(value="SessionToken",required = false) String sessionToken,
-                           FeedbackRequest feedbackInfo
+                           CustomerReportJob customerReportJob
     ) {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
         String token = cookieToken!=null?cookieToken:sessionToken;
-        MessageOject mo = customerService.feedback(feedbackInfo,feedbackInfo.getCustomerId());
+        MessageOject mo = customerReportService.report(customerReportJob);
         model.addAttribute("MessageFeedback",mo);
         return "redirect:/customer/history";
     }

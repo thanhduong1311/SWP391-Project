@@ -5,6 +5,8 @@ import com.demo.homemate.dtos.account.response.AccountResponse;
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.entities.Customer;
+import com.demo.homemate.entities.Member;
 import com.demo.homemate.entities.Ranking;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.mappings.CustomerMapping;
@@ -39,13 +41,19 @@ public class CustomerAccountController {
                               Model model,
                               HttpSession session) {
         CustomerMapping cm = new CustomerMapping();
-        CustomerProfileRequest profile =cm.toCustomerProfile(customerRepository.findByUsername(username));
+        CustomerProfileRequest profile =customerService.getProfile(username);
         model.addAttribute("profile",profile);
-        System.out.println(profile.getAvatar());
+        Ranking ranking = rankingService.getRank(username);
+        if (ranking!=null){
+            model.addAttribute("Ranking",ranking.getName());
+        }
+        Customer c = customerRepository.findByUsername(username);
+        MessageOject mo = rankingService.checkRank(c);
+        System.out.println("(Ben employeeservice)UPDATE RANK: " + mo.getMessage());
+
         MessageOject messageOject = (MessageOject)session.getAttribute("EditMessage");
         session.removeAttribute("EditMessage");
         if (messageOject!=null){
-            System.out.println(Objects.equals(messageOject.getName(), "Success"));
             if (Objects.equals(messageOject.getName(), "Success")){
                 model.addAttribute("EditMessage22","Success#Edit profile successfully!");
             }else{
@@ -54,7 +62,6 @@ public class CustomerAccountController {
         }model.addAttribute("EditMessage","Success#Login successfully");
         return "customer/customer-profile";
     }
-
     @GetMapping("/changePassword")
     public String changePasswordView(Model model,@CookieValue(name = "Token",required = false) String cookieToken,
                                      @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
@@ -111,11 +118,11 @@ public class CustomerAccountController {
     }
 
 
-    @GetMapping("/rank")
+   /* @GetMapping("/rank")
     public String viewRank() {
 
-        Ranking rank = rankingService.getRank(customerRepository.findById(1));
+        *//*Ranking rank = rankingService.getRank(customerRepository.findById(1));
         System.out.println(rank.toString() + " absdjhbaskdhbasyudg678wygdukjashgdiastd678yuasgudkjahgsydgasiudas");
-        return "";
-    }
+        return "";*//*
+    }*/
 }

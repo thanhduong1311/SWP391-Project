@@ -1,8 +1,10 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
+import com.demo.homemate.dtos.feedback.FeedbackRequest;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.*;
+import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.ICustomerReportService;
 import lombok.RequiredArgsConstructor;
@@ -118,5 +120,23 @@ public class CustomerReportService implements ICustomerReportService {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Override
+    public MessageOject report(CustomerReportJob customerReportJob) {
+        CustomerMapping customerMapping= new CustomerMapping();
+        try {
+            Customer customer = customerRepository.findById(customerReportJob.getCustomerId());
+            Job job = jobRepository.findById(customerReportJob.getJobId());
+            Report oldReport = reportRepository.findById(customerReportJob.getReportId());
+            Report report = customerMapping.toReport(customerReportJob,oldReport, customer, job);
+            reportRepository.save(report);
+            MessageOject mo = new MessageOject("Success", "Save report successfully", null);
+            return mo;
+        }catch(Exception e){
+
+            System.out.println(e.getMessage());
+        }
+        return new MessageOject("Fail","Error save feedback",null);
     }
 }

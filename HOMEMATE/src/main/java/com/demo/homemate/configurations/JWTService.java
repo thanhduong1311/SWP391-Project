@@ -7,6 +7,8 @@ import com.demo.homemate.entities.Admin;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.mappings.AccountMapper;
+import com.demo.homemate.repositories.MemberRepository;
+import com.demo.homemate.services.RankingService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -18,7 +20,6 @@ import java.util.Date;
 import java.util.Random;
 
 public class JWTService {
-
 
     private static final String SECRET_KEY = "Homemate-in-your-heart";
 
@@ -107,7 +108,6 @@ public class JWTService {
     }
 
     public static void main(String[] args) {
-String j ="one###two##three###";
-        System.out.println(j.substring(0,j.length()-3));
+
     }
 }
