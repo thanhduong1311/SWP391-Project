@@ -1,0 +1,47 @@
+header {
+    border-bottom: 1px solid #ff914d;
+}
+
+section {
+    background-color: rgba(255, 145, 77, 0.18);
+    height: 100%;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+
+body {
+    position: relative;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+footer {
+    position: absolute;
+    right: 0;
+    left: 0;bottom:0;
+    background-color: #ff914d;
+    color: #ffffff;
+}
+
+.adminBtn {
+    background-color: #ff9b5ce3;
+    color: #fff;
+}
+
+.adminBtn:hover {
+    transform: scale(1.05);
+    background-color: #ff9b5ce3;
+    color: #fff;
+}
+
+.serviceDetail {
+    padding: 10px;
+}
+
+.item-flex {
+    width: 100%;
+    display: flex;
+justify-content: space-between;
+}

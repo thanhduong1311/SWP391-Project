@@ -8,6 +8,8 @@
     <link
       rel="stylesheet"
       href="/assets/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/admin.css">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -92,36 +94,38 @@
                   position: relative;
                   height: 400px;
                 ">
-                    <div class="col-9">
-                      <div>
-                        Username: <span th:text="*{partnerDeatail.getUsername()}"></span>
+                    <div class="col-6">
+                      <div class="item-flex">
+                        <span>Username:</span> <span th:text="*{partnerDeatail.getUsername()}"></span>
                       </div>
 
-                      <div>
-                        Full Name: <span th:text="*{partnerDeatail.getFullName()}"></span>
+                      <div class="item-flex">
+                        <span>Full Name: </span><span th:text="*{partnerDeatail.getFullName()}"></span>
                       </div>
-                      <div>
-                        Gender: <span th:text="*{partnerDeatail.getGender()}"></span>
+                      <div class="item-flex">
+                        <span>Gender: </span><span th:text="*{partnerDeatail.getGender()}"></span>
                       </div>
-                      <div>Brith Day: <span th:text="*{partnerDeatail.getDob()}"></span>
+                      <div class="item-flex"><span>Brith Day:</span> <span th:text="*{partnerDeatail.getDob()}"></span>
                       </div>
-                      <div>
-                        Address: <span th:text="*{partnerDeatail.getAddress_detail()}"></span>
+                      <div class="item-flex">
+                       <span> Address:</span> <span th:text="*{partnerDeatail.getAddress_detail()}"></span>
                       </div>
-                      <div>Phone <span th:text="*{partnerDeatail.getPhone()}"></span></div>
-                      <div>
-                        <div>
-                          Email: <span th:text="*{partnerDeatail.getEmail()}"></span>
-                        </div>
-                        ID Card number: <span th:text="*{partnerDeatail.getIdCardNumber()}"></span>
+                      <div class="item-flex">Phone <span th:text="*{partnerDeatail.getPhone()}"></span></div>
+                      <div class="item-flex">
+                        <span>Email:</span> <span th:text="*{partnerDeatail.getEmail()}"></span>
                       </div>
-                      <div>Workplace: <span th:text="*{partnerDeatail.getWork_place()}"></span>
+                      <div class="item-flex">
+
+                        <span>ID Card number:</span> <span th:text="*{partnerDeatail.getIdCardNumber()}"></span>
                       </div>
-                      <div>
-                        Account status: <span th:text="*{partnerDeatail.getAccountStatus().toString()}"></span>
+                      <div  class="item-flex">Workplace: <span th:text="*{partnerDeatail.getWork_place()}"></span>
+                      </div>
+                      <div  class="item-flex">
+                        <span>Account status:</span> <span th:text="*{partnerDeatail.getAccountStatus().toString()}"></span>
                       </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-4"></div>
+                    <div class="col-2">
                       <a id="unBlockBtn"  class="btn btn-success w-100 mb-1"
                          th:href="@{/admin/userManagement/employee/approve/{id}(id=${partnerDeatail.getEmployeeId()})}"
 
@@ -142,6 +146,13 @@
         </div>
       </div>
     </section>
+
+  <footer class="text-center text-dark mt-3">
+    <div class="text-center p-3">
+      © 2023 Homemade
+    </div>
+    <!-- Copyright -->
+  </footer>
 
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
   </body>

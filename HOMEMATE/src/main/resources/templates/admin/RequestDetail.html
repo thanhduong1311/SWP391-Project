@@ -12,6 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
+    <link rel="stylesheet" href="/assets/css/admin.css">
+
     <link rel="stylesheet" href="/assets/css/toastMessage.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -74,9 +76,7 @@
       </div>
     </nav>
   </header>
-    <section
-      class="vh-100"
-      style="background-color: #eee">
+    <section >
       <div class="container py-5">
         <div
           class="row d-flex justify-content-center align-items-center">
@@ -96,43 +96,48 @@
                   position: relative;
                   height: 400px;
                 ">
-                    <div class="col-md-9">
+                    <div class="col-md-6">
 
-                      <div>
-                        Request ID: <span th:text="*{cancelRequestDetail.getRequestId()}"></span>
+                      <div class="item-flex">
+                        <span>Request ID:</span> <span th:text="*{cancelRequestDetail.getRequestId()}"></span>
                       </div>
-                      <div>
-                        Job ID: <span th:text="*{cancelRequestDetail.getJobId()}"></span>
+                      <div class="item-flex">
+                        <span>Job ID:</span> <span th:text="*{cancelRequestDetail.getJobId()}"></span>
                       </div>
 
-                      <div>
-                        Customer Name: <span th:text="*{cancelRequestDetail.getCustomerName()}"></span>
+                      <div class="item-flex">
+                        <span>Customer Name:</span> <span th:text="*{cancelRequestDetail.getCustomerName()}"></span>
                       </div>
-                      <div>
-                        Address: <span th:text="*{cancelRequestDetail.getAddress()}"></span>
+                      <div class="item-flex">
+                        <span>Address:</span> <span th:text="*{cancelRequestDetail.getAddress()}"></span>
                       </div>
-                      <div>Service: <span th:text="*{cancelRequestDetail.getService()}"></span>
+                      <div class="item-flex">
+                        <span>Service:</span><span th:text="*{cancelRequestDetail.getService()}"></span>
                       </div>
-                      <div>
-                        Job Description: <span th:text="*{cancelRequestDetail.getDescription()}"></span>
+                      <div class="item-flex">
+                       <span> Job Description:</span> <span th:text="*{cancelRequestDetail.getDescription()}"></span>
                       </div>
-                      <div>
-                        Start: <span th:text="*{cancelRequestDetail.getStart()}"></span>
+                      <div class="item-flex">
+                        <span>Start:</span> <span th:text="*{cancelRequestDetail.getStart()}"></span>
                       </div>
-                      <div>End: <span th:text="*{cancelRequestDetail.getEnd()}"></span></div>
-                      <div>
-                        <div>
-                          Employee Name: <span th:text="*{cancelRequestDetail.getEmployeeName()}"></span>
-                        </div>
-                        Cancel Reason: <span th:text="*{cancelRequestDetail.getReason()}"></span>
+                      <div class="item-flex">
+                        <span>End:</span><span th:text="*{cancelRequestDetail.getEnd()}"></span>
                       </div>
-                      <div>Request Status: <span th:text="*{cancelRequestDetail.getStatus()}"></span>
+                      <div class="item-flex">
+                        <span>Employee Name:</span> <span th:text="*{cancelRequestDetail.getEmployeeName()}"></span>
                       </div>
-                      <div>
-                        Payment Type: <span th:text="*{cancelRequestDetail.getPaymentType()}"></span>
+                      <div  class="item-flex">
+
+                        <span>Cancel Reason:</span> <span th:text="*{cancelRequestDetail.getReason()}"></span>
+                      </div>
+                      <div  class="item-flex"><span>Request Status:</span> <span th:text="*{cancelRequestDetail.getStatus()}"></span>
+                      </div>
+                      <div  class="item-flex">
+                        <span>Payment Type:</span> <span th:text="*{cancelRequestDetail.getPaymentType()}"></span>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">
                       <a id="unBlockBtn"  class="btn btn-success w-100 mb-1"
                          th:href="@{/admin/tasks/approve/{id}(id=${cancelRequestDetail.getRequestId()})}"
                          th:if="${cancelRequestDetail.getStatus().toString() == 'WAITING'}"
@@ -163,6 +168,13 @@
         </div>
       </div>
     </section>
+
+  <footer class="text-center text-dark mt-3">
+    <div class="text-center p-3">
+      © 2023 Homemade
+    </div>
+    <!-- Copyright -->
+  </footer>
 
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
