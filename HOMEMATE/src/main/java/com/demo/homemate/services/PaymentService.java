@@ -1,5 +1,7 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.entities.Ranking;
+import com.demo.homemate.repositories.RankRepository;
 import com.demo.homemate.repositories.ServiceRepository;
 import com.demo.homemate.services.interfaces.IPaymentService;
 import com.demo.homemate.utils.JobTimer;
@@ -20,6 +22,8 @@ import java.util.Date;
 public class PaymentService implements IPaymentService {
 
     private final ServiceRepository serviceRepository;
+    private final RankingService rankingService;
+    private final RankRepository rankRepository;
     @SneakyThrows
     @Override
     public double getTotalTime(String from, String to) {
@@ -78,6 +82,28 @@ public class PaymentService implements IPaymentService {
 
         return totalMoney;
     }
+    @Override
+    public double getDiscountedFinalMoney(double hour, int serviceID,int rankID) {
+      double finalPrice = getTotalMoney(hour, serviceID);
+      finalPrice= getDiscount(finalPrice,rankID,serviceID);
+        return finalPrice;
+    }
+    @Override
+    public double getDiscount(double totalPrice, int rankID, int serviceID) {
+double discountedPrice = totalPrice;
+
+        Ranking currentRank = rankRepository.findById(rankID);
+        if (currentRank != null){
+            discountedPrice -= discountedPrice * currentRank.getDiscount()/100;
+        }
+        discountedPrice -= discountedPrice *  serviceRepository.findById(serviceID).getDiscount()/100;
+        BigDecimal bd = new BigDecimal(discountedPrice);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        discountedPrice = bd.doubleValue();
+
+        return discountedPrice;
+    }
+
 
     @Override
     public boolean payBill(double amount) {

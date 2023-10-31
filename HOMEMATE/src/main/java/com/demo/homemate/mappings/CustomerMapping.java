@@ -78,13 +78,13 @@ public class CustomerMapping implements ICustomerMapping {
     }
     public Report toReport(CustomerReportJob crj,Report old, Customer c, Job j) {
         Report report = new Report();
-        report.setReportId(crj.getReportId());
         report.setCustomerId(c);
         report.setJobId(j);
         if (crj.getReason()!=null){
             report.setReason(crj.getReason());
         }
         if (old!=null){
+            report.setReportId(old.getReportId());
             report.setCreateAt(old.getCreateAt());
             report.setUpdateAt(new Date());
         }else{

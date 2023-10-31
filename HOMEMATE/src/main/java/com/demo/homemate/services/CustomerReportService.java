@@ -110,7 +110,7 @@ public class CustomerReportService implements ICustomerReportService {
     @Override
     public MessageOject deleteReport(int id) {
         try {
-            Report report = reportRepository.findById(id);
+            Report report = reportRepository.findReportByJobID(id);
             if(report == null) {
                 return new MessageOject("Failed", "Can not delete this report",null);
             } else {
@@ -128,7 +128,7 @@ public class CustomerReportService implements ICustomerReportService {
         try {
             Customer customer = customerRepository.findById(customerReportJob.getCustomerId());
             Job job = jobRepository.findById(customerReportJob.getJobId());
-            Report oldReport = reportRepository.findById(customerReportJob.getReportId());
+            Report oldReport = reportRepository.findReportByJobID(customerReportJob.getJobId());
             Report report = customerMapping.toReport(customerReportJob,oldReport, customer, job);
             reportRepository.save(report);
             MessageOject mo = new MessageOject("Success", "Save report successfully", null);
@@ -137,6 +137,7 @@ public class CustomerReportService implements ICustomerReportService {
 
             System.out.println(e.getMessage());
         }
-        return new MessageOject("Fail","Error save feedback",null);
+        return new MessageOject("Fail","Error save report",null);
     }
+
 }

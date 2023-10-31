@@ -159,7 +159,8 @@
                             type="text"
                             name="description"
                             id="description"
-                            placeholder="Your review description" />
+                            placeholder="Your review description" required />
+
                 </div>
                     <input hidden readonly th:field="*{reportId}">
                     <input hidden readonly th:field="*{customerId}">
@@ -170,6 +171,7 @@
                                 type="submit">
                             Send Report
                         </button>
+                        <a   class="btn btn-dark mt-3 w-25" th:href="@{/customer/history/deleteReport/{id}(id=*{jobId})}" onclick="return confirm('Are you sure you want to delete this item?');">Delete report</a>
                     </div>
 
                 </form>

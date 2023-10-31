@@ -30,7 +30,6 @@ public class RankingService implements IRankIngService {
         double totalSpend = customer.getTotalSpend();
         List<Ranking> listRank = rankRepository.findAll();
             if (member!=null){
-                System.out.println("da co member roi");
                 if (totalSpend >= member.getRanking().getMinSpend() &&
                         (member.getRanking().getRankId() == listRank.size() || totalSpend < listRank.get(member.getRanking().getRankId()).getMinSpend()))
                 {
@@ -48,7 +47,6 @@ public class RankingService implements IRankIngService {
                 }
                 if (totalSpend>=listRank.get(i).getMinSpend()
                         &&totalSpend<listRank.get(i+1).getMinSpend()){
-                    System.out.println(listRank.get(i).getName());
                     return upRank(customer,listRank.get(i).getRankId());
                 }
             }

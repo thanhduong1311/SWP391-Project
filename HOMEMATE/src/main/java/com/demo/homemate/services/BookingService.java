@@ -5,10 +5,7 @@ import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.job.request.JobRequest;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
-import com.demo.homemate.entities.Customer;
-import com.demo.homemate.entities.Employee;
-import com.demo.homemate.entities.Job;
-import com.demo.homemate.entities.Service;
+import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.PaymentType;
 import com.demo.homemate.repositories.CustomerRepository;
@@ -41,6 +38,9 @@ public class BookingService implements IJobService {
 
     private final PaymentService paymentService;
 
+    private final RankingService rankingService;
+
+
     @Override
     public MessageOject createJob(JobRequest request) {
         try {
@@ -63,9 +63,6 @@ public class BookingService implements IJobService {
                 job.setCreateAt(new Date());
                 job.setUpdateAt(new Date());
                 jobRepository.save(job);
-
-
-
                 MailContents mailContents = new MailContents();
                 mailContents.setSubjectName(customer.getFullName());
                 mailContents.setTitle("[HOMEMATE] BOOKING SUCCESSFULLY");
@@ -110,7 +107,7 @@ public class BookingService implements IJobService {
                 job.setServiceId(service);
                 job.setPaymentType(request.getPaymentType() == 0 ? PaymentType.BANKING:PaymentType.CASH);
                 job.setStart(jobTimer.getTimeStart(request.getTimeStart()));
-               job.setEnd(jobTimer.getEndTime(request.getTimeStart(),request.getTimeService()));
+                job.setEnd(jobTimer.getEndTime(request.getTimeStart(),request.getTimeService()));
                 job.setStatus(JobStatus.UN_PAY);
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());
@@ -157,12 +154,16 @@ public class BookingService implements IJobService {
         try {
             Customer customer = customerRepository.findById(customerID);
             List<Job> jobs = jobRepository.findByCustomerId(customer);
-
+            Ranking ranking = rankingService.getRank(customer.getUsername());
+            if (ranking==null){
+                ranking = new Ranking();
+               ranking.setRankId(0);
+            }
             for (Job j : jobs) {
                 JobDetail jobOverView = new JobDetail();
                 Employee employee = employeeRepository.findById(j.getEmployeeId() == null ? new Employee().getEmployeeId():j.getEmployeeId().getEmployeeId());
                 jobOverView.setServiceName(j.getServiceId().getName());
-                jobOverView.setPrice(paymentService.getTotalMoney(paymentService.getTotalTime(j.getStart(),j.getEnd()),j.getServiceId().getServiceId()));
+                jobOverView.setPrice(paymentService.getDiscountedFinalMoney(paymentService.getTotalTime(j.getStart(),j.getEnd()),j.getServiceId().getServiceId(),ranking.getRankId()));
                 jobOverView.setEmployeeName(employee == null ? "":employee.getFullName());
                 jobOverView.setStatus(j.getStatus());
                 jobOverView.setJobID(j.getJobId());
@@ -186,7 +187,11 @@ public class BookingService implements IJobService {
             Customer customer = customerRepository.findById(job.getCustomerId().getCustomerId());
             Service service = serviceRepository.findById(job.getServiceId().getServiceId());
             Employee employee = employeeRepository.findById(job.getEmployeeId() == null ? new Employee().getEmployeeId():job.getEmployeeId().getEmployeeId());
-
+            Ranking ranking = rankingService.getRank(customer.getUsername());
+            if (ranking==null){
+                ranking = new Ranking();
+                ranking.setRankId(0);
+            }
             JobDetail jobDetail = new JobDetail();
 
             if(employee != null ) {
@@ -205,10 +210,9 @@ public class BookingService implements IJobService {
             jobDetail.setJobDescription(job.getDescription());
             jobDetail.setPaymentType(job.getPaymentType());
             jobDetail.setStatus(job.getStatus());
-
             jobDetail.setServiceTime(paymentService.getTotalTime(job.getStart(),job.getEnd()));
             jobDetail.setPrice(paymentService.getTotalMoney(paymentService.getTotalTime(job.getStart(),job.getEnd()),job.getServiceId().getServiceId()));
-
+            jobDetail.setPrice(paymentService.getDiscountedFinalMoney(paymentService.getTotalTime(job.getStart(),job.getEnd()),job.getServiceId().getServiceId(),ranking.getRankId()));
             return jobDetail;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

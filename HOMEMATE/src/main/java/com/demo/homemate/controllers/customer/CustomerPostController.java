@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.util.List;
 
 @Controller
@@ -121,10 +122,20 @@ public class CustomerPostController {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
+
         String token = cookieToken!=null?cookieToken:sessionToken;
         MessageOject mo = customerReportService.report(customerReportJob);
         model.addAttribute("MessageFeedback",mo);
         return "redirect:/customer/history";
+    }
+    @GetMapping("deleteReport/{id}")
+    public String deleteReport(Model model,
+                               @PathVariable("id") int jobId){
+        MessageOject messageOject = customerReportService.deleteReport(jobId);
+        model.addAttribute("DeleteReportMessage",messageOject);
+        System.out.println(messageOject.getMessage());
+        return "redirect:/customer/history";
+
     }
 
 }

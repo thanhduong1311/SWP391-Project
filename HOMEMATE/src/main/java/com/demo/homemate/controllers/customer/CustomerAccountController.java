@@ -50,7 +50,6 @@ public class CustomerAccountController {
         Customer c = customerRepository.findByUsername(username);
         MessageOject mo = rankingService.checkRank(c);
         System.out.println("(Ben employeeservice)UPDATE RANK: " + mo.getMessage());
-
         MessageOject messageOject = (MessageOject)session.getAttribute("EditMessage");
         session.removeAttribute("EditMessage");
         if (messageOject!=null){
@@ -65,7 +64,6 @@ public class CustomerAccountController {
     @GetMapping("/changePassword")
     public String changePasswordView(Model model,@CookieValue(name = "Token",required = false) String cookieToken,
                                      @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
-
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
