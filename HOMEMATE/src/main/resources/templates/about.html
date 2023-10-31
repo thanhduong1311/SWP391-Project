@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Homemate</title>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <noscript
+    ><link rel="stylesheet" href="/assets/css/noscript.css"
+    /></noscript>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+        <div class="logo">
+            <img src="/assets/images/HomeMate.png"  style="width: 80px">
+        </div>
+        <div class="content">
+            <div class="inner">
+                <h1>Homemate</h1>
+                <p>
+                    DISCOVER THE PINNACLE OF HOUSEKEEPING EXCELLENCE WITH HOMEMATE!<br />
+                    VISIT OUR <a th:href="@{/}">HOMEPAGE</a> FOR MORE DETAILS.
+                    thêm chi tiết.
+                </p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#intro">Intro</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a th:href="@{/}">Webpage</a></li>
+                <!--<li><a href="#elements">Elements</a></li>-->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <div id="main">
+        <!-- Intro -->
+        <article id="intro">
+            <h2 class="major">INTRODUCTION</h2>
+            <span class="image main"><img src="/assets/images/pic01.jpg" alt="" /></span>
+            <p>
+                We are a corporation specialized in providing the best service in Vietnam. Take a look at our work to learn more about what we are currently working on.
+            </p>
+            <p>
+                We are a corporation specialized in providing the best service in Vietnam. Take a look at our work to learn more about what we are currently working on.
+            </p>
+            <p>
+                <a th:href="@{/login}">Join us now</a> to experience the best quality service.
+            </p>
+        </article>
+
+        <!-- Work -->
+        <article id="work">
+            <h2 class="major">WORK</h2>
+            <span class="image main"><img src="/assets/images/pic02.jpg" alt="" /></span>
+            <p>
+                Our job is to assist you in finding the best service with the most suitable cost and pricing. We are committed to providing services that align with the purpose and usage needs of our customers, in accordance with legal regulations and contractual agreements made online.
+            </p>
+            <p>
+                Depending on your needs, we can undertake various tasks. Our services encompass household cleaning, dishwashing, cleaning of specialized areas (playgrounds, hotels, etc.), and furniture repair, among others. We also welcome your requests to introduce new services and evolve over time.
+            </p>
+        </article>
+
+        <!-- About -->
+        <article id="about">
+            <h2 class="major">ABOUT US</h2>
+            <span class="image main"><img src="../assets/images/pic03.jpg" alt="" /></span>
+            <p>
+                This website was created and developed by students from FPT University.
+            </p>
+            <p>By team 4, class SE1701</p>
+            <p>Comprising the members:
+            <ul>
+            <li>Nguyen Thanh Duong(Leader)</li>
+            <li>Le Anh Tuan</li>
+            <li>Tran Ha Gia Huy</li>
+            <li>Tran Minh Nhut</li>
+            <li>To Cao Kim Ngan</li>
+            </ul>
+            </p>
+        </article>
+
+        <!-- Elements -->
+    </div>
+
+    <!-- Footer -->
+
+</div>
+
+<!-- BG -->
+<div id="bg"></div>
+
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/browser.min.js"></script>
+<script src="/assets/js/breakpoints.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

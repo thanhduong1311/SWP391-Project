@@ -38,7 +38,7 @@
 <header class="header">
   <nav id="navBar">
     <div class="logoNav">
-      <a class="navbar-brand fs-2" href="/guest">
+      <a class="navbar-brand fs-2" href="/customer">
         <img src="/assets/images/HomeMate.png" alt="" class="logo">
       </a>
     </div>
@@ -69,18 +69,12 @@
       </li>
       <li class="">
         <a
-                th:href="@{/customer}"
+                th:href="@{/customer/account}"
                 class="nav-link"
-        >Reward</a>
+        >Account</a>
       </li>
     </ul>
 
-
-    <a th:href="@{/logout}"
-       class="btn btn-lg signBtn"
-       style=""
-    >Log out</a
-    >
   </nav>
 </header>
 
@@ -109,7 +103,7 @@
             class=" topService mt-5 mb-5"
             id="service">
       <div class="text-center">
-        <h2>Chúng tôi sẽ phục bạn</h2>
+        <h2>Our typical services include</h2>
       </div>
       <hr />
 
@@ -122,12 +116,15 @@
                   <div class="col-md-4" th:each="i: ${#numbers.sequence(state.index,((state.index + 2)>=(state.size+(-1))? state.size+(-1):(state.index + 2)))}">
 
                     <div class="shadow-lg serviceItem">
-                      <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getName()})}">
+                      <div class="carouselIMG">
+                        <img th:src="*{services[i].getImg()}" alt="">
+                      </div>
+                      <a class="nav-link" th:href="@{customer/services/{name}(name=${services[i].getName()})}">
                         <h3 th:text="${services[i].getName()}"></h3>
                         <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
                         <hr />
                         <h2 class="ms-2 mt-4" th:text="${'$'+services[i].getPrice()}"></h2> <sup>Per hour</sup>
-                        <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                        <h4 class="mt-5">Service details:</h4>
                         <ul th:each="detail:${services[i].getDetails()}">
                           <li th:text="${detail}"></li>
                         </ul>

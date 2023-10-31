@@ -1,132 +1,421 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Homemate</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta
             name="viewport"
-            content="width=device-width, initial-scale=1, user-scalable=no"
-    />
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <noscript
-    ><link rel="stylesheet" href="../assets/css/noscript.css"
-    /></noscript>
+            content="width=device-width, initial-scale=1.0" />
+    <link
+            rel="stylesheet"
+            href="../assets/css/bootstrap.min.css" />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com" />
+    <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet" />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+            rel="stylesheet"
+            href="/assets/css/home.css" />
+
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+    <title>Home | Homemate</title>
+
 </head>
-<body class="is-preload">
-<!-- Wrapper -->
-<div id="wrapper">
-    <!-- Header -->
-    <header id="header">
-        <div class="logo">
-            <span class="icon fa-gem"></span>
+<body class="animate__animated animate__fadeIn">
+<!-- Header -->
+<header class="header">
+    <nav id="navBar">
+        <div class="logoNav">
+            <a class="navbar-brand fs-2" href="/">
+                <img src="/assets/images/HomeMate.png" alt="" class="logo">
+            </a>
         </div>
-        <div class="content">
-            <div class="inner">
-                <h1>Homemate</h1>
+
+                <ul
+                        class="">
+                    <li class="">
+                        <a th:href="@{/}" class="nav-link"
+                        >Home</a
+                        >
+                    </li>
+                    <li class="">
+                        <a th:href="@{/about}" class="nav-link"
+                        >About</a
+                        >
+                    </li>
+                    <li class="">
+                        <a
+                                href="#service"
+                                class="nav-link"
+                        >Service</a
+                        >
+                    </li>
+                    <li class="d-none">
+                        <a href="#price" class="nav-link"
+                        >Price</a
+                        >
+                    </li>
+                    <li class="">
+                        <a
+                                th:href="@{/partnerRegister}"
+                                class="nav-link"
+                        >Become Maid</a>
+                    </li>
+                </ul>
+
+
+            <a th:href="@{/login}"
+                    class="btn btn-lg signBtn"
+                    style=""
+            >Sign In</a
+            >
+    </nav>
+</header>
+
+<main class="text-center">
+    <header>
+        <!-- Image header -->
+        <div
+                class="card mb-3"
+                style="max-width: 100%">
+            <div class="row bodyIntro">
+                <div class="col-md-7">
+                    <img
+                            src="/assets/images/livingroom.jpg"
+                            class="img-fluid rounded-start rounded-end w-100"
+                            alt="..." />
+                </div>
+                <div
+                        class="col-md-5 d-flex align-items-center">
+                    <div class="card-body">
+                        <h5 class="card-title h1">
+                            Homemate Housekeeping service
+                        </h5>
+                        <p class="card-text">
+                            Home is a place to gather and cherish each other of every family. A cozy home is a clean home, but in today's busy society, people have limited time to tidy up their abode. Some are willing to spend money to hire house help, but the cost is often too high. That's why we've introduced the hourly service model. You don't need to clean up but only pay a very reasonable price.
+                        </p>
+                        <a
+                                class="btn mt-4 signBtn"
+                                href="/">
+                            Learn more
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Info -->
+    <div  class="border shadow-lg"
+            id="aboutHome">
+        <h2>
+            Homemate - Effective hourly service solution
+        </h2>
+        <p class="mt-3">
+            A flexible and efficient service model, specifically designed to meet the diverse needs of users in today's society. Instead of committing to long-term contracts or paying a large sum for hiring household help on a fixed schedule, this model offers excellent flexibility. Users can arrange the hourly service schedule to suit their own time and needs. This brings significant benefits to individuals with busy schedules or those who need the flexibility of home cleaning. You can choose a specific time for the house help to come and work, and only pay for the actual time the service is used. This helps save costs and optimize efficiency, providing convenience and time savings for the users.
+        </p>
+    </div>
+
+    <div  class="mt-5 px-4 py-5 reasonIntro"
+            id="featured-3">
+        <h2 class="pb-2 border-bottom">
+            The reasons for choosing Homemate
+        </h2>
+        <div
+                class="row g-5 py-5 row-cols-1 row-cols-lg-3">
+            <div class="feature col">
+                <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    <i
+                            class="bi bi-people-fill display-1 p-3"></i>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">
+                    Professionalism
+                </h3>
                 <p>
-                    Dịch vụ thuê phục vụ hàng đầu Việt Nam. <br />
-                    Truy cập <a th:href="@{/guest}">Webpage</a> của chúng tôi để biết
-                    thêm chi tiết.
+                    The employees sent to you have been carefully screened and trained by us before being officially employed to serve.
+                </p>
+            </div>
+            <div class="feature col">
+                <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    <i
+                            class="bi bi-shield-check display-1 p-3"></i>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">
+                    Security and Privacy
+                </h3>
+                <p>
+                    All of your personal information is kept secure and guaranteed. We encrypt all user data. We also provide information about vaccine status, health, as well as background information about the service personnel before they arrive at your home.
+                </p>
+            </div>
+            <div class="feature col">
+                <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    <i
+                            class="bi bi-clock display-1 p-3"></i>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">
+                    Efficiently
+                </h3>
+                <p>
+                    Within 2 to 12 hours from the start of the service, we will call to confirm and send the service personnel to clean.
+                </p>
+            </div>
+            <div class="feature col">
+                <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    <i
+                            class="bi bi-telephone display-1 p-3"></i>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">
+                    Connection
+                </h3>
+                <p>
+                    The selected service will be sent directly to you for confirmation in advance to avoid any misunderstandings and discrepancies. Additionally, throughout the service usage, you will be continuously updated with information regarding the order status.
+                </p>
+            </div>
+            <div class="feature col">
+                <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    <i
+                            class="bi bi-star display-1 p-3"></i>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">
+                    Cost Savings
+                </h3>
+                <p>
+                    Compared to hiring a house help on a fixed schedule or a long-term contract, Homemate allows you to only pay for the actual time the service is used. This helps you save a significant amount of money.
+                </p>
+            </div>
+            <div class="feature col">
+                <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    <i
+                            class="bi bi-gem display-1 p-3"></i>
+                </div>
+                <h3 class="fs-2 text-body-emphasis">
+                    Suited for the Modern Society
+                </h3>
+                <p>
+                    In today's society, people often have busy schedules and limited time to manage household chores. Homemate understands and addresses this need by providing flexible services that align with your schedule and individual requirements, helping to solve this common issue.
                 </p>
             </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#intro">Intro</a></li>
-                <li><a href="#work">Work</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a th:href="@{/guest}">Webpage</a></li>
-                <!--<li><a href="#elements">Elements</a></li>-->
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Main -->
-    <div id="main">
-        <!-- Intro -->
-        <article id="intro">
-            <h2 class="major">Giới thiệu</h2>
-            <span class="image main"><img src="../assets/images/pic01.jpg" alt="" /></span>
-            <p>
-                Chúng tôi là tập đoàn chuyên cung cấp dịch vụ phục vụ tốt nhất Việt
-                Nam. Hãy kiểm tra qua <a href="#work">công việc</a> của chúng tôi để
-                biết thêm chi tiết chúng tôi đang làm những gì.
-            </p>
-            <p>
-                Hiện nay ở Việt Nam, để thuê một lao công uy tín và có trách nhiệm
-                thì người thuê phải thông qua quen biết hoặc những đối tác kém uy
-                tín. Thế nên, giải pháp của chúng tôi đưa ra là chúng tôi sẽ cung
-                cấp cho bạn lao công uy tín, có hợp đồng và có bảo hiểm, đặc biệt
-                chúng tôi sẽ cung cấp thêm cho bạn những thông tin cần thiết như đã
-                tiêm ngừa vaccine covid-19, số sao đánh giá và mức độ uy tín của lao
-                công. Chúng tôi cung cấp đa dịch vụ dành cho cả cá nhân và cả doanh
-                nghiệp dành cho bạn với một mức giá vô cùng hợp lí.
-            </p>
-            <p>
-                Hãy <a th:href="@{/login}">tham gia ngay</a> với chúng tôi để được trải
-                nghiệm chất lượng phục vụ tốt nhất.
-            </p>
-        </article>
-
-        <!-- Work -->
-        <article id="work">
-            <h2 class="major">Công việc</h2>
-            <span class="image main"><img src="../assets/images/pic02.jpg" alt="" /></span>
-            <p>
-                Công việc của chúng tôi là hỗ trợ cho bạn tìm phục vụ tốt nhất với
-                chi phí và giá thành phù hợp nhất. Chúng tôi cam kết cung cấp dịch
-                vụ đúng với mục đích và nhu cầu sử dụng của khách hàng, theo quy
-                định của pháp luật và cam kết bằng hợp đồng biên bản online.
-            </p>
-            <p>
-                Tùy theo nhu cầu của bạn mà chúng tôi sẽ làm nhiều công việc khác
-                nhau. Các dịch vụ của chúng tôi bao gồm: dọn nhà, rửa chén, vệ sinh
-                các khu vực đặc biệt(khu vui chơi, khách sạn,...), sửa chữa đồ nội
-                thất,.... Chúng tôi cũng sẽ nhận yêu cầu của bạn để thêm những dịch
-                vụ mới và phát triển theo thời gian.
-            </p>
-        </article>
-
-        <!-- About -->
-        <article id="about">
-            <h2 class="major">Về chúng tôi</h2>
-            <span class="image main"><img src="../assets/images/pic03.jpg" alt="" /></span>
-            <p>
-                Trang web này được tạo ra và phát triển bởi sinh viên trường đại học
-                FPT.
-            </p>
-            <p>Bởi nhóm 4 - SE1704</p>
-            <p>Bao gồm các thành viên:
-            <ul>
-            <li>Nguyen Thanh Duong</li>
-            <li>Le Anh Tuan</li>
-            <li>Tran Ha Gia Huy</li>
-            <li>Tran Minh Nhut</li>
-            <li>To Cao Kim Ngan</li>
-            </ul>
-            </p>
-        </article>
-
-        <!-- Elements -->
     </div>
 
-    <!-- Footer -->
-    <footer id="footer">
-        <p class="copyright">
-            &copy; Team Coding. Design:
-            <a href="https://github.com/zun3007work" target="_blank">ZUN</a>.
-        </p>
-    </footer>
-</div>
+    <div
+            class=" topService mt-5 mb-5"
+            id="service">
+        <div class="text-center">
+            <h2>Our typical services include</h2>
+        </div>
+        <hr />
 
-<!-- BG -->
-<div id="bg"></div>
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-inner">
+                    <div th:each="service,state: ${services}">
+                        <th:block th:if="${state.index % 3 ==0}">
+                            <div th:class="${state.first}? 'carousel-item row active':'carousel-item row'" >
+                                <div class="row d-md-flex mt-5 col-11 m-auto ">
+                                    <div class="col-md-4" th:each="i: ${#numbers.sequence(state.index,((state.index + 2)>=(state.size+(-1))? state.size+(-1):(state.index + 2)))}">
 
-<!-- Scripts -->
-<script src="../assets/js/jquery.min.js"></script>
-<script src="../assets/js/browser.min.js"></script>
-<script src="../assets/js/breakpoints.min.js"></script>
-<script src="../assets/js/util.js"></script>
-<script src="../assets/js/main.js"></script>
+                                                <div class="shadow-lg serviceItem">
+                                                    <div class="carouselIMG">
+                                                        <img th:src="*{services[i].getImg()}" alt="">
+                                                    </div>
+                                                    <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getName()})}">
+                                                    <h3 th:text="${services[i].getName()}"></h3>
+                                                    <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
+                                                    <hr />
+                                                    <h2 class="ms-2 mt-4" th:text="${'$'+services[i].getPrice()}"></h2> <sup>Per hour</sup>
+                                                    <h4 class="mt-5">Chi tiết dịch vụ:</h4>
+                                                    <ul th:each="detail:${services[i].getDetails()}">
+                                                        <li th:text="${detail}"></li>
+                                                    </ul>
+                                                    <div class="btnBook">
+                                                        <a class="btn w-100 fw-normal" th:href="@{/customer/bookings/form}">Booking now</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </th:block>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"></span>
+                <span class="visually-hidden nextCarBtn"
+                >Previous</span
+                >
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"></span>
+                <span class="visually-hidden"
+                >Next</span
+                >
+            </button>
+        </div>
+
+
+
+
+
+        <hr />
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Price -->
+    <div class=" mt-5 d-none" id="price">
+        <h2>Bảng giá sản phẩm của chúng tôi:</h2>
+        <div class="row mt-5">
+            <div class="col-lg-4 hover-luaga">
+                <div
+                        class="container shadow-lg rounded-5 p-5 bg-light text-dark">
+                    <h3>Gói 2 giờ</h3>
+                    <small
+                    >(2 phòng - 55
+                        m<sup>2</sup>)</small
+                    >
+                    <hr />
+                    <h4>
+                        100.000<sup>đ</sup> - 150.000<sup
+                    >đ</sup
+                    >
+                    </h4>
+                    <i
+                            class="bi bi-star-fill text-warning"></i>
+                    5.0
+                </div>
+            </div>
+            <div class="col-lg-4 hover-luaga">
+                <div
+                        class="container shadow-lg rounded-5 p-5 bg-dark text-light">
+                    <h3>Gói 3 giờ</h3>
+                    <small
+                    >(3 phòng - 85
+                        m<sup>2</sup>)</small
+                    >
+                    <hr />
+                    <h4>
+                        160.000<sup>đ</sup> - 200.000<sup
+                    >đ</sup
+                    >
+                    </h4>
+                    <i
+                            class="bi bi-star-fill text-warning"></i>
+                    5.0
+                </div>
+            </div>
+            <div class="col-lg-4 hover-luaga">
+                <div
+                        class="container shadow-lg rounded-5 p-5 bg-light text-dark">
+                    <h3>Gói 4 giờ</h3>
+                    <small
+                    >(4 phòng - 105
+                        m<sup>2</sup>)</small
+                    >
+                    <hr />
+                    <h4>
+                        200.000<sup>đ</sup> - 250.000<sup
+                    >đ</sup
+                    >
+                    </h4>
+                    <i
+                            class="bi bi-star-fill text-warning"></i>
+                    5.0
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5 p-5 note">
+        <h2>
+            <img class="imgNote" src="/assets/images/HomeMate.png" alt="">
+        </h2>
+            <span>
+                The prices above are for reference only and may vary over time, either increase or decrease.
+            </span><br>
+            <span>
+                The service prices may automatically adjust based on the area, weekends, peak hours (before 8 AM and after 5 PM), or holidays.
+            </span>
+    </div>
+
+    <!-- Sign Up -->
+    <div
+            class=" shadow-lg p-5 text-center border rounded-4 mb-4">
+        <h1>
+            Do you want to use our services?
+        </h1>
+        <a
+                th:href="@{/signup}"
+                class="btn btn-lg mt-5 register-btn"
+        >Register Now</a
+        >
+    </div>
+</main>
+
+<!-- Footer -->
+<footer
+        class=" text-center text-white">
+    <div
+            class="text-center p-3"
+            style="
+          background-color: rgba(0, 0, 0, 0.2);
+        ">
+        © 2023 Homemade
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+
+<div id="toast"></div>
+
+<script src="/assets/js/toast.js"></script>
+
+
+<div style="display: none" id="script" th:text="*{RegisterPartner}"> </div>
+
+<script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+</script>
 </body>
 </html>

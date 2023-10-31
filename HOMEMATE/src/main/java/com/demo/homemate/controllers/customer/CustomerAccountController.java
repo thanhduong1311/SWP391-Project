@@ -34,8 +34,27 @@ public class CustomerAccountController {
     private final CustomerService customerService;
     private final RankingService rankingService;
 
+    @GetMapping("")
+    public String viewAccount( Model model,
+                              HttpSession session,@CookieValue(name = "Token",required = false) String cookieToken,
+                               @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
+
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+        String username = (String) JWTService.parseJwt(token).get("Username");
+        CustomerMapping cm = new CustomerMapping();
+        CustomerProfileRequest profile =cm.toCustomerProfile(customerRepository.findByUsername(username));
+        model.addAttribute("profile",profile);
+
+
+        return "customer/Account";
+    }
+
     @GetMapping("/{username}")
-    public String viewAccount(@PathVariable("username") String username,
+    public String viewProfile(@PathVariable("username") String username,
                               Model model,
                               HttpSession session) {
         CustomerMapping cm = new CustomerMapping();

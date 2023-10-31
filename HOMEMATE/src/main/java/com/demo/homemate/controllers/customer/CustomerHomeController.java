@@ -3,6 +3,7 @@ package com.demo.homemate.controllers.customer;
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.services.interfaces.IAuthenticationService;
@@ -70,5 +71,15 @@ public class CustomerHomeController {
 
 
 
+    @GetMapping("/services/{name}")
+    public String getServiceDetail(Model model,
+                                   @PathVariable("name") String name) {
+
+        ServiceDetailResponse service = serviceService.getServiceByName(name);
+        System.out.println(service.getName());
+        System.out.println(service.getIntro());
+        model.addAttribute("Service",service);
+        return "customer/serviceDetail";
+    }
 
 }

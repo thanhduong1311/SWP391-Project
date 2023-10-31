@@ -30,7 +30,7 @@
   <header class="header">
     <nav id="navBar">
       <div class="logoNav">
-        <a class="navbar-brand fs-2" href="/employee">
+        <a class="navbar-brand fs-2" href="/customer">
           <img src="/assets/images/HomeMate.png" alt="" class="logo">
         </a>
       </div>
@@ -38,37 +38,26 @@
       <ul
               class="">
         <li class="">
-          <a th:href="@{/employee}" class="nav-link"
+          <a th:href="@{/customer}" class="nav-link"
           >Home</a
           >
         </li>
         <li class="">
-          <a th:href="@{/employee/job/jobList}" class="nav-link"
-          >Jobs</a
+          <a th:href="@{/customer/bookings/form}" class="nav-link"
+          >Booking</a
           >
         </li>
         <li class="">
           <a
-                  href="/employee/job/incomes"
+                  th:href="@{/customer/history}"
                   class="nav-link"
-          >Income</a
+          >History</a
           >
-        </li>
-        <li class="d-none">
-          <a href="#price" class="nav-link"
-          ></a
-          >
-        </li>
-        <li class="">
-          <a
-                  th:href="@{/employee/job/schedule}"
-                  class="nav-link"
-          >Schedule</a>
         </li>
 
         <li class="">
           <a
-                  th:href="@{/employee/account}"
+                  th:href="@{/customer/account}"
                   class="nav-link"
           >Account</a>
         </li>
@@ -87,25 +76,25 @@
           </div>
 
         <a class="detailBtn btn btn-lg w-75 mt-3"
-           th:href="@{/employee/account/{username}(username=${profile.getUsername()})}"
+           th:href="@{/customer/account/{username}(username=${profile.getUsername()})}"
         >
           Profile
         </a>
 
         <a class="detailBtn btn btn-lg w-75 mt-3"
-           th:href="@{/employee/account/changePassword}"
+           th:href="@{/customer/account/changePassword}"
         >
           Change password
         </a>
 
-        <a class="detailBtn btn btn-lg w-75 mt-3" th:href="@{/employee/job/incomes}">
-          Income
+        <a class="detailBtn btn btn-lg w-75 mt-3" th:href="@{/customer/history}">
+          History Booking
         </a>
 
         <a class="detailBtn btn btn-lg w-75 mt-3"
-           th:href="@{/employee/job/schedule}"
+           th:href="@{/customer/history}"
         >
-          Schedule
+          Reward
         </a>
 
         <a class="detailBtn btn btn-lg w-75 mt-3" th:href="@{/logout}">
