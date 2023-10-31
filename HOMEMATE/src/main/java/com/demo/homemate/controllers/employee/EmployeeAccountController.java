@@ -25,8 +25,33 @@ public class EmployeeAccountController {
 
     private final EmployeeService employeeService;
 
+    @GetMapping("")
+    public String viewAccount( Model model,@CookieValue(name = "Token",required = false) String cookieToken,
+                               @SessionAttribute(value="SessionToken",required = false) String sessionToken,
+                               HttpSession session) {
+
+        if (cookieToken == null && sessionToken==null) {
+            return "redirect:/login";
+        }
+        String token=cookieToken!=null?cookieToken:sessionToken;
+
+        String username = (String) JWTService.parseJwt(token).get("Username");
+            EmployeMapping mapper = new EmployeMapping();
+
+
+            EmployeeProlife prolife = mapper.toEmployeeProfile(employeeRepository.findByUsername(username));
+
+            String s  = (String) session.getAttribute("EmployeeMessage");
+            session.removeAttribute("EmployeeMessage");
+            model.addAttribute("EmployeeMessage",s);
+
+            model.addAttribute("profile",prolife);
+            return "employee/Account";
+    }
+
+
     @GetMapping("/{username}")
-    public String viewAccount(@PathVariable("username") String username, Model model, HttpSession session) {
+    public String viewProflie(@PathVariable("username") String username, Model model, HttpSession session) {
 
         EmployeMapping mapper = new EmployeMapping();
 
@@ -35,9 +60,9 @@ public class EmployeeAccountController {
         System.out.println("profile : " + prolife.toString());
         System.out.println("profile dob: " + employeeRepository.findByUsername(username).getDob());
 
-        String s  = (String) session.getAttribute("AccountMessage");
-        session.removeAttribute("AccountMessage");
-        model.addAttribute("AccountMessage",s);
+        String s  = (String) session.getAttribute("EmployeeMessage");
+        session.removeAttribute("EmployeeMessage");
+        model.addAttribute("EmployeeMessage",s);
 
         model.addAttribute("profile",prolife);
         return "employee/profile";
@@ -62,14 +87,17 @@ public class EmployeeAccountController {
         ChangePasswordRequest cr = new ChangePasswordRequest();
         cr.setUsername(emp.getUsername());
 
-        String s  = (String) session.getAttribute("ChangePassMessage");
-        session.removeAttribute("ChangePassMessage");
-        model.addAttribute("ChangePassMessage",s);
+        String s  = (String) session.getAttribute("EmployeeMessage");
+        session.removeAttribute("EmployeeMessage");
+        model.addAttribute("EmployeeMessage",s);
 
 
         model.addAttribute("employee",emp);
 
         model.addAttribute("ChangePasswordRequest",cr);
+
+
+
         return "employee/changePassword";
     }
 
@@ -83,7 +111,7 @@ public class EmployeeAccountController {
 
         MessageOject messageOject = employeeService.changePassword(request);
 
-        session.setAttribute("ChangePassMessage", messageOject.getName()
+        session.setAttribute("EmployeeMessage", messageOject.getName()
                 +"#" +messageOject.getMessage());
 
         System.out.println(messageOject.getMessage());
@@ -122,7 +150,7 @@ public class EmployeeAccountController {
         MessageOject messageOject = employeeService.updateProfile(request);
 
 
-        session.setAttribute("AccountMessage", messageOject.getName()
+        session.setAttribute("EmployeeMessage", messageOject.getName()
                 +"#" +messageOject.getMessage());
         System.out.println(messageOject.getMessage());
 

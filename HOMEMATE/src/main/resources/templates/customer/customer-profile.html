@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/profile.css">
     <link rel="stylesheet" href="/assets/css/home.css" />
     <link rel="stylesheet" href="/assets/css/toastMessage.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -73,35 +74,31 @@
         <div class="row main-profile">
           <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-              <img class="rounded-5 border me-4" width="150px" height="auto" th:src="*{profile.getAvatar()}" />
+              <img class="rounded-5 border avatar " th:src="*{profile.getAvatar()}" />
               <span class="font-weight-bold" th:text="*{profile.getUsername()}"></span>
               <i>Member: <b><span th:text="${Ranking}"></span></b></i>
               <i class="text-warning">Balance: <b th:text="*{profile.getBalance()}"></b></i>
-                <a th:href="@{/customer/account/changePassword}" class="btn btn-md btn-dark mt-4">
-                  Change Password
+                <a th:href="@{/customer/account/edit/{username}(username=${profile.getUsername()})}"
+                   class="btn editBtn mt-4">
+                  Edit profile
                 </a>
             </div>
           </div>
           <div class="col-md-9 border-right">
             <div class="p-3 py-5">
               <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="text-right">
+                <h3 class="text-right fw-bold">
                   My profile
                 </h3>
                 <div
                         class="col-6 text-center">
-                  <a
-                          th:href="@{/customer/account/edit/{username}(username=${profile.getUsername()})}"
-                          class="text-decoration-none"
-                  >
-                    Edit profile
-                  </a>
+
                 </div>
               </div>
               <div class="row mt-2">
                 <div class="col-md-6">
                   <label
-                    class="form-label"
+                    class="form-label text-black-50"
                     >Full Name
                     </label
                   >
@@ -109,14 +106,14 @@
                 </div>
                 <div class="col-md-6">
                   <label
-                          class="form-label">Total Spend
+                          class="form-label text-black-50">Total Spend
                   </label>
                   <h4 th:text="*{profile.getTotalSpend()}"></h4>
                 </div>
               </div>
               <div class="row mt-3">
                 <div class="col-md-8">
-                  <label class="form-label">Email
+                  <label class="form-label text-black-50">Email
                   </label>
                   <h4 th:text="*{profile.getEmail()}"></h4>
                 </div>
@@ -124,7 +121,7 @@
               <div class="row">
                   <div class="col-md-6">
                     <label
-                            class="form-label"
+                            class="form-label text-black-50"
                     >Birthday
                     </label
                     >
@@ -132,17 +129,17 @@
                   </div>
                   <div class="col-md-6">
                     <label
-                            class="form-label"
+                            class="form-label text-black-50"
                     >Phone number
                     </label
                     >
-                    <h4 th:text="*{profile.getPhone()}"></h4>
+                    <h4 th:text="*{profile.getPhone()} "></h4>
                   </div>
                 </div>
               <div class="row">
                 <div class="col-md-4">
                   <label
-                          class="form-label"
+                          class="form-label text-black-50"
                   >Address
                   </label
                   >
@@ -150,7 +147,7 @@
                 </div>
                 <div class="col-md-4">
                   <label
-                          class="form-label"
+                          class="form-label text-black-50"
                   >City
                   </label
                   >
@@ -158,7 +155,7 @@
                 </div>
                 <div class="col-md-4">
                   <label
-                          class="form-label"
+                          class="form-label text-black-50"
                   >District
                   </label
                   >
@@ -169,6 +166,11 @@
           </div>
         </div>
     </div>
+
+  <footer class="text-center text-dark footerAbsolute">
+    <div class="text-center p-3">© 2023 Homemade</div>
+    <!-- Copyright -->
+  </footer>
     <div style="display: none" id="script" th:text="${EditMessage}"> </div>
 
     <script src="/assets/js/bootstrap.bundle.min.js"></script>

@@ -16,83 +16,68 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
+    <link rel="stylesheet" href="/assets/css/employee.css">
+
+    <link rel="stylesheet" href="/assets/css/home.css">
+
+
     <style></style>
     <title>Document</title>
   </head>
   <body class="bg-light">
-  <header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-      <div class="container">
-        <a class="navbar-brand fs-2" href="/employee">
-          <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
+  <header class="header">
+    <nav id="navBar">
+      <div class="logoNav">
+        <a class="navbar-brand fs-2" href="/guest">
+          <img src="/assets/images/HomeMate.png" alt="" class="logo">
         </a>
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-        </button>
-        <div
-                class="collapse navbar-collapse"
-                id="navbarSupportedContent">
-          <ul
-                  class="navbar-nav mx-auto mb-2 mb-lg-0">
-
-            <li class="nav-item">
-              <a th:href="@{/employee}"  class="nav-link"
-              >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/employee/job/jobList}"  class="nav-link"
-              >Jobs</a
-              >
-            </li>
-            <li class="nav-item" >
-              <a th:href="@{/employee/job/incomes}"   class="nav-link"
-              >Income</a
-              >
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/employee/job/schedule}" class="nav-link"
-              >Schedule
-              </a
-              >
-            </li>
-
-            <li class="nav-item">
-              <a th:href="@{/admin/tasks}" class="nav-link"
-              >Account
-              </a
-              >
-            </li>
-
-            <li class="nav-item">
-
-                <img
-                        class="rounded-5 border me-4"
-                        src="images/customer-example.jpg"
-                        style="
-                           object-fit: cover; width: 60px;
-                           object-position: 25% 25%;"
-                        alt="User Image" />
-              </a>
-            </li>
-
-          </ul>
-
-        </div>
       </div>
+
+      <ul
+              class="">
+        <li class="">
+          <a th:href="@{/employee}" class="nav-link"
+          >Home</a
+          >
+        </li>
+        <li class="">
+          <a th:href="@{/employee/job/jobList}" class="nav-link"
+          >Jobs</a
+          >
+        </li>
+        <li class="">
+          <a
+                  href="/employee/job/incomes"
+                  class="nav-link"
+          >Income</a
+          >
+        </li>
+        <li class="d-none">
+          <a href="#price" class="nav-link"
+          ></a
+          >
+        </li>
+        <li class="">
+          <a
+                  th:href="@{/employee/job/schedule}"
+                  class="nav-link"
+          >Schedule</a>
+        </li>
+        <li class="">
+          <a
+                  th:href="@{/employee/account}"
+                  class="nav-link"
+          >Account</a>
+        </li>
+      </ul>
+
+
+
     </nav>
   </header>
-    <div
-      class="container rounded bg-white mt-5 mb-5">
+
+  <div
+      class="main-empProfile rounded bg-white   mb-5">
       <form  th:action="@{/employee/account/edit}" method="post" th:object="${employeeProfile}">
         <div class="row">
           <div class="col-md-3 border-right">
@@ -101,8 +86,8 @@
               <img
                 class="rounded-circle mt-5"
                 width="150px"
-                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" />
-              <label class="link-info" for="avatar" style="cursor:pointer">Change avatar</label>
+                th:src="${employeeProfile.getAvatar()}" />
+              <label class="link-info" for="txtavatar" style="cursor:pointer">Change avatar</label>
               <span
                 class="font-weight-bold" th:text="${employeeProfile.getName()}"
                 >Customer</span
@@ -158,17 +143,13 @@
               <div class="row mt-3">
 
 
-                <div class="col-md-6">
-                  <label
-                          class="form-label"
-                          for="avatar"
-                  >Avatar<sup
-                          style="color: red"
-                  >(*)</sup
+                <div class="col-md-6 justify-content-center">
+                  <label class="form-label">Avatar<sup  >(*)</sup
                   ></label>
-                  <input  id="avatar"  name ="avatar" type="file" th:field="*{avatar}" class="form-control" accept="image/png, image/jpeg" >
-                  <p><img id="avatarPreview" alt="Avatar Preview"></p>
-                
+                  <img th:src="${employeeProfile.getAvatar()}" id="avatarPreview" alt="Avatar Preview">
+                  <input id="txtavatar" name ="txtavatar" type="file" class="form-control d-none" accept="image/*" >
+
+
                 </div>
                 <div class="col-md-6">
                   <label
@@ -290,8 +271,8 @@
               <hr>
                 <br />
               <div class="col-md-12 text-center">
-                <input class="btn btn-md btn-dark" id="saveEdit" type="submit" value="Save">
-                <input class="btn btn-md btn-dark" id="resetEdit" type="reset" value="Reset">
+                <input class="btn btn-md detailBtn" id="saveEdit" type="submit" value="Save">
+                <input class="btn btn-md detailBtn" id="resetEdit" type="reset" value="Reset">
               </div>
               </div>
             </div>
@@ -299,16 +280,21 @@
 
       </form>
     </div>
+
+  <footer class="text-center text-dark">
+    <div class="text-center p-3">
+      © 2023 Homemade
+    </div>
+    <!-- Copyright -->
+  </footer>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
   <div id="toast"></div>
-
   <script src="/assets/js/toast.js"></script>
 
   <script src="/assets/js/employeeValidation.js"></script>
 
-
-
+  <div style="display: none" id="script" th:text="*{EmployeeMessage}"> </div>
   <script >
     var mes = document .getElementById("script").innerText
     splitMessase(mes.trim())
@@ -316,7 +302,7 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#avatar').change(function(){
+      $('#txtavatar').change(function(){
   showPreviewImage(this);
       });
     });
@@ -325,9 +311,9 @@
         reader = new FileReader();
         reader.onload = function(e){
           $(#avatarPreview).attr("src",e.target.result);
-        }
+
         reader.readAsDataURL(file);
-    };
+    }};
   </script>
   </body>
 </html>

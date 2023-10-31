@@ -28,7 +28,14 @@ function locate(lo) {
 
 }
 
-
+// function addMarkersToMap(map) {
+//     var parisMarker = new H.map.Marker({lat:10.0116, lng:105.76507});
+//     map.addObject(parisMarker);
+//
+//     var romeMarker = new H.map.Marker({lat:10.01972, lng: 105.77284});
+//     map.addObject(romeMarker);
+//
+// }
 
 // service.reverseGeocode({
 //     at: '10.0116,105.76507'

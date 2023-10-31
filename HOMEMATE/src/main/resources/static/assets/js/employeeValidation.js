@@ -1,8 +1,9 @@
-const dobInput = document.getElementById('userDob');
+var profileDOB = document.getElementById('userDob');
 
-dobInput.addEventListener('focusout', function(event) {
+profileDOB.addEventListener('focusout', function(event) {
     const dob = event.target.value;
 
+    console.log("check")
     // Check if the user is old enough to register
     if (isDateUnderage(dob)) {
         // Display an error message
@@ -33,8 +34,7 @@ function isDateUnderage(dob) {
     return age <= 18;
 }
 
-const passwordInput = document.getElementById('userNewPassword');
-
+var changePassInput = document.getElementById("userNewPassword")
 passwordInput.addEventListener('change', function(event) {
     const password = event.target.value;
 

@@ -69,15 +69,15 @@ const tbody = document.getElementById('bodyTable');
     <div style=" padding: 10px">
     
       <th>
-        <img class="shadow-1-strong rounded-circle" alt="avatar 1" style=" width: 55px; height: auto;" src="${item.customerAvt}" />
+        <img class="shadow-1-strong rounded-3" alt="avatar 1" style=" width: 55px; height: 55px;" src="${item.customerAvt}" />
         <span class="ms-2">${item.customerName}</span>
       </th>
       <td class="align-middle"><span>${item.serviceName}</span>
       </td>
       <td class="align-middle">
-      <h6 class="mb-0"><span class="badge bg-success">${item.status}</span></h6>
+      <h6 class="mb-0"><span class="badge bg-primary text-center">${item.status}</span></h6>
       </td>
-      <td class="align-middle"><a class="btn btn-outline-primary" href="/employee/job/${item.jobID}">Detail</a>
+      <td class="align-middle"><a class="btn detailBtn text-center" href="/employee/job/${item.jobID}">Detail</a>
       </td>
 </div>
       
@@ -88,15 +88,15 @@ const tbody = document.getElementById('bodyTable');
     <tr class="fw-normal p-3"  style="height: 40px" xmlns="http://www.w3.org/1999/html">
      <div style=" padding: 10px">
       <th>
-        <img class="shadow-1-strong rounded-circle" alt="avatar 1" style=" width: 55px; height: auto;" src="${item.customerAvt}" />
+        <img class="shadow-1-strong rounded-3" alt="avatar 1" style=" width: 55px; height: 55px;" src="${item.customerAvt}" />
         <span class="ms-2">${item.customerName}</span>
       </th>
       <td class="align-middle"><span>${item.serviceName}</span>
       </td>
       <td class="align-middle">
-      <h6 class="mb-0"><span class="badge bg-primary">${item.status}</span></h6>
+      <h6 class="mb-0"><span class="badge bg-warning text-center">${item.status}</span></h6>
       </td>
-      <td class="align-middle"><a class="btn btn-outline-primary" href="/employee/job/${item.jobID}">Detail</a>
+      <td class="align-middle"><a class="btn detailBtn text-center" href="/employee/job/${item.jobID}">Detail</a>
       </td>
       </div>
     </tr>

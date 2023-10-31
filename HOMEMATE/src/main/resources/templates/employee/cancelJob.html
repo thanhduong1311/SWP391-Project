@@ -1,259 +1,194 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="/assets/css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-    <style>
-      body {
-        background-color: #eee;
-      }
-      .card {
-        background-color: #fff;
-        width: 800px;
-        border: none;
-        border-radius: 16px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+  <link
+          rel="stylesheet"
+          href="/assets/css/bootstrap.min.css" />
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
-      .info {
-        line-height: 19px;
-      }
+  <link rel="stylesheet" href="/assets/css/toastMessage.css">
 
-      .name {
-        color: #4c40e0;
-        font-weight: 600;
-      }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="/assets/css/home.css">
 
-      .order {
-        font-weight: 400;
-        color: #2b2b2b;
-      }
-      .detail {
-        line-height: 19px;
-      }
+  <link rel="stylesheet" href="/assets/css/employee.css">
 
-      .summery {
-        color: #2b2b2b;
-        font-weight: 400;
-      }
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
 
-      .text {
-        line-height: 15px;
-      }
-      .new {
-        color: #000;
-        font-weight: 600;
-      }
-      .money {
-        font-weight: 500;
-      }
-      .address {
-        color: #2b2b2b;
-        font-weight: 500;
-      }
+  <script type="text/javascript" charset="utf-8" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
 
-      .last {
-        font-weight: 500;
-      }
 
-      .address-line {
-        color: #4c40e0;
-        font-weight: 700;
-      }
-    </style>
-    <title>Document</title>
-  </head>
-  <body>
-  <header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-      <div class="container">
-        <a class="navbar-brand fs-2" href="/employee">
-          <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
-        </a>
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-        </button>
-        <div
-                class="collapse navbar-collapse"
-                id="navbarSupportedContent">
-          <ul
-                  class="navbar-nav mx-auto mb-2 mb-lg-0">
+  <title>Document</title>
+</head>
+<body>
+<header class="header">
+  <nav id="navBar">
+    <div class="logoNav">
+      <a class="navbar-brand fs-2" href="/guest">
+        <img src="/assets/images/HomeMate.png" alt="" class="logo">
+      </a>
+    </div>
 
-            <li class="nav-item">
-              <a th:href="@{/employee}"  class="nav-link"
-              >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/employee/job/jobList}"  class="nav-link"
-              >Jobs</a
-              >
-            </li>
-            <li class="nav-item" >
-              <a th:href="@{/employee/job/incomes}"   class="nav-link"
-              >Income</a
-              >
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/employee/job/schedule}" class="nav-link"
-              >Schedule
-              </a
-              >
-            </li>
+    <ul
+            class="">
+      <li class="">
+        <a th:href="@{/employee}" class="nav-link"
+        >Home</a
+        >
+      </li>
+      <li class="">
+        <a th:href="@{/employee/job/jobList}" class="nav-link"
+        >Jobs</a
+        >
+      </li>
+      <li class="">
+        <a
+                href="/employee/job/incomes"
+                class="nav-link"
+        >Income</a
+        >
+      </li>
+      <li class="d-none">
+        <a href="#price" class="nav-link"
+        ></a
+        >
+      </li>
+      <li class="">
+        <a
+                th:href="@{/employee/job/schedule}"
+                class="nav-link"
+        >Schedule</a>
+      </li>
+      <li class="">
+        <a
+                th:href="@{/employee/account}"
+                class="nav-link"
+        >Account</a>
+      </li>
+    </ul>
 
-            <li class="nav-item">
-              <a th:href="@{/admin/tasks}" class="nav-link"
-              >Account
-              </a
-              >
-            </li>
 
-            <li class="nav-item">
 
-                <img
-                        class="rounded-5 border me-4"
-                        src="images/customer-example.jpg"
-                        style="
-                           object-fit: cover; width: 60px;
-                           object-position: 25% 25%;"
-                        alt="User Image" />
-            </li>
+  </nav>
+</header>
+<section
+        class="vh-100 sectionCancel"
+        style="background-color: #eee">
+  <div class="container py-5">
+    <div
+            class="row d-flex justify-content-center align-items-center">
 
-          </ul>
+      <div class="col-md-12 col-xl-10">
+        <div class="card">
+          <div class="card-header p-3">
+            <h2 class="mb-0">
+              <i class="fas fa-tasks me-2 titleJob"></i
+              >Job information
+            </h2>
+          </div>
 
-        </div>
-      </div>
-    </nav>
-  </header>
-    <section
-      class="vh-100"
-      style="background-color: #eee">
-      <div class="container py-5">
-        <div
-          class="row d-flex justify-content-center align-items-center">
 
-          <div class="col-md-12 col-xl-10">
-            <div class="card">
-              <div class="card-header p-3">
-                <h2 class="mb-0">
-                  <i class="fas fa-tasks me-2"></i
-                  >Create cancel request
-                </h2>
-              </div>
-              <div
-                class="card-body h-100"
-                data-mdb-perfect-scrollbar="true"
-                style="
-                  position: relative;
-                  height: 400px;
-                ">
-                <div
-                  class="first d-flex justify-content-between align-items-center mb-3">
-                  <div class="info">
-                    <span class="h3 d-block name"
-                      >Customer: <span th:text="*{job.getCustomerName()}"></span></span
+          <div
+                  class="card-body h-100"
+                  data-mdb-perfect-scrollbar="true" >
+            <div
+                    class="first d-flex justify-content-between mb-3">
+              <div class="info col-md-6">
+                    <span class="h5 d-block name"
+                    >Customer information: </span >
+                <div class="d-flex align-items-center">
+                  <img class="cusAvt rounded-3 m-2" th:src="*{job.getCustomerAvt()}">
+
+                  <div>
+                    <div class="fw-bold mb-2" th:text="*{job.getCustomerName()}"></div>
+                    <span class=" address   col-4  mt-3"
+                          th:if="*{job.getStatus().ordinal() == 1}"
                     >
-                    <div>From: <span class="text-black-50" th:text="*{job.getStart()}"></span></div>
-                    <div>To  : <span class="text-black-50" th:text="*{job.getEnd()}"></span></div>
-                    <div>Total time  : <span class="text-black-50" th:text="*{job.getServiceTime()  + 'h'}"></span></div>
-                    <span class="order"
-                          th:text="*{job.getServiceName()}"
-                      >
-                    </span>
-
-                    <span class="order"
-                          th:text="*{job.getJobDescription()}"
-                    >
-                    </span>
+                    <span>Phone: </span> <span class="text-black-50" th:text="*{job.getPhone()}"></span>
+                  </span>
                   </div>
                 </div>
-                <div class="detail">
-                  <span class="d-block summery"
-                    >Payment Type:
-                    <span class="text-success" th:text="*{job.getPaymentType()}"></span></span
-                  >
-                </div>
-                <div class="detail">
-                  <span class="d-block summery"
-                  >Status:
-                    <span class="text-info" th:text="*{job.getStatus()}"></span></span
-                  >
-                </div>
-                <hr />
-                <div class="text row">
-                  <span class="mb-1 col-1"
-                    >At:</span
-                  >
-
-                  <span class=" address mb-3 col-7"
-                        th:text="*{job.getAddress()}"
-                  ></span
-                  >
-
-                  <span class=" address mb-3 col-4"
-                        th:if="*{job.getStatus().ordinal() == 1}"
-                  >
-                    <span>Contact: </span> <span th:text="*{job.getPhone()}"></span>
-                  </span>
 
 
-                </div>
 
 
-                <div
-                  class="money d-flex flex-row mt-2 align-items-center">
-                  <span class="ml-2 text-success" th:text="'$' + *{job.getPrice()}"></span>
-                </div>
               </div>
 
-              <form th:action="@{/employee/job/cancelJob/{id}(id=${job.getJobID()})}" method="post">
+              <div class="row col-md-6">
+                     <span class="h5 d-block name"
+                     >Job information: </span >
+                <div class="jobDTInfor"><span>From:</span> <span class="text-black-50" th:text="*{job.getStart()}"></span></div>
+                <div  class="jobDTInfor"><span>To:</span> <span class="text-black-50" th:text="*{job.getEnd()}"></span></div>
+                <div class="jobDTInfor"><span>Payment Type:</span><span class="text-black-50" th:text="*{job.getPaymentType().toString()}"></span></div>
+                <div class="jobDTInfor"><span>Status:</span><span class="text-black-50" th:text="*{job.getStatus().toString()}"></span></div>
+                <div class="jobDTInfor"><span>Type of service:</span><span class="text-black-50" th:text="*{job.getServiceName()}"></span></div>
+                <div  class="jobDTInfor"> <span>Total time:</span><span class="text-black-50" th:text="*{job.getServiceTime()  + 'h'}"></span></div>
+                <div class="jobDTInfor"><span>Service price:</span><span class="text-black-50" th:text="*{'$'+job.getPrice()}"></span></div>
 
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <hr />
+            <div class="text row">
+              <span class="mb-1 col-2">At:</span>  <span class=" address mb-3 col-10" th:text="*{job.getAddress()}" ></span >
+
+            </div>
+            <hr />
+
+            <form method="post" th:action="@{/employee/job/cancelJob/{id}(id=${job.getJobID()})}">
               <div class="col-md-12">
                 <label for="reason"></label>
-                  <textarea name="reason" type="text" id="reason" class="w-100" th:field="*{reason.reason}">
+                <textarea rows="4" name="reason" type="text" id="reason" class="w-100" th:field="*{reason.reason}">
 
                   </textarea>
               </div>
-
-
               <div
-                class="card-footer p-3 d-flex justify-content-end">
-
+                      class="card-footer p-3 d-flex justify-content-end">
 
                 <button th:if="${job.getStatus().ordinal() == 1}"
-                   th:href="@{/employee/job/cancel/{id}(id=${job.getJobID()})}"
-                   class="btn btn-danger" type="submit"
-                >Cancel</button
+                   type="submit"
+                   class="btn btn-danger"
+                >Send cancel request</button
                 >
 
-
-
               </div>
-              </form>
+            </form>
 
-            </div>
+
+
           </div>
+
         </div>
 
       </div>
-    </section>
+
+    </div>
+
+  </div>
+</section>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+<div id="toast"></div>
+<script src="/assets/js/toast.js"></script>
+<script src="/assets/js/signupValidation.js"></script>
+<div style="display: none" id="script" th:text="*{EmployeeMessage}"> </div>
+<script >
+  var mes = document .getElementById("script").innerText
+  splitMessase(mes.trim())
+</script>
   </body>
 </html>

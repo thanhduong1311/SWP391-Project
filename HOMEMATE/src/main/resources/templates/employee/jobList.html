@@ -8,6 +8,8 @@
     <link
       rel="stylesheet"
       href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/employee.css">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
@@ -19,82 +21,59 @@
     <title>Document</title>
   </head>
   <body>
-  <header>
-    <nav
-            class="navbar navbar-expand-lg bg-body-tertiary fs-4">
-      <div class="container">
-        <a class="navbar-brand fs-2" href="/employee">
-          <img src="/assets/images/HomeMate.png" alt="" style="height: 100px">
+  <header class="header">
+    <nav id="navBar">
+      <div class="logoNav">
+        <a class="navbar-brand fs-2" href="/guest">
+          <img src="/assets/images/HomeMate.png" alt="" class="logo">
         </a>
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span
-                    class="navbar-toggler-icon"></span>
-        </button>
-        <div
-                class="collapse navbar-collapse"
-                id="navbarSupportedContent">
-          <ul
-                  class="navbar-nav mx-auto mb-2 mb-lg-0">
-
-            <li class="nav-item">
-              <a th:href="@{/employee}"  class="nav-link"
-              >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/employee/job/jobList}"  class="nav-link"
-              >Jobs</a
-              >
-            </li>
-            <li class="nav-item" >
-              <a th:href="@{/employee/job/incomes}"   class="nav-link"
-              >Income</a
-              >
-            </li>
-            <li class="nav-item">
-              <a th:href="@{/employee/job/schedule}" class="nav-link"
-              >Schedule
-              </a
-              >
-            </li>
-
-            <li class="nav-item">
-              <a th:href="@{/admin/tasks}" class="nav-link"
-              >Account
-              </a
-              >
-            </li>
-
-            <li class="nav-item">
-
-                <img
-                        class="rounded-5 border me-4"
-                        src="/assets/images/customer-example.jpg"
-
-                        style="
-                           object-fit: cover; width: 60px;
-                           object-position: 25% 25%;"
-                         />
-
-            </li>
-
-          </ul>
-
-        </div>
       </div>
+
+      <ul
+              class="">
+        <li class="">
+          <a th:href="@{/employee}" class="nav-link"
+          >Home</a
+          >
+        </li>
+        <li class="">
+          <a th:href="@{/employee/job/jobList}" class="nav-link"
+          >Jobs</a
+          >
+        </li>
+        <li class="">
+          <a
+                  href="/employee/job/incomes"
+                  class="nav-link"
+          >Income</a
+          >
+        </li>
+        <li class="d-none">
+          <a href="#price" class="nav-link"
+          ></a
+          >
+        </li>
+        <li class="">
+          <a
+                  th:href="@{/employee/job/schedule}"
+                  class="nav-link"
+          >Schedule</a>
+        </li>
+        <li class="">
+          <a
+                  th:href="@{/employee/account}"
+                  class="nav-link"
+          >Account</a>
+        </li>
+      </ul>
+
+
+
     </nav>
   </header>
     <section
-      class="vh-100"
-      style="background-color: #eee">
-      <div class="container py-5">
+      class="vh-100" >
+      <div class="">
         <div
           class="row d-flex justify-content-center align-items-center">
           <div class="col-md-12 col-xl-10">
@@ -108,21 +87,21 @@
               <div
                 class="card-body h-100"
                 data-mdb-perfect-scrollbar="true"
-                style="
-                  position: relative;
-                  height: 400px;
-                ">
+                >
 
                 <table class="table mb-0" th:if="*{jobs.size() !=0}">
                   <thead>
                     <tr>
-                      <th class="h4" scope="col">
+                      <th class="h4 fw-bold" scope="col">
                         Customer
                       </th>
-                      <th class="h4" scope="col">
+                      <th class="h4 fw-bold" scope="col">
                         Service
                       </th>
-                      <th class="h4" scope="col">
+                      <th class="h4 fw-bold text-center" scope="col">
+                        Date
+                      </th>
+                      <th class="h4 fw-bold text-center" scope="col">
                         Payment status
                       </th>
                       <th
@@ -135,12 +114,9 @@
                       <th>
                         <img
                           th:src="*{job.getCustomerAvt()}"
-                          class="shadow-1-strong rounded-circle"
+                          class="shadow-1-strong rounded-circle cusAvt"
                           alt="avatar 1"
-                          style="
-                            width: 55px;
-                            height: auto;
-                          " />
+                          />
                         <span class="ms-2" th:text="*{job.getCustomerName()}"
                           ></span
                         >
@@ -151,10 +127,17 @@
                           </span
                         >
                       </td>
+
+                      <td class="align-middle text-primary text-center">
+                        <span th:text="*{job.getJobInCalendar()}"
+                        >
+                          </span
+                          >
+                      </td>
                       <td class="align-middle">
-                        <h6 class="mb-0">
+                        <h6 class="mb-0 text-center">
                           <span
-                            class="badge bg-success" th:text="*{job.getPaymentType().toString()}"
+                            class="badge bg-success " th:text="*{job.getPaymentType().toString()}"
                             > </span
                           >
                         </h6>
@@ -162,7 +145,7 @@
                       <td class="align-middle">
                         <a
                           th:href="@{/employee/job/{id}(id=${job.getJobID()})}"
-                          class="btn btn-outline-primary"
+                          class="btn detailBtn"
                           >Detail</a
                         >
                       </td>
@@ -176,13 +159,21 @@
                 </div>
 
               </div>
-              <div class="card-footer p-3"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <div id="toast"></div>
+  <script src="/assets/js/toast.js"></script>
+  <script src="/assets/js/signupValidation.js"></script>
+  <div style="display: none" id="script" th:text="*{EmployeeMessasge}"> </div>
+  <script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+  </script>
   </body>
 </html>

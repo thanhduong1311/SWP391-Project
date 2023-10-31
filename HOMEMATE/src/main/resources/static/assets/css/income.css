@@ -1,0 +1,101 @@
+ #db-wrapper {
+     width: 100%;
+     padding: 0 80px;
+     margin-top: 120px;
+ }
+
+ body {
+     position: relative;
+     min-height: calc(100vh - 40px);
+
+ }
+
+ body footer {
+     position: absolute;
+     bottom: 0;
+     right: 0;
+     left: 0;
+ }
+
+ .cusAvt {
+     width: 55px;
+     height: 55px;
+     border: 1px solid #ff9b5ce3;
+ }
+
+ .income {
+     text-decoration: none;
+     color: #000;
+     border-top: 1px solid #ccc;
+ }
+
+ .income .row {
+     padding: 10px 4px;
+     margin-bottom: 30px;
+ }
+
+ .income .row:hover {
+     background-color: #ff914d17;
+ }
+
+ #incomeDetail {
+
+ }
+
+.header {
+
+}
+
+ .info {
+     line-height: 19px;
+ }
+
+ .name {
+     color: #4c40e0;
+     font-weight: 600;
+ }
+
+ .order {
+     font-weight: 400;
+     color: #2b2b2b;
+ }
+ .detail {
+     line-height: 19px;
+ }
+
+ .summery {
+     color: #2b2b2b;
+     font-weight: 400;
+ }
+
+ .text {
+     line-height: 15px;
+ }
+ .new {
+     color: #000;
+     font-weight: 600;
+ }
+ .money {
+     font-weight: 500;
+ }
+ .address {
+     color: #2b2b2b;
+     font-weight: 500;
+ }
+
+
+ .income-detail.card {
+     width: 650px;
+ }
+
+ .infoDetails {
+     margin-top:10px ;
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+ }
+
+
+ .infoDetails a {
+     color:   #ff9b5ce3;
+ }
