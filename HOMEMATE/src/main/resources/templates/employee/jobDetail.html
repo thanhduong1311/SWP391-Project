@@ -191,64 +191,29 @@
       </div>
     </section>
 
+  <div style="display: none" id="cusLoca" th:text="*{ job.getJobLocation()}"></div>
+<!--  <div id="emoLoca">10.0089,105.7493</div>-->
+
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
   <script src="/assets/js/MapService.js"></script>
 
   <div id="toast"></div>
   <script src="/assets/js/toast.js"></script>
-  <script src="/assets/js/signupValidation.js"></script>
+<!--  <script src="/assets/js/signupValidation.js"></script>-->
   <div style="display: none" id="script" th:text="*{EmployeeMessage}"> </div>
   <script >
     var mes = document .getElementById("script").innerText
     splitMessase(mes.trim())
   </script>
 
-  <div style="display: none" id="cusLoca"></div>
-  <div style="display: none" id="emoLoca"></div>
 
-<!--  <button style="display: none" onclick="sliceLocation()" >cccc</button>-->
+
+<!--  <button style="display: none" onclick="sliceLocation()" >Get location</button>-->
 
     <script >
 
 
-
-      var cusLocationEle = document.getElementById("cusLoca")
-      var empLocationEle = document.getElementById("emoLoca")
-
-
-
-
-
-      function sliceLocation() {
-        var cus = cusLocationEle.innerHTML
-        var emp = empLocationEle.innerHTML
-
-        var emLAT = emp.slice(0, emp.indexOf("###"))
-        var emLNG = emp.slice( emp.indexOf("###") +3,emp.length)
-        var cusLAT = cus.slice(0, cus.indexOf("###"))
-        var cusLNG = cus.slice( cus.indexOf("###") +3,cus.length)
-
-        console.log("cus " + cusLAT + " " + cusLNG)
-        console.log("emp " + emLAT + " " + emLNG)
-
-
-        function addMarkersToMap(map) {
-          var cusMarker = new H.map.Marker({lat:10.0116, lng:105.76507});
-          map.addObject(cusMarker);
-
-          var empMarker = new H.map.Marker({lat:10.01972, lng: 105.77284});
-          map.addObject(empMarker);
-
-
-        }}
-
-
-      window.onload = function () {
-        cusLocationEle.innerHTML = "10.0116###105.76507";
-        empLocationEle.innerHTML = "10.01972###105.77284";
-
-      }
 
     </script>
 

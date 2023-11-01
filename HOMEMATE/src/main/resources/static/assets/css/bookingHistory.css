@@ -39,6 +39,8 @@ section {
 
 .main-booking-detail .card {
     border: 2px solid #ff9b5ce3;
+    min-width: 650px;
+
 }
 
 .spanDetail {
@@ -50,6 +52,7 @@ section {
 .feedBackBtn {
     background-color: #ff9b5ce3;
     color: #ffff;
+    margin-left: 20px;
 }
 
 .feedBackBtn:hover {

@@ -62,6 +62,8 @@ public class BookingService implements IJobService {
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());
                 job.setUpdateAt(new Date());
+                job.setLocation(request.getLocation());
+                job.setJobAddress(request.getCustomerAddress());
                 jobRepository.save(job);
                 MailContents mailContents = new MailContents();
                 mailContents.setSubjectName(customer.getFullName());
@@ -112,6 +114,8 @@ public class BookingService implements IJobService {
                 job.setDescription(request.getJobDescription());
                 job.setCreateAt(new Date());
                 job.setUpdateAt(new Date());
+                job.setLocation(request.getLocation());
+                job.setJobAddress(request.getCustomerAddress());
                 jobRepository.save(job);
                 return new MessageOject("Success",null,null);
 
@@ -169,6 +173,8 @@ public class BookingService implements IJobService {
                 jobOverView.setJobID(j.getJobId());
                 jobOverView.setEmployeeAvt(employee == null ? "":employee.getAvatar());
                 jobOverView.setJobInCalendar(JobTimer.convertDateToString(j.getStart()));
+                jobOverView.setAddress(j.getJobAddress());
+                jobOverView.setAddress(j.getJobAddress());
                 bookings.add(jobOverView);
             }
 
@@ -203,13 +209,14 @@ public class BookingService implements IJobService {
             jobDetail.setJobID(jobID);
             jobDetail.setCustomerName(customer.getFullName());
             jobDetail.setServiceName(service.getName());
-            jobDetail.setAddress(customer.getAddress_detail() + ", " + customer.getDistrict() + ", " + customer.getCity());
+            jobDetail.setAddress(job.getJobAddress());
             jobDetail.setStart(job.getStart());
             jobDetail.setEnd(job.getEnd());
             jobDetail.setPhone(customer.getPhone());
             jobDetail.setJobDescription(job.getDescription());
             jobDetail.setPaymentType(job.getPaymentType());
             jobDetail.setStatus(job.getStatus());
+            jobDetail.setJobLocation(job.getLocation());
             jobDetail.setServiceTime(paymentService.getTotalTime(job.getStart(),job.getEnd()));
             jobDetail.setPrice(paymentService.getTotalMoney(paymentService.getTotalTime(job.getStart(),job.getEnd()),job.getServiceId().getServiceId()));
             jobDetail.setPrice(paymentService.getDiscountedFinalMoney(paymentService.getTotalTime(job.getStart(),job.getEnd()),job.getServiceId().getServiceId(),ranking.getRankId()));

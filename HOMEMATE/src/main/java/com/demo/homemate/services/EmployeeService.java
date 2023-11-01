@@ -72,6 +72,7 @@ public class EmployeeService implements IEmployeeService {
                 jobOverView.setJobID(j.getJobId());
                 jobOverView.setCustomerAvt(j.getCustomerId().getAvatar());
                 jobOverView.setPaymentType(j.getPaymentType());
+                jobOverView.setJobDescription(j.getDescription());
                     jobOverView.setJobInCalendar(JobTimer.convertDateToString(j.getStart()));
 
                 availableJob.add(jobOverView);
@@ -101,7 +102,7 @@ public class EmployeeService implements IEmployeeService {
 
             jobDetail.setCustomerName(customer.getFullName());
             jobDetail.setServiceName(service.getName());
-            jobDetail.setAddress(customer.getAddress_detail() + ", " + customer.getDistrict() + ", " + customer.getCity());
+            jobDetail.setAddress(job.getJobAddress());
             jobDetail.setStart(job.getStart());
             jobDetail.setEnd(job.getEnd());
             jobDetail.setPhone(customer.getPhone());
@@ -110,6 +111,7 @@ public class EmployeeService implements IEmployeeService {
             jobDetail.setPaymentType(job.getPaymentType());
             jobDetail.setStatus(job.getStatus());
             jobDetail.setCustomerAvt(customer.getAvatar());
+            jobDetail.setJobLocation(job.getLocation());
 
             jobDetail.setJobInCalendar(JobTimer.convertDateToString(job.getStart()));
 
@@ -396,11 +398,6 @@ public class EmployeeService implements IEmployeeService {
                     incDel.setIncomeId(i.getIncomeId());
                     incDel.setCustomerName(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getFullName());
                     incDel.setCustomerPhone(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getPhone());
-                    incDel.setAddress(
-                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getAddress_detail()+", "+
-                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getDistrict() + "," +
-                            customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getCity()
-                    );
                     incDel.setRealAmount(i.getAmount());
                     incDel.setAmountFromJob(amount);
                     incDel.setCommission(commission);
@@ -411,6 +408,7 @@ public class EmployeeService implements IEmployeeService {
                     incDel.setDateOfIncome(i.getCreateAt());
                     incDel.setServiceName(jobRepository.findById(i.getJobId().getJobId()).getServiceId().getName());
                     incDel.setNote(i.getNote());
+                    incDel.setAddress(job.getJobAddress());
                     incDel.setCustomerAvt(customerRepository.findById(jobRepository.findById(i.getJobId().getJobId()).getCustomerId().getCustomerId()).getAvatar());
                     result.add(incDel);
                 }
@@ -455,11 +453,6 @@ public class EmployeeService implements IEmployeeService {
             incDel.setIncomeId(i.getIncomeId());
             incDel.setCustomerName(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getFullName());
             incDel.setCustomerPhone(customerRepository.findById(i.getJobId().getCustomerId().getCustomerId()).getPhone());
-            incDel.setAddress(
-                    customer.getAddress_detail()+", "+
-                            customer.getDistrict() + "," +
-                            customer.getCity()
-            );
             incDel.setRealAmount(i.getAmount());
             incDel.setAmountFromJob(amount);
             incDel.setCommission(commission);
@@ -470,6 +463,7 @@ public class EmployeeService implements IEmployeeService {
             incDel.setDateOfIncome(i.getCreateAt());
             incDel.setServiceName(jobRepository.findById(i.getJobId().getJobId()).getServiceId().getName());
             incDel.setNote(i.getNote());
+            incDel.setAddress(job.getJobAddress());
 
             return  incDel;
         } catch (Exception e){

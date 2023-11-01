@@ -50,6 +50,8 @@ public class Job {
 
     private String location;
 
+    private String jobAddress;
+
     @OneToOne(mappedBy = "jobId")
     private Income income;
 

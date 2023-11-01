@@ -49,3 +49,75 @@ startInput.addEventListener("change", function() {
 });
 
 
+
+var currentMarker;
+var locationOfAddress
+function setUpClickListener(map) {
+    // Attach an event listener to map display
+    // obtain the coordinates and display in an alert box.
+
+    map.addEventListener('tap', function (evt) {
+        var coord = map.screenToGeo(evt.currentPointer.viewportX,
+            evt.currentPointer.viewportY);
+
+        if (currentMarker) {
+            map.removeObject(currentMarker);
+        }
+
+        logEvent('Clicked at ' + Math.abs(coord.lat.toFixed(4)) +
+            ' ' + Math.abs(coord.lng.toFixed(4)))
+
+        var cusMarker = new H.map.Marker({ lat: Math.abs(coord.lat.toFixed(4)), lng: Math.abs(coord.lng.toFixed(4)) });
+
+        console.log("LAT: " + Math.abs(coord.lat.toFixed(4)))
+        console.log("LNG: " + Math.abs(coord.lng.toFixed(4)))
+        currentMarker = cusMarker;
+
+        // Add the new marker to the map
+        map.addObject(cusMarker);
+
+
+        var locationOfAddress =""+Math.abs(coord.lat.toFixed(4))+','+Math.abs(coord.lng.toFixed(4))
+
+        document.getElementById('rawLocation').value = ""+Math.abs(coord.lat.toFixed(4))+","+Math.abs(coord.lng.toFixed(4))
+        console.log("input: " + document.getElementById('rawLocation').value)
+
+    });
+}
+
+var platform = new H.service.Platform({
+    apikey: 'hdUeo8qlrCz1vOREZej-KBRIPRdNeNY7qoXeQ52Kp2w'
+});
+var defaultLayers = platform.createDefaultLayers();
+
+var map = new H.Map(document.getElementById('map'),
+    defaultLayers.vector.normal.map, {
+        center: { lat: 10.05165, lng: 105.77329 },
+        zoom: 10,
+        pixelRatio: window.devicePixelRatio || 1
+    });
+
+window.addEventListener('resize', () => map.getViewPort().resize());
+
+
+var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+// Step 4: create custom logging facilities
+var logContainer = document.createElement('ul');
+logContainer.className = 'log';
+logContainer.innerHTML = '<li class="log-entry">Try clicking on the map</li>';
+map.getElement().appendChild(logContainer);
+
+// Helper for logging events
+function logEvent(str) {
+    var entry = document.createElement('li');
+    entry.className = 'log-entry';
+    entry.textContent = str;
+    logContainer.insertBefore(entry, logContainer.firstChild);
+}
+
+
+setUpClickListener(map);
+
+//////////////////////////////////////
+//change form here
