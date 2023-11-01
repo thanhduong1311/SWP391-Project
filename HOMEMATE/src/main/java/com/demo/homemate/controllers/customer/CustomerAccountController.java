@@ -49,7 +49,6 @@ public class CustomerAccountController {
         }
         Customer c = customerRepository.findByUsername(username);
         MessageOject mo = rankingService.checkRank(c);
-        System.out.println("(Ben employeeservice)UPDATE RANK: " + mo.getMessage());
         MessageOject messageOject = (MessageOject)session.getAttribute("EditMessage");
         session.removeAttribute("EditMessage");
         if (messageOject!=null){

@@ -36,8 +36,10 @@ public class RankingService implements IRankIngService {
                     return new MessageOject("Failed","You are still in your rank",null);
                 }
             }
+
             for (int i=0;i<listRank.size();i++){
                 if (totalSpend<listRank.get(0).getMinSpend()){
+                    upRank(customer,listRank.get(0).getRankId());
                     return new MessageOject("Failed","You can not up rank now",null);
                 }
                 if (i==(listRank.size()-1)){
