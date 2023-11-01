@@ -78,7 +78,7 @@
 
   <div
       class="main-empProfile rounded bg-white   mb-5">
-      <form  th:action="@{/employee/account/edit}" method="post" th:object="${employeeProfile}">
+      <form  th:action="@{/employee/account/edit}" method="post" th:object="${employeeProfile}" enctype="multipart/form-data">
         <div class="row">
           <div class="col-md-3 border-right">
             <div
@@ -290,6 +290,21 @@
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
   <div id="toast"></div>
+  <script type="text/javascript">
+    const inputFile = document.querySelector('#txtavatar');
+    const img = document.querySelector('#avatarPreview');
+
+    inputFile.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const url = URL.createObjectURL(file);
+
+      img.src = url;
+    });
+    const originalSrc = img.getAttribute('src');
+    document.querySelector('input[type="reset"]').addEventListener('click', function() {
+      img.src = originalSrc;
+    });
+  </script>
   <script src="/assets/js/toast.js"></script>
 
   <script src="/assets/js/employeeValidation.js"></script>
@@ -300,20 +315,5 @@
     splitMessase(mes.trim())
   </script>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('#txtavatar').change(function(){
-  showPreviewImage(this);
-      });
-    });
-    function showPreviewImage(fileInput){
-        file = fileInput.files[0];
-        reader = new FileReader();
-        reader.onload = function(e){
-          $(#avatarPreview).attr("src",e.target.result);
-
-        reader.readAsDataURL(file);
-    }};
-  </script>
   </body>
 </html>

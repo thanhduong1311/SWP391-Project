@@ -92,7 +92,7 @@
         </a>
 
         <a class="detailBtn btn btn-lg w-75 mt-3"
-           th:href="@{/customer/history}"
+           th:href="@{/customer/account/{id}/reward (id=*{profile.getUsername()})}"
         >
           Reward
         </a>

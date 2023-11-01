@@ -5,6 +5,8 @@ import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
 import com.demo.homemate.dtos.notification.MessageOject;
+import com.demo.homemate.entities.Employee;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public interface IEmployeeService {
     String getScheduleJSON(int employeeID) ;
 
 
-    MessageOject updateProfile(EmployeeProlife request);
+    MessageOject updateProfile(EmployeeProlife e, MultipartFile mf , String c);
 
     List<JobDetail> viewOwnJob(int employeeID);
 

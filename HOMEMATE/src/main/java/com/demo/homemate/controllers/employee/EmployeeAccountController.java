@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/employee/account")
@@ -139,21 +140,21 @@ public class EmployeeAccountController {
         EmployeMapping mapping = new EmployeMapping();
         EmployeeProlife employeeProfile = mapping.toEmployeeProfile(employeeRepository.findByUsername(uname));
         System.out.println(employeeProfile.toString() );
+        model.addAttribute("EmployeeMessage",session.getAttribute("EmployeeMessage"));
+        session.removeAttribute("EmployeeMessage");
         model.addAttribute("employeeProfile", employeeProfile);
         return "employee/editProfile";
     }
     @PostMapping ("/edit")
-    public String editProfile(Model model, EmployeeProlife request,HttpSession session){
-
-        System.out.println("Request: " + request.toString());
-
-        MessageOject messageOject = employeeService.updateProfile(request);
-
-
+    public String editProfile(EmployeeProlife request,
+                              Model model,
+                              @RequestParam("txtavatar") MultipartFile multipartFile,
+                              HttpSession session
+    ){
+        System.out.println("++++++++++++++++++++++++++++++");
+        MessageOject messageOject = employeeService.updateProfile(request,multipartFile,"employee");
         session.setAttribute("EmployeeMessage", messageOject.getName()
                 +"#" +messageOject.getMessage());
-        System.out.println(messageOject.getMessage());
-
         return "redirect:/employee/account/" + request.getUsername();
     }
 

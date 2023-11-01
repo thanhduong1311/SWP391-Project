@@ -1,7 +1,9 @@
 package com.demo.homemate.services;
 
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
+import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.dtos.employee.response.EmployeeProlife;
+import com.demo.homemate.dtos.image.ImageResponse;
 import com.demo.homemate.dtos.job.response.CalendarObject;
 import com.demo.homemate.dtos.job.response.IncomeDetail;
 import com.demo.homemate.dtos.job.response.JobDetail;
@@ -10,14 +12,19 @@ import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.JobStatus;
 import com.demo.homemate.enums.PaymentType;
 import com.demo.homemate.enums.RequestStatus;
+import com.demo.homemate.mappings.CustomerMapping;
+import com.demo.homemate.mappings.EmployeMapping;
+import com.demo.homemate.mappings.interfaces.IEmployeeMapping;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IEmployeeService;
 import com.demo.homemate.utils.JobTimer;
 import com.demo.homemate.utils.PasswordMD5;
+import com.demo.homemate.utils.UploadPicture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -519,37 +526,24 @@ public class EmployeeService implements IEmployeeService {
 
     @SneakyThrows
     @Override
-    public MessageOject updateProfile(EmployeeProlife request) {
+    public MessageOject updateProfile(EmployeeProlife UserInfo,
+                                      MultipartFile multipartFile,
+                                      String foldername) {
+
         try {
-                Employee employee = employeeRepository.findByUsername(request.getUsername());
-                if (employee != null) {
+            UploadPicture uploadPicture = new UploadPicture();
+            ImageResponse imageResponse = uploadPicture.uploadImage(multipartFile, foldername);
+            EmployeMapping emap = new EmployeMapping();
+            Employee e = employeeRepository.findByUsername(UserInfo.getUsername());
+            if (!imageResponse.getMessageOject().getName().equals("Error")) {
+                e.setAvatar(imageResponse.getImgUrl());
+            }
+            e = emap.toEmployeeFromEmployeeProfile(e, UserInfo);
+            employeeRepository.save(e);
+            return new MessageOject("Success","Edit profile successfully!",null);
+        }catch(Exception e){
+            return new MessageOject("Failed","Fail to edit profile!",null);
 
-                    // set date
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    employee.setDob(sdf.parse(request.getDob()));
-
-                    employee.setFullName(request.getName());
-
-                    if(employee.getAvatar() != request.getAvatar()) {
-                        employee.setAvatar(request.getAvatar());
-
-                    }
-                    employee.setPhone(request.getPhone());
-                    employee.setAddress_detail(request.getAddress());
-                    employee.setCity(request.getCity());
-                    employee.setDistrict(request.getDistrict());
-                    employee.setIdCardNumber(request.getIDCard());
-                    employee.setWork_place(request.getPlaceOfWork());
-                    employee.setUpdateAt(new Date());
-
-                    employeeRepository.save(employee);
-                    return new MessageOject("Success", "Profile update successfully",null);
-                }
-
-
-        return new MessageOject("Failed","Can not update profile",null);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
         }
     }
 
