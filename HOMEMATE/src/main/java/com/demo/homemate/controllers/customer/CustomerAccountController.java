@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -47,8 +48,9 @@ public class CustomerAccountController {
         String token=cookieToken!=null?cookieToken:sessionToken;
 
         String username = (String) JWTService.parseJwt(token).get("Username");
+        Ranking rank = rankingService.getRank(username);
         CustomerMapping cm = new CustomerMapping();
-        CustomerProfileRequest profile =cm.toCustomerProfile(customerRepository.findByUsername(username));
+        CustomerProfileRequest profile =cm.toCustomerProfile(customerRepository.findByUsername(username),rank);
         model.addAttribute("profile",profile);
 
 
@@ -112,7 +114,6 @@ public class CustomerAccountController {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
-
         String token=cookieToken!=null?cookieToken:sessionToken;
         String uname = (String) JWTService.parseJwt(token).get("Username");
         if (!username.equals(uname)){
@@ -132,8 +133,16 @@ public class CustomerAccountController {
         session.setAttribute("EditMessage",messageOject);
         return "redirect:/customer/account/" + UserInfo.getUsername();
     }
-
-
+    @GetMapping("{username}/reward")
+    public String viewReward( @PathVariable("username") String username,
+                              Model model){
+        System.out.println(username);
+        CustomerProfileRequest cpr = customerService.getProfile(username);
+        model.addAttribute("profile",cpr);
+        List<Ranking> listrank = rankingService.getRanks();
+        model.addAttribute("listRank",listrank);
+        return "customer/customer-reward";
+    }
    /* @GetMapping("/rank")
     public String viewRank() {
 

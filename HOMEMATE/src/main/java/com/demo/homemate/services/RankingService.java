@@ -12,6 +12,7 @@ import com.demo.homemate.services.interfaces.IRankIngService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,23 +40,23 @@ public class RankingService implements IRankIngService {
 
             for (int i=0;i<listRank.size();i++){
                 if (totalSpend<listRank.get(0).getMinSpend()){
-                    upRank(customer,listRank.get(0).getRankId());
+                    changeRank(customer,listRank.get(0).getRankId());
                     return new MessageOject("Failed","You can not up rank now",null);
                 }
                 if (i==(listRank.size()-1)){
                     if(totalSpend>=listRank.get(i).getMinSpend()){
-                        return upRank(customer,listRank.get(i).getRankId());
+                        return changeRank(customer,listRank.get(i).getRankId());
                     }
                 }
                 if (totalSpend>=listRank.get(i).getMinSpend()
                         &&totalSpend<listRank.get(i+1).getMinSpend()){
-                    return upRank(customer,listRank.get(i).getRankId());
+                    return changeRank(customer,listRank.get(i).getRankId());
                 }
             }
          return new MessageOject("Failed","You can not up rank now",null);
     }
     @Override
-    public MessageOject upRank(Customer customer,int rankId) {
+    public MessageOject changeRank(Customer customer, int rankId) {
        Member member = new Member();
         MemberKey memberKey = new MemberKey();
         memberKey.setRankId(rankId);
@@ -69,9 +70,17 @@ public class RankingService implements IRankIngService {
     }
 
     @Override
-    public MessageOject downRank(Customer customer) {
-        return null;
+    public List<Ranking> getRanks() {
+        List<Ranking> list = new ArrayList<>();
+        try {
+            list = rankRepository.findAll();
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
+
 
     @SneakyThrows
     @Override

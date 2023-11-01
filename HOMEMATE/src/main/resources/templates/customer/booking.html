@@ -167,10 +167,7 @@
                     <label for="RankDiscount">Discount:</label>
                     <input th:value="'Rank '+${ranking.getName()}+': '+'-'+${ranking.getDiscount()}+'%'" name="RankDiscount" type="text" class="form-control" id="RankDiscount" readonly>
                 </div>
-                <div class="form-group mb-3 col-md-6">
-                    <label for="ServiceDiscount">Discount:</label>
-                    <input th:value="'Rank '+${ranking.getName()}+': '+'-'+${ranking.getDiscount()}+'%'" name="ServiceDiscount" type="text" class="form-control" id="ServiceDiscount" readonly>
-                </div>
+
                     <div class=" mb-3">
                         <label for="description">Job description</label>
                         <textarea th:field="*{bookingInfor.jobDescription}"  name="description" type="text" class="form-control" id="description" placeholder="Job description"></textarea>

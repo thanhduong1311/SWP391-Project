@@ -1,5 +1,6 @@
 package com.demo.homemate.dtos.customer.response;
 
+import com.demo.homemate.entities.Ranking;
 import lombok.*;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ public class CustomerProfileRequest {
         private String dob;
         private String district;
         private String username;
+        private Ranking rank;
         private String avatar;
         private double balance;
     }

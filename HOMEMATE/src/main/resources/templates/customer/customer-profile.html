@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -68,8 +68,10 @@
           <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
               <img class="rounded-5 border avatar " th:src="*{profile.getAvatar()}" />
-              <span class="font-weight-bold" th:text="*{profile.getUsername()}"></span>
-              <i>Member: <b><span th:text="${Ranking}"></span></b></i>
+              <span name="txtUsername" class="font-weight-bold" th:text="*{profile.getUsername()}"></span>
+             <a class="text-decoration-none" th:href="@{/customer/account/{id}/reward (id=*{profile.getUsername()})}">
+               <i>Member: <b><span th:text="${profile.getRank().getName()}"></span></b></i>
+             </a>
               <i class="text-warning">Balance: <b th:text="*{profile.getBalance()}"></b></i>
                 <a th:href="@{/customer/account/edit/{username}(username=${profile.getUsername()})}"
                    class="btn editBtn mt-4">

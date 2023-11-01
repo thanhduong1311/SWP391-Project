@@ -4,8 +4,10 @@ import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Ranking;
 
+import java.util.List;
+
 public interface IRankIngService {
-    MessageOject upRank(Customer customer,int rankID);
-    MessageOject downRank(Customer customer);
+    MessageOject changeRank(Customer customer, int rankID);
+    List<Ranking> getRanks();
     Ranking getRank(String username);
 }

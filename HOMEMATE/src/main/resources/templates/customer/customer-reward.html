@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/profile.css">
+    <link rel="stylesheet" href="/assets/css/home.css" />
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+
+    <title>Document</title>
+</head>
+<body class="bg-light">
+<header class="header">
+    <nav id="navBar">
+        <div class="logoNav">
+            <a class="navbar-brand fs-2" href="/guest">
+                <img src="/assets/images/HomeMate.png" alt="" class="logo">
+            </a>
+        </div>
+
+        <ul
+                class="">
+            <li class="">
+                <a th:href="@{/customer}" class="nav-link"
+                >Home</a
+                >
+            </li>
+            <li class="">
+                <a th:href="@{/customer/bookings/form}" class="nav-link"
+                >Booking</a
+                >
+            </li>
+            <li class="">
+                <a
+                        href="/customer/history"
+                        class="nav-link"
+                >History</a
+                >
+            </li>
+            <li class="d-none">
+                <a href="#price" class="nav-link"
+                ></a
+                >
+            </li>
+            <li class="">
+                <a
+                        th:href="@{/customer/account}"
+                        class="nav-link"
+                >Account</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div
+        class=" rounded bg-white mt-5 mb-5">
+
+    <div class="row main-profile">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-5 border avatar " th:src="*{profile.getAvatar()}" />
+                <span name="txtUsername" class="font-weight-bold" th:text="*{profile.getUsername()}"></span>
+                    <i>Member: <b><span th:text="${profile.getRank().getName()}"></span></b></i>
+                <i class="text-warning">Balance: <b th:text="*{profile.getBalance()}"></b></i>
+                <a th:href="@{/customer/account/{username}(username=${profile.getUsername()})}"
+                   class="btn editBtn mt-4">
+                    Back
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9 border-right">
+            <div class="p-0 py-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right fw-bold">
+                        My rank
+                    </h3>
+                    <div
+                            class="col-6 text-center">
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50"
+                        >Current rank:
+                        </label>
+                        <span class="h4" th:text="*{profile.getRank().getName()}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50">Current Total Spend:
+                        </label>
+                        <span th:text="*{profile.getTotalSpend()}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50">Description
+                        </label>
+                        <span th:text="*{profile.getRank().getDescription()}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50">Discount on service :
+                        </label>
+                        <span th:text="*{'&nbsp'+profile.getRank().getDiscount()+'%'}"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-0 py-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right fw-bold">
+                        Next rank requirement
+                    </h3>
+                </div>
+                <div class="row mt-2">
+                    <div class="d-flex ">
+                        <div class="progress w-50 ms-4 m-auto me-0"  >
+                            <div  th:style="'background-color:#ff9b5ce3; width:' +
+                            ${profile.getTotalSpend()/listRank.get(profile.getRank().getRankId()).getMinSpend()*100} + '%;'"
+                                  class=" progress-bar progress-bar-warning progress-bar-striped"
+                                  role="progressbar"
+                                  th:aria-valuenow="${profile.getTotalSpend()}" aria-valuemin="0"
+                                  th:aria-valuemax="${listRank.get(profile.getRank().getRankId()).getMinSpend()}">
+
+                            </div>
+                        </div>
+                        <span class="text-danger" th:text="'&nbsp'+*{profile.getTotalSpend()+'/'+listRank.get(profile.getRank().getRankId()).getMinSpend()}"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="p-0 py-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="text-right fw-bold">
+                        Next rank
+                    </h3>
+                    <div
+                            class="col-6 text-center">
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50"
+                        >Next rank:
+                        </label>
+                        <span class="h4" th:text="*{listRank.get(profile.getRank().getRankId()).getName()}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50">Minimum Total Spend
+                        </label>
+                        <span th:text="*{listRank.get(profile.getRank().getRankId()).getMinSpend()}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50">Description
+                        </label>
+                        <span th:text="*{listRank.get(profile.getRank().getRankId()).getDescription()}"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label
+                                class="form-label text-black-50">Discount on service :
+                        </label>
+                       <span th:text="*{'&nbsp'+listRank.get(profile.getRank().getRankId()).getDiscount()+'%'}"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center text-dark footerAbsolute">
+    <div class="text-center p-3">© 2023 Homemade</div>
+    <!-- Copyright -->
+</footer>
+<div style="display: none" id="script" th:text="${EditMessage}"> </div>
+
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/toast.js"></script>
+<script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+</script>
+</body>
+</html>

@@ -3,10 +3,7 @@ package com.demo.homemate.mappings;
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
 import com.demo.homemate.dtos.customerReport.responese.CustomerReportJob;
 import com.demo.homemate.dtos.feedback.FeedbackRequest;
-import com.demo.homemate.entities.Customer;
-import com.demo.homemate.entities.Feedbacks;
-import com.demo.homemate.entities.Job;
-import com.demo.homemate.entities.Report;
+import com.demo.homemate.entities.*;
 import com.demo.homemate.mappings.interfaces.ICustomerMapping;
 
 import com.demo.homemate.repositories.CustomerRepository;
@@ -25,8 +22,9 @@ public class CustomerMapping implements ICustomerMapping {
 
     @SneakyThrows
     @Override
-    public CustomerProfileRequest toCustomerProfile(Customer customer) {
+    public CustomerProfileRequest toCustomerProfile(Customer customer,Ranking rank) {
         try {
+
             UploadPicture uploadPicture = new UploadPicture();
             CustomerProfileRequest prolife = new CustomerProfileRequest();
             JobTimer jobTimer = new JobTimer();
@@ -41,6 +39,7 @@ public class CustomerMapping implements ICustomerMapping {
             prolife.setBalance(customer.getBalance());
             prolife.setDob(jobTimer.toBirthDay(customer.getDob()));
             prolife.setTotalSpend(customer.getTotalSpend());
+            prolife.setRank(rank);
             return prolife;
         } catch (Exception e)  {
             throw new Exception(e.getMessage());

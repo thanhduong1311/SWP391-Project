@@ -8,6 +8,7 @@ import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Feedbacks;
 import com.demo.homemate.entities.Job;
+import com.demo.homemate.entities.Ranking;
 import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.repositories.CustomerRepository;
 import com.demo.homemate.repositories.FeedbackRepository;
@@ -35,11 +36,14 @@ public class CustomerService implements ICustomerService {
     private final FeedbackRepository feedbackRepository;
 
     private final JobRepository jobRepository;
+    private final RankingService rankingService;
+
 
     public CustomerProfileRequest getProfile(String username){
         CustomerMapping customerMapping = new CustomerMapping();
         Customer customer = customerRepository.findByUsername(username);
-        return customerMapping.toCustomerProfile(customer);
+        Ranking rank = rankingService.getRank(username);
+        return customerMapping.toCustomerProfile(customer,rank);
     }
     public MessageOject editProfile(CustomerProfileRequest UserInfo,
                                     MultipartFile multipartFile,
