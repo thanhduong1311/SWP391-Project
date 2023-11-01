@@ -27,7 +27,7 @@ function getAddress(locationPoint) {
 
 
     function onError(error) {
-        showErrorToast("Can\\'t reach the remote server");
+        showWaringToast("Can't reach the remote server");
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 

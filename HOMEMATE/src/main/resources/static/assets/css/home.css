@@ -235,3 +235,10 @@ footer {
   height: 205px;
   object-fit: cover;
 }
+
+.main-report {
+  padding: 0 80px;
+  width: 100%;
+  margin-top: 120px;
+  min-height: calc(100vh - 70px - 100px);
+}

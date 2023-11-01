@@ -210,7 +210,7 @@
               <hr>
                 <br />
               <div class="col-md-12 text-center">
-                <input class="btn btn-md editBtn" type="submit" value="Save">
+                <input id="saveEdit" class="btn btn-md editBtn" type="submit" value="Save">
                 <input class="btn btn-md editBtn" type="reset" value="Reset">
               </div>
               </div>
@@ -224,6 +224,20 @@
     <div class="text-center p-3">© 2023 Homemade</div>
     <!-- Copyright -->
   </footer>
+
+  <div id="toast"></div>
+
+  <script src="/assets/js/toast.js"></script>
+
+  <script src="/assets/js/customerValidation.js"></script>
+
+  <div style="display: none" id="script" th:text="*{CustomerMessage}"> </div>
+
+  <script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+  </script>
+
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
       const inputFile = document.querySelector('#txtavatar');

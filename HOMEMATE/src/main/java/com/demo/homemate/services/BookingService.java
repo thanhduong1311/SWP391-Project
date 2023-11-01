@@ -137,6 +137,9 @@ public class BookingService implements IJobService {
             } else {
                 job.setStatus(JobStatus.AVAILABLE);
                 jobRepository.save(job);
+
+
+
                 MailContents mailContents = new MailContents();
                 mailContents.setSubjectName(customer.getFullName());
                 mailContents.setTitle("[HOMEMATE] BOOKING SUCCESSFULLY");
