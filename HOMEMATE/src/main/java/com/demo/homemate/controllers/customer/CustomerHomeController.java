@@ -54,9 +54,11 @@ public class CustomerHomeController {
                     String username = (String)claim.get("Username");
                     AccountResponse customer = new AccountMapper().toCustomerResponse(customerRepository.findByUsername(username));
                    //  List all services
-                    String message =String.valueOf(session.getAttribute("LoginMessage"));
-                    session.removeAttribute("LoginMessage");
-                    model.addAttribute("LoginMessage", message);
+                    String message =(String)(session.getAttribute("CustomerMessage"));
+                    session.removeAttribute("CustomerMessage");
+                    model.addAttribute("CustomerMessage", message);
+
+
                     model.addAttribute("services", serviceService.getAllDetailServices());
                     model.addAttribute("AccountInfo",customer);
                     return "customer/customer-home";

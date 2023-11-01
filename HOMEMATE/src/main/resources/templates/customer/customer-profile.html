@@ -16,8 +16,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
+    <link rel="stylesheet" href="/assets/css/toastMessage.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
     <style></style>
-    <title>Document</title>
+    <title>Profile</title>
   </head>
   <body class="bg-light">
   <header class="header">
@@ -166,13 +170,16 @@
     <div class="text-center p-3">© 2023 Homemade</div>
     <!-- Copyright -->
   </footer>
-    <div style="display: none" id="script" th:text="${EditMessage}"> </div>
+  <div id="toast"></div>
 
-    <script src="/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/toast.js"></script>
-    <script >
-      var mes = document .getElementById("script").innerText
-      splitMessase(mes.trim())
-    </script>
+  <script src="/assets/js/toast.js"></script>
+
+
+  <div style="display: none" id="script" th:text="*{CustomerMessage}"> </div>
+
+  <script >
+    var mes = document .getElementById("script").innerText
+    splitMessase(mes.trim())
+  </script>
   </body>
 </html>

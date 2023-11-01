@@ -70,19 +70,14 @@ public class CustomerAccountController {
         }
         Customer c = customerRepository.findByUsername(username);
         MessageOject mo = rankingService.checkRank(c);
-        MessageOject messageOject = (MessageOject)session.getAttribute("EditMessage");
-        session.removeAttribute("EditMessage");
-        if (messageOject!=null){
-            if (Objects.equals(messageOject.getName(), "Success")){
-                model.addAttribute("EditMessage22","Success#Edit profile successfully!");
-            }else{
-                model.addAttribute("EditMessage1","Failed#Fail to edit profile!");
-            }
-        }model.addAttribute("EditMessage","Success#Login successfully");
+        String messageOject = (String)session.getAttribute("CustomerMessage");
+        session.removeAttribute("CustomerMessage");
+
+        model.addAttribute("CustomerMessage",messageOject);
         return "customer/customer-profile";
     }
     @GetMapping("/changePassword")
-    public String changePasswordView(Model model,@CookieValue(name = "Token",required = false) String cookieToken,
+    public String changePasswordView(HttpSession session,Model model,@CookieValue(name = "Token",required = false) String cookieToken,
                                      @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
@@ -95,18 +90,26 @@ public class CustomerAccountController {
         cr.setUsername(customerResponse.getUsername());
         model.addAttribute("customer",customerResponse);
         model.addAttribute("ChangePasswordRequest",cr);
+
+        String message =(String)(session.getAttribute("CustomerMessage"));
+        session.removeAttribute("CustomerMessage");
+        model.addAttribute("CustomerMessage", message);
+
         return "customer/changePassword";
     }
 
     @PostMapping("/changePassword")
-    public String changePassword(Model model, ChangePasswordRequest request) {
+    public String changePassword(HttpSession session,Model model, ChangePasswordRequest request) {
         MessageOject messageOject = customerService.changePassword(request);
         System.out.println(messageOject.getMessage());
+        session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
+
+
         return "redirect:/customer/account/changePassword";
     }
 
     @RequestMapping ("/edit/{username}")
-    public String viewEditProfile(@PathVariable("username") String username,
+    public String viewEditProfile(@PathVariable("username") String username,HttpSession session,
                                   Model model,
                                   @CookieValue(name = "Token",required = false) String cookieToken,
                                   @SessionAttribute(value="SessionToken",required = false) String sessionToken
@@ -114,6 +117,12 @@ public class CustomerAccountController {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
+
+        String messageOject = (String)session.getAttribute("CustomerMessage");
+        session.removeAttribute("CustomerMessage");
+
+        model.addAttribute("CustomerMessage",messageOject);
+
         String token=cookieToken!=null?cookieToken:sessionToken;
         String uname = (String) JWTService.parseJwt(token).get("Username");
         if (!username.equals(uname)){
@@ -130,7 +139,7 @@ public class CustomerAccountController {
                               HttpSession session
                               ) throws IOException {
         MessageOject messageOject = customerService.editProfile(UserInfo,multipartFile,"customer");
-        session.setAttribute("EditMessage",messageOject);
+        session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
         return "redirect:/customer/account/" + UserInfo.getUsername();
     }
     @GetMapping("{username}/reward")

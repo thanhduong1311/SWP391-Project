@@ -16,6 +16,7 @@ import com.demo.mservice.enums.RequestType;
 import com.demo.mservice.momo.MomoPay;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +42,7 @@ public class CustomerBookingController {
     private final RankingService rankingService;
 
     @GetMapping("/form")
-    public String createBooking(Model model,
+    public String createBooking(Model model,HttpSession session,
                                 @CookieValue(name = "Token",required = false) String cookieToken,
                                 @SessionAttribute(value="SessionToken",required = false) String sessionToken
     ) {
@@ -54,6 +55,10 @@ public class CustomerBookingController {
 
         String username = (String) JWTService.parseJwt(token).get("Username");
         Customer customer =  customerRepository.findByUsername(username);
+
+        String message =(String)(session.getAttribute("CustomerMessage"));
+        session.removeAttribute("CustomerMessage");
+        model.addAttribute("CustomerMessage", message);
 
         if (token!=null){
             try {
@@ -83,8 +88,8 @@ public class CustomerBookingController {
     }
 
     @PostMapping("boooking")
-    public String booking(JobRequest request, Model model,@CookieValue(name = "Token",required = false) String cookieToken,
-                          @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
+    public String booking(JobRequest request, Model model, @CookieValue(name = "Token",required = false) String cookieToken,
+                          @SessionAttribute(value="SessionToken",required = false) String sessionToken, HttpSession session) {
 
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
@@ -132,8 +137,10 @@ public class CustomerBookingController {
             System.out.println(messageOject.getMessage());
 
             if( messageOject.getName().equals("Success")) {
+                session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
                 return "redirect:/customer";
             } else {
+                session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
                 return  "redirect:/customer/bookings/form";
             }
         }
@@ -147,7 +154,7 @@ public class CustomerBookingController {
     }
 
     @PostMapping("/checkOutWithPayment")
-    public String payment(HttpServletRequest request, PaymentRequest paymentRequest) {
+    public String payment(HttpServletRequest request, PaymentRequest paymentRequest,HttpSession session) {
 
         int cus = paymentRequest.getCustomerID();
         long amo = paymentRequest.getAmount();
@@ -162,7 +169,7 @@ public class CustomerBookingController {
         String payLink = MomoPay.getPayLink(request, requestType, paymentRequest.getAmount(),paymentRequest.getCustomerID());
 
         if (payLink == null) {
-            request.getSession().setAttribute("Error", "There are some error when checkout!");
+            session.setAttribute("CustomerMessage","Error#There are some error when checkout!");
             return "redirect:/customer/bookings/form";
         } else {
             return "redirect:" + payLink;
@@ -170,22 +177,17 @@ public class CustomerBookingController {
     }
 
     @GetMapping("/completeBooking/{id}")
-    public String completeWithPayment(HttpServletRequest request,Model model,@PathVariable("id") int id) {
+    public String completeWithPayment(HttpServletRequest request,Model model,@PathVariable("id") int id,HttpSession session) {
 
         Customer customer = adminService.getACustomer(id);
 
         if (customer == null) {
-            MessageOject messageOject = new MessageOject("Failed", "There some error occur", null);
-            System.out.println(messageOject.getMessage());
+            session.setAttribute("CustomerMessage","Failed#There some error occur");
             return "redirect:/customer/bookings/form";
         } else {
-
             MessageOject messageOject = bookingService.completeCreateJob(id);
-
             emailService.sendEmail(messageOject.getEmailMessage());
-
-            System.out.println(messageOject.getMessage());
-
+            session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
             return "redirect:/customer";
         }
 

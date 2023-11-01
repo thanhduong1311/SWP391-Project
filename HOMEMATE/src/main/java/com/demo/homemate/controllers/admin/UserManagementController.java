@@ -35,7 +35,6 @@ public class UserManagementController {
 
         String s  = (String) session.getAttribute("LoginMessage");
         session.removeAttribute("LoginMessage");
-
         model.addAttribute("LoginMessage",s);
 
 
