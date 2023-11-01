@@ -32,7 +32,7 @@
 <header class="header">
     <nav id="navBar">
         <div class="logoNav">
-            <a class="navbar-brand fs-2" href="/">
+            <a class="navbar-brand fs-2" href="/employee">
                 <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
         </div>
@@ -40,41 +40,43 @@
         <ul
                 class="">
             <li class="">
-                <a th:href="@{/}" class="nav-link"
+                <a th:href="@{/employee}" class="nav-link"
                 >Home</a
                 >
             </li>
             <li class="">
-                <a th:href="@{/about}" class="nav-link"
-                >About</a
+                <a th:href="@{/employee/job/jobList}" class="nav-link"
+                >Jobs</a
                 >
             </li>
             <li class="">
                 <a
-                        href="#service"
+                        href="/employee/job/incomes"
                         class="nav-link"
-                >Service</a
+                >Income</a
                 >
             </li>
             <li class="d-none">
                 <a href="#price" class="nav-link"
-                >Price</a
+                ></a
                 >
             </li>
             <li class="">
                 <a
-                        th:href="@{/partnerRegister}"
+                        th:href="@{/employee/job/schedule}"
                         class="nav-link"
-                >Become Maid</a>
+                >Schedule</a>
+            </li>
+
+            <li class="">
+                <a
+                        th:href="@{/employee/account}"
+                        class="nav-link"
+                >Account</a>
             </li>
         </ul>
 
 
-        <a th:href="@{/login}"
-           class="btn btn-lg signBtn"
-           style=""
-        >Sign In</a
-        >
     </nav>
 </header>
 <div
@@ -93,7 +95,6 @@
             <li th:text="${detail}"></li>
         </ul>
 
-        <a class="btn btnBookforDetail  w-100" th:href="@{/customer/bookings/form}">Booking now</a>
 
     </div>
 </div>

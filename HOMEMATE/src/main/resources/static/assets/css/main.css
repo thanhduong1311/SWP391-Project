@@ -624,7 +624,7 @@ input[type='radio'] + label:before {
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
   background-color 0.2s ease-in-out;
   border-radius: 4px;
-  border: solid 1px #ffffff;
+  border: solid 1px #FD904CFF;
   content: '';
   display: inline-block;
   height: 1.65rem;
@@ -1414,7 +1414,7 @@ body.is-preload #bg:before {
   width: 5.5rem;
   height: 5.5rem;
   line-height: 5.5rem;
-  border: solid 1px #ffffff;
+  border: solid 1px #FD904CFF;
   border-radius: 100%;
 }
 
@@ -1424,7 +1424,7 @@ body.is-preload #bg:before {
 
 #header .content {
   border-style: solid;
-  border-color: #ffffff;
+  border-color: #FD904CFF;
   border-top-width: 1px;
   border-bottom-width: 1px;
   max-width: 100%;
@@ -1467,13 +1467,13 @@ body.is-preload #bg:before {
   margin-bottom: 0;
   list-style: none;
   padding-left: 0;
-  border: solid 1px #ffffff;
+  border: solid 1px #FD904CFF;
   border-radius: 4px;
 }
 
 #header nav ul li {
   padding-left: 0;
-  border-left: solid 1px #ffffff;
+  border-left: solid 1px #FD904CFF;
 }
 
 #header nav ul li:first-child {

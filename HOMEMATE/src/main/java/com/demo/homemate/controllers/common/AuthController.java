@@ -203,14 +203,20 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/guest")
+    @GetMapping("")
     public String guestPage(Model model,HttpSession session) {
         model.addAttribute("services", serviceService.getAllDetailServices());
         String s = (String) session.getAttribute("RegisterPartner");
         session.removeAttribute("RegisterPartner");
         model.addAttribute("RegisterPartner",s);
-        return "home";
+        return "index";
     }
+
+    @GetMapping("/about")
+    public String aboutPage( ) {
+        return "about";
+    }
+
     @GetMapping("/services/{name}")
     public String getServiceDetail(Model model,
                                    @PathVariable("name") String name) {

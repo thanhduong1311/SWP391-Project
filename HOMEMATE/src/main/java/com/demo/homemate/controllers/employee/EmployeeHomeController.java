@@ -2,6 +2,7 @@ package com.demo.homemate.controllers.employee;
 
 import com.demo.homemate.configurations.JWTService;
 import com.demo.homemate.dtos.account.response.AccountResponse;
+import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.enums.Role;
 import com.demo.homemate.mappings.AccountMapper;
 import com.demo.homemate.repositories.EmployeeRepository;
@@ -12,10 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/employee")
@@ -63,6 +61,15 @@ public class EmployeeHomeController {
         }
         else return "redirect:/employee/home";
     }
+    @GetMapping("/services/{name}")
+    public String getServiceDetail(Model model,
+                                   @PathVariable("name") String name) {
 
+        ServiceDetailResponse service = serviceService.getServiceByName(name);
+        System.out.println(service.getName());
+        System.out.println(service.getIntro());
+        model.addAttribute("Service",service);
+        return "employee/serviceDetail";
+    }
 
 }

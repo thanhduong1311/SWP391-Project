@@ -32,7 +32,7 @@
 <header class="header">
     <nav id="navBar">
         <div class="logoNav">
-            <a class="navbar-brand fs-2" href="/">
+            <a class="navbar-brand fs-2" href="/customer">
                 <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
         </div>
@@ -40,41 +40,35 @@
         <ul
                 class="">
             <li class="">
-                <a th:href="@{/}" class="nav-link"
+                <a th:href="@{/customer}" class="nav-link"
                 >Home</a
                 >
             </li>
             <li class="">
-                <a th:href="@{/about}" class="nav-link"
-                >About</a
+                <a th:href="@{/customer/bookings/form}" class="nav-link"
+                >Booking</a
                 >
             </li>
             <li class="">
                 <a
-                        href="#service"
+                        href="/customer/history"
                         class="nav-link"
-                >Service</a
+                >History</a
                 >
             </li>
             <li class="d-none">
                 <a href="#price" class="nav-link"
-                >Price</a
+                ></a
                 >
             </li>
             <li class="">
                 <a
-                        th:href="@{/partnerRegister}"
+                        th:href="@{/customer/account}"
                         class="nav-link"
-                >Become Maid</a>
+                >Account</a>
             </li>
         </ul>
 
-
-        <a th:href="@{/login}"
-           class="btn btn-lg signBtn"
-           style=""
-        >Sign In</a
-        >
     </nav>
 </header>
 <div
@@ -94,7 +88,6 @@
         </ul>
 
         <a class="btn btnBookforDetail  w-100" th:href="@{/customer/bookings/form}">Booking now</a>
-
     </div>
 </div>
 <script src="/assets/js/jquery.min.js"></script>
