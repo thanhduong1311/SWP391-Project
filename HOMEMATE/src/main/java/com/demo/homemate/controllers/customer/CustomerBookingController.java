@@ -94,7 +94,6 @@ public class CustomerBookingController {
         String username = (String) JWTService.parseJwt(token).get("Username");
         request.setCustomerID(customerRepository.findByUsername(username).getCustomerId());
 
-        System.out.println("location : "+ request.getLocation());
         Ranking ranking = rankingService.getRank(username);
         int rankID=0;
         if (ranking!=null){
@@ -112,6 +111,7 @@ public class CustomerBookingController {
         PaymentRequest pr = new PaymentRequest();
         pr.setAmount(amount);
         pr.setCustomerID(request.getCustomerID());
+
 
         if(request.getPaymentType() == 0) {
                 model.addAttribute("JobRequest", request);

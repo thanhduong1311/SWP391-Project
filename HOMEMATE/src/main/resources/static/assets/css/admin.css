@@ -3,10 +3,10 @@ header {
 }
 
 section {
-    background-color: rgba(255, 145, 77, 0.18);
     height: 100%;
-    padding-bottom: 80px;
+    padding-bottom:110px;
     min-height: 100vh;
+    background-color: #f6efe8;
 }
 
 body {

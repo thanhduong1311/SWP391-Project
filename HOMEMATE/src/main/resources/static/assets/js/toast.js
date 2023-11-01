@@ -85,3 +85,5 @@ function splitMessase(s) {
         }
     }
 }
+
+var str = "10.0383,105.7561";
