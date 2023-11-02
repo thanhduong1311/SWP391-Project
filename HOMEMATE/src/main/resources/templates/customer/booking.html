@@ -53,7 +53,7 @@
 <header class="header">
     <nav id="navBar">
         <div class="logoNav">
-            <a class="navbar-brand fs-2" href="/guest">
+            <a class="navbar-brand fs-2" href="/customer">
                 <img src="/assets/images/HomeMate.png" alt="" class="logo">
             </a>
         </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="form-group mb-3 col-md-12">
                 <label for="address">Address</label>
-                <textarea th:field="*{bookingInfor.customerAddress}"  name="address"  type="text" class="form-control" id="address" placeholder="Address"></textarea>
+                <textarea readonly th:field="*{bookingInfor.customerAddress}"  name="address"  type="text" class="form-control" id="address" placeholder="Address"></textarea>
             </div>
 
                 <div class="form-group mb-3 col-md-6">
@@ -222,7 +222,7 @@
 <script src="/assets/js/MapService.js"></script>
 
 <script src="/assets/js/convertToAddress.js"></script>
-<!--<div style="display: none" id="script" th:text="*{SignupMessage}"> </div>-->
+<div style="display: none" id="script" th:text="*{CustomerMessage}"> </div>
 
 <script >
     function displayLocation() {

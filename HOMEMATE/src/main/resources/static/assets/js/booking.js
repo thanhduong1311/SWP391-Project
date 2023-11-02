@@ -120,4 +120,39 @@ function logEvent(str) {
 setUpClickListener(map);
 
 //////////////////////////////////////
-//change form here
+//change form herez
+
+
+var currentLAT = 10.05165
+var currentLNG = 105.77329
+function locate(lo) {
+
+    var service = platform.getSearchService();
+
+    service.geocode({
+        q: lo
+    }, (result) => {
+        // Add a marker for each location found
+        result.items.forEach((item) => {
+
+            map.addObject( new H.map.Marker(item.position));
+
+            currentLAT = item.position.lat;
+            currentLNG =item.position.lng ;
+
+
+            // map.removeObject(mapitem);
+        });
+    }, showWaringToast("Can not detect current customer loaction."));
+
+}
+
+
+window.onload = function () {
+    // var locateCenter  = document.getElementById("address").value
+    // locate(locateCenter);
+    // map.setCenter({lat: currentLAT, lng: currentLNG});
+}
+
+
+

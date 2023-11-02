@@ -21,7 +21,7 @@ function locate(lo) {
 
             // map.removeObject(mapitem);
         });
-    }, alert);
+    }, showWaringToast("Can not detect current customer loaction."));
 
 }
 
