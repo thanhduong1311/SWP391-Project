@@ -63,7 +63,7 @@ public class CustomerPostController {
             FeedbackRequest feedRequest = new FeedbackRequest();
             JobDetail jobDetail = bookingService.getAJob(jobId);
             if (jobDetail.getStatus() != JobStatus.DONE){
-                MessageOject mo = new MessageOject("Fail","This job hasn't done yet",null);
+                MessageOject mo = new MessageOject("Failed","This job hasn't done yet",null);
                 model.addAttribute("MessageResult",mo);
                 return "redirect:/customer/history";
             }
@@ -98,7 +98,7 @@ public class CustomerPostController {
             CustomerReportJob customerReportJob;
             JobDetail jobDetail = bookingService.getAJob(jobId);
             if (jobDetail.getStatus() == JobStatus.AVAILABLE){
-                MessageOject mo = new MessageOject("Fail","This job hasn't start yet",null);
+                MessageOject mo = new MessageOject("Failed","This job hasn't start yet",null);
                 model.addAttribute("MessageResult",mo);
                 return "redirect:/customer/history";
             }

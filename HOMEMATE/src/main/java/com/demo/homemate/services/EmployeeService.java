@@ -70,7 +70,6 @@ public class EmployeeService implements IEmployeeService {
                 if(!jobTimer.isExpired(j.getStart())) {
 
                 JobDetail jobOverView = new JobDetail();
-                Customer customer = new Customer();
 
                 jobOverView.setCustomerName(j.getCustomerId().getFullName());
                 jobOverView.setServiceName(j.getServiceId().getName());

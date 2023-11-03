@@ -135,7 +135,7 @@ public class CustomerService implements ICustomerService {
     }catch(Exception e){
         System.out.println(e.getMessage());
     }
-        return new MessageOject("Fail","Error save feedback",null);
+        return new MessageOject("Failed","Error save feedback",null);
     }
    /* public MessageOject editProfile(CustomerProfileRequest request) {
         try {

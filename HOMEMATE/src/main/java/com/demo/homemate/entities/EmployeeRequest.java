@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class EmployeeRequest {
+public class    EmployeeRequest {
 
     public final static String COLLECTION_NAME = "employeeRequest";
 

@@ -9,7 +9,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-        ddl-auto: true
+        ddl-auto: none
         format_sql: true
     show-sql: false
     hibernate:
