@@ -390,7 +390,7 @@ public class AuthController {
             model.addAttribute("PartnerRegiter", response.getMessageOject());
             emailService.sendEmail(response.getMessageOject().getEmailMessage());
             session.setAttribute("RegisterPartner",response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage());
-            return "redirect:/guest";
+            return "redirect:/";
         }else {
             session.setAttribute("RegisterPartner",response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage());
             return viewPartnerRegister(model);

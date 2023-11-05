@@ -5,6 +5,7 @@ var startInput = document.querySelector('#start');
 var endInput = document.querySelector('#end');
 var selectElement = document.querySelector('#forTime');
 var bookingbtn = document.querySelector("#bookingBtn")
+var addressinput = document.getElementById("address")
 bookingbtn.disabled = true;
 
 
@@ -25,6 +26,8 @@ startInput.addEventListener('change', function() {
 });
 
 
+
+
 startInput.addEventListener("change", function() {
         // Lấy thời gian hiện tại
         const now = new Date();
@@ -41,9 +44,12 @@ startInput.addEventListener("change", function() {
             console.log("False")
             // Thêm lớp CSS để hiển thị thông báo
             showErrorToast("You need to book at least 1 hour before the start time.")
+
+
         } else {
             // Enable nút booking
             bookingbtn.disabled = false;
+
             console.log("True")
         }
 });
@@ -152,7 +158,24 @@ window.onload = function () {
     // var locateCenter  = document.getElementById("address").value
     // locate(locateCenter);
     // map.setCenter({lat: currentLAT, lng: currentLNG});
+
+
 }
 
 
 
+function checkCondition() {
+    // Lấy giá trị của trường input
+    let name = document.querySelector("input[name='name']").value;
+
+    if(addressinput.value.trim() == "") {
+        showErrorToast("Please, pick an address!")
+    } else {
+        document.querySelector("#bookingForm").submit();
+    }
+
+
+}
+
+// Liên kết hàm với sự kiện onclick() của nút submit
+document.querySelector("#bookingBtn").onclick = checkCondition;

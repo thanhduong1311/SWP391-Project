@@ -242,11 +242,15 @@
                                                     <h3 th:text="${services[i].getName()}"></h3>
                                                     <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
                                                     <hr />
+                                                        <div class="serviceDetail">
+
+
                                                     <h2 class="ms-2 mt-4" th:text="${'$'+services[i].getPrice()}"></h2> <sup>Per hour</sup>
                                                     <h4 class="mt-5">Chi tiết dịch vụ:</h4>
                                                     <ul th:each="detail:${services[i].getDetails()}">
                                                         <li th:text="${detail}"></li>
                                                     </ul>
+                                                        </div>
                                                     <div class="btnBook">
                                                         <a class="btn w-100 fw-normal" th:href="@{/customer/bookings/form}">Booking now</a>
                                                     </div>

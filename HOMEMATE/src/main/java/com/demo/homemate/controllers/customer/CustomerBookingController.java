@@ -128,16 +128,18 @@ public class CustomerBookingController {
                     return checkOut(model);
 
                 } else {
+                    session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
                     return  "redirect:/customer/bookings/form";
                 }
 
         } else {
           MessageOject messageOject = bookingService.createJob(request);
-            emailService.sendEmail(messageOject.getEmailMessage());
-            System.out.println(messageOject.getMessage());
+
 
             if( messageOject.getName().equals("Success")) {
                 session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
+                emailService.sendEmail(messageOject.getEmailMessage());
+                System.out.println(messageOject.getMessage());
                 return "redirect:/customer";
             } else {
                 session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());

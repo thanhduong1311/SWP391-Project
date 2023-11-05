@@ -106,7 +106,7 @@
                 ">
                 <h3 class="text-center">Service List</h3>
               </div>
-              <table class="table" >
+              <table class="table" th:if="*{ ServiceList.size() !=0}">
                 <thead class="thead-dark">
                 <tr>
                   <th scope="col"></th>
@@ -128,6 +128,7 @@
                 </tr>
                 </tbody>
               </table>
+              <div  th:if="${ServiceList.size() ==0}" class="card card-body text-center fw-bold">Service List Is Empty</div>
               <div class="card-footer p-3"></div>
             </div>
           </div>

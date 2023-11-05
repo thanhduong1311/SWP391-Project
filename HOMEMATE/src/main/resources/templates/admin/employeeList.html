@@ -120,7 +120,7 @@
                   height: 400px;
                 ">
                 <h3 class="text-center">Employee List</h3>
-                <table class="table mb-0">
+                <table class="table mb-0" th:if="*{EmployeeList.size()!=0}">
                   <thead>
                   <tr>
                     <th class="h4" scope="col">
@@ -169,6 +169,7 @@
 
                   </tbody>
                 </table>
+                <div  th:if="${EmployeeList.size()==0}" class="card card-body text-center fw-bold">Employee List Is Empty</div>
               </div>
               <div class="card-footer p-3"></div>
             </div>

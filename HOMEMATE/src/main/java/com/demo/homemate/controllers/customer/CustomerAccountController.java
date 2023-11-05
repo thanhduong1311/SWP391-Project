@@ -45,6 +45,7 @@ public class CustomerAccountController {
         if (cookieToken == null && sessionToken==null) {
             return "redirect:/login";
         }
+        List<Ranking> listrank = rankingService.getRanks();
         String token=cookieToken!=null?cookieToken:sessionToken;
 
         String username = (String) JWTService.parseJwt(token).get("Username");
@@ -62,6 +63,7 @@ public class CustomerAccountController {
                               Model model,
                               HttpSession session) {
         CustomerMapping cm = new CustomerMapping();
+        List<Ranking> listrank = rankingService.getRanks();
         CustomerProfileRequest profile =customerService.getProfile(username);
         model.addAttribute("profile",profile);
         Ranking ranking = rankingService.getRank(username);

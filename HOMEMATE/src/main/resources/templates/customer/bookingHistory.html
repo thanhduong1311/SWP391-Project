@@ -16,7 +16,8 @@
       pointer-events: none;
     }
   </style>
-  <title>Booking History</title>
+
+  <title>HomeMate - Booking History</title>
 </head>
 
 <body>
@@ -64,7 +65,7 @@
 <!-- Wrapper -->
 <div id="db-wrapper">
   <!-- Page Content -->
-  <main id="page-content ">
+  <main id="page-content " style="min-height: calc(100vh - 176px);">
     <!-- Container fluid -->
     <section class=" shadow-lg mt-5 bg-light p-3 rounded">
       <!-- row -->
@@ -127,7 +128,7 @@
                       <div class="col-lg-3 col-12 d-grid text-danger text-center bookinginfor"
                            th:if="*{booking.getStatus().ordinal() == 3}">CANCELED</div>
                       <div class="col-lg-3 col-12 d-grid text-danger text-center bookinginfor"
-                           th:if="*{booking.getStatus().ordinal() == 4}"></div>
+                           th:if="*{booking.getStatus().ordinal() == 4}">BOOKING FAILED </div>
                     </div>
                   </a>
 

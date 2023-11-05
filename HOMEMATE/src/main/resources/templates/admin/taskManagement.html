@@ -95,8 +95,8 @@
                 </div>
               </div>
               <div class="card-body card">
-                <h3></h3>
-                <table class="table" >
+                <h3 class="text-center">Request List</h3>
+                <table class="table" th:if="*{requestList.size() != 0 || reportList.size()!=0}">
                   <p> </p>
 
                   <thead class="thead-dark">
@@ -132,6 +132,7 @@
 
                   </tbody>
                 </table>
+                <div  th:if="${requestList.size() == 0 && reportList.size()==0}" class="card card-body text-center fw-bold">Request List Is Empty</div>
               </div>
             </div>
           </div>

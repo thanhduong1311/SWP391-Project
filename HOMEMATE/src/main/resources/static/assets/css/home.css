@@ -242,3 +242,17 @@ footer {
   margin-top: 120px;
   min-height: calc(100vh - 70px - 100px);
 }
+
+
+
+
+.serviceDetail {
+  max-height: 360px;
+  overflow-y: scroll;
+
+
+}
+
+.serviceDetail::-webkit-scrollbar {
+  display: none;
+}

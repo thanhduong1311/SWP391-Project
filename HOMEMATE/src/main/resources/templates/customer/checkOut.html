@@ -29,7 +29,7 @@
             href="/assets/css/home.css" />
 
     <link rel="stylesheet" href="/assets/css/booking.css">
-    <title>Zun | Homemate</title>
+    <title>HomeMate - Checkout</title>
     <style>
         body,
         html {
@@ -104,7 +104,7 @@
                     <div class="paymentInfo">
                         <h1 class="text-center mb-4">Almost complete</h1>
                         <h4 class="text-center">Pay for <b th:text="*{JobRequest.getServiceName()}"></b> in <b th:text="*{JobRequest.getTimeService()}"></b> hours </h4>
-                        <h4 class="text-center mb-4">Total payment: <b th:text="*{JobRequest.getAmount()  + ' VND'} "></b></h4>
+                        <h4 class="text-center mb-4">Total payment: <b id="amount" th:text="*{JobRequest.getAmount()} "></b><b>VND</b></h4>
                         <input type="hidden"  name="amount"  th:field="*{PaymentRequest.amount} "/>
                         <input type="hidden" name="customerID" th:field="*{PaymentRequest.customerID}">
                         <h5 class="text-start me-auto text-center">Choose your payment methods</h5>
@@ -153,5 +153,8 @@
 </footer>
 <!-- Footer -->
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/checkout.js">
+
+</script>
 </body>
 </html>
