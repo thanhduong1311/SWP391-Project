@@ -91,7 +91,8 @@
                 <form
                   th:action="@{/admin/services/edit}"
                   method="post"
-                  th:object="${ServiceEdit}" >
+                  th:object="${ServiceEdit}"
+                  enctype="multipart/form-data">
                   <input type="hidden" th:field="*{serviceId}">
                   <div class="form-floating pb-3">
 
@@ -105,13 +106,9 @@
                     <label for="floatingNameService">Name</label>
                   </div>
                   <div class="form-floating pb-3">
-                    <input
-                            type="text"
-                            th:field="*{img}"
-                            class="form-control"
-                            id="floatingImageService"
-                            placeholder=""
-                            required />
+
+                    <img width="200px" th:src="*{img}" id="avatarPreview" alt="Avatar Preview">
+                    <input id="floatingImageService" name ="floatingImageService" type="file" class="form-control" accept="image/*" >
                     <label
                             for="floatingImageService"
                     >Image</label
@@ -121,6 +118,7 @@
                     <input
                             type="number"
                             th:field="*{price}"
+                            step="0.01"
                             class="form-control"
                             id="floatingPriceService"
                             placeholder=""
@@ -133,6 +131,7 @@
                     <input
                             type="number"
                             th:field="*{discount}"
+                            step="0.01"
                             class="form-control"
                             id="floatingDiscountService"
                             placeholder=""
@@ -171,7 +170,7 @@
                   </div>
                   <div class="form-floating pb-3">
 
-                    <textarea class="form-control" name="txtDetails" rows="4"   id="floatingDetailService" th:text="${joinedText}"></textarea>
+                    <textarea class="form-control" name="txtDetails" th:rows="10" th:cols="20"   id="floatingDetailService" th:text="${joinedText}"></textarea>
                     <label for="floatingDetailService">Details:</label>
                   </div>
                   <div
@@ -209,6 +208,23 @@
 
   <script src="/assets/js/adminValidation.js"></script>
 
+  </script>
 
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript">
+    const inputFile = document.querySelector('#floatingImageService');
+    const img = document.querySelector('#avatarPreview');
+
+    inputFile.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      const url = URL.createObjectURL(file);
+
+      img.src = url;
+    });
+    const originalSrc = img.getAttribute('src');
+    document.querySelector('input[type="reset"]').addEventListener('click', function() {
+      img.src = originalSrc;
+    });
+  </script>
   </body>
 </html>

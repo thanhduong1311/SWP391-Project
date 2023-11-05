@@ -68,8 +68,7 @@ public class CustomerAccountController {
         if (ranking!=null){
             model.addAttribute("Ranking",ranking.getName());
         }
-        Customer c = customerRepository.findByUsername(username);
-        MessageOject mo = rankingService.checkRank(c);
+        MessageOject mo = rankingService.checkRank(username);
         String messageOject = (String)session.getAttribute("CustomerMessage");
         session.removeAttribute("CustomerMessage");
 
@@ -85,7 +84,8 @@ public class CustomerAccountController {
         String token=cookieToken!=null?cookieToken:sessionToken;
         String username = (String) JWTService.parseJwt(token).get("Username");
         AccountMapper mapper = new AccountMapper();
-        AccountResponse customerResponse = mapper.toCustomerResponse(customerRepository.findByUsername(username));
+        Customer c = customerService.getCustomer(username);
+        AccountResponse customerResponse = mapper.toCustomerResponse(c);
         ChangePasswordRequest cr = new ChangePasswordRequest();
         cr.setUsername(customerResponse.getUsername());
         model.addAttribute("customer",customerResponse);
@@ -103,7 +103,6 @@ public class CustomerAccountController {
         MessageOject messageOject = customerService.changePassword(request);
         System.out.println(messageOject.getMessage());
         session.setAttribute("CustomerMessage",messageOject.getName()+"#"+messageOject.getMessage());
-
 
         return "redirect:/customer/account/changePassword";
     }
@@ -134,7 +133,6 @@ public class CustomerAccountController {
     }
     @PostMapping ("/edit")
     public String editProfile(CustomerProfileRequest UserInfo,
-                              Model model,
                               @RequestParam("txtavatar") MultipartFile multipartFile,
                               HttpSession session
                               ) throws IOException {
@@ -152,11 +150,4 @@ public class CustomerAccountController {
         model.addAttribute("listRank",listrank);
         return "customer/customer-reward";
     }
-   /* @GetMapping("/rank")
-    public String viewRank() {
-
-        *//*Ranking rank = rankingService.getRank(customerRepository.findById(1));
-        System.out.println(rank.toString() + " absdjhbaskdhbasyudg678wygdukjashgdiastd678yuasgudkjahgsydgasiudas");
-        return "";*//*
-    }*/
 }

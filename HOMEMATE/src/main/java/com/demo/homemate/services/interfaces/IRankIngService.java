@@ -10,4 +10,6 @@ public interface IRankIngService {
     MessageOject changeRank(Customer customer, int rankID);
     List<Ranking> getRanks();
     Ranking getRank(String username);
+
+    MessageOject checkRank(String username);
 }

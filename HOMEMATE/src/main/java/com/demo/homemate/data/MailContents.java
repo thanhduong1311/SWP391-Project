@@ -38,9 +38,13 @@ public class MailContents {
                 "<li>Pay the service fee.</li>\n" +
                 "</ol>\n" +
                 "\n" +
-                "<p>If you have any questions or requests, please contact us via hotline <b>0813113149</b> or email <b>homematesuportteam@gmail.com</b> .</p>\n" +
+                "<p>If you have any questions or requests, please contact us:</p>\n" +
+                "<ul>\n" +
+                "<li>Support Phone Number: 0813113149</li>\n" +
+                "<li>Support Email: homematesuportteam@gmail.com</li>\n" +
+                "</ul>\n" +
                 "\n" +
-                "<p>Thank you for signing up for Homemate. We wish you a great experience!</p>\n" +
+                "<p>Thank you for signing up for Homemate.\nWe wish you a great experience!</p>\n" +
                 "\n" +
                 "<p>Sincerely,</p>\n" +
                 "<p>Homemate</p>\n" +

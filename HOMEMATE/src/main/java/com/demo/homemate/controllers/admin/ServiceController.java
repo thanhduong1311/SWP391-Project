@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/admin/services")
@@ -57,9 +58,12 @@ public class ServiceController {
 
     // Add service handle
     @PostMapping("/add")
-    public String addService(Model model, ServiceDetailResponse request,
-                   @ModelAttribute("txtDetails") String details, HttpSession session) {
-        MessageOject messageOject = adminService.addService(request,details);
+    public String addService(Model model,
+                             ServiceDetailResponse request,
+                             @ModelAttribute("txtDetails") String details,
+                             @RequestParam("floatingImageService") MultipartFile multipartFile,
+                             HttpSession session) {
+        MessageOject messageOject = adminService.addService(request,details,multipartFile,"services");
 
         if(messageOject.getName() == "Success") {
             session.setAttribute("AddServiceMessage", new MessageOject("Success","",null));
@@ -93,9 +97,12 @@ public class ServiceController {
 
     //Edit service handle
     @PostMapping("/edit")
-    public String editlService(Model model,ServiceDetailResponse request,
-                      @ModelAttribute("txtDetails") String details,HttpSession session) {
-        MessageOject messageOject = adminService.updateService(request,details);
+    public String editlService(Model model,
+                               ServiceDetailResponse request,
+                               @ModelAttribute("txtDetails") String details,
+                               @RequestParam("floatingImageService") MultipartFile multipartFile,
+                               HttpSession session) {
+        MessageOject messageOject = adminService.updateService(request,details,multipartFile,"services");
 
         System.out.println(messageOject.getMessage() + messageOject.getName());
 

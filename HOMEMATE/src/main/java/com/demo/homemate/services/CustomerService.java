@@ -38,7 +38,9 @@ public class CustomerService implements ICustomerService {
     private final JobRepository jobRepository;
     private final RankingService rankingService;
 
-
+    public Customer getCustomer(String username){
+        return customerRepository.findByUsername(username);
+    }
     public CustomerProfileRequest getProfile(String username){
         CustomerMapping customerMapping = new CustomerMapping();
         Customer customer = customerRepository.findByUsername(username);

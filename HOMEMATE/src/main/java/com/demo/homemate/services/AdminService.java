@@ -1,5 +1,6 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.dtos.image.ImageResponse;
 import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.dtos.services.request.ServiceRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
@@ -7,10 +8,13 @@ import com.demo.homemate.dtos.services.response.ServiceResponse;
 import com.demo.homemate.entities.*;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.enums.Role;
+import com.demo.homemate.mappings.CustomerMapping;
 import com.demo.homemate.mappings.ServiceMapper;
 import com.demo.homemate.repositories.*;
 import com.demo.homemate.services.interfaces.IAdminService;
+import com.demo.homemate.utils.UploadPicture;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -177,11 +181,15 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public MessageOject addService(ServiceDetailResponse response, String detail) {
+    public MessageOject addService(ServiceDetailResponse response, String detail,MultipartFile multipartFile,String foldername) {
         ServiceRequest request = new ServiceRequest();
+        UploadPicture uploadPicture = new UploadPicture();
         try {
             request.setServiceId(response.getServiceId());
-            request.setImg(response.getImg());
+            ImageResponse imageResponse = uploadPicture.uploadImage(multipartFile, foldername);
+            if (!imageResponse.getMessageOject().getName().equals("Error")) {
+                request.setImg(imageResponse.getImgUrl());
+            }
             request.setName(response.getName());
             request.setPrice(response.getPrice());
             request.setDiscount(response.getDiscount());
@@ -210,12 +218,17 @@ public class AdminService implements IAdminService  {
     }
 
     @Override
-    public MessageOject updateService(ServiceDetailResponse request, String detail) {
+    public MessageOject updateService(ServiceDetailResponse request, String detail, MultipartFile multipartFile,String foldername) {
         try {
+            UploadPicture uploadPicture = new UploadPicture();
             Service service = serviceRepository.findById(request.getServiceId());
             if(service != null) {
+
+                ImageResponse imageResponse = uploadPicture.uploadImage(multipartFile, foldername);
+                if (!imageResponse.getMessageOject().getName().equals("Error")) {
+                    service.setImage(imageResponse.getImgUrl());
+                }
                 service.setName(request.getName());
-                service.setImage(request.getImg());
                 service.setPrice(request.getPrice());
                 service.setDiscount(request.getDiscount());
                 String [] listDetail = detail.split("\n");

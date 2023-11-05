@@ -73,11 +73,11 @@ public class CustomerHomeController {
 
 
 
-    @GetMapping("/services/{name}")
+    @GetMapping("/services/{id}")
     public String getServiceDetail(Model model,
-                                   @PathVariable("name") String name) {
+                                   @PathVariable("id") int id) {
 
-        ServiceDetailResponse service = serviceService.getServiceByName(name);
+        ServiceDetailResponse service = serviceService.getServiceByID(id);
         System.out.println(service.getName());
         System.out.println(service.getIntro());
         model.addAttribute("Service",service);

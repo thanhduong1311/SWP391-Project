@@ -117,7 +117,9 @@ public class EmployeeTaskController {
     }
 
     @GetMapping("/done/{id}")
-    public  String doneJob(@PathVariable("id") int id,HttpSession session, @CookieValue(name = "Token",required = false) String cookieToken,
+    public  String doneJob(@PathVariable("id") int id,
+                           HttpSession session,
+                           @CookieValue(name = "Token",required = false) String cookieToken,
                            @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
 
         if (cookieToken == null && sessionToken==null) {
