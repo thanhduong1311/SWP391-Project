@@ -11,5 +11,5 @@ public interface IServiceService {
 
     ServiceResponse getServiceDetail(int id);
     List<ServiceDetailResponse> getAllDetailServices();
-    ServiceDetailResponse getServiceByName(String name);
+    ServiceDetailResponse getServiceByID(int id);
 }

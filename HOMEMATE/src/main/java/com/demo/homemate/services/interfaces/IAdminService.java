@@ -5,6 +5,7 @@ import com.demo.homemate.dtos.services.request.ServiceRequest;
 import com.demo.homemate.dtos.services.response.ServiceDetailResponse;
 import com.demo.homemate.entities.Customer;
 import com.demo.homemate.entities.Employee;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -103,14 +104,14 @@ public interface IAdminService {
      * @param request
      * @return
      */
-    public MessageOject addService(ServiceDetailResponse request, String details);
+    public MessageOject addService(ServiceDetailResponse request, String details,MultipartFile multipartFile, String foldername);
 
     /**
      *  update service
      * @param request
      * @return
      */
-    public MessageOject updateService(ServiceDetailResponse request, String detail);
+    public MessageOject updateService(ServiceDetailResponse request, String detail, MultipartFile multipartFile, String foldername);
 
 
     /**

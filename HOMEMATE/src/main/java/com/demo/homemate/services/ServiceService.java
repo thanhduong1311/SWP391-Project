@@ -34,8 +34,8 @@ public class ServiceService implements IServiceService {
         return serviceMapper.toServiceResponse(service);
     }
     @Override
-    public ServiceDetailResponse getServiceByName(String name) {
-        Service service = serviceRepository.findByName(name);
+    public ServiceDetailResponse getServiceByID(int id) {
+        Service service = serviceRepository.findById(id);
         return serviceMapper.toServiceDetailResponse(service);
     }
 

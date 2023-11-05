@@ -217,11 +217,11 @@ public class AuthController {
         return "about";
     }
 
-    @GetMapping("/services/{name}")
+    @GetMapping("/services/{id}")
     public String getServiceDetail(Model model,
-                                   @PathVariable("name") String name) {
+                                   @PathVariable("id") int id) {
 
-        ServiceDetailResponse service = serviceService.getServiceByName(name);
+        ServiceDetailResponse service = serviceService.getServiceByID(id);
         System.out.println(service.getName());
         System.out.println(service.getIntro());
         model.addAttribute("Service",service);
@@ -274,7 +274,7 @@ public class AuthController {
                    model.addAttribute("Message",messageOject.getName()+"#"+messageOject.getMessage());
                    session.removeAttribute("MessageCheckOTP");
                }else{
-                   return "redirect:/changepassword";
+                  return "redirect:/changepassword";
                }
            }
            session.setAttribute("OTP","Yes");
@@ -325,6 +325,9 @@ public class AuthController {
         return "redirect:/forgetpassword";
     }
     @PostMapping("/checkCode")
+
+
+
     public String checkForgetPasswordCode(Model model,
                                           HttpSession session,
                                           @CookieValue(name = "RToken",required = false) String rtoken,
@@ -357,8 +360,9 @@ public class AuthController {
                                       HttpServletResponse response,
                                       newPasswordRequest newPass) throws NoSuchAlgorithmException {
         if (newPass.getNewPassword().equals(newPass.getRenewPassword())){
-            String email =(String) session.getAttribute("EmailValue");
+            String email =(String) session.getAttribute("InputValue");
             userService.ChangePassword(email, newPass.getRenewPassword());
+            System.out.println("thanh cong");
             session.removeAttribute("MessageCheckOTP");
             session.removeAttribute("OTP");
             Cookie cookie = WebUtils.getCookie(request,"RToken");

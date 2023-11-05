@@ -26,7 +26,8 @@ public class RankingService implements IRankIngService {
     private final CustomerRepository customerRepository;
 
 
-    public MessageOject checkRank(Customer customer){
+    public MessageOject checkRank(String username){
+        Customer customer = customerRepository.findByUsername(username);
         Member member = memberRepository.findByCustomerID(customer.getCustomerId());
         double totalSpend = customer.getTotalSpend();
         List<Ranking> listRank = rankRepository.findAll();

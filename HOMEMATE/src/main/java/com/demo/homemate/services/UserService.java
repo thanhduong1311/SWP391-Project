@@ -394,8 +394,7 @@ public class UserService implements IUserService {
         password=PasswordMD5.encode(password);
         switch (checkAccount){
             case 0:{
-                //K tim thay
-                break;
+                System.out.println("k tim thya");                break;
             }
             case 1:{
                 //Customer

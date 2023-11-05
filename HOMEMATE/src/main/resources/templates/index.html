@@ -238,7 +238,7 @@
                                                     <div class="carouselIMG">
                                                         <img th:src="*{services[i].getImg()}" alt="">
                                                     </div>
-                                                    <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getName()})}">
+                                                    <a class="nav-link" th:href="@{/services/{name}(name=${services[i].getServiceId()})}">
                                                     <h3 th:text="${services[i].getName()}"></h3>
                                                     <!--<small>(2 phòng, 55 m<sup>2</sup>)</small>-->
                                                     <hr />
