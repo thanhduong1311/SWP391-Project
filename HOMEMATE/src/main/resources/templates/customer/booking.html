@@ -111,7 +111,7 @@
             </div>
             <div class="form-group mb-3 col-md-12">
                 <label for="address">Address</label>
-                <textarea readonly  name="address"  type="text" class="form-control" id="address" placeholder="Address"></textarea>
+                <textarea th:value="*{bookingInfor.getCustomerAddress()}" required name="address"  type="text" class="form-control" id="address" placeholder="Please pick up address in map."></textarea>
             </div>
 
                 <div class="form-group mb-3 col-md-6">

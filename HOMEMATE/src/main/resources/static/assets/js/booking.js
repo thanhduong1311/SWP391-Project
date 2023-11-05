@@ -164,18 +164,22 @@ window.onload = function () {
 
 
 
-function checkCondition() {
-    // Lấy giá trị của trường input
-    let name = document.querySelector("input[name='name']").value;
+document.querySelector("#bookingForm").addEventListener("submit", (event) => {
+    // Kiểm tra xem trường `address` đã được điền hay chưa.
+    const isAddressFilled = isAddressFilled();
 
-    if(addressinput.value.trim() == "") {
-        showErrorToast("Please, pick an address!")
-    } else {
-        document.querySelector("#bookingForm").submit();
+    // Nếu trường `address` chưa được điền, ngăn form submit.
+    if (!isAddressFilled) {
+        event.preventDefault();
+        // Hiển thị lỗi cho người dùng.
+        showErrorToast("Please, enter your address!");
     }
+});
 
+function isAddressFilled() {
+    // Lấy giá trị của trường `address`
+    const addressValue = document.querySelector("#address").value;
 
+    // Nếu giá trị của trường `address` không rỗng, thì trường đã được điền.
+    return addressValue !== "";
 }
-
-// Liên kết hàm với sự kiện onclick() của nút submit
-document.querySelector("#bookingBtn").onclick = checkCondition;
