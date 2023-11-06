@@ -134,7 +134,8 @@
           class="money d-flex flex-row mt-2 align-items-center spanDetail">
           <span class="fw-bold"> Total payment: </span>
           <h4 th:if="${jobDetail.getStatus().ordinal() == 3}" class="ml-2 text-danger text-decoration-line-through">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
-          <h4 th:if="${jobDetail.getStatus().ordinal() != 3}" class="ml-2 ">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
+          <h4 th:if="${jobDetail.getStatus().ordinal() == 4}" class="ml-2 text-danger text-decoration-line-through">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
+          <h4 th:if="${jobDetail.getStatus().ordinal() != 3 && jobDetail.getStatus().ordinal() != 4}" class="ml-2 ">$<span th:text="*{jobDetail.getPrice()}"></span></h4>
         </div>
 
         <div class="card-footer p-3 d-flex justify-content-end">

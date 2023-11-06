@@ -105,14 +105,17 @@
                             required />
                     <label for="floatingNameService">Name</label>
                   </div>
-                  <div class="form-floating pb-3">
+                  <div class="form-floating pb-3 row">
+                    <div class="col-md-6 " style="height: 140px; display: flex; justify-content: center">
+                      <img width="200px"  th:src="*{img}" id="avatarPreview"  style="height: 100%; border: 1px solid #ccc">
+                      <!--                      <img width="200px"  th:if="*{img == null}" src="/assets/images/icon-image-not-found-free-vector.jpg" id="placehhoder"  style="height: 100%; border: 1px solid #ccc; object-fit: cover">-->
 
-                    <img width="200px" th:src="*{img}" id="avatarPreview" alt="Avatar Preview">
-                    <input id="floatingImageService" name ="floatingImageService" type="file" class="form-control" accept="image/*" >
-                    <label
-                            for="floatingImageService"
-                    >Image</label
-                    >
+                    </div>
+                    <div class="col-md-6  ">
+                      <input id="floatingImageService" name ="floatingImageService" type="file" class="form-control" accept="image/*" >
+
+                    </div>
+
                   </div>
                   <div class="form-floating pb-3">
                     <input

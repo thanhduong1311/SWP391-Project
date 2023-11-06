@@ -370,11 +370,12 @@ public class AuthController {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
+            session.setAttribute("SignupMessage","Success#Change password successfully");
                 return "redirect:/login";
         }else{
 
             String mes = "Failed#Password and confirm password is not matching";
-            session.setAttribute("SignupMessage",mes);
+            model.addAttribute("Message",mes);
         }
         return changePassword(model,request,newPass);
     }

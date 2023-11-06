@@ -42,7 +42,7 @@ public class CustomerReportService implements ICustomerReportService {
                 crj.setReason(r.getReason());
                 crj.setEmployeeName(employeeRepository.findById(jobRepository.findById(r.getJobId().getJobId()).getEmployeeId().getEmployeeId()).getFullName());
                 crj.setEmployeeID(employeeRepository.findById(jobRepository.findById(r.getJobId().getJobId()).getEmployeeId().getEmployeeId()).getEmployeeId());
-                crj.setRole(employeeRepository.findById(r.getCustomerId().getCustomerId()).getRole());
+                crj.setRole(customerRepository.findById(r.getCustomerId().getCustomerId()).getRole());
                 result.add(crj );
             }
         } catch (Exception e) {

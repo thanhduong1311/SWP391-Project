@@ -9,6 +9,7 @@ import com.demo.homemate.dtos.notification.MessageOject;
 import com.demo.homemate.entities.Employee;
 import com.demo.homemate.enums.AccountStatus;
 import com.demo.homemate.repositories.EmployeeRepository;
+import com.demo.homemate.services.EmailService;
 import com.demo.homemate.services.EmployeeService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class EmployeeTaskController {
     private final EmployeeService employeeService;
 
     private final EmployeeRepository employeeRepository;
+
+    private final EmailService emailService;
     @GetMapping("/jobList")
     public String viewJObs(Model model ,@CookieValue(name = "Token",required = false) String cookieToken,
                            @SessionAttribute(value="SessionToken",required = false) String sessionToken) {
@@ -111,6 +114,13 @@ public class EmployeeTaskController {
 
         System.out.println(messageOject.getMessage());
         session.setAttribute("EmployeeMessage", messageOject.getName()+"#"+messageOject.getMessage());
+
+        if(messageOject.getName() == "Success") {
+            emailService.sendEmail(messageOject.getEmailMessage());
+            System.out.println(messageOject.getMessage());
+        }
+
+
 
 
         return "redirect:/employee/job/" + id;

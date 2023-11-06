@@ -122,4 +122,30 @@ public class MailContents {
                 "</html>";
     }
 
+    public String  employeeReceive() {
+        return "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "  <title>Homemate Booking Confirmation</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "  <p>Dear " +this.subjectName+",</p>\n" +"<p>\n" +
+                "        Your booking for Homemate has been assigned.\n" +
+                "    </p>\n" +
+                "    <p>\n" +
+                "        An employee has already accepted the job you requested, please check your booking history.\n" +
+                "    </p>\n" +
+                "    <p>\n" +
+                "        Thank you for using Homemate!\n" +
+                "    </p>"+
+                "  <ul>\n" +
+                "    <li>Email: <b>homematesuportteam@gmail.com</b></li>\n" +
+                "    <li>Hotline: <b>0813113149</b></li>\n" +
+                "  </ul>\n" +
+                "  <p>Thank you for your booking.</p>\n" +
+                "  <p>Sincerely,</p>\n" +
+                "  <p>Homemate</p>\n" +
+                "</body>\n" +
+                "</html>";
+    }
+
 }

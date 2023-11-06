@@ -81,15 +81,15 @@
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5">
               <img
+                      style="width: 150px; height: 150px; object-fit: cover"
                 class="rounded-circle mt-5"
-                width="150px"
                 th:src="*{profile.getAvatar()}" /><span
                 class="font-weight-bold"
                  th:text="*{profile.getUsername()}"></span
               >
               <i
                 class="text-warning"
-              >Balance: <b th:text="*{profile.getBalance()}"></b></i
+              >Balance: <b th:text="*{'$'+profile.getBalance()}"></b></i
               >
               <span><a th:href="@{/employee/account/edit/{username}(username=${profile.getUsername()})}"
                        class="btn btn-md mt-2 detailBtn"

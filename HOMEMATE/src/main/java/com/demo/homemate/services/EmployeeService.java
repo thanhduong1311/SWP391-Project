@@ -1,7 +1,9 @@
 package com.demo.homemate.services;
 
+import com.demo.homemate.data.MailContents;
 import com.demo.homemate.dtos.auth.request.ChangePasswordRequest;
 import com.demo.homemate.dtos.customer.response.CustomerProfileRequest;
+import com.demo.homemate.dtos.email.EmailDetails;
 import com.demo.homemate.dtos.employee.response.EmployeeProlife;
 import com.demo.homemate.dtos.image.ImageResponse;
 import com.demo.homemate.dtos.job.response.CalendarObject;
@@ -54,6 +56,8 @@ public class EmployeeService implements IEmployeeService {
     private final IncomeRepository incomeRepository;
 
     private final EmployeeRequestRepository employeeRequestRepository;
+
+    private final EmailService emailService;
 
     @SneakyThrows
     @Override
@@ -180,6 +184,7 @@ public class EmployeeService implements IEmployeeService {
             Job job = jobRepository.findById(jobID);
             Employee employee = employeeRepository.findById(employeeID);
             List<Job> myJob  = jobRepository.findByEmployeeId(employee);
+            Customer customer = job.getCustomerId();
 
             boolean isBusy = false;
             JobTimer jobTimer = new JobTimer();
@@ -225,7 +230,17 @@ public class EmployeeService implements IEmployeeService {
                             employeeRepository.save(employee);
                             jobRepository.save(job);
 
-                            return new MessageOject("Success", "Receive job is successfully!", null);
+                            MailContents mailContents = new MailContents();
+                            mailContents.setSubjectName(customer.getFullName());
+                            mailContents.setTitle("[HOMEMATE] YOUR BOOKING HAS BEEN ASSIGNED FOR EMPLOYEE");
+
+
+                            EmailDetails emailDetails = new EmailDetails();
+                            emailDetails.setRecipient(customer.getEmail());
+                            emailDetails.setSubject(mailContents.getTitle());
+                            emailDetails.setMsgBody(mailContents.employeeReceive());
+
+                            return new MessageOject("Success", "Receive job is successfully!", emailDetails);
 
 
                         } else {
@@ -241,7 +256,18 @@ public class EmployeeService implements IEmployeeService {
                         employeeRepository.save(employee);
                         jobRepository.save(job);
 
-                        return new MessageOject("Success", "Receive job is successfully!", null);
+
+                        MailContents mailContents = new MailContents();
+                        mailContents.setSubjectName(customer.getFullName());
+                        mailContents.setTitle("[HOMEMATE] YOUR BOOKING HAS BEEN ASSIGNED FOR EMPLOYEE");
+
+
+                        EmailDetails emailDetails = new EmailDetails();
+                        emailDetails.setRecipient(customer.getEmail());
+                        emailDetails.setSubject(mailContents.getTitle());
+                        emailDetails.setMsgBody(mailContents.employeeReceive());
+
+                        return new MessageOject("Success", "Receive job is successfully!", emailDetails);
                     }
                 }else {
                     return new MessageOject("Failed", "Your account is blocked, can not take job!",null);

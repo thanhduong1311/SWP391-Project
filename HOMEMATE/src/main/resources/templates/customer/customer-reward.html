@@ -67,10 +67,10 @@
     <div class="row main-profile">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-5 border avatar " th:src="*{profile.getAvatar()}" />
+                <img class="rounded-5 border avatar " th:src="*{profile.getAvatar()}" style="width: 150px; height: 150px; object-fit: cover" />
                 <span name="txtUsername" class="font-weight-bold" th:text="*{profile.getUsername()}"></span>
                     <i>Member: <b><span th:text="${profile.getRank().getName()}"></span></b></i>
-                <i class="text-warning">Balance: <b th:text="*{profile.getBalance()}"></b></i>
+                <i class="text-warning">Balance: <b th:text="*{'$'+profile.getBalance()}"></b></i>
                 <a th:href="@{/customer/account/{username}(username=${profile.getUsername()})}"
                    class="btn editBtn mt-4">
                     Back

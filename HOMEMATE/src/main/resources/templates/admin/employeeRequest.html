@@ -122,7 +122,7 @@
                     <td></td>
                     <td th:text="${request.getAccount()}"></td>
                     <td th:text="${request.getAccountName()}"></td>
-                    <td th:text="${request.getReason()}"></td>
+                    <td style="max-width: 500px;" th:text="${request.getReason()}"></td>
                     <td class="job-status" th:text="${request.getRequestStatus()}"></td>
                     <td>
                       <a class="btn adminBtn"  th:href="@{/admin/tasks/request/{id}(id=${request.getRequestID()})}" >Detail</a>
