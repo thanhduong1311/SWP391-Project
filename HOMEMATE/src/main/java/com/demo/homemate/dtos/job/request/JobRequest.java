@@ -30,5 +30,6 @@ public class JobRequest {
     private String serviceName;
 
     private String location;
+    private String jobAddress;
 
 }

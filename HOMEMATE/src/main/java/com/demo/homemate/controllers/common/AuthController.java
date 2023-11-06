@@ -142,7 +142,12 @@ public class AuthController {
 
             model.getAttribute("User");
             if (cookieToken == null&& sessionToken==null) {
-                return "customer-home";
+
+                model.addAttribute("services", serviceService.getAllDetailServices());
+                String str = (String) session.getAttribute("RegisterPartner");
+                session.removeAttribute("RegisterPartner");
+                model.addAttribute("RegisterPartner",str);
+                return "index";
             }else {
                 String token=cookieToken!=null?cookieToken:sessionToken;
                 Claims claim = null;
@@ -162,7 +167,11 @@ public class AuthController {
                         return "redirect:/employee";
                     }
                     default -> {
-                        return "redirect:/guest";
+                        model.addAttribute("services", serviceService.getAllDetailServices());
+                        String str = (String) session.getAttribute("RegisterPartner");
+                        session.removeAttribute("RegisterPartner");
+                        model.addAttribute("RegisterPartner",str);
+                        return "index";
                     }
                 }
             }
@@ -205,11 +214,7 @@ public class AuthController {
 
     @GetMapping("")
     public String guestPage(Model model,HttpSession session) {
-        model.addAttribute("services", serviceService.getAllDetailServices());
-        String s = (String) session.getAttribute("RegisterPartner");
-        session.removeAttribute("RegisterPartner");
-        model.addAttribute("RegisterPartner",s);
-        return "index";
+      return "redirect:/home";
     }
 
     @GetMapping("/about")
@@ -381,9 +386,13 @@ public class AuthController {
     }
 
     @GetMapping("/partnerRegister")
-    public  String viewPartnerRegister(Model model) {
+    public  String viewPartnerRegister(Model model,HttpSession session) {
         model.addAttribute("service", serviceService.getAllServices());
         model.addAttribute("partnerInfo",new PartnerRegisterRequest());
+        String checkEmail = (String)session.getAttribute("RegisterPartner");
+        session.removeAttribute("RegisterPartner");
+        System.out.println("Ahjvashjvdjhasvdhjasvbda+ " + checkEmail);
+        model.addAttribute("RegisterPartner",checkEmail);
         return "partnerRegister";
     }
 
@@ -398,7 +407,7 @@ public class AuthController {
             return "redirect:/";
         }else {
             session.setAttribute("RegisterPartner",response.getMessageOject().getName()+"#"+response.getMessageOject().getMessage());
-            return viewPartnerRegister(model);
+            return "redirect:/partnerRegister";
         }
     }
 

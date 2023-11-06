@@ -63,7 +63,7 @@ public class BookingService implements IJobService {
                 job.setCreateAt(new Date());
                 job.setUpdateAt(new Date());
                 job.setLocation(request.getLocation());
-                job.setJobAddress(request.getCustomerAddress());
+                job.setJobAddress(request.getJobAddress());
                 jobRepository.save(job);
                 MailContents mailContents = new MailContents();
                 mailContents.setSubjectName(customer.getFullName());
@@ -115,7 +115,7 @@ public class BookingService implements IJobService {
                 job.setCreateAt(new Date());
                 job.setUpdateAt(new Date());
                 job.setLocation(request.getLocation());
-                job.setJobAddress(request.getCustomerAddress());
+                job.setJobAddress(request.getJobAddress());
                 jobRepository.save(job);
                 return new MessageOject("Success",null,null);
 

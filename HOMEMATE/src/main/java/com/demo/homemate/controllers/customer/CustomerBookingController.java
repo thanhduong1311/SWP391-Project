@@ -118,11 +118,12 @@ public class CustomerBookingController {
         pr.setCustomerID(request.getCustomerID());
 
 
+        System.out.println("+y1362178346876348732+      "  +request.getJobAddress());
+
         if(request.getPaymentType() == 0) {
                 model.addAttribute("JobRequest", request);
                 model.addAttribute("PaymentRequest",pr);
                 MessageOject messageOject = bookingService.createJobWithoutPayment(request);
-                System.out.println(messageOject.getMessage());
 
                 if( messageOject.getName().equals("Success")) {
                     return checkOut(model);
