@@ -228,6 +228,11 @@ public class AdminService implements IAdminService  {
                 if (!imageResponse.getMessageOject().getName().equals("Error")) {
                     service.setImage(imageResponse.getImgUrl());
                 }
+
+                if (serviceRepository.findByName(request.getName())!=null){
+                    return new MessageOject("Failed","Update service Failed!",null);
+                }
+
                 service.setName(request.getName());
                 service.setPrice(request.getPrice());
                 service.setDiscount(request.getDiscount());
